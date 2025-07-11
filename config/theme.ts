@@ -21,7 +21,7 @@ async function loadThemeOverrides(): Promise<Partial<ThemeConfig>> {
     const extension = 'ts';
     const fullPath = `${basePath}/${fileName}.${extension}`;
 
-    const module = await import(fullPath);
+    const module = await import(/* @vite-ignore */fullPath);
     return (module.default || module) as Partial<ThemeConfig>;
   } catch {
     return {};
