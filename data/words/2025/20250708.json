@@ -1,0 +1,120 @@
+{
+    "word": "flower",
+    "date": "20250708",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "F5202600-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5202600-2",
+            "partOfSpeech": "noun",
+            "text": "The reproductive structure of angiosperms, characteristically having either specialized male or female organs or both male and female organs, such as stamens and a pistil, enclosed in an outer envelope of petals and sepals.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5202600-3",
+            "partOfSpeech": "noun",
+            "text": "Such a structure having showy or colorful parts; a blossom.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5202600-4",
+            "partOfSpeech": "noun",
+            "text": "A flower head.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5202600-5",
+            "partOfSpeech": "noun",
+            "text": "A plant that is cultivated or appreciated for its blossoms.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5202600-6",
+            "partOfSpeech": "noun",
+            "text": "The condition or a time of having developed flowers.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "examples": [
+                "The azaleas were in full flower."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5202600-7",
+            "partOfSpeech": "noun",
+            "text": "The period of highest development or greatest vigor. <i>synonym</i>: <strong> bloom</strong>.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5202600-8",
+            "partOfSpeech": "noun",
+            "text": "The highest example or best representative.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "examples": [
+                "the flower of our generation."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5202600-9",
+            "partOfSpeech": "noun",
+            "text": "A natural development or outgrowth.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5202600-10",
+            "partOfSpeech": "noun",
+            "text": "A fine powder produced by condensation or sublimation of a compound.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

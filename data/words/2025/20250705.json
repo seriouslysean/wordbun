@@ -1,0 +1,114 @@
+{
+    "word": "sun",
+    "date": "20250705",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "S5947900-1",
+            "partOfSpeech": "noun",
+            "text": "The star around which Earth and other planets orbit. It provides heat and light to Earth. It has a mean distance from Earth of about 150 million kilometers (93 million miles), a diameter of approximately 1,392,000 kilometers (865,000 miles), and a mass about 335,000 times that of Earth.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sun",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5947900-2",
+            "partOfSpeech": "noun",
+            "text": "A star that is the center of a planetary system.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sun",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5947900-3",
+            "partOfSpeech": "noun",
+            "text": "The radiant energy, especially heat and visible light, emitted by the sun; sunshine.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sun",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5947900-4",
+            "partOfSpeech": "noun",
+            "text": "A sunlike object, representation, or design.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sun",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5947900-5",
+            "partOfSpeech": "intransitive verb",
+            "text": "To expose to the sun's rays, as for warming, drying, or tanning.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sun",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5947900-6",
+            "partOfSpeech": "intransitive verb",
+            "text": "To expose oneself or itself to the sun.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sun",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5947900-7",
+            "partOfSpeech": "idiom",
+            "text": "(<em>in the sun</em>)  In the public eye.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sun",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5947900-8",
+            "partOfSpeech": "idiom",
+            "text": "(<em>under the sun</em>)  On the earth; in the world.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sun",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "See <internalXref urlencoded=\"sunn\">sunn</internalXref>.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/sun",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "To expose to the sun's rays; warm or dry in the sunshine; insolate: as, to <internalXref urlencoded=\"sun\">sun</internalXref> cloth.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/sun",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

@@ -1,0 +1,127 @@
+{
+    "word": "sign",
+    "date": "20250702",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "S5430700-1",
+            "partOfSpeech": "noun",
+            "text": "Something that suggests the presence or existence of a fact, condition, or quality.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "examples": [
+                "A high temperature is a sign of fever."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5430700-2",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5430700-3",
+            "partOfSpeech": "noun",
+            "text": "An act or gesture used to convey an idea, a desire, information, or a command: <i>synonym</i>: <strong> gesture</strong>.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "examples": [
+                "gave the go-ahead sign."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5430700-4",
+            "partOfSpeech": "noun",
+            "text": "Sign language.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5430700-5",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5430700-6",
+            "partOfSpeech": "noun",
+            "text": "A displayed structure bearing lettering or symbols, used to identify or advertise a place of business.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "examples": [
+                "a motel with a flashing neon sign outside."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5430700-7",
+            "partOfSpeech": "noun",
+            "text": "A posted notice bearing a designation, direction, or command.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "examples": [
+                "an EXIT sign above a door; a traffic sign."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5430700-8",
+            "partOfSpeech": "noun",
+            "text": "A conventional figure or device that stands for a word, phrase, or operation; a symbol, as in mathematics or in musical notation.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5430700-9",
+            "partOfSpeech": "noun",
+            "text": "An indicator, such as a dropping or footprint, of the trail of an animal.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "examples": [
+                "looking for deer sign."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5430700-10",
+            "partOfSpeech": "noun",
+            "text": "A trace or vestige.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "examples": [
+                "no sign of life."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

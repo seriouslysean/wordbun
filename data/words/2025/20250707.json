@@ -1,0 +1,116 @@
+{
+    "word": "cup",
+    "date": "20250707",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "C5838300-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cup",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5838300-2",
+            "partOfSpeech": "noun",
+            "text": "A small open container, usually with a flat bottom and a handle, used for drinking.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cup",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5838300-3",
+            "partOfSpeech": "noun",
+            "text": "Such a container and its contents.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cup",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5838300-4",
+            "partOfSpeech": "noun",
+            "text": "A unit of capacity or volume equal to 16 tablespoons or 8 fluid ounces (237 milliliters).",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cup",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5838300-5",
+            "partOfSpeech": "noun",
+            "text": "The bowl of a drinking vessel.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cup",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5838300-6",
+            "partOfSpeech": "noun",
+            "text": "The chalice or the wine used in the celebration of the Eucharist.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cup",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5838300-7",
+            "partOfSpeech": "noun",
+            "text": "A decorative cup-shaped vessel awarded as a prize or trophy.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cup",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5838300-8",
+            "partOfSpeech": "noun",
+            "text": "A golf hole or the metal container inside a hole.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cup",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5838300-9",
+            "partOfSpeech": "noun",
+            "text": "Either of the two parts of a brassiere that fit over the breasts.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cup",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5838300-10",
+            "partOfSpeech": "noun",
+            "text": "An athletic supporter having a protective reinforcement of rigid plastic or metal.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cup",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
