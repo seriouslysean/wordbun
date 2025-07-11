@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rg:*)",
+      "Bash(grep:*)",
+      "Bash(mv:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(find:*)",
+      "Bash(npm run lint:*)",
+      "Bash(cp:*)",
+      "Bash(npm test)",
+      "Bash(ls:*)",
+      "Bash(npm test:*)"
+    ],
+    "deny": []
+  }
+}

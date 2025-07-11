@@ -1,0 +1,36 @@
+---
+import Layout from '~layouts/Layout.astro';
+import Heading from '~components/Heading.astro';
+import WordList from '~components/WordList.astro';
+import SectionHeading from '~components/SectionHeading.astro';
+import { getUrl } from '~utils/utils.js';
+import { getAllWords, formatWordCount, groupWordsByYear } from '~utils/word-utils.js';
+import { STRUCTURED_DATA_TYPE } from '~utils/schema-utils.ts';
+
+const words = getAllWords();
+const wordsByYear = groupWordsByYear(words);
+---
+
+<Layout title="All Words" structuredDataType={STRUCTURED_DATA_TYPE.WORD_LIST}>
+  <main class="words">
+    <Heading text="All Words" secondaryText={formatWordCount(words.length)} />
+
+    {(Object.entries(wordsByYear) as [string, typeof words][]).reverse().map(([year, words]) => (
+      <section class="words__section">
+        <SectionHeading text={year} href={getUrl(`/words/${year}`)} />
+        <WordList words={words} columns={2} />
+      </section>
+    ))}
+  </main>
+</Layout>
+
+<style>
+    .words {
+        max-width: var(--content-width-medium);
+        margin: 0 auto;
+    }
+
+    .words__section {
+        margin-bottom: var(--spacing-large);
+    }
+</style>

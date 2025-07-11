@@ -1,0 +1,398 @@
+---
+import Layout from '~layouts/Layout.astro';
+import Heading from '~components/Heading.astro';
+import WordLink from '~components/WordLink.astro';
+import SiteLink from '~components/SiteLink.astro';
+import { getAllWords, getWordStats, getLetterStats, countSyllables, getLetterPatternStats, getWordEndingStats, getCurrentStreakStats } from '~utils/word-utils.js';
+
+const words = getAllWords().sort((a, b) => a.date.localeCompare(b.date));
+const totalWords = words.length;
+const firstWord = words[0];
+const latestWord = words[words.length - 1];
+const wordStats = getWordStats(words);
+const letterStats = getLetterStats(wordStats.letterFrequency);
+const letterPatterns = getLetterPatternStats(words);
+const wordEndings = getWordEndingStats(words);
+const streakStats = getCurrentStreakStats(words);
+
+const wordWithMostSyllables = words.reduce((max, curr) => {
+  const currSyllables = countSyllables(curr.word);
+  const maxSyllables = countSyllables(max.word);
+  return currSyllables > maxSyllables ? curr : max;
+}, words[0]);
+
+const wordWithLeastSyllables = words.reduce((min, curr) => {
+  const currSyllables = countSyllables(curr.word);
+  const minSyllables = countSyllables(min.word);
+  return currSyllables < minSyllables ? curr : min;
+}, words[0]);
+
+const allVowels = words.filter(w => /^[aeiou]+$/i.test(w.word));
+const allConsonants = words.filter(w => /^[^aeiou]+$/i.test(w.word));
+const palindromes = words.filter(w => w.word.toLowerCase() === w.word.toLowerCase().split('').reverse().join(''));
+
+
+import { getVowelCount, getConsonantCount } from '~utils/text-utils.ts';
+
+const mostVowels = words.reduce((max, curr) => {
+  const count = getVowelCount(curr.word);
+  return count > getVowelCount(max.word) ? curr : max;
+}, words[0]);
+
+const mostConsonants = words.reduce((max, curr) => {
+  const count = getConsonantCount(curr.word);
+  return count > getConsonantCount(max.word) ? curr : max;
+}, words[0]);
+
+const findWordDate = (targetWord: string) => {
+  return words.find(w => w.word === targetWord)?.date;
+};
+
+---
+
+<Layout title="Stats">
+  <main class="stats">
+    <Heading text="Stats" secondaryText="For Nerds" />
+
+    <section class="stats__section">
+      <div class="stats__list">
+        <div class="stats__item">
+          <div class="stats__fact">total words</div>
+          <div class="stats__value">
+            <SiteLink href="/words" class="stats__link">{totalWords}</SiteLink>
+          </div>
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">first word</div>
+          <WordLink word={firstWord} />
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">latest word</div>
+          <WordLink word={latestWord} />
+        </div>
+      </div>
+    </section>
+
+    <section class="stats__section">
+      <h2 class="stats__heading">Word Facts</h2>
+      <div class="stats__list">
+        <div class="stats__item">
+          <div class="stats__fact">shortest ({wordStats.shortest.length} letters)</div>
+          <WordLink word={{
+            word: wordStats.shortest.word,
+            date: findWordDate(wordStats.shortest.word),
+          }} />
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">longest ({wordStats.longest.length} letters)</div>
+          <WordLink word={{
+            word: wordStats.longest.word,
+            date: findWordDate(wordStats.longest.word),
+          }} />
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">least syllables ({countSyllables(wordWithLeastSyllables.word)})</div>
+          <WordLink word={wordWithLeastSyllables} />
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">most syllables ({countSyllables(wordWithMostSyllables.word)})</div>
+          <WordLink word={wordWithMostSyllables} />
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">most common letter ({letterStats[0][1]} words)</div>
+          <div class="stats__value">
+            {letterStats[0][0]}
+          </div>
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">least common letter ({letterStats[letterStats.length - 1][1]} word{letterStats[letterStats.length - 1][1] !== 1 ? 's' : ''})</div>
+          <div class="stats__value">
+            {letterStats[letterStats.length - 1][0]}
+          </div>
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">most vowels ({getVowelCount(mostVowels.word)})</div>
+          <WordLink word={{
+            word: mostVowels.word,
+            date: mostVowels.date,
+          }} />
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">most consonants ({getConsonantCount(mostConsonants.word)})</div>
+          <WordLink word={{
+            word: mostConsonants.word,
+            date: mostConsonants.date,
+          }} />
+        </div>
+        {palindromes.length > 0 && (
+          <div class="stats__item">
+            <div class="stats__fact">palindromes</div>
+            <div class="stats__value">
+              {palindromes.map(w => w.word).join(', ')}
+            </div>
+          </div>
+        )}
+        {allConsonants.length > 0 && (
+          <div class="stats__item">
+            <div class="stats__fact">all consonants</div>
+            <div class="stats__value">
+              {allConsonants.map(w => w.word).join(', ')}
+            </div>
+          </div>
+        )}
+        {allVowels.length > 0 && (
+          <div class="stats__item">
+            <div class="stats__fact">all vowels</div>
+            <div class="stats__value">
+              {allVowels.map(w => w.word).join(', ')}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="stats__section">
+      <h2 class="stats__heading">Streaks</h2>
+      <div class="stats__list">
+        <div class="stats__item">
+          <div class="stats__fact">current streak</div>
+          <div class="stats__value">
+            {streakStats.currentStreak} days
+          </div>
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">longest streak</div>
+          <div class="stats__value">
+            {streakStats.longestStreak} days
+          </div>
+        </div>
+        <div class="stats__item stats__streak-chart">
+          <div class="stats__fact">streak comparison</div>
+          <div class="streak-chart">
+            <div class="streak-chart__bar">
+              <div
+                class="streak-chart__current"
+                style={`--current-width: ${Math.min(100, (streakStats.currentStreak / Math.max(streakStats.longestStreak, 1)) * 100)}%`}
+              ></div>
+              <div
+                class="streak-chart__longest"
+                style="--longest-width: 100%"
+              ></div>
+            </div>
+            <div class="streak-chart__labels">
+              <span class="streak-chart__label streak-chart__label--current">Current: {streakStats.currentStreak}</span>
+              <span class="streak-chart__label streak-chart__label--longest">Best: {streakStats.longestStreak}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats__section">
+      <h2 class="stats__heading">Letter Patterns</h2>
+      <div class="stats__list">
+        {letterPatterns.startEndSame.length > 0 && (
+          <div class="stats__item">
+            <div class="stats__fact">same start/end letter</div>
+            <div class="stats__value">
+              <SiteLink href="/stats/same-start-end" class="stats__link">{letterPatterns.startEndSame.length}</SiteLink>
+            </div>
+          </div>
+        )}
+        {letterPatterns.doubleLetters.length > 0 && (
+          <div class="stats__item">
+            <div class="stats__fact">double letters</div>
+            <div class="stats__value">
+              <SiteLink href="/stats/double-letters" class="stats__link">{letterPatterns.doubleLetters.length}</SiteLink>
+            </div>
+          </div>
+        )}
+        {letterPatterns.tripleLetters.length > 0 && (
+          <div class="stats__item">
+            <div class="stats__fact">triple letters</div>
+            <div class="stats__value">
+              <span>{letterPatterns.tripleLetters.length}</span>
+            </div>
+          </div>
+        )}
+        {letterPatterns.alphabetical.length > 0 && (
+          <div class="stats__item">
+            <div class="stats__fact">alphabetical order</div>
+            <div class="stats__value">
+              <SiteLink href="/stats/alphabetical-order" class="stats__link">{letterPatterns.alphabetical.length}</SiteLink>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="stats__section">
+      <h2 class="stats__heading">Word Endings</h2>
+      <div class="stats__list">
+        <div class="stats__item">
+          <div class="stats__fact">-ing words</div>
+          <div class="stats__value">
+            <SiteLink href="/stats/words-ending-ing" class="stats__link">{wordEndings.ing.length}</SiteLink>
+          </div>
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">-ed words</div>
+          <div class="stats__value">
+            <SiteLink href="/stats/words-ending-ed" class="stats__link">{wordEndings.ed.length}</SiteLink>
+          </div>
+        </div>
+        <div class="stats__item">
+          <div class="stats__fact">-ly words</div>
+          <div class="stats__value">
+            <SiteLink href="/stats/words-ending-ly" class="stats__link">{wordEndings.ly.length}</SiteLink>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+    .stats {
+        max-width: var(--content-width-medium);
+        margin: 0 auto;
+    }
+
+    .stats__section {
+        margin-bottom: var(--spacing-large);
+    }
+
+    .stats__heading {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--spacing-base);
+        color: var(--color-primary-light);
+        border-bottom: 1px solid var(--color-primary-light);
+        padding-bottom: 0.5rem;
+    }
+
+    .stats__list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-small);
+    }
+
+    .stats__item {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-xs);
+        padding-block: var(--spacing-small);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .stats__fact {
+        color: var(--color-text-light);
+    }
+
+    .stats__value {
+        font-size: 1.1rem;
+        font-weight: 500;
+        text-align: right;
+        min-width: 0;
+    }
+
+    .stats__link {
+        color: var(--color-primary-light);
+        text-decoration: none;
+        transition: opacity 0.2s ease;
+    }
+
+    .stats__link:hover {
+        opacity: 0.7;
+    }
+
+    /* Stats-specific styles */
+    .stats :global(a) {
+        font-size: 1.1rem;
+        font-weight: 500;
+        display: flex;
+        flex-direction: row;
+        gap: var(--spacing-small);
+        text-align: right;
+    }
+
+    .stats :global(time) {
+        color: var(--color-text-lighter);
+        font-size: 0.8rem;
+        font-weight: normal;
+        margin: 0;
+    }
+
+    /* Streak chart styles */
+    .stats__streak-chart {
+        flex-direction: column !important;
+        gap: var(--spacing-small);
+        align-items: stretch !important;
+    }
+
+    .streak-chart {
+        width: 100%;
+    }
+
+    .streak-chart__bar {
+        height: 20px;
+        background: var(--color-border, #e5e7eb);
+        border-radius: 4px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .streak-chart__current,
+    .streak-chart__longest {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 4px;
+    }
+
+    .streak-chart__longest {
+        background: var(--color-primary-light, #4a7c7d);
+        width: var(--longest-width);
+        opacity: 0.3;
+    }
+
+    .streak-chart__current {
+        background: var(--color-primary-light, #4a7c7d);
+        width: var(--current-width);
+        z-index: 1;
+    }
+
+    .streak-chart__labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: var(--font-size-small);
+        color: var(--color-text-light);
+    }
+
+    .streak-chart__label--current {
+        color: var(--color-primary-light, #4a7c7d);
+        font-weight: 500;
+    }
+
+    @media (min-width: 1024px) {
+        .stats__item {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0;
+            padding-block: 0;
+        }
+
+        .stats__fact {
+            flex-shrink: 0;
+            padding-right: 1rem;
+        }
+
+        .stats__value {
+            text-align: right;
+            width: auto;
+        }
+    }
+</style>
