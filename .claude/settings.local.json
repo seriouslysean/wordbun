@@ -10,7 +10,8 @@
       "Bash(cp:*)",
       "Bash(npm test)",
       "Bash(ls:*)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "WebFetch(domain:docs.astro.build)"
     ],
     "deny": []
   }
