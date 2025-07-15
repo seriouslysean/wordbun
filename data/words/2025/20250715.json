@@ -1,0 +1,120 @@
+{
+    "word": "toy",
+    "date": "20250715",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "T5323700-1",
+            "partOfSpeech": "noun",
+            "text": "An object for a child to play with.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5323700-2",
+            "partOfSpeech": "noun",
+            "text": "Something that provides amusement.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5323700-3",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5323700-4",
+            "partOfSpeech": "noun",
+            "text": "A small ornament; a bauble.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5323700-5",
+            "partOfSpeech": "noun",
+            "text": "Something of little importance; a trifle.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5323700-6",
+            "partOfSpeech": "noun",
+            "text": "A diminutive thing, especially a dog of a very small breed or of a variety smaller than the standard variety of its breed.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5323700-7",
+            "partOfSpeech": "noun",
+            "text": "A loose covering for the head, formerly worn by women.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5323700-8",
+            "partOfSpeech": "noun",
+            "text": "A shooter marble.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5323700-9",
+            "partOfSpeech": "intransitive verb",
+            "text": "To amuse oneself idly; trifle.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "examples": [
+                "a cat toying with a mouse."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5323700-10",
+            "partOfSpeech": "intransitive verb",
+            "text": "To treat something casually or without seriousness: <i>synonym</i>: <strong> flirt</strong>.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "examples": [
+                "toyed with the idea of writing a play."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
