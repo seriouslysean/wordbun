@@ -1,0 +1,118 @@
+{
+    "word": "sticky",
+    "date": "20250718",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "S5821400-1",
+            "partOfSpeech": "adjective",
+            "text": "Having the property of adhering or sticking to a surface; adhesive.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5821400-2",
+            "partOfSpeech": "adjective",
+            "text": "Covered with an adhesive agent.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5821400-3",
+            "partOfSpeech": "adjective",
+            "text": "Warm and humid; muggy.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "examples": [
+                "a sticky day."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5821400-4",
+            "partOfSpeech": "adjective",
+            "text": "Painful or difficult.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "examples": [
+                "a sticky situation."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5821400-5",
+            "partOfSpeech": "adjective",
+            "text": "Tending to remain the same despite changes in the economy. Used of prices or wages.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5821400-6",
+            "partOfSpeech": "adjective",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5821400-7",
+            "partOfSpeech": "adjective",
+            "text": "Of or relating to an item of software or hardware, such as an onscreen graphic or mouse button, that remains active for a brief time after being touched.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "examples": [
+                "sticky keys; a sticky menu."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5821400-8",
+            "partOfSpeech": "adjective",
+            "text": "Of or relating to content designed to increase the duration of visits to a website.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "Like a stick; stiff.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "Having the property of adhering to a surface; inclining to stick; adhesive; viscous; viscid; glutinous; tenacious.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
