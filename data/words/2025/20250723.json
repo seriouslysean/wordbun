@@ -1,0 +1,117 @@
+{
+    "word": "boot",
+    "date": "20250723",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "B5407100-1",
+            "partOfSpeech": "intransitive verb",
+            "text": "To be of help or advantage; avail.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/boot",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5407100-2",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/boot",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5407100-3",
+            "partOfSpeech": "noun",
+            "text": "Advantage; avail.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/boot",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5407100-4",
+            "partOfSpeech": "idiom",
+            "text": "(<em>to boot</em>)  In addition; besides.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/boot",
+            "examples": [
+                "The new cruise ship was not only the biggest in the world, but the fastest to boot."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5407000-1",
+            "partOfSpeech": "noun",
+            "text": "A durable covering for the foot and part or much of the leg, usually made of leather, fabric, plastic, or rubber.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/boot",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5407000-2",
+            "partOfSpeech": "noun",
+            "text": "A protective covering, especially a sheath to enclose the base of a floor-mounted gear shift lever in a car or truck.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/boot",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5407000-3",
+            "partOfSpeech": "noun",
+            "text": "An automobile trunk.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/boot",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5407000-4",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/boot",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5407000-5",
+            "partOfSpeech": "noun",
+            "text": "A kick.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/boot",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5407000-6",
+            "partOfSpeech": "noun",
+            "text": "An unceremonious dismissal, as from a job. Used with <em>the.</em>",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/boot",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
