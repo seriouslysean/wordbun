@@ -1,0 +1,20 @@
+---
+import StatsMilestonePage from '~components/StatsMilestonePage.astro';
+import StatsWordListPage from '~components/StatsWordListPage.astro';
+import { generateStatsStaticPaths } from '~utils/static-paths-utils';
+
+export const getStaticPaths = generateStatsStaticPaths;
+
+import type { WordData, WordMilestoneItem } from '~types/word';
+
+const { words, description, template } = Astro.props;
+
+const milestoneWords = template === 'milestone' ? (words as WordMilestoneItem[]) : undefined;
+const wordListWords = template === 'word-list' ? (words as WordData[]) : undefined;
+---
+
+{template === 'milestone' ? (
+  <StatsMilestonePage words={[...milestoneWords!].reverse()} descriptionText={description} />
+) : (
+  <StatsWordListPage words={wordListWords!} descriptionText={description} />
+)}
