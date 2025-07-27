@@ -70,10 +70,7 @@ jobs:
           SITE_ID: ${{ vars.SITE_ID }}
           SITE_KEYWORDS: ${{ vars.SITE_KEYWORDS }}
           SITE_TITLE: ${{ vars.SITE_TITLE }}
-<<<<<<< HEAD
-=======
           # Required for Vite build-time define (__SITE_URL__)
->>>>>>> 8be26d829ae7f62fd158f49e8d172098dc7e8833
           SITE_URL: ${{ vars.SITE_URL }}
           TZ: America/New_York
           WORDNIK_API_KEY: ${{ secrets.WORDNIK_API_KEY }}
