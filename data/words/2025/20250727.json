@@ -1,0 +1,121 @@
+{
+    "word": "mat",
+    "date": "20250727",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "M5153300-1",
+            "partOfSpeech": "noun",
+            "text": "A flat piece of coarse fabric or other material used for wiping one's shoes or feet, or in various other forms as a floor covering.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5153300-2",
+            "partOfSpeech": "noun",
+            "text": "A small flat piece of decorated material placed under a lamp, dish of food, or other object.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5153300-3",
+            "partOfSpeech": "noun",
+            "text": "A floor pad to protect athletes, as in wrestling or gymnastics.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5153300-4",
+            "partOfSpeech": "noun",
+            "text": "A densely woven or thickly tangled mass.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "examples": [
+                "a mat of hair."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5153300-5",
+            "partOfSpeech": "noun",
+            "text": "The solid part of a lace design.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5153300-6",
+            "partOfSpeech": "noun",
+            "text": "A heavy woven net of rope or wire cable placed over a blasting site to keep debris from scattering.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5153300-7",
+            "partOfSpeech": "intransitive verb",
+            "text": "To cover, protect, or decorate with mats or a mat.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5153300-8",
+            "partOfSpeech": "intransitive verb",
+            "text": "To pack or interweave into a thick mass.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "examples": [
+                "High winds matted the leaves against the base of the fence."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5153300-9",
+            "partOfSpeech": "intransitive verb",
+            "text": "To be packed or interwoven into a thick mass; become entangled.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5153400-1",
+            "partOfSpeech": "noun",
+            "text": "A decorative border placed around a picture to serve as a frame or provide contrast between the picture and the frame.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
