@@ -1,0 +1,123 @@
+{
+    "word": "bum",
+    "date": "20250728",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "B5560300-1",
+            "partOfSpeech": "noun",
+            "text": "The buttocks.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5560200-1",
+            "partOfSpeech": "noun",
+            "text": "A tramp; a vagrant.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5560200-2",
+            "partOfSpeech": "noun",
+            "text": "A lazy or shiftless person, especially one who seeks to live solely by the support of others.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5560200-3",
+            "partOfSpeech": "noun",
+            "text": "An incompetent, insignificant, or obnoxious person.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "examples": [
+                "The batter called the pitcher a bum."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5560200-4",
+            "partOfSpeech": "noun",
+            "text": "One who spends a lot of time doing a particular recreational activity.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "examples": [
+                "a beach bum; a ski bum."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5560200-5",
+            "partOfSpeech": "intransitive verb",
+            "text": "To live by begging and scavenging from place to place. Often used with <em>around.</em>",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5560200-6",
+            "partOfSpeech": "intransitive verb",
+            "text": "To pass time idly; loaf. Often used with <em>around.</em>",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5560200-7",
+            "partOfSpeech": "intransitive verb",
+            "text": "To acquire by begging; cadge. <i>synonym</i>: <strong> cadge</strong>.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5560200-8",
+            "partOfSpeech": "intransitive verb",
+            "text": "To depress, dishearten, or dismay. Often used with <em>out.</em>",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5560200-9",
+            "partOfSpeech": "adjective",
+            "text": "Inferior; worthless.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "examples": [
+                "gave me bum advice; did a bum job of fixing the car."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
