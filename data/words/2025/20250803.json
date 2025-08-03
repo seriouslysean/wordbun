@@ -1,35 +1,105 @@
 {
-    "word": "supernova",
+    "word": "painting",
     "date": "20250803",
     "adapter": "wordnik",
     "data": [
         {
-            "id": "S5957350-1",
+            "id": "P5017000-1",
             "partOfSpeech": "noun",
-            "text": "A rare celestial phenomenon involving the explosion of a star and resulting in an extremely bright, short-lived object that emits vast amounts of energy. Depending on the type of supernova, the explosion may completely destroy the star, or the stellar core may survive to become a neutron star.",
+            "text": "The process, art, or occupation of coating surfaces with paint for a utilitarian or artistic effect.",
             "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
             "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/supernova",
+            "sourceUrl": "https://www.wordnik.com/words/painting",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5017000-2",
+            "partOfSpeech": "noun",
+            "text": "A picture or design in paint.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/painting",
             "examples": [],
             "synonyms": [],
             "antonyms": []
         },
         {
             "partOfSpeech": "noun",
-            "text": "A <xref>star</xref> which explodes, increasing its brightness to typically a billion times that of our <xref>sun</xref>, though attenuated by the great distance from our sun. Some leave only debris (Type I); others fade to <xref>invisibility</xref> as <xref>neutron stars</xref> (Type II).",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/supernova",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/painting",
             "examples": [],
             "synonyms": [],
             "antonyms": []
         },
         {
             "partOfSpeech": "noun",
-            "text": "a star that explodes and becomes extremely luminous in the process",
-            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
-            "sourceDictionary": "wordnet",
-            "sourceUrl": "https://www.wordnik.com/words/supernova",
+            "text": "The act, art, or employment of laying on paints.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/painting",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A picture; specifically, a likeness, image, or scene depicted with paints.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/painting",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Color laid on.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/painting",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "See the <em>qualifying words.</em>",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/painting",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The act or employment of laying on, or adorning with, paints or colors.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/painting",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The work of the painter; also, any work of art in which objects are represented in color on a flat surface; a colored representation of any object or scene; a picture.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/painting",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Color laid on; paint.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/painting",
             "examples": [],
             "synonyms": [],
             "antonyms": []
