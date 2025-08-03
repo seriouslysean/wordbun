@@ -1,0 +1,116 @@
+{
+    "word": "vacuum",
+    "date": "20250802",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "V5003800-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/vacuum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "V5003800-2",
+            "partOfSpeech": "noun",
+            "text": "Absence of matter.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/vacuum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "V5003800-3",
+            "partOfSpeech": "noun",
+            "text": "A space empty of matter.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/vacuum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "V5003800-4",
+            "partOfSpeech": "noun",
+            "text": "A space relatively empty of matter.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/vacuum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "V5003800-5",
+            "partOfSpeech": "noun",
+            "text": "A space in which the pressure is significantly lower than atmospheric pressure.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/vacuum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "V5003800-6",
+            "partOfSpeech": "noun",
+            "text": "A state of emptiness; a void.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/vacuum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "V5003800-7",
+            "partOfSpeech": "noun",
+            "text": "A state of being sealed off from external or environmental influences; isolation.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/vacuum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "V5003800-8",
+            "partOfSpeech": "noun",
+            "text": "A vacuum cleaner.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/vacuum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "V5003800-9",
+            "partOfSpeech": "adjective",
+            "text": "Of, relating to, or used to create a vacuum.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/vacuum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "V5003800-10",
+            "partOfSpeech": "adjective",
+            "text": "Containing air or other gas at a reduced pressure.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/vacuum",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
