@@ -1,0 +1,121 @@
+{
+    "word": "leaf",
+    "date": "20250805",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "L5092600-1",
+            "partOfSpeech": "noun",
+            "text": "A usually green, flattened, lateral structure attached to a stem and functioning as a principal organ of photosynthesis and transpiration in most plants.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/leaf",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "L5092600-2",
+            "partOfSpeech": "noun",
+            "text": "A leaflike organ or structure.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/leaf",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "L5092600-3",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/leaf",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "L5092600-4",
+            "partOfSpeech": "noun",
+            "text": "Leaves considered as a group; foliage.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/leaf",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "L5092600-5",
+            "partOfSpeech": "noun",
+            "text": "The state or time of having or showing leaves.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/leaf",
+            "examples": [
+                "trees in full leaf."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "L5092600-6",
+            "partOfSpeech": "noun",
+            "text": "The leaves of a plant used or processed for a specific purpose.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/leaf",
+            "examples": [
+                "large supplies of tobacco leaf."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "L5092600-7",
+            "partOfSpeech": "noun",
+            "text": "Any of the sheets of paper bound in a book, each side of which constitutes a page.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/leaf",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "L5092600-8",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/leaf",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "L5092600-9",
+            "partOfSpeech": "noun",
+            "text": "A very thin sheet of material, especially metal.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/leaf",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "L5092600-10",
+            "partOfSpeech": "noun",
+            "text": "Such leaves considered as a group.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/leaf",
+            "examples": [
+                "covered in gold leaf."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
