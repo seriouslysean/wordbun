@@ -1,0 +1,122 @@
+{
+    "word": "underground",
+    "date": "20250811",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "U5054700-1",
+            "partOfSpeech": "adjective",
+            "text": "Situated, occurring, or operating below the surface of the earth.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/underground",
+            "examples": [
+                "underground caverns; underground missile sites."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "U5054700-2",
+            "partOfSpeech": "adjective",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/underground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "U5054700-3",
+            "partOfSpeech": "adjective",
+            "text": "Hidden or concealed; clandestine.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/underground",
+            "examples": [
+                "underground resistance to the tyrant."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "U5054700-4",
+            "partOfSpeech": "adjective",
+            "text": "Of or relating to an organization involved in secret or illegal activity.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/underground",
+            "examples": [
+                "underground trade in weapons."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "U5054700-5",
+            "partOfSpeech": "adjective",
+            "text": "Of or relating to an avant-garde movement or its films, publications, and art, usually privately produced and of special appeal and often concerned with social or artistic experiment.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/underground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "U5054700-6",
+            "partOfSpeech": "noun",
+            "text": "A clandestine, often nationalist, organization fostering or planning hostile activities against, or the overthrow of, a government in power, such as an occupying military government.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/underground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "U5054700-7",
+            "partOfSpeech": "noun",
+            "text": "A subway system.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/underground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "U5054700-8",
+            "partOfSpeech": "noun",
+            "text": "An avant-garde movement or publication.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/underground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "U5054700-9",
+            "partOfSpeech": "adverb",
+            "text": "Below the surface of the earth.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/underground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "U5054700-10",
+            "partOfSpeech": "adverb",
+            "text": "In secret; stealthily.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/underground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
