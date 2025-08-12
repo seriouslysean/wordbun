@@ -1,0 +1,47 @@
+{
+    "word": "glasses",
+    "date": "20250812",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "partOfSpeech": "noun plural",
+            "text": "Same as <xref urlencoded=\"eyeglasses\">eyeglasses</xref>. See <xref urlencoded=\"eyeglass\">eyeglass</xref>{1}.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/glasses",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Plural form of <xref>glass</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/glasses",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "<xref>spectacles</xref>, frames bearing two lenses worn in front of the eyes",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/glasses",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "optical instrument consisting of a frame that holds a pair of lenses for correcting defective vision",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/glasses",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
