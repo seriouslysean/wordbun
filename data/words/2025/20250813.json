@@ -1,0 +1,122 @@
+{
+    "word": "sack",
+    "date": "20250813",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "S5010000-1",
+            "partOfSpeech": "transitive verb",
+            "text": "To rob (a town, for example) of goods or valuables, especially after capture.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sack",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5010000-2",
+            "partOfSpeech": "noun",
+            "text": "The looting or pillaging of a captured city or town.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sack",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5010100-1",
+            "partOfSpeech": "noun",
+            "text": "Any of various light, dry, strong wines from Spain and the Canary Islands, imported to England in the 1500s and 1600s.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sack",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5009900-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sack",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5009900-2",
+            "partOfSpeech": "noun",
+            "text": "A bag, especially one made of strong material for holding grain or objects in bulk.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sack",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5009900-3",
+            "partOfSpeech": "noun",
+            "text": "The amount that a sack can hold.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sack",
+            "examples": [
+                "sold two sacks of rice."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5009900-4",
+            "partOfSpeech": "noun",
+            "text": "A short loose-fitting garment for women and children.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sack",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5009900-5",
+            "partOfSpeech": "noun",
+            "text": "Dismissal from employment.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sack",
+            "examples": [
+                "finally got the sack after a year of ineptitude."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5009900-6",
+            "partOfSpeech": "noun",
+            "text": "A bed, mattress, or sleeping bag.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sack",
+            "examples": [
+                "hit the sack at 10:00."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5009900-7",
+            "partOfSpeech": "noun",
+            "text": "A base.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sack",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
