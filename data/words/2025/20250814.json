@@ -1,0 +1,123 @@
+{
+    "word": "blanket",
+    "date": "20250814",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "B5319800-1",
+            "partOfSpeech": "noun",
+            "text": "A large piece of woven material used as a covering for warmth, especially on a bed.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5319800-2",
+            "partOfSpeech": "noun",
+            "text": "A layer that covers or encloses.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "examples": [
+                "a thick blanket of snow."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5319800-3",
+            "partOfSpeech": "adjective",
+            "text": "Applying to or covering all conditions or instances.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "examples": [
+                "a blanket insurance policy."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5319800-4",
+            "partOfSpeech": "adjective",
+            "text": "Applying to or covering all members of a class.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "examples": [
+                "blanket sanctions against human-rights violators."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5319800-5",
+            "partOfSpeech": "transitive verb",
+            "text": "To cover with or as if with a blanket.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "examples": [
+                "leaves that blanket the ground."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5319800-6",
+            "partOfSpeech": "transitive verb",
+            "text": "To cover so as to inhibit, suppress, or extinguish.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "examples": [
+                "blanketed the grease fire with sand."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5319800-7",
+            "partOfSpeech": "transitive verb",
+            "text": "To apply to generally and uniformly without exception.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "examples": [
+                "high telephone service charges that blanketed our region."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "To cover with a blanket or as with a blanket: as, to <internalXref urlencoded=\"blanket\">blanket</internalXref> a horse.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "To toss in a blanket by way of punishment or practical joke.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "To take the wind out of the sails of, as the sails of one vessel when it is passing close to windward of another.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
