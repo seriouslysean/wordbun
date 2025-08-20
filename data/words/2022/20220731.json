@@ -1,0 +1,48 @@
+{
+    "word": "hi",
+    "date": "20220731",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "H5191700-1",
+            "partOfSpeech": "interjection",
+            "text": "Used to express greeting.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hi",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "interjection",
+            "text": "A <xref>friendly</xref>, <xref>informal</xref>, <xref>casual</xref> <xref>greeting</xref> said when meeting someone.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/hi",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "adjective",
+            "text": "Informal spelling of <xref>high</xref>, often hyphenated.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/hi",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "\"Hi\" or similar greeting.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/hi",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

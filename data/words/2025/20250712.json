@@ -1,0 +1,118 @@
+{
+    "word": "pencil",
+    "date": "20250712",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "P5172900-1",
+            "partOfSpeech": "noun",
+            "text": "A narrow, generally cylindrical implement for writing, drawing, or marking, consisting of a thin rod of graphite, colored wax, or similar substance encased in wood or held in a mechanical holder.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pencil",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5172900-2",
+            "partOfSpeech": "noun",
+            "text": "Something shaped or used like a pencil, especially a narrow medicated or cosmetic stick.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pencil",
+            "examples": [
+                "an eyebrow pencil."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5172900-3",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pencil",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5172900-4",
+            "partOfSpeech": "noun",
+            "text": "A style or technique in drawing or delineating.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pencil",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5172900-5",
+            "partOfSpeech": "noun",
+            "text": "Descriptive skill.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pencil",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5172900-6",
+            "partOfSpeech": "noun",
+            "text": "An artist's brush, especially a fine one.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pencil",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5172900-7",
+            "partOfSpeech": "noun",
+            "text": "A beam of radiant energy in the form of a narrow cone or cylinder.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pencil",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5172900-8",
+            "partOfSpeech": "noun",
+            "text": "A family of geometric objects, such as lines, that have a common property, such as passage through a given line in a given plane.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pencil",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5172900-9",
+            "partOfSpeech": "transitive verb",
+            "text": "To write or produce by using a pencil.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pencil",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5172900-10",
+            "partOfSpeech": "transitive verb",
+            "text": "To mark or color with or as if with a pencil.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pencil",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

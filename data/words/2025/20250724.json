@@ -1,0 +1,116 @@
+{
+    "word": "pillow",
+    "date": "20250724",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "P5332700-1",
+            "partOfSpeech": "noun",
+            "text": "A cloth case stuffed with something soft, such as down, feathers, or foam rubber, used to cushion the head, especially during sleep.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pillow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5332700-2",
+            "partOfSpeech": "noun",
+            "text": "A decorative cushion.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pillow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5332700-3",
+            "partOfSpeech": "noun",
+            "text": "The pad on which bobbin lace is made.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pillow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5332700-4",
+            "partOfSpeech": "intransitive verb",
+            "text": "To rest (one's head) on or as if on a pillow.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pillow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5332700-5",
+            "partOfSpeech": "intransitive verb",
+            "text": "To serve as a pillow for.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pillow",
+            "examples": [
+                "Grass pillowed my head."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5332700-6",
+            "partOfSpeech": "intransitive verb",
+            "text": "To rest on or as if on a pillow.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pillow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5332700-7",
+            "partOfSpeech": "intransitive verb",
+            "text": "To assume the shape of a pillow.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pillow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A head-rest used by a person reclining; specifically, a soft elastic cushion filled with down, feathers, curled hair, or other yielding material, used to support the head during repose.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/pillow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A block or support resembling such a cushion in form or use.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/pillow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A kind of plain fustian.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/pillow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

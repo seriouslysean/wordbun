@@ -1,0 +1,125 @@
+{
+    "word": "window",
+    "date": "20250716",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "W5179300-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/window",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5179300-2",
+            "partOfSpeech": "noun",
+            "text": "An opening constructed in a wall, door, or roof that functions to admit light or air to an enclosure and is often framed and spanned with glass mounted to permit opening and closing.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/window",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5179300-3",
+            "partOfSpeech": "noun",
+            "text": "A framework enclosing a pane of glass for such an opening; a sash.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/window",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5179300-4",
+            "partOfSpeech": "noun",
+            "text": "A pane of glass or similar material enclosed in such a framework.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/window",
+            "examples": [
+                "The ball broke the window."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5179300-5",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/window",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5179300-6",
+            "partOfSpeech": "noun",
+            "text": "An opening or transparent part that resembles a window in function or appearance.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/window",
+            "examples": [
+                "a sail window."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5179300-7",
+            "partOfSpeech": "noun",
+            "text": "The transparent panel on a window envelope.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/window",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5179300-8",
+            "partOfSpeech": "noun",
+            "text": "The area or space immediately behind a window, especially at the front of a shop.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/window",
+            "examples": [
+                "goods displayed in the window."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5179300-9",
+            "partOfSpeech": "noun",
+            "text": "A means of access or observation.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/window",
+            "examples": [
+                "St. Petersburg was Peter the Great's window onto the Baltic."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5179300-10",
+            "partOfSpeech": "noun",
+            "text": "An interval of time during which an activity can or must take place.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/window",
+            "examples": [
+                "a window of opportunity for a space mission; a window of vulnerability when the air force was subject to attack."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

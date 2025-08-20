@@ -1,0 +1,119 @@
+{
+    "word": "paper",
+    "date": "20250714",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "P5054100-1",
+            "partOfSpeech": "noun",
+            "text": "A material made of cellulose pulp, derived mainly from wood, rags, and certain grasses, processed into flexible sheets or rolls by deposit from an aqueous suspension, and used chiefly for writing, printing, drawing, wrapping, and covering walls.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5054100-2",
+            "partOfSpeech": "noun",
+            "text": "A single sheet of this material.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5054100-3",
+            "partOfSpeech": "noun",
+            "text": "One or more sheets of paper bearing writing or printing, especially.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5054100-5",
+            "partOfSpeech": "noun",
+            "text": "A formal written composition intended to be published, presented, or read aloud; a scholarly essay or treatise.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5054100-6",
+            "partOfSpeech": "noun",
+            "text": "A piece of written work for school; a report or theme.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5054100-7",
+            "partOfSpeech": "noun",
+            "text": "An official document, especially one establishing the identity of the bearer.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5054100-7",
+            "partOfSpeech": "noun",
+            "text": "A collection of letters, diaries, and other writings, especially by one person.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "examples": [
+                "the Madison papers."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5054100-8",
+            "partOfSpeech": "noun",
+            "text": "Short-term debt instruments, especially commercial paper.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5054100-9",
+            "partOfSpeech": "noun",
+            "text": "A newspaper.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5054100-10",
+            "partOfSpeech": "noun",
+            "text": "Wallpaper.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

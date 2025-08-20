@@ -1,0 +1,115 @@
+{
+    "word": "button",
+    "date": "20250818",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "B5598700-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/button",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5598700-2",
+            "partOfSpeech": "noun",
+            "text": "A generally disk-shaped fastener used to join two parts of a garment by fitting through a buttonhole or loop.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/button",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5598700-3",
+            "partOfSpeech": "noun",
+            "text": "Such an object used for decoration.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/button",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5598700-4",
+            "partOfSpeech": "noun",
+            "text": "Any of various objects resembling a button, especially.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/button",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5598700-6",
+            "partOfSpeech": "noun",
+            "text": "A push-button switch.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/button",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5598700-7",
+            "partOfSpeech": "noun",
+            "text": "The blunt tip of a fencing foil.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/button",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5598700-8",
+            "partOfSpeech": "noun",
+            "text": "A fused metal or glass globule.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/button",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5598700-8",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/button",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5598700-9",
+            "partOfSpeech": "noun",
+            "text": "In graphical user interface systems, a well-defined area within the interface that is clicked to select a command.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/button",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5598700-10",
+            "partOfSpeech": "noun",
+            "text": "In a hypertext database, an icon that when selected allows a user to view a particular associated object.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/button",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

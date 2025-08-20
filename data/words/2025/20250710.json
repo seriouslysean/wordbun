@@ -1,0 +1,94 @@
+{
+    "word": "words",
+    "date": "20250710",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "partOfSpeech": "noun",
+            "text": "Plural form of <xref>word</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/words",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An angry discussion.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/words",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "Third-person singular simple present indicative form of <xref>word</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/words",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "words making up the dialogue of a play",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/words",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "the words that are spoken",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/words",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "the text of a popular song or musical-comedy number",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/words",
+            "examples": [
+                "he wrote both words and music",
+                "the song uses colloquial language"
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "an angry dispute",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/words",
+            "examples": [
+                "they had words"
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "language that is spoken or written",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/words",
+            "examples": [
+                "she put her thoughts into words"
+            ],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

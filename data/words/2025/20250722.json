@@ -1,0 +1,108 @@
+{
+    "word": "lotion",
+    "date": "20250722",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "L5272400-1",
+            "partOfSpeech": "noun",
+            "text": "A protective or restorative liquid or cream applied to the skin.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/lotion",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A washing; particularly, a washing of the skin.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/lotion",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A fluid preparation, wash, or cosmetic applied to the skin, especially the skin of the face, for the purpose of rendering it smooth, soft, or fair.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/lotion",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In <em>pharmacy</em>, a liquid holding in solution various medicinal substances, applied externally to stimulate action, to relieve pain, etc.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/lotion",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Drink (humorously conceived as a ‘wash’ or ‘remedy’).",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/lotion",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A washing, especially of the skin for the purpose of rendering it fair.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/lotion",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A liquid preparation for bathing the skin, or an injured or diseased part, either for a medicinal purpose, or for improving its appearance.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/lotion",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A low- to medium-<xref>viscosity</xref> <xref>topical</xref> <xref>preparation</xref> intended for application to unbroken skin.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/lotion",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A <xref>washing</xref>, especially of the skin for the purpose of <xref>beautification</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/lotion",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "To cover or treat with a lotion.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/lotion",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

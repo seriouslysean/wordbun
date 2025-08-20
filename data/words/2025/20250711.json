@@ -1,0 +1,124 @@
+{
+    "word": "door",
+    "date": "20250711",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "D5350200-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/door",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "D5350200-2",
+            "partOfSpeech": "noun",
+            "text": "A movable structure used to close off an entrance, typically consisting of a panel that swings on hinges or that slides or rotates.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/door",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "D5350200-3",
+            "partOfSpeech": "noun",
+            "text": "A similar part on a piece of furniture or a vehicle.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/door",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "D5350200-4",
+            "partOfSpeech": "noun",
+            "text": "A doorway.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/door",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "D5350200-5",
+            "partOfSpeech": "noun",
+            "text": "The room or building to which a door belongs.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/door",
+            "examples": [
+                "They live three doors down the hall."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "D5350200-6",
+            "partOfSpeech": "noun",
+            "text": "A means of approach or access.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/door",
+            "examples": [
+                "looking for the door to success."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "D5350200-7",
+            "partOfSpeech": "transitive verb",
+            "text": "To strike (a passing bicyclist, for example) by suddenly opening a vehicular door.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/door",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "D5350200-8",
+            "partOfSpeech": "transitive verb",
+            "text": "To serve as a doorman or doorwoman of (a nightclub, for example).",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/door",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "D5350200-9",
+            "partOfSpeech": "idiom",
+            "text": "(<em>at (someone's) door</em>)  As a charge holding someone responsible.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/door",
+            "examples": [
+                "You shouldn't lay the blame for the fiasco at her door."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "D5350200-10",
+            "partOfSpeech": "idiom",
+            "text": "(<em>close</em><em>/shut</em>)  To refuse to allow for the possibility of.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/door",
+            "examples": [
+                "The secretary of state closed the door on future negotiations."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

@@ -1,0 +1,122 @@
+{
+    "word": "house",
+    "date": "20250804",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "H5310200-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/house",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5310200-2",
+            "partOfSpeech": "noun",
+            "text": "A structure serving as a dwelling for one or more persons, especially for a family.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/house",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5310200-3",
+            "partOfSpeech": "noun",
+            "text": "A household or family.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/house",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5310200-4",
+            "partOfSpeech": "noun",
+            "text": "Something, such as a burrow or shell, that serves as a shelter or habitation for a wild animal.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/house",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5310200-5",
+            "partOfSpeech": "noun",
+            "text": "A dwelling for a group of people, such as students or members of a religious community, who live together as a unit.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/house",
+            "examples": [
+                "a sorority house."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5310200-6",
+            "partOfSpeech": "noun",
+            "text": "A building that functions as the primary shelter or location of something.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/house",
+            "examples": [
+                "a carriage house; the lion house at the zoo."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5310200-7",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/house",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5310200-8",
+            "partOfSpeech": "noun",
+            "text": "A facility, such as a theater or restaurant, that provides entertainment or food for the public.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/house",
+            "examples": [
+                "a movie house; the specialty of the house."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5310200-9",
+            "partOfSpeech": "noun",
+            "text": "The audience or patrons of such an establishment.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/house",
+            "examples": [
+                "a full house."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5310200-10",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/house",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

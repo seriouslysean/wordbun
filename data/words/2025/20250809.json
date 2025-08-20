@@ -1,0 +1,115 @@
+{
+    "word": "telephone",
+    "date": "20250809",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "T5098000-1",
+            "partOfSpeech": "noun",
+            "text": "An instrument that converts voice and other sound signals into a form that can be transmitted to remote locations and that receives and reconverts waves into sound signals.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/telephone",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5098000-2",
+            "partOfSpeech": "intransitive verb",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/telephone",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5098000-3",
+            "partOfSpeech": "intransitive verb",
+            "text": "To make or try to make a telephone connection with; place a call to.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/telephone",
+            "examples": [
+                "telephoned the police station."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5098000-4",
+            "partOfSpeech": "intransitive verb",
+            "text": "To dial (a telephone number).",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/telephone",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5098000-5",
+            "partOfSpeech": "intransitive verb",
+            "text": "To transmit (a message, for example) by telephone.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/telephone",
+            "examples": [
+                "I telephoned that I was sick and could not come to work."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5098000-6",
+            "partOfSpeech": "intransitive verb",
+            "text": "To engage in communication by telephone.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/telephone",
+            "examples": [
+                "She telephoned to invite us to the party."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An instrument or apparatus for the transmission of sound to a distant point.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/telephone",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "<em>n</em>",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/telephone",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "An interurban telephone system.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/telephone",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "To communicate by telephone.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/telephone",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

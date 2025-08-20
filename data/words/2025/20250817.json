@@ -1,0 +1,120 @@
+{
+    "word": "sky",
+    "date": "20250817",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "S5495500-1",
+            "partOfSpeech": "noun",
+            "text": "The expanse of air over any given point on the earth; the upper atmosphere as seen from the earth's surface.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5495500-2",
+            "partOfSpeech": "noun",
+            "text": "The appearance of the upper atmosphere, especially with reference to weather.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sky",
+            "examples": [
+                "Threatening skies portend a storm."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5495500-3",
+            "partOfSpeech": "noun",
+            "text": "The celestial regions; the heavens.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sky",
+            "examples": [
+                "stars in the southern sky."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5495500-4",
+            "partOfSpeech": "noun",
+            "text": "The highest level or degree.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sky",
+            "examples": [
+                "reaching for the sky."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5495500-5",
+            "partOfSpeech": "intransitive verb",
+            "text": "To hit or throw (a ball, for example) high in the air.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5495500-6",
+            "partOfSpeech": "intransitive verb",
+            "text": "To hang (a painting, for example) high up on the wall, above the line of vision.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5495500-7",
+            "partOfSpeech": "intransitive verb",
+            "text": "To jump very high in order to make a play, as in getting a rebound in basketball.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/sky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A cloud.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/sky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The region of clouds, wind, and rain; that part of the earth's atmosphere in which meteorological phenomena take place: often used in the plural.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/sky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The apparent arch or vault of heaven, which in a clear day is of a blue color; the firm ament: often used in the plural.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/sky",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

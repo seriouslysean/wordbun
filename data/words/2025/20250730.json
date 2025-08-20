@@ -1,0 +1,88 @@
+{
+    "word": "reindeer",
+    "date": "20250730",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "R5143000-1",
+            "partOfSpeech": "noun",
+            "text": "A large deer <em>(Rangifer tarandus)</em> of the Arctic tundra and northern boreal forests, having large hooves and long branched antlers in both sexes, and widely domesticated in Eurasia. Subspecies native to North America and Greenland are usually called caribou.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/reindeer",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A deer of the genus <em>Rangifer</em> or <em>Tarandus</em>, having horns in both sexes, and inhabiting arctic and cold temperate regions; the <em>Cervus tarandus, Rangifer tarandus</em>, or <em>Tarandus rangifer.</em>",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/reindeer",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In <em>heraldry</em>, a stag having two sets of antlers, the one pair bending downward, and the other standing erect.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/reindeer",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Any ruminant of the genus Rangifer, of the Deer family, found in the colder parts of both the Eastern and Western hemispheres, and having long irregularly branched antlers, with the brow tines palmate.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/reindeer",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "a gray branching lichen (<spn>Cladonia rangiferina</spn>) which forms extensive patches on the ground in arctic and even in north temperature regions. It is the principal food of the Lapland reindeer in winter.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/reindeer",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "a name sometimes given to a part of the Paleolithic era when the reindeer was common over Central Europe.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/reindeer",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An Arctic and Subarctic-dwelling <xref>deer</xref> with a number of <xref>subspecies</xref>. The North American subspecies are known as <xref>caribou</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/reindeer",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Arctic deer with large antlers in both sexes; called `reindeer' in Eurasia and `caribou' in North America",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/reindeer",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

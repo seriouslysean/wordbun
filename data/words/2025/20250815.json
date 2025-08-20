@@ -1,0 +1,119 @@
+{
+    "word": "plant",
+    "date": "20250815",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "P5382900-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5382900-2",
+            "partOfSpeech": "noun",
+            "text": "Any of various photosynthetic, eukaryotic, multicellular organisms of the kingdom Plantae characteristically containing chloroplasts, having cell walls made of cellulose, producing embryos, and lacking the power of locomotion. Plants include trees, bushes, herbs, ferns, mosses, and certain green algae.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5382900-3",
+            "partOfSpeech": "noun",
+            "text": "A plant having no permanent woody stem; an herb.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5382900-4",
+            "partOfSpeech": "noun",
+            "text": "Any of various fungi, algae, or protists that resemble plants and were formerly classified in the plant kingdom. Not in scientific use.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5382900-5",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5382900-6",
+            "partOfSpeech": "noun",
+            "text": "A building or group of buildings for the manufacture of a product; a factory.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "examples": [
+                "works in an auto plant."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5382900-7",
+            "partOfSpeech": "noun",
+            "text": "The buildings, fixtures, and equipment, including machinery, tools, and instruments, necessary for an industrial operation or an institution.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "examples": [
+                "the university's mechanical plant."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5382900-8",
+            "partOfSpeech": "noun",
+            "text": "A person or thing put into place in order to mislead or function secretly, especially.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5382900-10",
+            "partOfSpeech": "noun",
+            "text": "A person placed in a group of spectators to influence behavior.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5382900-11",
+            "partOfSpeech": "noun",
+            "text": "A person stationed in a given location as a spy or observer.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

@@ -1,0 +1,111 @@
+{
+    "word": "playground",
+    "date": "20250719",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "P5397300-1",
+            "partOfSpeech": "noun",
+            "text": "An outdoor area set aside for recreation and play, especially one containing equipment such as seesaws and swings.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/playground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5397300-2",
+            "partOfSpeech": "noun",
+            "text": "A field or sphere of unrestricted pleasurable activity.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/playground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A piece of ground set apart for open-air recreation; especially, such a piece of ground connected with a school, etc.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/playground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A piece of ground used for recreation.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/playground",
+            "examples": [
+                "the <ex>playground</ex> of a school"
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A large open space to play on, usually for children.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/playground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A <xref>yard</xref> or other open-air space on a school campus where the children can play, especially during breaks",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/playground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Small area with dedicated play equipment, usually for children",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/playground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Any physical or metaphysical space in which a person or organization has free rein to do as they please.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/playground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "yard consisting of an outdoor area for children's play",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/playground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "an area where many people go for recreation",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/playground",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

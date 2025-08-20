@@ -1,0 +1,110 @@
+{
+    "word": "stuffy",
+    "date": "20250801",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "S5895000-1",
+            "partOfSpeech": "adjective",
+            "text": "Lacking sufficient ventilation; close.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/stuffy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5895000-2",
+            "partOfSpeech": "adjective",
+            "text": "Having the respiratory passages blocked.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/stuffy",
+            "examples": [
+                "a stuffy nose."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5895000-3",
+            "partOfSpeech": "adjective",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/stuffy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5895000-4",
+            "partOfSpeech": "adjective",
+            "text": "Dull and boring.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/stuffy",
+            "examples": [
+                "a stuffy lecture."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5895000-5",
+            "partOfSpeech": "adjective",
+            "text": "Rigidly adhering to conventional standards; strait-laced.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/stuffy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "Close, as if from being stuffed and unaired; musty from closeness; oppressive to the head or lungs.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/stuffy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "Stuffed out; fat: said of a person.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/stuffy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "Affected as if by stuffing; muffled: said of the voice or speech.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/stuffy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "Made of good stuff; stout; resolute; mettlesome.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/stuffy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "Angry; sulky: obstinate.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/stuffy",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

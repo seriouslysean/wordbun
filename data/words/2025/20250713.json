@@ -1,0 +1,117 @@
+{
+    "word": "hair",
+    "date": "20250713",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "H5015700-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5015700-2",
+            "partOfSpeech": "noun",
+            "text": "Any of the cylindrical, keratinized, often pigmented filaments characteristically growing from the epidermis of a mammal.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5015700-3",
+            "partOfSpeech": "noun",
+            "text": "A growth of such filaments, as that forming the coat of an animal or covering the scalp of a human.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5015700-4",
+            "partOfSpeech": "noun",
+            "text": "A filamentous projection or bristle similar to a hair, such as a seta of an arthropod or an epidermal process of a plant.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5015700-5",
+            "partOfSpeech": "noun",
+            "text": "Fabric made from the hair of certain animals.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "examples": [
+                "a coat of alpaca hair."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5015700-6",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5015700-7",
+            "partOfSpeech": "noun",
+            "text": "A minute distance or narrow margin.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "examples": [
+                "won by a hair."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5015700-8",
+            "partOfSpeech": "noun",
+            "text": "A precise or exact degree.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "examples": [
+                "calibrated to a hair."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "To produce or grow hair.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "Another spelling of <internalXref urlencoded=\"hare\">hare</internalXref>.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

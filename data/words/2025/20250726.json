@@ -1,0 +1,119 @@
+{
+    "word": "ramp",
+    "date": "20250726",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "R5037400-1",
+            "partOfSpeech": "noun",
+            "text": "An inclined surface or roadway connecting different levels.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5037400-2",
+            "partOfSpeech": "noun",
+            "text": "A mobile staircase by which passengers board and leave an aircraft.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5037400-3",
+            "partOfSpeech": "noun",
+            "text": "A concave bend of a handrail where a sharp change in level or direction occurs, as at a stair landing.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5037400-4",
+            "partOfSpeech": "phrasal verb",
+            "text": "To decrease in volume, amount, or rate.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "examples": [
+                "As the project ramped down, several employees were laid off."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5037400-5",
+            "partOfSpeech": "phrasal verb",
+            "text": "To increase in volume, amount, or rate.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "examples": [
+                "The factory ramped up production to meet the increased demand."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5037500-1",
+            "partOfSpeech": "intransitive verb",
+            "text": "To rush around or act in a threatening or violent manner.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5037500-2",
+            "partOfSpeech": "intransitive verb",
+            "text": "To assume a threatening stance, as in rearing up on hindlegs.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5037500-3",
+            "partOfSpeech": "intransitive verb",
+            "text": "To stand in the rampant position.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5037600-1",
+            "partOfSpeech": "noun",
+            "text": "A plant <em>(Allium tricoccum)</em> of the eastern United States having small bulbs and young leaves that are edible and have a pungent onionlike flavor.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "To rise by climbing or shooting up, as a plant; run or grow up rapidly; spring up in growth.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

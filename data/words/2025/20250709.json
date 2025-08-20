@@ -1,0 +1,126 @@
+{
+    "word": "picture",
+    "date": "20250709",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "P5317600-1",
+            "partOfSpeech": "noun",
+            "text": "A visual representation or image painted, drawn, photographed, or otherwise rendered on a flat surface.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5317600-2",
+            "partOfSpeech": "noun",
+            "text": "A visible image, especially one on a flat surface or screen.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "examples": [
+                "the picture reflected in the lake; focused the picture on the movie screen."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5317600-3",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5317600-4",
+            "partOfSpeech": "noun",
+            "text": "A vivid or realistic verbal description.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "examples": [
+                "a Shakespearean picture of guilt."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5317600-5",
+            "partOfSpeech": "noun",
+            "text": "A vivid mental image.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5317600-6",
+            "partOfSpeech": "noun",
+            "text": "A person or object bearing a marked resemblance to another.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "examples": [
+                "She's the picture of her mother."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5317600-7",
+            "partOfSpeech": "noun",
+            "text": "A person, object, or scene that typifies or embodies an emotion, state of mind, or mood.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "examples": [
+                "Your face was the very picture of horror."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5317600-8",
+            "partOfSpeech": "noun",
+            "text": "The chief circumstances of an event or time; the situation.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "examples": [
+                "How does the new boyfriend figure in the picture?"
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5317600-9",
+            "partOfSpeech": "noun",
+            "text": "A movie.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5317600-10",
+            "partOfSpeech": "noun",
+            "text": "A tableau vivant.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

@@ -1,0 +1,114 @@
+{
+    "word": "rainbow",
+    "date": "20250808",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "R5028000-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5028000-2",
+            "partOfSpeech": "noun",
+            "text": "An arc of spectral colors, usually identified as red, orange, yellow, green, blue, indigo, and violet, that appears in the sky opposite the sun as a result of the refractive dispersion of sunlight in drops of rain or mist.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5028000-3",
+            "partOfSpeech": "noun",
+            "text": "A similar arc or band, as one produced by a prism or by iridescence.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5028000-4",
+            "partOfSpeech": "noun",
+            "text": "A graded display of colors.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5028000-5",
+            "partOfSpeech": "noun",
+            "text": "An illusory hope.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "examples": [
+                "chasing the rainbow of overnight success."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5028000-6",
+            "partOfSpeech": "noun",
+            "text": "A diverse assortment or collection.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A bow, or an arc of a circle, consisting of the prismatic colors, formed by the refraction and reflection of rays of light from drops of rain or vapor, appearing in the part of the heavens opposite to the sun.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In <em>heraldry</em>, the representation of a half-ring divided into seven concentric narrow rings and arched upward, each end resting on a clump of clouds.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In <em>ornithology</em>, a humming-bird of tho genus <em>Diphlogena</em>, containing two most brilliantly plumaged species, <em>D. iris</em> of Bolivia, and <em>D. hesperus</em> of Ecuador.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The rainbow-fish.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

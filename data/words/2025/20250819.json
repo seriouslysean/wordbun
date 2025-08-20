@@ -1,0 +1,17 @@
+{
+    "word": "rocketship",
+    "date": "20250819",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "partOfSpeech": "noun",
+            "text": "A <xref>rocket</xref>-powered <xref>spacecraft</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/rocketship",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
