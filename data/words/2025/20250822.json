@@ -1,0 +1,120 @@
+{
+    "word": "water",
+    "date": "20250822",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "W5046100-1",
+            "partOfSpeech": "noun",
+            "text": "A clear, colorless, odorless, and tasteless liquid, H<sub>2</sub>O, essential for most plant and animal life and the most widely used of all solvents. Freezing point 0°C (32°F); boiling point 100°C (212°F); specific gravity (4°C) 1.0000; weight per gallon (15°C) 8.338 pounds (3.782 kilograms).",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/water",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5046100-2",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/water",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5046100-3",
+            "partOfSpeech": "noun",
+            "text": "Any of various forms of water.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/water",
+            "examples": [
+                "waste water."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5046100-4",
+            "partOfSpeech": "noun",
+            "text": "Naturally occurring mineral water, as at a spa.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/water",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5046100-5",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/water",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5046100-6",
+            "partOfSpeech": "noun",
+            "text": "A body of water such as a sea, lake, river, or stream.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/water",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5046100-7",
+            "partOfSpeech": "noun",
+            "text": "A particular stretch of sea or ocean, especially that of a state or country.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/water",
+            "examples": [
+                "escorted out of British waters."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5046100-8",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/water",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5046100-9",
+            "partOfSpeech": "noun",
+            "text": "A supply of water.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/water",
+            "examples": [
+                "had to turn off the water while repairing the broken drain."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "W5046100-10",
+            "partOfSpeech": "noun",
+            "text": "A water supply system.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/water",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
