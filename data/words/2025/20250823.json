@@ -1,0 +1,59 @@
+{
+    "word": "balance beam",
+    "date": "20250823",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "B5036600-1",
+            "partOfSpeech": "noun",
+            "text": "A horizontal raised beam with a width of 10 centimeters (4 inches) and a length of 5 meters (16 feet) that is used in gymnastic competition for balancing exercises.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/balance%20beam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5036600-2",
+            "partOfSpeech": "noun",
+            "text": "A competitive gymnastics event in which various balancing feats are performed on this beam.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/balance%20beam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A narrow wooden rail used in gymnastics.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/balance%20beam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The horizontal member of any balance (scale,) usually carrying pans at each end, supported at its center by a <xref>fulcrum</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/balance%20beam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "a gymnastic apparatus used by women gymnasts",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/balance%20beam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
