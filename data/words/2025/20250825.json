@@ -1,0 +1,115 @@
+{
+    "word": "camera",
+    "date": "20250825",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "C5050400-1",
+            "partOfSpeech": "noun",
+            "text": "A usually portable device containing a photosensitive surface that records images through a lens.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5050400-2",
+            "partOfSpeech": "noun",
+            "text": "A camera obscura.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5050400-3",
+            "partOfSpeech": "noun",
+            "text": "A judge's private chamber.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5050400-4",
+            "partOfSpeech": "idiom",
+            "text": "(<em>in camera</em>)  Outside of the public view.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "examples": [
+                "The committee met in camera to discuss the report."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5050400-5",
+            "partOfSpeech": "idiom",
+            "text": "(<em>off camera</em>)  Outside the field of view of a movie camera.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5050400-6",
+            "partOfSpeech": "idiom",
+            "text": "(<em>on camera</em>)  Within the field of view of a movie camera.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In <em>ancient architecture</em>, an arched roof, ceiling, or covering; a vault.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "<em>Nautical</em>, a small vessel used on the coasts of the Bosporus and the Black Sea. Also <internalXref urlencoded=\"camara\">camara</internalXref>.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The variety of camera obscura used by photographers.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In <em>anatomy</em>: The so-called fifth ventricle of the brain, between the laminæ of the septum lucidum.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
