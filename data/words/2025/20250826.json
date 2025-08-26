@@ -1,0 +1,121 @@
+{
+    "word": "outside",
+    "date": "20250826",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "O5185400-1",
+            "partOfSpeech": "noun",
+            "text": "The part or parts that face out; the outer surface.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "O5185400-2",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "O5185400-3",
+            "partOfSpeech": "noun",
+            "text": "The part or side of an object that is presented to the viewer; the external aspect.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "O5185400-4",
+            "partOfSpeech": "noun",
+            "text": "Outward aspect or appearance.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "O5185400-5",
+            "partOfSpeech": "noun",
+            "text": "The space beyond a boundary or limit.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "O5185400-6",
+            "partOfSpeech": "noun",
+            "text": "A position at a distance from the inside or center, as of a playing field or racetrack.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "O5185400-7",
+            "partOfSpeech": "noun",
+            "text": "The utmost limit; the maximum.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "examples": [
+                "We'll be leaving in ten days at the outside."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "O5185400-8",
+            "partOfSpeech": "adjective",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "O5185400-9",
+            "partOfSpeech": "adjective",
+            "text": "Of, relating to, or being on or near the outer side; outer.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "examples": [
+                "the outside margin."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "O5185400-10",
+            "partOfSpeech": "adjective",
+            "text": "Of, restricted to, or situated on the outer side of an enclosure or a boundary; external.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "examples": [
+                "an outside door lock; an outside antenna."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
