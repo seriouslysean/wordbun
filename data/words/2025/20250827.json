@@ -1,0 +1,38 @@
+{
+    "word": "tic-tac-toe",
+    "date": "20250827",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "T5224700-1",
+            "partOfSpeech": "noun",
+            "text": "A game played by two people, each trying to make a line of three X's or three O's in a boxlike figure with nine spaces.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tic-tac-toe",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A <xref>game</xref> in which two <xref>players</xref> take <xref>turns</xref> putting <xref>circles</xref> and <xref>crosses</xref> on a 3x3 <xref>grid</xref> and try to get three of the same <xref>symbols</xref> in a <xref>line</xref>",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/tic-tac-toe",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "a game in which two players alternately put crosses and circles in one of the compartments of a square grid of nine spaces; the object is to get a row of three crosses or three circles before the opponent does",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/tic-tac-toe",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
