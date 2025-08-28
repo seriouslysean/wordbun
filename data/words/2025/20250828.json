@@ -1,0 +1,110 @@
+{
+    "word": "teak",
+    "date": "20250828",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "T5078400-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/teak",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5078400-2",
+            "partOfSpeech": "noun",
+            "text": "A large deciduous tree <em>(Tectona grandis)</em> in the mint family, native to tropical South and Southeast Asia, having hard, heavy, durable yellowish-brown wood.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/teak",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5078400-3",
+            "partOfSpeech": "noun",
+            "text": "The wood of this tree, used especially for furniture and in shipbuilding.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/teak",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5078400-4",
+            "partOfSpeech": "noun",
+            "text": "A grayish yellowish brown or grayish to moderate brown.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/teak",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An East Indian timber-tree, <em>Tectona grandis</em>, or its wood.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/teak",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A tree of East Indies (<spn>Tectona grandis</spn>) which furnishes an extremely strong and durable timber highly valued for shipbuilding and other purposes; also, the timber of the tree.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/teak",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "a tree (<spn>Oldfieldia Africana</spn>) of Sierra Leone; also, its very heavy and durable wood; -- called also <altname>African oak</altname>.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/teak",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "a large tree (<spn>Vitex littoralis</spn>) of New Zeland; also, its hard, durable timber.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/teak",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An extremely durable timber highly valued for shipbuilding and other purposes, yielded by Tectona grandis (and Tectona spp.).",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/teak",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A tree of the species in the genus Tectona",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/teak",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
