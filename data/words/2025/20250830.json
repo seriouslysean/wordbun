@@ -1,0 +1,27 @@
+{
+    "word": "kitty-cat",
+    "date": "20250830",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "partOfSpeech": "noun",
+            "text": "A domestic cat (species Feles catus.)",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/kitty-cat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "informal terms referring to a domestic cat",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/kitty-cat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
