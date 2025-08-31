@@ -1,0 +1,129 @@
+{
+    "word": "cook",
+    "date": "20250831",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "C5647000-1",
+            "partOfSpeech": "intransitive verb",
+            "text": "To prepare (food) for eating by applying heat.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5647000-2",
+            "partOfSpeech": "intransitive verb",
+            "text": "To prepare or treat by heating.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "examples": [
+                "slowly cooked the medicinal mixture."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5647000-3",
+            "partOfSpeech": "intransitive verb",
+            "text": "To alter or falsify so as to make a more favorable impression; doctor.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "examples": [
+                "disreputable accountants who were paid to cook the firm's books."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5647000-4",
+            "partOfSpeech": "intransitive verb",
+            "text": "To prepare food for eating by applying heat.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5647000-5",
+            "partOfSpeech": "intransitive verb",
+            "text": "To undergo application of heat especially for the purpose of later ingestion.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5647000-6",
+            "partOfSpeech": "intransitive verb",
+            "text": "To happen, develop, or take place.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "examples": [
+                "What's cooking in town?"
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5647000-7",
+            "partOfSpeech": "intransitive verb",
+            "text": "To proceed or perform very well.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "examples": [
+                "The band really got cooking after midnight."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5647000-8",
+            "partOfSpeech": "noun",
+            "text": "A person who prepares food for eating.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5647000-9",
+            "partOfSpeech": "phrasal verb",
+            "text": "To fabricate; concoct.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "examples": [
+                "cook up an excuse."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "C5647000-10",
+            "partOfSpeech": "idiom",
+            "text": "(<em>cook (one's) goose</em>)  To ruin one's chances.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "examples": [
+                "The speeding ticket cooked his goose with his father. Her goose was cooked when she was caught cheating on the test."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
