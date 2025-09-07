@@ -1,0 +1,38 @@
+{
+    "word": "no one",
+    "date": "20250907",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "N5169200-1",
+            "partOfSpeech": "pronoun",
+            "text": "No person; nobody.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/no%20one",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "pronoun",
+            "text": "Not one person, <xref>nobody</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/no%20one",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "pronoun",
+            "text": "The logical <xref>negation</xref> of <xref>someone</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/no%20one",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
