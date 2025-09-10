@@ -1,0 +1,119 @@
+{
+    "word": "poop",
+    "date": "20250910",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "P5479800-1",
+            "partOfSpeech": "noun",
+            "text": "A person regarded as very disagreeable.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5479900-1",
+            "partOfSpeech": "noun",
+            "text": "Excrement.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5479900-2",
+            "partOfSpeech": "intransitive verb",
+            "text": "To defecate.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5479900-3",
+            "partOfSpeech": "intransitive verb",
+            "text": "To defecate in (one's clothes or bed, for example).",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5479600-1",
+            "partOfSpeech": "transitive verb",
+            "text": "To cause to become fatigued; tire.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5479600-2",
+            "partOfSpeech": "phrasal verb",
+            "text": "To quit because of exhaustion.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "examples": [
+                "poop out of a race."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5479600-3",
+            "partOfSpeech": "phrasal verb",
+            "text": "To decide not to participate, especially at the last moment.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5479500-1",
+            "partOfSpeech": "noun",
+            "text": "An enclosed superstructure at the stern of a ship.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5479500-2",
+            "partOfSpeech": "noun",
+            "text": "A poop deck.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5479500-3",
+            "partOfSpeech": "transitive verb",
+            "text": "To break over the stern of (a ship). Used of a wave.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
