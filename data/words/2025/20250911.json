@@ -1,0 +1,68 @@
+{
+    "word": "pus",
+    "date": "20250911",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "P5732800-1",
+            "partOfSpeech": "noun",
+            "text": "A generally viscous, yellowish-white fluid formed in infected tissue, consisting of white blood cells, cellular debris, and necrotic tissue.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/pus",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An inflammatory exudation composed of modified white blood-cells (pus-corpuscles), with more or less of the debris and of the proliferating cells of the solid tissues of the part, and a liquid plasma.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/pus",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The yellowish white opaque creamy matter produced by the process of suppuration. It consists of innumerable white nucleated cells floating in a clear liquid.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/pus",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A whitish-yellow or yellow substance composed primarily of dead white blood cells and dead <xref>pyogenic</xref> bacteria; normally found in regions of bacterial <xref>infection</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/pus",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "the tenth month of the Hindu calendar",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/pus",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "a fluid product of inflammation",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/pus",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
