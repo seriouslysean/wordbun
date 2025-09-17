@@ -1,0 +1,116 @@
+{
+    "word": "grunt",
+    "date": "20250917",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "G5299200-1",
+            "partOfSpeech": "intransitive verb",
+            "text": "To utter a deep guttural sound, as a hog does.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/grunt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "G5299200-2",
+            "partOfSpeech": "intransitive verb",
+            "text": "To utter a sound similar to a grunt, as in disgust.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/grunt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "G5299200-3",
+            "partOfSpeech": "intransitive verb",
+            "text": "To utter or express with a deep guttural sound.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/grunt",
+            "examples": [
+                "He merely grunted his approval."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "G5299200-4",
+            "partOfSpeech": "noun",
+            "text": "A deep guttural sound.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/grunt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "G5299200-5",
+            "partOfSpeech": "noun",
+            "text": "Any of various chiefly tropical marine fishes of the family Haemulidae that produce a grunting sound by rubbing together their pharyngeal teeth.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/grunt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "G5299200-6",
+            "partOfSpeech": "noun",
+            "text": "An infantryman in the US military, especially in the Vietnam War.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/grunt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "G5299200-7",
+            "partOfSpeech": "noun",
+            "text": "One who performs routine or mundane tasks.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/grunt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "G5299200-8",
+            "partOfSpeech": "noun",
+            "text": "A dessert made by stewing fruit topped with pieces of biscuit dough, which steam as the fruit cooks.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/grunt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "To make a guttural noise, as a hog; also, to utter short or broken groans, as from eagerness or over-exertion.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/grunt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A deep guttural sound, as that made by a hog.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/grunt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
