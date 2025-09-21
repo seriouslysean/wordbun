@@ -1,0 +1,115 @@
+{
+    "word": "tea",
+    "date": "20250921",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "T5075700-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tea",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5075700-2",
+            "partOfSpeech": "noun",
+            "text": "An evergreen shrub or small tree <em>(Camellia sinensis)</em> native to Asia, having fragrant, nodding, cup-shaped white flowers and glossy leaves.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tea",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5075700-3",
+            "partOfSpeech": "noun",
+            "text": "The young, dried leaves of this plant, prepared by various processes and used to make a beverage, usually served hot.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tea",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5075700-4",
+            "partOfSpeech": "noun",
+            "text": "An aromatic, slightly bitter beverage made by steeping tea leaves in boiling water.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tea",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5075700-5",
+            "partOfSpeech": "noun",
+            "text": "Any of various plants, such as New Jersey tea, having leaves that are or were formerly used to make a tealike beverage.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tea",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5075700-6",
+            "partOfSpeech": "noun",
+            "text": "Any of various beverages made by steeping the leaves of certain plants, such as peppermint.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tea",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5075700-7",
+            "partOfSpeech": "noun",
+            "text": "Any of various beverages made by extracting an infusion from meat, especially beef.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tea",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5075700-8",
+            "partOfSpeech": "noun",
+            "text": "A tea rose.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tea",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5075700-9",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tea",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5075700-10",
+            "partOfSpeech": "noun",
+            "text": "An afternoon refreshment consisting usually of sandwiches and cakes served with tea.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tea",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
