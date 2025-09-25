@@ -1,0 +1,59 @@
+{
+    "word": "origami",
+    "date": "20250925",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "O5134700-1",
+            "partOfSpeech": "noun",
+            "text": "The art or process, originating in Japan, of folding paper into shapes representing flowers and birds, for example.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/origami",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "O5134700-2",
+            "partOfSpeech": "noun",
+            "text": "A decorative object made by folding paper.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/origami",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The <xref>Japanese</xref> <xref>art</xref> of <xref>paper</xref> <xref>folding</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/origami",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A piece of art made by folding paper.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/origami",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "the Japanese art of folding paper into shapes representing objects (e.g., flowers or birds)",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/origami",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
