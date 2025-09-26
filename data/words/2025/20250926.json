@@ -1,0 +1,124 @@
+{
+    "word": "antique",
+    "date": "20250926",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "A5365400-1",
+            "partOfSpeech": "adjective",
+            "text": "Belonging to, made in, or typical of an earlier period: <i>synonym</i>: <strong> old</strong>.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "examples": [
+                "antique furniture."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "A5365400-2",
+            "partOfSpeech": "adjective",
+            "text": "Of or belonging to ancient times, especially of, from, or characteristic of ancient Greece or Rome.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "A5365400-3",
+            "partOfSpeech": "adjective",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "A5365400-4",
+            "partOfSpeech": "adjective",
+            "text": "Relating to or dealing in antiques.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "A5365400-5",
+            "partOfSpeech": "adjective",
+            "text": "Having the appearance of an antique.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "A5365400-6",
+            "partOfSpeech": "adjective",
+            "text": "Old-fashioned; outdated.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "examples": [
+                "wore a suit of rather antique appearance."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "A5365400-7",
+            "partOfSpeech": "noun",
+            "text": "An object having special value because of its age, especially a domestic item or piece of furniture or handicraft esteemed for its artistry, beauty, or period of origin.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "A5365400-8",
+            "partOfSpeech": "noun",
+            "text": "The style or manner of ancient times, especially that of ancient Greek or Roman art.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "examples": [
+                "an admirer of the antique."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "A5365400-9",
+            "partOfSpeech": "intransitive verb",
+            "text": "To give the appearance of an antique to.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "examples": [
+                "antiqued an oak chest."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "A5365400-10",
+            "partOfSpeech": "intransitive verb",
+            "text": "To hunt or shop for antiques.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
