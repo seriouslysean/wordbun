@@ -1,0 +1,116 @@
+{
+    "word": "shirt",
+    "date": "20250928",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "S5377800-1",
+            "partOfSpeech": "noun",
+            "text": "A garment for the upper part of the body, typically having a collar, sleeves, and a front opening.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5377800-2",
+            "partOfSpeech": "noun",
+            "text": "An undershirt.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5377800-3",
+            "partOfSpeech": "noun",
+            "text": "A nightshirt.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5377800-4",
+            "partOfSpeech": "idiom",
+            "text": "(<em>keep (one's) shirt on</em>)  To remain calm or patient.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "examples": [
+                "The plane doesn't land for another hour, so keep your shirt on."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5377800-5",
+            "partOfSpeech": "idiom",
+            "text": "(<em>lose (one's) shirt</em>)  To lose everything one has or owns.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "S5377800-6",
+            "partOfSpeech": "idiom",
+            "text": "(<em>the shirt off (one's) back</em>)  The maximum one is able to give or lose.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "examples": [
+                "The only thing those swindlers didn't take was the shirt off my back."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A garment, formerly the chief under-garment of both sexes.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The amnion, or some part of it.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In a blast-furnace, an interior lining.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "text": "To clothe with a shirt; hence, by extension, to clothe; cover.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
