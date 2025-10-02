@@ -1,0 +1,47 @@
+{
+    "word": "lightroom",
+    "date": "20251002",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "partOfSpeech": "noun",
+            "text": "A small apartment next to the magazine in a ship of war, in which lights for illuminating the magazine are placed behind thick glass windows, to avoid danger from carrying fire among the explosives. Also called <internalXref urlencoded=\"light-box\">light-box</internalXref>.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/lightroom",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The room at the top of a lighthouse containing the lighting apparatus.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/lightroom",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A small room from which the magazine of a naval vessel is lighted, being separated from the magazine by heavy glass windows.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/lightroom",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A small <xref>room</xref> from which the <xref>magazine</xref> of a <xref>naval</xref> <xref>vessel</xref> is <xref>lighted</xref>, being separated from the magazine by heavy glass <xref>windows</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/lightroom",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
