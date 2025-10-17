@@ -1,0 +1,122 @@
+{
+    "word": "monkey",
+    "date": "20251017",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "M5420600-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/monkey",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5420600-2",
+            "partOfSpeech": "noun",
+            "text": "Any of various tailed primates of the suborder Anthropoidea, including the macaques, baboons, capuchins, and marmosets, and excluding the apes.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/monkey",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5420600-3",
+            "partOfSpeech": "noun",
+            "text": "A nonhuman ape. Not in scientific use.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/monkey",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5420600-4",
+            "partOfSpeech": "noun",
+            "text": "One who behaves in a way suggestive of a monkey, as a mischievous child or a mimic.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/monkey",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5420600-5",
+            "partOfSpeech": "noun",
+            "text": "The iron block of a pile driver.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/monkey",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5420600-6",
+            "partOfSpeech": "noun",
+            "text": "A person who is mocked, duped, or made to appear a fool.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/monkey",
+            "examples": [
+                "They made a monkey out of him."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5420600-7",
+            "partOfSpeech": "noun",
+            "text": "Used as a disparaging term for a person with dark skin.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/monkey",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5420600-8",
+            "partOfSpeech": "intransitive verb",
+            "text": "To play, fiddle, trifle, or tamper with something.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/monkey",
+            "examples": [
+                "Who was monkeying with my cell phone?"
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5420600-9",
+            "partOfSpeech": "intransitive verb",
+            "text": "To behave in a mischievous or apish manner.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/monkey",
+            "examples": [
+                "Stop monkeying around!"
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "M5420600-10",
+            "partOfSpeech": "intransitive verb",
+            "text": "To imitate or mimic; ape.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/monkey",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
