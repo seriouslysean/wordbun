@@ -1,0 +1,46 @@
+{
+    "word": "pajamas",
+    "date": "20251018",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "text": "Loose drawers or trousers, usually of silk or silk and cotton, tied round the waist with a cord, used by both sexes in India, and adopted from the Mohammedans by Europeans as a chamber garment.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/pajamas",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun plural",
+            "text": "Originally, in India, loose drawers or trousers, such as those worn, tied about the waist, by Mohammedan men and women; by extension, a similar garment adopted among Europeans, Americans, etc., for wear in the dressing room and during sleep; also, a suit consisting of drawers and a loose upper garment for such wear.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/pajamas",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "<xref>Clothes</xref> for wearing to bed and sleeping in, usually consisting of a loose-fitting shirt and pants/trousers.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/pajamas",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Loose-fitting <xref>trousers</xref> worn by both sexes in various southern Asian countries including <xref>India</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/pajamas",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
