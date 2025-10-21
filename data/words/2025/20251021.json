@@ -1,0 +1,110 @@
+{
+    "word": "blueberry",
+    "date": "20251021",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "B5351300-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blueberry",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5351300-2",
+            "partOfSpeech": "noun",
+            "text": "Any of various plants of the genus <em>Vaccinium,</em> having white to reddish, urn-shaped or tubular flowers and edible blue to blue-black berries, especially the highbush blueberry and the lowbush blueberry.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blueberry",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5351300-3",
+            "partOfSpeech": "noun",
+            "text": "The fruit of any of these plants.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blueberry",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "B5351300-4",
+            "partOfSpeech": "noun",
+            "text": "A usually blue-gray spherule that is found in soil and sedimentary rock and is rich in hematite, produced by the weathering of rock or by precipitation from rock by moving groundwater.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/blueberry",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In America: The fruit of several species of <em>Vaccinium</em>, ordinarily distinguished from the various kinds of huckleberry by its blue color and smaller seeds. The swamp or tall blueberry is the <em>Vaccinium corymbosum</em>; the low blueberry, <em>V. vacillans</em>; and the dwarf blueberry, <em>V. Pennsylvanicum.</em> See <internalXref urlencoded=\"bilberry\">bilberry</internalXref>.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/blueberry",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Another name of the cohosh, <em>Caulophyllum thalictroides.</em>",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/blueberry",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In Australia: The fruit of the blueberry-tree, or the tree itself.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/blueberry",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The berry-like fruit of <em>Dianella lævis</em>, of the lily family.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/blueberry",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The berry of several species of Vaccinium, an ericaceous genus, differing from the American huckleberries in containing numerous minute seeds instead of ten nutlets. The commonest species are <spn>Vaccinium Pennsylvanicum</spn> and <spn>Vaccinium vacillans</spn>. <spn>Vaccinium corymbosum</spn> is the tall blueberry.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/blueberry",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An edible round <xref>berry</xref> belonging to the <xref>cowberry</xref> family. (A botanically false berry.) It has flared \"crowns\" at the end that turn blue on ripening.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/blueberry",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
