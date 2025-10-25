@@ -1,0 +1,49 @@
+{
+    "word": "remote control",
+    "date": "20251025",
+    "adapter": "wordnik",
+    "data": [
+        {
+            "id": "R5160000-1",
+            "partOfSpeech": "noun",
+            "text": "The control of an activity, process, or machine from a distance, as by radioed instructions or coded signals.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/remote%20control",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "R5160000-2",
+            "partOfSpeech": "noun",
+            "text": "A device used to control an apparatus or machine from a distance.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/remote%20control",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A <xref>device</xref> used to <xref>operate</xref> an <xref>appliance</xref> (such as a <xref>television</xref>) or mechanical toy from a short distance away.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/remote%20control",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "a device that can be used to control a machine or apparatus from a distance",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/remote%20control",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
