@@ -2,6 +2,7 @@
     "word": "monkey",
     "date": "20251017",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "M5420600-1",

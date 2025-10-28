@@ -2,6 +2,7 @@
     "word": "grunt",
     "date": "20250917",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "G5299200-1",

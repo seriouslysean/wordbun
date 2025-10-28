@@ -2,6 +2,7 @@
     "word": "sun",
     "date": "20250705",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "S5947900-1",

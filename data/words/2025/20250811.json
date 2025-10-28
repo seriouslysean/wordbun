@@ -2,6 +2,7 @@
     "word": "underground",
     "date": "20250811",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "U5054700-1",

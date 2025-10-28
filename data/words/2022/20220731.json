@@ -2,6 +2,7 @@
     "word": "hi",
     "date": "20220731",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "H5191700-1",

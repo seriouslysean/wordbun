@@ -2,6 +2,7 @@
     "word": "poop",
     "date": "20250910",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "P5479800-1",

@@ -2,6 +2,7 @@
     "word": "rainbow",
     "date": "20250808",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "R5028000-1",

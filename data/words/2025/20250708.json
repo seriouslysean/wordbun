@@ -2,6 +2,7 @@
     "word": "flower",
     "date": "20250708",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "F5202600-1",

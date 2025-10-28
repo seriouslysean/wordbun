@@ -2,6 +2,7 @@
     "word": "remote control",
     "date": "20251025",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "R5160000-1",

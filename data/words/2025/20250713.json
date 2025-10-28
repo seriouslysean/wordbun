@@ -2,6 +2,7 @@
     "word": "hair",
     "date": "20250713",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "H5015700-1",

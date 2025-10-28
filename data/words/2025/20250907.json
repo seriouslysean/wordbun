@@ -2,6 +2,7 @@
     "word": "no one",
     "date": "20250907",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "N5169200-1",

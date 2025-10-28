@@ -2,6 +2,7 @@
     "word": "balance beam",
     "date": "20250823",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "B5036600-1",

@@ -2,6 +2,7 @@
     "word": "button",
     "date": "20250818",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "B5598700-1",

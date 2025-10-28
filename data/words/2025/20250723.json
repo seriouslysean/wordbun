@@ -2,6 +2,7 @@
     "word": "boot",
     "date": "20250723",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "B5407100-1",

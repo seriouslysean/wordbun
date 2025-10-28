@@ -2,6 +2,7 @@
     "word": "tic-tac-toe",
     "date": "20250827",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "T5224700-1",

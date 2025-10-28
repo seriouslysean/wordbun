@@ -2,6 +2,7 @@
     "word": "shirt",
     "date": "20250928",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "S5377800-1",

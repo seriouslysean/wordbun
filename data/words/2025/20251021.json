@@ -2,6 +2,7 @@
     "word": "blueberry",
     "date": "20251021",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "B5351300-1",

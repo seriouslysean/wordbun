@@ -2,6 +2,7 @@
     "word": "ladybug",
     "date": "20250729",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "L5015200-1",

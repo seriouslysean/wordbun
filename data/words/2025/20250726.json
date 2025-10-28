@@ -2,6 +2,7 @@
     "word": "ramp",
     "date": "20250726",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "R5037400-1",

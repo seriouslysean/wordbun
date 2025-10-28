@@ -2,6 +2,7 @@
     "word": "mocha",
     "date": "20250906",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "M5389000-1",

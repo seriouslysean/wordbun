@@ -2,6 +2,7 @@
     "word": "cup",
     "date": "20250707",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "C5838300-1",

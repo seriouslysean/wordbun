@@ -2,6 +2,7 @@
     "word": "pencil",
     "date": "20250712",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "P5172900-1",

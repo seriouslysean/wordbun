@@ -2,6 +2,7 @@
     "word": "playhouse",
     "date": "20250821",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "P5397400-1",

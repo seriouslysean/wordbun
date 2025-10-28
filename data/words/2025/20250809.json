@@ -2,6 +2,7 @@
     "word": "telephone",
     "date": "20250809",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "T5098000-1",

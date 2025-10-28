@@ -2,6 +2,7 @@
     "word": "plant",
     "date": "20250815",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "P5382900-1",

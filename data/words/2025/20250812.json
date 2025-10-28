@@ -2,6 +2,7 @@
     "word": "glasses",
     "date": "20250812",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "partOfSpeech": "noun plural",

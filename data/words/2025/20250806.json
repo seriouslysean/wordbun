@@ -2,6 +2,7 @@
     "word": "ice cream",
     "date": "20250806",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "I5008900-1",

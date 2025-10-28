@@ -2,6 +2,7 @@
     "word": "camera",
     "date": "20250825",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "C5050400-1",

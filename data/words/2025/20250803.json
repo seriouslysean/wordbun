@@ -2,6 +2,7 @@
     "word": "painting",
     "date": "20250803",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "P5017000-1",

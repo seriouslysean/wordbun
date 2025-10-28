@@ -2,6 +2,7 @@
     "word": "tea",
     "date": "20250921",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "T5075700-1",

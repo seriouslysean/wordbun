@@ -2,6 +2,7 @@
     "word": "pus",
     "date": "20250911",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "P5732800-1",

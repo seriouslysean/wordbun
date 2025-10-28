@@ -2,6 +2,7 @@
     "word": "bum",
     "date": "20250728",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "B5560300-1",

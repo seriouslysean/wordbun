@@ -2,6 +2,7 @@
     "word": "puppy",
     "date": "20251003",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "P5724300-1",

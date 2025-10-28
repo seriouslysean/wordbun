@@ -2,6 +2,7 @@
     "word": "people",
     "date": "20250807",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "P5188600-1",

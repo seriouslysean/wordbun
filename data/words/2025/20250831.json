@@ -2,6 +2,7 @@
     "word": "cook",
     "date": "20250831",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "C5647000-1",

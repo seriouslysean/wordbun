@@ -2,6 +2,7 @@
     "word": "backpack",
     "date": "20250816",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "B5014900-1",

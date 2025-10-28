@@ -2,6 +2,7 @@
     "word": "lotion",
     "date": "20250722",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "L5272400-1",

@@ -2,6 +2,7 @@
     "word": "toy",
     "date": "20250715",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "T5323700-1",

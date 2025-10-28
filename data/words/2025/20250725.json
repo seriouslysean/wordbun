@@ -2,6 +2,7 @@
     "word": "bag",
     "date": "20250725",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "B5026800-1",

@@ -2,6 +2,7 @@
     "word": "playground",
     "date": "20250719",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "P5397300-1",

@@ -2,6 +2,7 @@
     "word": "window",
     "date": "20250716",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "W5179300-1",

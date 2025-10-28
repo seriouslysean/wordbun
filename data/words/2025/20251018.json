@@ -2,6 +2,7 @@
     "word": "pajamas",
     "date": "20251018",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "text": "Loose drawers or trousers, usually of silk or silk and cotton, tied round the waist with a cord, used by both sexes in India, and adopted from the Mohammedans by Europeans as a chamber garment.",

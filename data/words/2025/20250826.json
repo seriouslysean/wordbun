@@ -2,6 +2,7 @@
     "word": "outside",
     "date": "20250826",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "O5185400-1",

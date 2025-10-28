@@ -2,6 +2,7 @@
     "word": "whack",
     "date": "20250905",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "W5110700-1",

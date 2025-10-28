@@ -2,6 +2,7 @@
     "word": "words",
     "date": "20250710",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "partOfSpeech": "noun",
