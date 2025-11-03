@@ -1,0 +1,39 @@
+{
+    "word": "candy corn",
+    "date": "20251103",
+    "adapter": "wordnik",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "C5067000-1",
+            "partOfSpeech": "noun",
+            "text": "A small piece of candy shaped like a kernel of corn.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/candy%20corn",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A <xref>confection</xref> of <xref>sugar</xref> and <xref>corn syrup</xref> supposed to resemble a <xref>kernel</xref> of <xref>maize</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/candy%20corn",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "a small yellow and white candy shaped to resemble a kernel of corn",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/candy%20corn",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
