@@ -1,0 +1,111 @@
+{
+    "word": "tiger",
+    "date": "20251107",
+    "adapter": "wordnik",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "T5230400-1",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tiger",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5230400-2",
+            "partOfSpeech": "noun",
+            "text": "A large carnivorous feline mammal <em>(Panthera tigris)</em> of Asia, having a tawny coat with transverse black stripes.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tiger",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5230400-3",
+            "partOfSpeech": "noun",
+            "text": "Any of various similar wild felines, such as the jaguar, mountain lion, or lynx.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tiger",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "T5230400-4",
+            "partOfSpeech": "noun",
+            "text": "A person regarded as aggressive, audacious, or fierce.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/tiger",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In <em>poker</em>, a hand which is seven high and deuce low, without a pair, sequence, or flush. When played, it beats a straight and loses to a flush. Sometimes called a <em>little dog.</em>",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/tiger",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "In Central and South America the jaguar, <em>Felis onca</em>, whoso black and yellow coat suggests the Asiatic tiger.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/tiger",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A feline quadruped, <em>Felis tigris</em> or <em>Tigris regalis</em>, one of the two largest living cats (the other being the lion), of the family <em>Felidæ.</em>",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/tiger",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The thylacine dasyure, or tiger-wolf: so called from the stripes. See <internalXref urlencoded=\"thylacine\">thylacine</internalXref> (with cut).",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/tiger",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A person of a fierce, bloodthirsty disposition.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/tiger",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A dissolute swaggering dandy; a ruffling blade; a swaggerer; a hector; a bully; a mohawk.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/tiger",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
