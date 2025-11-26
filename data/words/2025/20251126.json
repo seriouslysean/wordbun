@@ -1,0 +1,114 @@
+{
+    "word": "peanut",
+    "date": "20251126",
+    "adapter": "wordnik",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "P5144600-1",
+            "partOfSpeech": "noun",
+            "text": "A prostrate southern Brazilian plant <em>(Arachis hypogaea)</em> widely cultivated in tropical and warm temperate regions, having yellow flowers on stalks that bend over so that the seed pods ripen underground.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/peanut",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5144600-2",
+            "partOfSpeech": "noun",
+            "text": "The edible, nutlike, oily seed of this plant, used for food and as a source of oil.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/peanut",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5144600-3",
+            "partOfSpeech": "noun",
+            "text": "A peanut-shaped piece of polystyrene, used in cushioning items during shipment.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/peanut",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5144600-4",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/peanut",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5144600-5",
+            "partOfSpeech": "noun",
+            "text": "A small child. Often used as a term of affection.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/peanut",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5144600-6",
+            "partOfSpeech": "noun",
+            "text": "A person who is regarded as insignificant.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/peanut",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5144600-7",
+            "partOfSpeech": "noun",
+            "text": "A very small amount of money; a trifling sum.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/peanut",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "One of the edible fruits of <em>Arachis hypogæn.</em>",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/peanut",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The plant that bears these fruits, better known in England as <em>groundnut.</em> See <internalXref urlencoded=\"Arachis\">Arachis</internalXref>. Also called <internalXref urlencoded=\"ground-pea\">ground-pea</internalXref>, <em>earthnut</em>, <em>Manila nut</em>, <em>jur-nut</em>, <em>goober</em>, and <em>pindar.</em>",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/peanut",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The fruit of a trailing leguminous plant (<spn>Arachis hypogæa</spn>); also, the plant itself, which is widely cultivated for its fruit.",
+            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+            "sourceDictionary": "gcide",
+            "sourceUrl": "https://www.wordnik.com/words/peanut",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
