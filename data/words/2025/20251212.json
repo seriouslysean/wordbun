@@ -1,0 +1,119 @@
+{
+    "word": "hat",
+    "date": "20251212",
+    "adapter": "wordnik",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "H5082400-1",
+            "partOfSpeech": "noun",
+            "text": "A covering for the head, especially one with a shaped crown and brim.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5082400-2",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5082400-3",
+            "partOfSpeech": "noun",
+            "text": "A head covering of distinctive color and shape worn as a symbol of office.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5082400-4",
+            "partOfSpeech": "noun",
+            "text": "The office symbolized by the wearing of such a head covering.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5082400-5",
+            "partOfSpeech": "noun",
+            "text": "A role or office symbolized by or as if by the wearing of different hats.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "examples": [
+                "wears two hats—one as parent and one as corporate executive."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5082400-6",
+            "partOfSpeech": "transitive verb",
+            "text": "To supply or cover with a hat.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5082400-7",
+            "partOfSpeech": "idiom",
+            "text": "(<em>at the drop of a hat</em>)  At the slightest pretext or provocation.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5082400-8",
+            "partOfSpeech": "idiom",
+            "text": "(<em>hat in hand</em>)  In a humble manner; humbly.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5082400-9",
+            "partOfSpeech": "idiom",
+            "text": "(<em>take (one's) hat off to</em>)  To respect, admire, or congratulate.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "H5082400-10",
+            "partOfSpeech": "idiom",
+            "text": "(<em>talk through (one's) hat</em>)  To talk nonsense.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
