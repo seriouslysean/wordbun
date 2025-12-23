@@ -9,6 +9,7 @@ import type {
   WordGroupByYearResult,
   WordProcessedData,
 } from '~types';
+import { MAX_PAST_WORDS_DISPLAY } from '~constants/text-patterns';
 import { getMonthSlugFromDate } from '~utils/date-utils';
 import {
   getAvailableYears,
@@ -19,6 +20,9 @@ import {
   getAvailablePartsOfSpeech,
   normalizePartOfSpeech,
   findValidDefinition,
+  getWordsByLength as getWordsByLengthPure,
+  getWordsByLetter as getWordsByLetterPure,
+  getWordsByPartOfSpeech as getWordsByPartOfSpeechPure,
 } from '~utils/word-data-utils';
 import {
   getWordStats,
@@ -58,12 +62,12 @@ export function extractWordDefinition(wordData: WordData): { definition: string;
     return { definition: '', partOfSpeech: '' };
   }
 
-  const validDef = findValidDefinition(wordData.data);
+  const validDefinition = findValidDefinition(wordData.data);
 
-  if (validDef) {
+  if (validDefinition) {
     return {
-      definition: validDef.text,
-      partOfSpeech: validDef.partOfSpeech,
+      definition: validDefinition.text,
+      partOfSpeech: validDefinition.partOfSpeech,
     };
   }
 
@@ -73,19 +77,19 @@ export function extractWordDefinition(wordData: WordData): { definition: string;
 /**
  * All words loaded with consistent sorting across environments
  */
-let _cachedWords: WordData[] | null = null;
+let cachedWords: WordData[] | null = null;
 
 async function getAllWords(): Promise<WordData[]> {
-  if (_cachedWords === null) {
+  if (cachedWords === null) {
     try {
-      _cachedWords = await getWordsFromCollection();
-      logger.info('Loaded words successfully', { count: _cachedWords.length });
+      cachedWords = await getWordsFromCollection();
+      logger.info('Loaded words successfully', { count: cachedWords.length });
     } catch (error) {
       logger.error('Failed to load words', { error: (error as Error).message });
-      _cachedWords = [];
+      cachedWords = [];
     }
   }
-  return _cachedWords;
+  return cachedWords;
 }
 
 export const allWords = await getAllWords();
@@ -198,7 +202,7 @@ export const getPastWords = (currentDate: string, words: WordData[] = allWords):
   }
   return words
     .filter(word => word.date < currentDate)
-    .slice(0, 5);
+    .slice(0, MAX_PAST_WORDS_DISPLAY);
 };
 
 /**
@@ -360,7 +364,7 @@ export const groupWordsByLength = (words: WordData[]): WordGroupByLengthResult =
  * @returns {WordData[]} Array of word data entries with the specified length
  */
 export const getWordsByLength = (length: number, words: WordData[] = allWords): WordData[] => {
-  return words.filter(word => word.word.length === length);
+  return getWordsByLengthPure(length, words);
 };
 
 /**
@@ -398,10 +402,7 @@ export const groupWordsByLetter = (words: WordData[]): Record<string, WordData[]
  * @returns {WordData[]} Array of word data entries starting with the specified letter
  */
 export const getWordsByLetter = (letter: string, words: WordData[] = allWords): WordData[] => {
-  const normalizedLetter = letter.toLowerCase();
-  return words.filter(word => 
-    word.word.toLowerCase().startsWith(normalizedLetter)
-  );
+  return getWordsByLetterPure(letter, words);
 };
 
 /**
@@ -450,14 +451,7 @@ export const groupWordsByPartOfSpeech = (words: WordData[]): WordGroupByPartOfSp
  * @returns {WordData[]} Array of word data entries with the specified part of speech
  */
 export const getWordsByPartOfSpeech = (partOfSpeech: string, words: WordData[] = allWords): WordData[] => {
-  const normalizedPartOfSpeech = normalizePartOfSpeech(partOfSpeech);
-  return words.filter(word => {
-    if (!word.data || !Array.isArray(word.data)) return false;
-    
-    return word.data.some(definition => 
-      definition.partOfSpeech && normalizePartOfSpeech(definition.partOfSpeech) === normalizedPartOfSpeech
-    );
-  });
+  return getWordsByPartOfSpeechPure(partOfSpeech, words);
 };
 
 

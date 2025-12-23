@@ -1,47 +1,16 @@
 import type { WordData } from '~types';
 import { areConsecutiveDays, dateToYYYYMMDD } from '~utils/date-utils';
-
-// Text analysis functions needed by stats
-function isStartEndSame(word: string): boolean {
-  return word.length > 1 && word[0] === word[word.length - 1];
-}
-
-function hasDoubleLetters(word: string): boolean {
-  return /(.)(\1)/.test(word);
-}
-
-function hasTripleLetters(word: string): boolean {
-  return /(.)(\1){2,}/.test(word);
-}
-
-function hasAlphabeticalSequence(word: string): boolean {
-  const letters = word.toLowerCase().split('');
-  return letters.slice(0, -2).some((_, i) => {
-    const a = letters[i].charCodeAt(0);
-    const b = letters[i + 1].charCodeAt(0);
-    const c = letters[i + 2].charCodeAt(0);
-    return b === a + 1 && c === b + 1;
-  });
-}
-
-function getWordEndings(word: string): string[] {
-  const endings = ['ing', 'ed', 'ly', 'ness', 'ful', 'less'];
-  return endings.filter(ending => word.endsWith(ending));
-}
-
-function isAllVowels(word: string): boolean {
-  return /^[aeiou]+$/i.test(word);
-}
-
-function isAllConsonants(word: string): boolean {
-  return /^[^aeiou]+$/i.test(word);
-}
-
-function isPalindrome(word: string): boolean {
-  if (!word) return false;
-  const normalized = word.toLowerCase();
-  return normalized === normalized.split('').reverse().join('');
-}
+import { TEXT_PATTERNS, MILESTONES } from '~constants/text-patterns';
+import {
+  isStartEndSame,
+  hasDoubleLetters,
+  hasTripleLetters,
+  hasAlphabeticalSequence,
+  getWordEndings,
+  isAllVowels,
+  isAllConsonants,
+  isPalindrome,
+} from '~utils/text-pattern-utils';
 
 /**
  * Analyzes words for various letter patterns
@@ -57,7 +26,7 @@ export const getLetterPatternStats = (words: WordData[]) => {
 
   for (const wordObj of words) {
     const word = wordObj.word;
-    
+
     if (isPalindrome(word)) {
       patterns.palindromes.push(wordObj);
     }
@@ -123,14 +92,14 @@ export const getLetterStats = (words: WordData[]) => {
   for (const wordObj of words) {
     const word = wordObj.word.toLowerCase();
     for (const letter of word) {
-      if (/^[a-z]$/i.test(letter)) {
+      if (TEXT_PATTERNS.LETTER_ONLY.test(letter)) {
         letterFrequency[letter] = (letterFrequency[letter] || 0) + 1;
       }
     }
   }
 
   const sortedLetters = Object.entries(letterFrequency)
-    .filter(([letter]) => /^[a-z]$/i.test(letter))
+    .filter(([letter]) => TEXT_PATTERNS.LETTER_ONLY.test(letter))
     .sort(([, a], [, b]) => b - a);
 
   const [mostCommonEntry] = sortedLetters;
@@ -151,16 +120,16 @@ export function getChronologicalMilestones(words: WordData[]): Array<{milestone:
   if (words.length === 0) {
     return [];
   }
-  
+
   return [
-    { milestone: 1, word: words[0] },
-    ...[25, 50, 75]
+    { milestone: MILESTONES.FIRST, word: words[0] },
+    ...MILESTONES.EARLY
       .filter(m => words.length >= m)
       .map(m => ({ milestone: m, word: words[m - 1] })),
     ...Array.from(
-      { length: Math.floor(words.length / 100) },
+      { length: Math.floor(words.length / MILESTONES.CENTURY) },
       (_, idx) => {
-        const milestone = (idx + 1) * 100;
+        const milestone = (idx + 1) * MILESTONES.CENTURY;
         return { milestone, word: words[milestone - 1] };
       },
     ),
@@ -179,7 +148,7 @@ export function getCurrentStreakWords(words: WordData[]): WordData[] {
 
   const mostRecentWord = sortedWords[0];
   const isActive = !!mostRecentWord && (mostRecentWord.date === todayString || mostRecentWord.date === yesterdayString);
-  
+
   if (!isActive || !mostRecentWord) return [];
 
   const streakWords = [mostRecentWord];

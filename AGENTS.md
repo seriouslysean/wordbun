@@ -35,9 +35,32 @@ Check similar files in the codebase for architectural patterns BEFORE writing ne
 # ALWAYS run after ANY code changes
 npm run lint         # Fix code style issues
 npm run typecheck    # Validate TypeScript
-npm test            # Run test suite
+npm test            # Run test suite (includes CLI integration tests)
 npm run build        # Verify build succeeds
+npx astro check      # Check for TypeScript errors, warnings, and hints
 ```
+
+### Quality Gates - ALL Must Pass
+- **0 ESLint errors or warnings** - Fix all linting issues
+- **0 TypeScript errors** - Resolve all type errors
+- **0 Astro warnings or hints** - Address all unused imports, type issues, etc.
+- **All tests passing** - No failing tests allowed (unit + integration + architecture)
+- **Build succeeds** - Must compile without errors
+- **DO NOT** commit code with warnings, hints, or errors
+- **DO NOT** ignore build warnings from external dependencies (document if unfixable)
+
+### Test Coverage
+The test suite includes multiple layers of protection:
+- **Unit Tests** (`tests/utils/`, `tests/adapters/`) - Individual function correctness
+- **Architecture Tests** (`tests/architecture/`) - Enforce boundaries and prevent DRY violations
+- **CLI Integration Tests** (`tests/tools/`) - Verify tools work without import errors (catches astro: protocol issues)
+
+### Known External Warnings (Not Fixable in Our Code)
+- **Vite Warning (Astro v5.15.6)**: `"matchHostname", "matchPathname", "matchPort" and "matchProtocol" are imported from external module "@astrojs/internal-helpers/remote" but never used`
+  - **Source**: Internal Astro dependency issue in `node_modules/astro/dist/assets/`
+  - **Status**: Cannot fix - this is in Astro's bundled code
+  - **Impact**: None - does not affect build or runtime
+  - **Action**: Monitor Astro updates for resolution
 
 ### Build Output Verification
 After building, check the `dist/` directory structure:
@@ -80,6 +103,8 @@ npm test                                         # Run test suite
 ### Import Aliases
 - **Always Use Aliases**: Use `~components`, `~astro-utils`, etc. instead of relative imports
 - **Never Relative**: `../` imports are not allowed, use aliases exclusively
+- **CRITICAL**: Files in `utils/` MUST NOT import from `~astro-utils/*` (breaks CLI tools)
+  - See docs/technical.md "Utility Architecture and Import Guidelines" for full details
 
 ## Documentation Structure
 
