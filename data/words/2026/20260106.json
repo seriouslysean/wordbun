@@ -1,0 +1,118 @@
+{
+    "word": "foam",
+    "date": "20260106",
+    "adapter": "wordnik",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "F5221500-1",
+            "partOfSpeech": "noun",
+            "text": "A colloidal dispersion of a gas in a liquid or solid medium, such as shaving cream, foam rubber, or a substance used to fight fires. A foam may be produced, especially on the surface of a liquid, by agitation or by a chemical reaction, such as fermentation.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5221500-2",
+            "partOfSpeech": "noun",
+            "text": "Any of various light, porous, semirigid or spongy materials, usually the solidified form of a liquid full of gas bubbles, used as a building material or for thermal insulation or shock absorption, as in packaging.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5221500-3",
+            "partOfSpeech": "noun",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5221500-4",
+            "partOfSpeech": "noun",
+            "text": "Frothy saliva produced especially as a result of physical exertion or a pathological condition.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5221500-5",
+            "partOfSpeech": "noun",
+            "text": "The frothy sweat of a horse or other equine animal.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5221500-6",
+            "partOfSpeech": "noun",
+            "text": "The sea.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5221500-7",
+            "partOfSpeech": "intransitive verb",
+            "text": "To produce or issue as foam; froth.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5221500-8",
+            "partOfSpeech": "intransitive verb",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5221500-9",
+            "partOfSpeech": "intransitive verb",
+            "text": "To produce foam from the mouth, as from exertion or a pathological condition.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "F5221500-10",
+            "partOfSpeech": "intransitive verb",
+            "text": "To be extremely angry; rage.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "examples": [
+                "was foaming over the disastrous budget cuts."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
