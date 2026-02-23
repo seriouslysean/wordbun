@@ -1,0 +1,39 @@
+{
+    "word": "trick or treat",
+    "date": "20251031",
+    "adapter": "wordnik",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "T5385600-1",
+            "partOfSpeech": "interjection",
+            "text": "Used as a greeting when trick-or-treating.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/trick%20or%20treat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "interjection",
+            "text": "A form of <xref>extortion</xref> by which children get <xref>candy</xref> on <xref>Halloween</xref>.",
+            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://www.wordnik.com/words/trick%20or%20treat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "a request by children on Halloween; they pass from door to door asking for goodies and threatening to play tricks on those who refuse",
+            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+            "sourceDictionary": "wordnet",
+            "sourceUrl": "https://www.wordnik.com/words/trick%20or%20treat",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}

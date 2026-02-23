@@ -1,0 +1,122 @@
+{
+    "word": "paw",
+    "date": "20251219",
+    "adapter": "wordnik",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "P5132900-1",
+            "partOfSpeech": "noun",
+            "text": "The foot of an animal, especially a quadruped, that has claws or nails.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paw",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5132900-2",
+            "partOfSpeech": "noun",
+            "text": "A human hand, especially a large clumsy one.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paw",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5132900-3",
+            "partOfSpeech": "intransitive verb",
+            "text": "To feel or strike with the paw or paws.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paw",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5132900-4",
+            "partOfSpeech": "intransitive verb",
+            "text": "To strike or scrape with a beating motion.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paw",
+            "examples": [
+                "The bull pawed the ground before charging."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5132900-5",
+            "partOfSpeech": "intransitive verb",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paw",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5132900-6",
+            "partOfSpeech": "intransitive verb",
+            "text": "To touch or handle clumsily or roughly.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paw",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5132900-7",
+            "partOfSpeech": "intransitive verb",
+            "text": "To feel or touch (another) in an annoying or unwanted way. <i>synonym</i>: <strong> touch</strong>.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paw",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5132900-8",
+            "partOfSpeech": "intransitive verb",
+            "text": "To scrape the ground with the forefeet.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paw",
+            "examples": [
+                "The horse pawed restlessly."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "id": "P5132900-9",
+            "partOfSpeech": "intransitive verb",
+            "text": "To handle someone or something clumsily, rudely, or with too much familiarity.",
+            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+            "sourceDictionary": "ahd-5",
+            "sourceUrl": "https://www.wordnik.com/words/paw",
+            "examples": [
+                "Don't paw at everything you see."
+            ],
+            "synonyms": [],
+            "antonyms": []
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The hand or foot of an animal which has nails or claws: distinguished from <internalXref urlencoded=\"hoof\">hoof</internalXref>: as, a monkey's <em>paw</em>; the <em>paws</em> of a cat, dog, rat, etc. In many animals the fore feet, and in some the hind feet, are prehensile, and serviceable as hands.",
+            "attributionText": "from The Century Dictionary.",
+            "sourceDictionary": "century",
+            "sourceUrl": "https://www.wordnik.com/words/paw",
+            "examples": [],
+            "synonyms": [],
+            "antonyms": []
+        }
+    ]
+}
