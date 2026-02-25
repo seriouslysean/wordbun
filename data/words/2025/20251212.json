@@ -1,119 +1,164 @@
 {
     "word": "hat",
     "date": "20251212",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "H5082400-1",
+            "id": "hat",
             "partOfSpeech": "noun",
-            "text": "A covering for the head, especially one with a shaped crown and brim.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "H5082400-2",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "H5082400-3",
-            "partOfSpeech": "noun",
-            "text": "A head covering of distinctive color and shape worn as a symbol of office.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "H5082400-4",
-            "partOfSpeech": "noun",
-            "text": "The office symbolized by the wearing of such a head covering.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "H5082400-5",
-            "partOfSpeech": "noun",
-            "text": "A role or office symbolized by or as if by the wearing of different hats.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hat",
+            "text": "a covering for the head usually having a shaped crown and brim",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat",
             "examples": [
-                "wears two hats—one as parent and one as corporate executive."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "wore many hats in her career"
+            ]
         },
         {
-            "id": "H5082400-6",
-            "partOfSpeech": "transitive verb",
-            "text": "To supply or cover with a hat.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "hat",
+            "partOfSpeech": "noun",
+            "text": "a distinctive head covering worn as a symbol of office",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat",
+            "examples": [
+                "wore many hats in her career"
+            ]
         },
         {
-            "id": "H5082400-7",
-            "partOfSpeech": "idiom",
-            "text": "(<em>at the drop of a hat</em>)  At the slightest pretext or provocation.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "hat",
+            "partOfSpeech": "noun",
+            "text": "an office, position, or role assumed by or as if by the wearing of a special hat",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat",
+            "examples": [
+                "wore many hats in her career"
+            ]
         },
         {
-            "id": "H5082400-8",
-            "partOfSpeech": "idiom",
-            "text": "(<em>hat in hand</em>)  In a humble manner; humbly.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "hat",
+            "partOfSpeech": "verb",
+            "text": "to furnish or provide with a hat",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat"
         },
         {
-            "id": "H5082400-9",
-            "partOfSpeech": "idiom",
-            "text": "(<em>take (one's) hat off to</em>)  To respect, admire, or congratulate.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "hat",
+            "partOfSpeech": "verb",
+            "text": "to make or supply hats",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat"
         },
         {
-            "id": "H5082400-10",
-            "partOfSpeech": "idiom",
-            "text": "(<em>talk through (one's) hat</em>)  To talk nonsense.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "hat in hand",
+            "partOfSpeech": "adverb",
+            "text": "in an attitude of respectful humility",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat",
+            "examples": [
+                "have to go hat in hand to apologize"
+            ]
+        },
+        {
+            "id": "hat trick",
+            "partOfSpeech": "noun",
+            "text": "the scoring of three goals in one game (as of hockey or soccer) by a single player",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat",
+            "examples": [
+                "… scored a hat trick when her three best steers corralled top honors …"
+            ]
+        },
+        {
+            "id": "hat trick",
+            "partOfSpeech": "noun",
+            "text": "the dismissing of three batsmen with three consecutive balls by a bowler in cricket",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat",
+            "examples": [
+                "… scored a hat trick when her three best steers corralled top honors …"
+            ]
+        },
+        {
+            "id": "hat trick",
+            "partOfSpeech": "noun",
+            "text": "a series of three victories, successes, or related accomplishments",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat",
+            "examples": [
+                "… scored a hat trick when her three best steers corralled top honors …"
+            ]
+        },
+        {
+            "id": "at the drop of a hat",
+            "text": "as soon as the slightest provocation is given: immediately",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat",
+            "examples": [
+                "loses her temper at the drop of a hat"
+            ]
+        },
+        {
+            "id": "black hat",
+            "partOfSpeech": "noun",
+            "text": "a hacker who infiltrates a computer system for malicious purposes (as to disable a website or uncover secret information)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat",
+            "examples": [
+                "In one segment … Assange reflects on his work as a black hat hacker in the early 1990s, recalling wistfully how he and others hacked into the Pentagon's Security Coordination Center."
+            ]
+        },
+        {
+            "id": "brass hat",
+            "partOfSpeech": "noun",
+            "text": "a member of the brass",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat"
+        },
+        {
+            "id": "bucket hat",
+            "partOfSpeech": "noun",
+            "text": "a cloth hat (as of canvas or twill) with a downward-sloping brim and a soft circular crown",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat",
+            "examples": [
+                "… to me there is nothing more intimidating than wearing a bucket hat. That brimmed shape—always tight fitted to the head—reminds me of hats I'd wear as a kid."
+            ]
+        },
+        {
+            "id": "cocked hat",
+            "partOfSpeech": "noun",
+            "text": "a hat with brim turned up to give a 3-cornered appearance",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat"
+        },
+        {
+            "id": "cocked hat",
+            "partOfSpeech": "noun",
+            "text": "a hat with brim turned up on two sides and worn either front to back or sideways",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat"
+        },
+        {
+            "id": "coolie hat",
+            "partOfSpeech": "noun",
+            "text": "a conical-shaped usually straw hat worn especially to protect the head from the heat of the sun",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hat"
         }
     ]
 }

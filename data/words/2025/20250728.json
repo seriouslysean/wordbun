@@ -1,124 +1,179 @@
 {
     "word": "bum",
     "date": "20250728",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "B5560300-1",
+            "id": "bum",
             "partOfSpeech": "noun",
-            "text": "The buttocks.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5560200-1",
-            "partOfSpeech": "noun",
-            "text": "A tramp; a vagrant.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5560200-2",
-            "partOfSpeech": "noun",
-            "text": "A lazy or shiftless person, especially one who seeks to live solely by the support of others.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5560200-3",
-            "partOfSpeech": "noun",
-            "text": "An incompetent, insignificant, or obnoxious person.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "text": "buttocks",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
             "examples": [
-                "The batter called the pitcher a bum."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "fell down on his bum"
+            ]
         },
         {
-            "id": "B5560200-4",
-            "partOfSpeech": "noun",
-            "text": "One who spends a lot of time doing a particular recreational activity.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bum",
-            "examples": [
-                "a beach bum; a ski bum."
-            ],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5560200-5",
-            "partOfSpeech": "intransitive verb",
-            "text": "To live by begging and scavenging from place to place. Often used with <em>around.</em>",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5560200-6",
-            "partOfSpeech": "intransitive verb",
-            "text": "To pass time idly; loaf. Often used with <em>around.</em>",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5560200-7",
-            "partOfSpeech": "intransitive verb",
-            "text": "To acquire by begging; cadge. <i>synonym</i>: <strong> cadge</strong>.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5560200-8",
-            "partOfSpeech": "intransitive verb",
-            "text": "To depress, dishearten, or dismay. Often used with <em>out.</em>",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5560200-9",
+            "id": "bum",
             "partOfSpeech": "adjective",
-            "text": "Inferior; worthless.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bum",
+            "text": "of poor quality or nature",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
             "examples": [
-                "gave me bum advice; did a bum job of fixing the car."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "bum advice",
+                "writing a bum check",
+                "a bum trip",
+                "has a bum knee"
+            ]
+        },
+        {
+            "id": "bum",
+            "partOfSpeech": "adjective",
+            "text": "not valid or deserved",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
+            "examples": [
+                "bum advice",
+                "writing a bum check",
+                "a bum trip",
+                "has a bum knee"
+            ]
+        },
+        {
+            "id": "bum",
+            "partOfSpeech": "adjective",
+            "text": "not pleasant or enjoyable",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
+            "examples": [
+                "bum advice",
+                "writing a bum check",
+                "a bum trip",
+                "has a bum knee"
+            ]
+        },
+        {
+            "id": "bum",
+            "partOfSpeech": "verb",
+            "text": "loaf",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
+            "examples": [
+                "bummed around the house all day",
+                "bum a cigarette"
+            ]
+        },
+        {
+            "id": "bum",
+            "partOfSpeech": "verb",
+            "text": "to spend time unemployed and often wandering —often used with around",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
+            "examples": [
+                "bummed around the house all day",
+                "bum a cigarette"
+            ]
+        },
+        {
+            "id": "bum",
+            "partOfSpeech": "verb",
+            "text": "to obtain by asking or begging: cadge",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
+            "examples": [
+                "bummed around the house all day",
+                "bum a cigarette"
+            ]
+        },
+        {
+            "id": "bum",
+            "partOfSpeech": "noun",
+            "text": "someone who lives off others and avoids work: sponge",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
+            "examples": [
+                "He's a lazy bum.",
+                "The fans called the umpire a bum.",
+                "a beach bum",
+                "ski bums",
+                "bums sleeping on park benches"
+            ]
+        },
+        {
+            "id": "bum",
+            "partOfSpeech": "noun",
+            "text": "someone who performs a function poorly",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
+            "examples": [
+                "He's a lazy bum.",
+                "The fans called the umpire a bum.",
+                "a beach bum",
+                "ski bums",
+                "bums sleeping on park benches"
+            ]
+        },
+        {
+            "id": "bum",
+            "partOfSpeech": "noun",
+            "text": "someone whose time is devoted to a recreational activity",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
+            "examples": [
+                "He's a lazy bum.",
+                "The fans called the umpire a bum.",
+                "a beach bum",
+                "ski bums",
+                "bums sleeping on park benches"
+            ]
+        },
+        {
+            "id": "bum",
+            "partOfSpeech": "noun",
+            "text": "a drinking spree: bender",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
+            "examples": [
+                "a 2-day bum"
+            ]
+        },
+        {
+            "id": "bum",
+            "partOfSpeech": "verb",
+            "text": "disappoint, depress —usually used with out",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum"
+        },
+        {
+            "id": "bum-rush",
+            "partOfSpeech": "verb",
+            "text": "to attack or seize with an overpowering rush",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum",
+            "examples": [
+                "bum-rush the stage"
+            ]
+        },
+        {
+            "id": "bum's rush",
+            "partOfSpeech": "noun",
+            "text": "forcible eviction or dismissal",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bum"
         }
     ]
 }

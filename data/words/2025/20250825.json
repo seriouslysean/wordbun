@@ -1,116 +1,113 @@
 {
     "word": "camera",
     "date": "20250825",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "C5050400-1",
+            "id": "camera",
             "partOfSpeech": "noun",
-            "text": "A usually portable device containing a photosensitive surface that records images through a lens.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/camera",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a device that consists of a lightproof chamber with an aperture fitted with a lens and a shutter through which the image of an object is projected onto a surface for recording (as on a photosensitive film or an electronic sensor) or for translation into electrical impulses (as for television broadcast)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera"
         },
         {
-            "id": "C5050400-2",
+            "id": "camera",
             "partOfSpeech": "noun",
-            "text": "A camera obscura.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/camera",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "camera obscura",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera"
         },
         {
-            "id": "C5050400-3",
+            "id": "camera",
             "partOfSpeech": "noun",
-            "text": "A judge's private chamber.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/camera",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "the treasury department of the papal curia",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera"
         },
         {
-            "id": "C5050400-4",
-            "partOfSpeech": "idiom",
-            "text": "(<em>in camera</em>)  Outside of the public view.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/camera",
+            "id": "camera lucida",
+            "partOfSpeech": "noun",
+            "text": "an instrument that by means of a prism or mirrors and often a microscope causes a virtual image of an object to appear as if projected upon a plane surface so that an outline may be traced",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera"
+        },
+        {
+            "id": "camera obscura",
+            "partOfSpeech": "noun",
+            "text": "a darkened enclosure having an aperture usually provided with a lens through which light from external objects enters to form an image of the objects on the opposite surface",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera"
+        },
+        {
+            "id": "body camera",
+            "partOfSpeech": "noun",
+            "text": "a video camera that is worn on clothing and used to continuously record activity in front of the wearer",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera",
             "examples": [
-                "The committee met in camera to discuss the report."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "Americans are deeply divided over race relations and police use of force. One thing they don't seem to be divided over, however, is support for police body cameras."
+            ]
         },
         {
-            "id": "C5050400-5",
-            "partOfSpeech": "idiom",
-            "text": "(<em>off camera</em>)  Outside the field of view of a movie camera.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/camera",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "C5050400-6",
-            "partOfSpeech": "idiom",
-            "text": "(<em>on camera</em>)  Within the field of view of a movie camera.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/camera",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
+            "id": "box camera",
             "partOfSpeech": "noun",
-            "text": "In <em>ancient architecture</em>, an arched roof, ceiling, or covering; a vault.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/camera",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a box-shaped camera with a simple lens and rotary shutter",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera"
         },
         {
+            "id": "candid camera",
             "partOfSpeech": "noun",
-            "text": "<em>Nautical</em>, a small vessel used on the coasts of the Bosporus and the Black Sea. Also <internalXref urlencoded=\"camara\">camara</internalXref>.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/camera",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a camera used to record subjects in a natural, spontaneous, or unposed manner; also: something likened to a camera used in such a manner",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera"
         },
         {
+            "id": "digital camera",
             "partOfSpeech": "noun",
-            "text": "The variety of camera obscura used by photographers.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/camera",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a camera that records images as digital data instead of on film",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera"
         },
         {
+            "id": "doorbell camera",
             "partOfSpeech": "noun",
-            "text": "In <em>anatomy</em>: The so-called fifth ventricle of the brain, between the laminæ of the septum lucidum.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/camera",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a small camera that is designed for use on an exterior door, that includes or connects to a doorbell, and that often has a built-in microphone and speaker: video doorbell",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera",
+            "examples": [
+                "Thanks to a rise in package theft, doorbell cameras have gained popularity …",
+                "[Marsha] Kazarosian [attorney] tells clients to make sure they shut off the microphone on their doorbell camera …",
+                "… began speaking to the deputy through a speaker in the doorbell camera."
+            ]
+        },
+        {
+            "id": "gamma camera",
+            "partOfSpeech": "noun",
+            "text": "a camera that detects the radiation from a radioactive tracer injected into the body and is used especially in medical diagnostic scanning",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera"
+        },
+        {
+            "id": "in camera",
+            "text": "in private; specifically, law: in a judge's chambers",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/camera",
+            "examples": [
+                "a review of documents held in camera"
+            ]
         }
     ]
 }

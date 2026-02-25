@@ -1,111 +1,134 @@
 {
     "word": "tiger",
     "date": "20251107",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "T5230400-1",
+            "id": "tiger",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/tiger",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a large Asian carnivorous mammal (Panthera tigris) of the cat family having a usually tawny coat transversely striped with black",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger",
+            "examples": [
+                "aroused the tiger in him",
+                "a tiger for work",
+                "… how the tiger of inflation can be tamed."
+            ]
         },
         {
-            "id": "T5230400-2",
+            "id": "tiger",
             "partOfSpeech": "noun",
-            "text": "A large carnivorous feline mammal <em>(Panthera tigris)</em> of Asia, having a tawny coat with transverse black stripes.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/tiger",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "any of several large wildcats (such as the jaguar or cougar)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger",
+            "examples": [
+                "aroused the tiger in him",
+                "a tiger for work",
+                "… how the tiger of inflation can be tamed."
+            ]
         },
         {
-            "id": "T5230400-3",
+            "id": "tiger",
             "partOfSpeech": "noun",
-            "text": "Any of various similar wild felines, such as the jaguar, mountain lion, or lynx.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/tiger",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a domestic cat with striped pattern",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger",
+            "examples": [
+                "aroused the tiger in him",
+                "a tiger for work",
+                "… how the tiger of inflation can be tamed."
+            ]
         },
         {
-            "id": "T5230400-4",
+            "id": "tiger beetle",
             "partOfSpeech": "noun",
-            "text": "A person regarded as aggressive, audacious, or fierce.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/tiger",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "any of numerous active carnivorous beetles (family Cicindelidae) having larvae that tunnel in the soil",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
         },
         {
+            "id": "tiger cat",
             "partOfSpeech": "noun",
-            "text": "In <em>poker</em>, a hand which is seven high and deuce low, without a pair, sequence, or flush. When played, it beats a straight and loses to a flush. Sometimes called a <em>little dog.</em>",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/tiger",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "any of various wildcats (such as the serval, ocelot, or margay) of moderate size and variegated coloration",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
         },
         {
+            "id": "tiger cat",
             "partOfSpeech": "noun",
-            "text": "In Central and South America the jaguar, <em>Felis onca</em>, whoso black and yellow coat suggests the Asiatic tiger.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/tiger",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a striped or sometimes blotched tabby cat",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
         },
         {
+            "id": "tiger lily",
             "partOfSpeech": "noun",
-            "text": "A feline quadruped, <em>Felis tigris</em> or <em>Tigris regalis</em>, one of the two largest living cats (the other being the lion), of the family <em>Felidæ.</em>",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/tiger",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a common Asian garden lily (Lilium lancifolium synonym L. tigrinum) that has nodding orange-colored flowers densely spotted with black and alternate leaves with black bulblets in the leaf axils; also: any of various lilies with similar flowers",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
         },
         {
+            "id": "tiger maple",
             "partOfSpeech": "noun",
-            "text": "The thylacine dasyure, or tiger-wolf: so called from the stripes. See <internalXref urlencoded=\"thylacine\">thylacine</internalXref> (with cut).",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/tiger",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "maple lumber having a distinct irregularly striped pattern and much used for furniture",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
         },
         {
+            "id": "tiger mosquito",
             "partOfSpeech": "noun",
-            "text": "A person of a fierce, bloodthirsty disposition.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/tiger",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "asian tiger mosquito",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
         },
         {
+            "id": "tiger mosquito",
             "partOfSpeech": "noun",
-            "text": "A dissolute swaggering dandy; a ruffling blade; a swaggerer; a hector; a bully; a mohawk.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/tiger",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "yellow-fever mosquito",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
+        },
+        {
+            "id": "tiger moth",
+            "partOfSpeech": "noun",
+            "text": "any of a family (Arctiidae) of stout-bodied moths usually with broad striped or spotted wings",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
+        },
+        {
+            "id": "tiger salamander",
+            "partOfSpeech": "noun",
+            "text": "a large widely distributed North American salamander (Ambystoma tigrinum of the family Ambystomatidae) that is variably colored with contrasting blotches, spots, or bars",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
+        },
+        {
+            "id": "tiger shark",
+            "partOfSpeech": "noun",
+            "text": "a large gray or brown stocky-bodied requiem shark (Galeocerdo cuvier) that is nearly cosmopolitan especially in warm seas and can be dangerous to humans",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
+        },
+        {
+            "id": "tiger shrimp",
+            "partOfSpeech": "noun",
+            "text": "a large shrimp (Penaeus monodon of the family Penaeidae) of the Indian and Pacific oceans that is often farmed and widely sold as food",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
         }
     ]
 }

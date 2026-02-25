@@ -1,130 +1,149 @@
 {
     "word": "cook",
     "date": "20250831",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "C5647000-1",
-            "partOfSpeech": "intransitive verb",
-            "text": "To prepare (food) for eating by applying heat.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cook",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "C5647000-2",
-            "partOfSpeech": "intransitive verb",
-            "text": "To prepare or treat by heating.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cook",
-            "examples": [
-                "slowly cooked the medicinal mixture."
-            ],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "C5647000-3",
-            "partOfSpeech": "intransitive verb",
-            "text": "To alter or falsify so as to make a more favorable impression; doctor.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cook",
-            "examples": [
-                "disreputable accountants who were paid to cook the firm's books."
-            ],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "C5647000-4",
-            "partOfSpeech": "intransitive verb",
-            "text": "To prepare food for eating by applying heat.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cook",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "C5647000-5",
-            "partOfSpeech": "intransitive verb",
-            "text": "To undergo application of heat especially for the purpose of later ingestion.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cook",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "C5647000-6",
-            "partOfSpeech": "intransitive verb",
-            "text": "To happen, develop, or take place.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cook",
-            "examples": [
-                "What's cooking in town?"
-            ],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "C5647000-7",
-            "partOfSpeech": "intransitive verb",
-            "text": "To proceed or perform very well.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cook",
-            "examples": [
-                "The band really got cooking after midnight."
-            ],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "C5647000-8",
+            "id": "cook",
             "partOfSpeech": "noun",
-            "text": "A person who prepares food for eating.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cook",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a person who prepares food for eating",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook"
         },
         {
-            "id": "C5647000-9",
-            "partOfSpeech": "phrasal verb",
-            "text": "To fabricate; concoct.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cook",
-            "examples": [
-                "cook up an excuse."
-            ],
-            "synonyms": [],
-            "antonyms": []
+            "id": "cook",
+            "partOfSpeech": "noun",
+            "text": "a technical or industrial process comparable to cooking food; also: a substance so processed",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook"
         },
         {
-            "id": "C5647000-10",
-            "partOfSpeech": "idiom",
-            "text": "(<em>cook (one's) goose</em>)  To ruin one's chances.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cook",
+            "id": "cook",
+            "partOfSpeech": "verb",
+            "text": "to prepare (food) for eating by a heating process",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook",
             "examples": [
-                "The speeding ticket cooked his goose with his father. Her goose was cooked when she was caught cheating on the test."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "Cook the vegetables over low heat for 10 minutes.",
+                "The fish was cooked in a wine sauce.",
+                "He cooked dinner for his guests.",
+                "The point is that every country's numbers are the result of a specific set of testing and accounting regimes. Everyone is cooking the data, one way or another.",
+                "Agents discovered a recipe for cooking meth at his lab …",
+                "We're too busy to cook tonight.",
+                "I enjoy cooking for friends.",
+                "The rice is cooking now.",
+                "She tried to find out what was cooking in the committee.",
+                "The jazz quartet was cooking along.",
+                "The party cooked right through the night."
+            ]
+        },
+        {
+            "id": "cook",
+            "partOfSpeech": "verb",
+            "text": "concoct, fabricate —usually used with up",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook",
+            "examples": [
+                "Cook the vegetables over low heat for 10 minutes.",
+                "The fish was cooked in a wine sauce.",
+                "He cooked dinner for his guests.",
+                "The point is that every country's numbers are the result of a specific set of testing and accounting regimes. Everyone is cooking the data, one way or another.",
+                "Agents discovered a recipe for cooking meth at his lab …",
+                "We're too busy to cook tonight.",
+                "I enjoy cooking for friends.",
+                "The rice is cooking now.",
+                "She tried to find out what was cooking in the committee.",
+                "The jazz quartet was cooking along.",
+                "The party cooked right through the night."
+            ]
+        },
+        {
+            "id": "cook",
+            "partOfSpeech": "verb",
+            "text": "to alter (something, such as records) with the intention of deceiving or misleading: falsify, doctor",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook",
+            "examples": [
+                "Cook the vegetables over low heat for 10 minutes.",
+                "The fish was cooked in a wine sauce.",
+                "He cooked dinner for his guests.",
+                "The point is that every country's numbers are the result of a specific set of testing and accounting regimes. Everyone is cooking the data, one way or another.",
+                "Agents discovered a recipe for cooking meth at his lab …",
+                "We're too busy to cook tonight.",
+                "I enjoy cooking for friends.",
+                "The rice is cooking now.",
+                "She tried to find out what was cooking in the committee.",
+                "The jazz quartet was cooking along.",
+                "The party cooked right through the night."
+            ]
+        },
+        {
+            "id": "Cook:b",
+            "text": "James 1728—1779 English navigator and explorer",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook"
+        },
+        {
+            "id": "cook cheese",
+            "partOfSpeech": "noun",
+            "text": "an unripened cheese made from curd that has been cooked to a soft consistency —called also cooked cheese",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook"
+        },
+        {
+            "id": "cook-off",
+            "partOfSpeech": "noun",
+            "text": "a cooking competition",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook"
+        },
+        {
+            "id": "cook one's goose",
+            "text": "to make one's failure or ruin certain",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook"
+        },
+        {
+            "id": "cook off",
+            "partOfSpeech": "verb",
+            "text": "to fire as a result of overheating",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook"
+        },
+        {
+            "id": "Cook's tour",
+            "partOfSpeech": "noun",
+            "text": "a rapid or cursory survey or review",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook"
+        },
+        {
+            "id": "cook the books",
+            "text": "to alter official accounting records in order to deceive or mislead",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook",
+            "examples": [
+                "Congress cooked the books with phony spending cuts and accounting gimmickry to appear to reduce the federal deficit."
+            ]
+        },
+        {
+            "id": "Cook, Mount:g",
+            "text": "mountain 12,316 feet (3754 meters) high in the west central part of the South Island, New Zealand; highest peak in the Southern Alps and in New Zealand",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cook"
         }
     ]
 }

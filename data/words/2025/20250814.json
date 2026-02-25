@@ -1,124 +1,187 @@
 {
     "word": "blanket",
     "date": "20250814",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "B5319800-1",
+            "id": "blanket",
             "partOfSpeech": "noun",
-            "text": "A large piece of woven material used as a covering for warmth, especially on a bed.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blanket",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a large usually oblong piece of woven fabric used as a bed covering",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket",
+            "examples": [
+                "a horse blanket",
+                "a blanket of fog",
+                "a blanket of gloom"
+            ]
         },
         {
-            "id": "B5319800-2",
+            "id": "blanket",
             "partOfSpeech": "noun",
-            "text": "A layer that covers or encloses.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "text": "a similar piece of fabric used as a body covering (as for an animal)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket",
             "examples": [
-                "a thick blanket of snow."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a horse blanket",
+                "a blanket of fog",
+                "a blanket of gloom"
+            ]
         },
         {
-            "id": "B5319800-3",
+            "id": "blanket",
+            "partOfSpeech": "noun",
+            "text": "something that resembles a blanket",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket",
+            "examples": [
+                "a horse blanket",
+                "a blanket of fog",
+                "a blanket of gloom"
+            ]
+        },
+        {
+            "id": "blanket",
+            "partOfSpeech": "verb",
+            "text": "to cover with or as if with a blanket",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket",
+            "examples": [
+                "new grass blankets the slope",
+                "blanket a fire with foam",
+                "freight rates that blanket a region",
+                "automatically blanketed into the program",
+                "towns blanketed into the district"
+            ]
+        },
+        {
+            "id": "blanket",
+            "partOfSpeech": "verb",
+            "text": "to cover so as to obscure, interrupt, suppress, or extinguish",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket",
+            "examples": [
+                "new grass blankets the slope",
+                "blanket a fire with foam",
+                "freight rates that blanket a region",
+                "automatically blanketed into the program",
+                "towns blanketed into the district"
+            ]
+        },
+        {
+            "id": "blanket",
+            "partOfSpeech": "verb",
+            "text": "to interrupt the smooth flow of wind to (something, such as a downwind ship)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket",
+            "examples": [
+                "new grass blankets the slope",
+                "blanket a fire with foam",
+                "freight rates that blanket a region",
+                "automatically blanketed into the program",
+                "towns blanketed into the district"
+            ]
+        },
+        {
+            "id": "blanket",
             "partOfSpeech": "adjective",
-            "text": "Applying to or covering all conditions or instances.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "text": "effective or applicable in all instances or contingencies",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket",
             "examples": [
-                "a blanket insurance policy."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "blanket rules",
+                "Traveller rights across the European Union remain unchanged despite the blanket cancellation of flights and holidays in recent weeks …",
+                "A blanket ban on all private collecting of ivory could result in the confiscation and destruction of many historically important pieces of work.",
+                "Dr. Molefi Kete Asante, chair of African American Studies at Temple University, … remarked: “I do not think that anyone should make any blanket statements about any ethnic or cultural group without citing authoritative sources to substantiate those statements.”",
+                "blanket insurance coverage",
+                "… calling for a five per cent blanket wage reduction for all city hall staffers …"
+            ]
         },
         {
-            "id": "B5319800-4",
+            "id": "blanket",
             "partOfSpeech": "adjective",
-            "text": "Applying to or covering all members of a class.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blanket",
+            "text": "covering all members of a group or class without individual apportionment",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket",
             "examples": [
-                "blanket sanctions against human-rights violators."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "blanket rules",
+                "Traveller rights across the European Union remain unchanged despite the blanket cancellation of flights and holidays in recent weeks …",
+                "A blanket ban on all private collecting of ivory could result in the confiscation and destruction of many historically important pieces of work.",
+                "Dr. Molefi Kete Asante, chair of African American Studies at Temple University, … remarked: “I do not think that anyone should make any blanket statements about any ethnic or cultural group without citing authoritative sources to substantiate those statements.”",
+                "blanket insurance coverage",
+                "… calling for a five per cent blanket wage reduction for all city hall staffers …"
+            ]
         },
         {
-            "id": "B5319800-5",
-            "partOfSpeech": "transitive verb",
-            "text": "To cover with or as if with a blanket.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blanket",
-            "examples": [
-                "leaves that blanket the ground."
-            ],
-            "synonyms": [],
-            "antonyms": []
+            "id": "blanket chest",
+            "partOfSpeech": "noun",
+            "text": "a piece of furniture with a hinged lid, a deep well, and usually one or two drawers underneath",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket"
         },
         {
-            "id": "B5319800-6",
-            "partOfSpeech": "transitive verb",
-            "text": "To cover so as to inhibit, suppress, or extinguish.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blanket",
-            "examples": [
-                "blanketed the grease fire with sand."
-            ],
-            "synonyms": [],
-            "antonyms": []
+            "id": "blanket stitch",
+            "partOfSpeech": "noun",
+            "text": "a buttonhole stitch with spaces of variable width used on materials too thick to hem",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket"
         },
         {
-            "id": "B5319800-7",
-            "partOfSpeech": "transitive verb",
-            "text": "To apply to generally and uniformly without exception.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blanket",
-            "examples": [
-                "high telephone service charges that blanketed our region."
-            ],
-            "synonyms": [],
-            "antonyms": []
+            "id": "pig in a blanket",
+            "partOfSpeech": "noun",
+            "text": "a frankfurter served in a wrapper of baked dough",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket"
         },
         {
-            "text": "To cover with a blanket or as with a blanket: as, to <internalXref urlencoded=\"blanket\">blanket</internalXref> a horse.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/blanket",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "receiving blanket",
+            "partOfSpeech": "noun",
+            "text": "a small lightweight blanket used to wrap an infant (as after bathing)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket"
         },
         {
-            "text": "To toss in a blanket by way of punishment or practical joke.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/blanket",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "saddle blanket",
+            "partOfSpeech": "noun",
+            "text": "a folded blanket or pad under a saddle to prevent galling the horse",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket"
         },
         {
-            "text": "To take the wind out of the sails of, as the sails of one vessel when it is passing close to windward of another.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/blanket",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "security blanket",
+            "partOfSpeech": "noun",
+            "text": "a blanket carried by a child as a protection against anxiety",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket"
+        },
+        {
+            "id": "security blanket",
+            "partOfSpeech": "noun",
+            "text": "a usually familiar object whose presence dispels anxiety",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket"
+        },
+        {
+            "id": "wet blanket",
+            "partOfSpeech": "noun",
+            "text": "one that quenches or dampens enthusiasm or pleasure",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket"
         }
     ]
 }

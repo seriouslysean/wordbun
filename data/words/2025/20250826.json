@@ -1,122 +1,232 @@
 {
     "word": "outside",
     "date": "20250826",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "O5185400-1",
+            "id": "outside",
             "partOfSpeech": "noun",
-            "text": "The part or parts that face out; the outer surface.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/outside",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "O5185400-2",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/outside",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "O5185400-3",
-            "partOfSpeech": "noun",
-            "text": "The part or side of an object that is presented to the viewer; the external aspect.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/outside",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "O5185400-4",
-            "partOfSpeech": "noun",
-            "text": "Outward aspect or appearance.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/outside",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "O5185400-5",
-            "partOfSpeech": "noun",
-            "text": "The space beyond a boundary or limit.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/outside",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "O5185400-6",
-            "partOfSpeech": "noun",
-            "text": "A position at a distance from the inside or center, as of a playing field or racetrack.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/outside",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "O5185400-7",
-            "partOfSpeech": "noun",
-            "text": "The utmost limit; the maximum.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "text": "a place or region beyond an enclosure or boundary: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
             "examples": [
-                "We'll be leaving in ten days at the outside."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "He looked forward to life on the outside again.",
+                "The outside of the house needs painting.",
+                "The candy was hard on the outside but chewy on the inside.",
+                "I may look calm on the outside, but I'm actually nervous.",
+                "the crowd numbered 10,000 at the outside"
+            ]
         },
         {
-            "id": "O5185400-8",
-            "partOfSpeech": "adjective",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/outside",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "O5185400-9",
-            "partOfSpeech": "adjective",
-            "text": "Of, relating to, or being on or near the outer side; outer.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "id": "outside",
+            "partOfSpeech": "noun",
+            "text": "the world beyond the confines of an institution (such as a prison)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
             "examples": [
-                "the outside margin."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "He looked forward to life on the outside again.",
+                "The outside of the house needs painting.",
+                "The candy was hard on the outside but chewy on the inside.",
+                "I may look calm on the outside, but I'm actually nervous.",
+                "the crowd numbered 10,000 at the outside"
+            ]
         },
         {
-            "id": "O5185400-10",
-            "partOfSpeech": "adjective",
-            "text": "Of, restricted to, or situated on the outer side of an enclosure or a boundary; external.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/outside",
+            "id": "outside",
+            "partOfSpeech": "noun",
+            "text": "the world beyond the territory or state of Alaska; especially: the 48 contiguous states",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
             "examples": [
-                "an outside door lock; an outside antenna."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "He looked forward to life on the outside again.",
+                "The outside of the house needs painting.",
+                "The candy was hard on the outside but chewy on the inside.",
+                "I may look calm on the outside, but I'm actually nervous.",
+                "the crowd numbered 10,000 at the outside"
+            ]
+        },
+        {
+            "id": "outside",
+            "partOfSpeech": "adjective",
+            "text": "of, relating to, or being on or toward the outer side or surface",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "the outside edge",
+                "an outside pitch",
+                "turned on the outside light",
+                "outside telephone line",
+                "not taking any outside calls",
+                "blamed the riot on outside agitators",
+                "outside interests",
+                "an outside chance",
+                "borrowed a basketball and practiced his outside shot"
+            ]
+        },
+        {
+            "id": "outside",
+            "partOfSpeech": "adjective",
+            "text": "of, relating to, or being on or toward the outer side of a curve or turn",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "the outside edge",
+                "an outside pitch",
+                "turned on the outside light",
+                "outside telephone line",
+                "not taking any outside calls",
+                "blamed the riot on outside agitators",
+                "outside interests",
+                "an outside chance",
+                "borrowed a basketball and practiced his outside shot"
+            ]
+        },
+        {
+            "id": "outside",
+            "partOfSpeech": "adjective",
+            "text": "of, relating to, or being on or near the outside",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "the outside edge",
+                "an outside pitch",
+                "turned on the outside light",
+                "outside telephone line",
+                "not taking any outside calls",
+                "blamed the riot on outside agitators",
+                "outside interests",
+                "an outside chance",
+                "borrowed a basketball and practiced his outside shot"
+            ]
+        },
+        {
+            "id": "outside",
+            "partOfSpeech": "adverb",
+            "text": "on or to the outside",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "The car seemed in good condition outside.",
+                "children playing outside"
+            ]
+        },
+        {
+            "id": "outside",
+            "partOfSpeech": "adverb",
+            "text": "outdoors",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "The car seemed in good condition outside.",
+                "children playing outside"
+            ]
+        },
+        {
+            "id": "outside",
+            "partOfSpeech": "preposition",
+            "text": "—used as a function word to indicate movement to or position on the outer side of",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "outside the scope of this report",
+                "outside the law",
+                "No one knew outside a few friends."
+            ]
+        },
+        {
+            "id": "outside",
+            "partOfSpeech": "preposition",
+            "text": "beyond the limits of",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "outside the scope of this report",
+                "outside the law",
+                "No one knew outside a few friends."
+            ]
+        },
+        {
+            "id": "outside",
+            "partOfSpeech": "preposition",
+            "text": "except",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "outside the scope of this report",
+                "outside the law",
+                "No one knew outside a few friends."
+            ]
+        },
+        {
+            "id": "outside of",
+            "partOfSpeech": "preposition",
+            "text": "outside",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "lived outside of the city",
+                "Outside of the players, no one was allowed in the locker room."
+            ]
+        },
+        {
+            "id": "outside of",
+            "partOfSpeech": "preposition",
+            "text": "aside from",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "lived outside of the city",
+                "Outside of the players, no one was allowed in the locker room."
+            ]
+        },
+        {
+            "id": "outside voice",
+            "partOfSpeech": "noun",
+            "text": "a person whose opinion, perspective, etc. differs from one's own or from that of a particular group; also: an opinion, perspective, etc. that differs from one's own or that of a particular group",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "By being an objective outside voice, the board chair can reduce the likelihood of extreme performance outcomes …",
+                "Convinced I was right, I sought an outside voice: Judge John Hodgman, the comedian who writes a satiric ethical advice column for The New York Times Magazine. I explained our impasse in an email, and Hodgman replied in the May 20 issue …",
+                "The hard part about relationships is just trying to be in one without a million outside voices interfering.",
+                "My personal insight and advice to you is … to quiet outside voices, grow a backbone, and to be in charge of your life …",
+                "This is a painstakingly crafted treatise on what it's like to live inside your own mind in an age where millions of outside voices are bombarding that mind endlessly.",
+                "… a long piece, with some good outside voices in it, was unplanned and written in one intense sprint.",
+                "… corrections like “sit still” or “you're using your outside voice, please use your inside voice” …",
+                "… at exactly the moment we were walking past a lineup at the check-out, in all innocence, she [a young child] used her loud outside voice and asked: \"What colour are your panties, Grandma?\""
+            ]
+        },
+        {
+            "id": "outside voice",
+            "partOfSpeech": "noun",
+            "text": "a volume of speaking that is typically considered too loud to be used indoors (as at home or school)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/outside",
+            "examples": [
+                "By being an objective outside voice, the board chair can reduce the likelihood of extreme performance outcomes …",
+                "Convinced I was right, I sought an outside voice: Judge John Hodgman, the comedian who writes a satiric ethical advice column for The New York Times Magazine. I explained our impasse in an email, and Hodgman replied in the May 20 issue …",
+                "The hard part about relationships is just trying to be in one without a million outside voices interfering.",
+                "My personal insight and advice to you is … to quiet outside voices, grow a backbone, and to be in charge of your life …",
+                "This is a painstakingly crafted treatise on what it's like to live inside your own mind in an age where millions of outside voices are bombarding that mind endlessly.",
+                "… a long piece, with some good outside voices in it, was unplanned and written in one intense sprint.",
+                "… corrections like “sit still” or “you're using your outside voice, please use your inside voice” …",
+                "… at exactly the moment we were walking past a lineup at the check-out, in all innocence, she [a young child] used her loud outside voice and asked: \"What colour are your panties, Grandma?\""
+            ]
         }
     ]
 }

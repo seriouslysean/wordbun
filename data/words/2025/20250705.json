@@ -1,115 +1,130 @@
 {
     "word": "sun",
     "date": "20250705",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "S5947900-1",
+            "id": "sun",
             "partOfSpeech": "noun",
-            "text": "The star around which Earth and other planets orbit. It provides heat and light to Earth. It has a mean distance from Earth of about 150 million kilometers (93 million miles), a diameter of approximately 1,392,000 kilometers (865,000 miles), and a mass about 335,000 times that of Earth.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sun",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "the luminous celestial body around which the earth and other planets revolve, from which they receive heat and light, which is composed mainly of hydrogen and helium, and which has a mean distance from earth of about 93,000,000 miles (150,000,000 kilometers), a linear diameter of 864,000 miles (1,390,000 kilometers), and a mass 332,000 times greater than earth",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun",
+            "examples": [
+                "played in the sun all day",
+                "from sun to sun"
+            ]
         },
         {
-            "id": "S5947900-2",
+            "id": "sun",
             "partOfSpeech": "noun",
-            "text": "A star that is the center of a planetary system.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sun",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a celestial body like the sun: star",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun",
+            "examples": [
+                "played in the sun all day",
+                "from sun to sun"
+            ]
         },
         {
-            "id": "S5947900-3",
+            "id": "sun",
             "partOfSpeech": "noun",
-            "text": "The radiant energy, especially heat and visible light, emitted by the sun; sunshine.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sun",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "the heat or light radiated from the sun",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun",
+            "examples": [
+                "played in the sun all day",
+                "from sun to sun"
+            ]
         },
         {
-            "id": "S5947900-4",
+            "id": "sun",
+            "partOfSpeech": "verb",
+            "text": "to expose to or as if to the rays of the sun",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
+        },
+        {
+            "id": "sun",
+            "partOfSpeech": "verb",
+            "text": "to sun oneself",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
+        },
+        {
+            "id": "Sun",
+            "text": "Sunday",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
+        },
+        {
+            "id": "sun bear",
             "partOfSpeech": "noun",
-            "text": "A sunlike object, representation, or design.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sun",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a small forest-dwelling bear (Ursus malayanus synonym Helarctos malayanus) of southeastern Asia that has short glossy black fur with a lighter muzzle and often an orange or white breast mark",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
         },
         {
-            "id": "S5947900-5",
-            "partOfSpeech": "intransitive verb",
-            "text": "To expose to the sun's rays, as for warming, drying, or tanning.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sun",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5947900-6",
-            "partOfSpeech": "intransitive verb",
-            "text": "To expose oneself or itself to the sun.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sun",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5947900-7",
-            "partOfSpeech": "idiom",
-            "text": "(<em>in the sun</em>)  In the public eye.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sun",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5947900-8",
-            "partOfSpeech": "idiom",
-            "text": "(<em>under the sun</em>)  On the earth; in the world.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sun",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
+            "id": "sun dance",
             "partOfSpeech": "noun",
-            "text": "See <internalXref urlencoded=\"sunn\">sunn</internalXref>.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/sun",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a solo or group solstice rite of North American Indigenous peoples especially of the Great Plains",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
         },
         {
-            "text": "To expose to the sun's rays; warm or dry in the sunshine; insolate: as, to <internalXref urlencoded=\"sun\">sun</internalXref> cloth.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/sun",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "sun disk",
+            "partOfSpeech": "noun",
+            "text": "an ancient Near Eastern symbol consisting of a disk with conventionalized wings emblematic of the sun god (such as Ra in Egypt)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
+        },
+        {
+            "id": "sun dog",
+            "partOfSpeech": "noun",
+            "text": "parhelion",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
+        },
+        {
+            "id": "sun dog",
+            "partOfSpeech": "noun",
+            "text": "a small nearly round halo on the parhelic circle most frequently just outside the halo of 22 degrees",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
+        },
+        {
+            "id": "sun god",
+            "partOfSpeech": "noun",
+            "text": "a god that represents or personifies the sun in various religions",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
+        },
+        {
+            "id": "sun goddess",
+            "partOfSpeech": "noun",
+            "text": "a goddess that represents or personifies the sun in various religions",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
+        },
+        {
+            "id": "sun-grebe",
+            "partOfSpeech": "noun",
+            "text": "any of a small family (Heliornithidae) of semiaquatic African, Asian, and American tropical birds that have lobed feet and are related to the rails",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
         }
     ]
 }

@@ -1,122 +1,204 @@
 {
     "word": "mat",
     "date": "20250727",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "M5153300-1",
+            "id": "mat",
             "partOfSpeech": "noun",
-            "text": "A flat piece of coarse fabric or other material used for wiping one's shoes or feet, or in various other forms as a floor covering.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/mat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5153300-2",
-            "partOfSpeech": "noun",
-            "text": "A small flat piece of decorated material placed under a lamp, dish of food, or other object.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/mat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5153300-3",
-            "partOfSpeech": "noun",
-            "text": "A floor pad to protect athletes, as in wrestling or gymnastics.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/mat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5153300-4",
-            "partOfSpeech": "noun",
-            "text": "A densely woven or thickly tangled mass.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "text": "a piece of coarse, woven, plaited, or felted fabric used especially as a floor covering or a support",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
             "examples": [
-                "a mat of hair."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "an algal mat",
+                "a mat of unkempt hair"
+            ]
         },
         {
-            "id": "M5153300-5",
+            "id": "mat",
             "partOfSpeech": "noun",
-            "text": "The solid part of a lace design.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/mat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5153300-6",
-            "partOfSpeech": "noun",
-            "text": "A heavy woven net of rope or wire cable placed over a blasting site to keep debris from scattering.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/mat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5153300-7",
-            "partOfSpeech": "intransitive verb",
-            "text": "To cover, protect, or decorate with mats or a mat.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/mat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5153300-8",
-            "partOfSpeech": "intransitive verb",
-            "text": "To pack or interweave into a thick mass.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/mat",
+            "text": "a piece of material placed at a door for wiping soiled shoe soles",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
             "examples": [
-                "High winds matted the leaves against the base of the fence."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "an algal mat",
+                "a mat of unkempt hair"
+            ]
         },
         {
-            "id": "M5153300-9",
-            "partOfSpeech": "intransitive verb",
-            "text": "To be packed or interwoven into a thick mass; become entangled.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/mat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5153400-1",
+            "id": "mat",
             "partOfSpeech": "noun",
-            "text": "A decorative border placed around a picture to serve as a frame or provide contrast between the picture and the frame.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/mat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a decorative piece of material used under a small item (such as a dish) especially for support or protection",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
+            "examples": [
+                "an algal mat",
+                "a mat of unkempt hair"
+            ]
+        },
+        {
+            "id": "mat",
+            "partOfSpeech": "verb",
+            "text": "to provide with a mat or matting",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
+            "examples": [
+                "dirt and filth matted her hair"
+            ]
+        },
+        {
+            "id": "mat",
+            "partOfSpeech": "verb",
+            "text": "to form into a tangled mass",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
+            "examples": [
+                "dirt and filth matted her hair"
+            ]
+        },
+        {
+            "id": "mat",
+            "partOfSpeech": "verb",
+            "text": "to pack down so as to form a dense mass",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
+            "examples": [
+                "dirt and filth matted her hair"
+            ]
+        },
+        {
+            "id": "mat",
+            "partOfSpeech": "verb",
+            "text": "to make (something, such as a metal, glass, or color) matte",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat"
+        },
+        {
+            "id": "mat",
+            "partOfSpeech": "verb",
+            "text": "to provide (a picture) with a mat",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat"
+        },
+        {
+            "id": "mat",
+            "partOfSpeech": "adjective",
+            "text": "lacking or deprived of luster or gloss: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
+            "examples": [
+                "matte metals",
+                "a matte finish"
+            ]
+        },
+        {
+            "id": "mat",
+            "partOfSpeech": "adjective",
+            "text": "having a usually smooth even surface free from shine or highlights",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
+            "examples": [
+                "matte metals",
+                "a matte finish"
+            ]
+        },
+        {
+            "id": "mat",
+            "partOfSpeech": "adjective",
+            "text": "having a rough or granular surface",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
+            "examples": [
+                "matte metals",
+                "a matte finish"
+            ]
+        },
+        {
+            "id": "mat",
+            "partOfSpeech": "noun",
+            "text": "a border going around a picture between picture and frame or serving as the frame",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat"
+        },
+        {
+            "id": "mat",
+            "partOfSpeech": "noun",
+            "text": "matrix",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat"
+        },
+        {
+            "id": "matte",
+            "partOfSpeech": "adjective",
+            "text": "lacking or deprived of luster or gloss: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
+            "examples": [
+                "matte metals",
+                "a matte finish"
+            ]
+        },
+        {
+            "id": "matte",
+            "partOfSpeech": "adjective",
+            "text": "having a usually smooth even surface free from shine or highlights",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
+            "examples": [
+                "matte metals",
+                "a matte finish"
+            ]
+        },
+        {
+            "id": "matte",
+            "partOfSpeech": "adjective",
+            "text": "having a rough or granular surface",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat",
+            "examples": [
+                "matte metals",
+                "a matte finish"
+            ]
+        },
+        {
+            "id": "matte",
+            "partOfSpeech": "noun",
+            "text": "a crude mixture of sulfides formed in smelting sulfide ores of metals (such as copper, lead, or nickel)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat"
+        },
+        {
+            "id": "matte",
+            "partOfSpeech": "noun",
+            "text": "a movie effect in which part of a scene is blocked out and later replaced by footage containing other material (such as a background painting)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat"
+        },
+        {
+            "id": "bath mat",
+            "partOfSpeech": "noun",
+            "text": "a usually washable mat used in a bathroom",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/mat"
         }
     ]
 }

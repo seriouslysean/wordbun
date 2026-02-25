@@ -1,117 +1,150 @@
 {
     "word": "bag",
     "date": "20250725",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "B5026800-1",
+            "id": "bag",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bag",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a usually flexible container that may be closed for holding, storing, or carrying something: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag",
+            "examples": [
+                "a bag of tricks"
+            ]
         },
         {
-            "id": "B5026800-2",
+            "id": "bag",
             "partOfSpeech": "noun",
-            "text": "A container of flexible material, such as paper, plastic, or leather, that is used for carrying or storing items.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bag",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "purse; especially: handbag",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag",
+            "examples": [
+                "a bag of tricks"
+            ]
         },
         {
-            "id": "B5026800-3",
+            "id": "bag",
             "partOfSpeech": "noun",
-            "text": "A handbag; a purse.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bag",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a bag for game",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag",
+            "examples": [
+                "a bag of tricks"
+            ]
         },
         {
-            "id": "B5026800-4",
-            "partOfSpeech": "noun",
-            "text": "A piece of hand luggage, such as a suitcase or satchel.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bag",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "bag",
+            "partOfSpeech": "verb",
+            "text": "to swell out: bulge",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag",
+            "examples": [
+                "The tent bagged outward under the force of the wind.",
+                "pants bagging in the back",
+                "bag groceries",
+                "arrived early and bagged a front row seat",
+                "… he was bagged by police who were alerted by the freelance jewel salesman.",
+                "bag a playoff berth",
+                "decided to bag her job and move to the country",
+                "Tiger's been losing his temper and his putting stroke. He shed his agent, and he bagged his caddy …",
+                "I asked the respiratory therapist to continue bagging and assisting the patient while I sought the family's permission not to proceed with intubation."
+            ]
         },
         {
-            "id": "B5026800-5",
-            "partOfSpeech": "noun",
-            "text": "A pouchlike or sagging organ or part of the body, such as a cow's udder.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bag",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "bag",
+            "partOfSpeech": "verb",
+            "text": "to hang loosely",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag",
+            "examples": [
+                "The tent bagged outward under the force of the wind.",
+                "pants bagging in the back",
+                "bag groceries",
+                "arrived early and bagged a front row seat",
+                "… he was bagged by police who were alerted by the freelance jewel salesman.",
+                "bag a playoff berth",
+                "decided to bag her job and move to the country",
+                "Tiger's been losing his temper and his putting stroke. He shed his agent, and he bagged his caddy …",
+                "I asked the respiratory therapist to continue bagging and assisting the patient while I sought the family's permission not to proceed with intubation."
+            ]
         },
         {
-            "id": "B5026800-6",
-            "partOfSpeech": "noun",
-            "text": "An object that resembles a pouch.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bag",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "bag",
+            "partOfSpeech": "verb",
+            "text": "to cause to swell",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag",
+            "examples": [
+                "The tent bagged outward under the force of the wind.",
+                "pants bagging in the back",
+                "bag groceries",
+                "arrived early and bagged a front row seat",
+                "… he was bagged by police who were alerted by the freelance jewel salesman.",
+                "bag a playoff berth",
+                "decided to bag her job and move to the country",
+                "Tiger's been losing his temper and his putting stroke. He shed his agent, and he bagged his caddy …",
+                "I asked the respiratory therapist to continue bagging and assisting the patient while I sought the family's permission not to proceed with intubation."
+            ]
         },
         {
-            "id": "B5026800-7",
-            "partOfSpeech": "noun",
-            "text": "The sagging or bulging part of a sail.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bag",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "BAg",
+            "text": "bachelor of agriculture",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag"
         },
         {
-            "id": "B5026800-8",
+            "id": "bag lady",
             "partOfSpeech": "noun",
-            "text": "The amount that a bag can hold.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bag",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a woman with no established residence who roams the streets of a city carrying her possessions in shopping bags",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag"
         },
         {
-            "id": "B5026800-9",
+            "id": "bag lunch",
             "partOfSpeech": "noun",
-            "text": "An amount of game taken or legally permitted to be taken.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bag",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a lunch prepared at home and packed inside a bag or box to be eaten elsewhere —called also box lunch",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag",
+            "examples": [
+                "His circle of students grew, and each Tuesday they met to eat bag lunches and talk."
+            ]
         },
         {
-            "id": "B5026800-10",
+            "id": "bag of waters",
             "partOfSpeech": "noun",
-            "text": "A base.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bag",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "the double-walled fluid-filled sac that encloses and protects the fetus in the womb and that breaks releasing its fluid during the birth process",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag"
+        },
+        {
+            "id": "barf bag",
+            "partOfSpeech": "noun",
+            "text": "a waterproof bag into which a person (such as an airplane passenger) who is experiencing nausea can vomit",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag",
+            "examples": [
+                "Nonetheless, he has his face in the barf bag on this ridiculously cramped and bumpy twin-propeller flight from Palm Springs to Los Angeles …"
+            ]
+        },
+        {
+            "id": "barracks bag",
+            "partOfSpeech": "noun",
+            "text": "a fabric bag for carrying personal equipment; especially: duffel bag",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bag"
         }
     ]
 }

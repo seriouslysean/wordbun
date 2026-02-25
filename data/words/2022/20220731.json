@@ -1,49 +1,97 @@
 {
     "word": "hi",
     "date": "20220731",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "H5191700-1",
+            "id": "hi",
             "partOfSpeech": "interjection",
-            "text": "Used to express greeting.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hi",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "—used especially as a greeting",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi"
         },
         {
-            "partOfSpeech": "interjection",
-            "text": "A <xref>friendly</xref>, <xref>informal</xref>, <xref>casual</xref> <xref>greeting</xref> said when meeting someone.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/hi",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "HI",
+            "text": "Hawaii",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi"
         },
         {
-            "partOfSpeech": "adjective",
-            "text": "Informal spelling of <xref>high</xref>, often hyphenated.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/hi",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "HI",
+            "text": "high intensity",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi"
         },
         {
+            "id": "HI",
+            "text": "humidity index",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi"
+        },
+        {
+            "id": "hi-fi",
             "partOfSpeech": "noun",
-            "text": "\"Hi\" or similar greeting.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/hi",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "high fidelity",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi"
+        },
+        {
+            "id": "hi-fi",
+            "partOfSpeech": "noun",
+            "text": "equipment for reproduction of sound with high fidelity",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi"
+        },
+        {
+            "id": "high-def",
+            "partOfSpeech": "adjective",
+            "text": "high-definition",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi",
+            "examples": [
+                "high-def TV",
+                "high-def programming",
+                "hi-def video"
+            ]
+        },
+        {
+            "id": "high hat",
+            "partOfSpeech": "noun",
+            "text": "beaver",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi"
+        },
+        {
+            "id": "high hat",
+            "partOfSpeech": "noun",
+            "text": "a pair of cymbals operated by a foot pedal",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi"
+        },
+        {
+            "id": "high tech",
+            "partOfSpeech": "noun",
+            "text": "high technology",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi"
+        },
+        {
+            "id": "high tech",
+            "partOfSpeech": "noun",
+            "text": "a style of interior design featuring industrial products, materials, or designs",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hi"
         }
     ]
 }

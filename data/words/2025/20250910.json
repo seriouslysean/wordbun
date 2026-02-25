@@ -1,120 +1,114 @@
 {
     "word": "poop",
     "date": "20250910",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "P5479800-1",
-            "partOfSpeech": "noun",
-            "text": "A person regarded as very disagreeable.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/poop",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5479900-1",
-            "partOfSpeech": "noun",
-            "text": "Excrement.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/poop",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5479900-2",
-            "partOfSpeech": "intransitive verb",
-            "text": "To defecate.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/poop",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5479900-3",
-            "partOfSpeech": "intransitive verb",
-            "text": "To defecate in (one's clothes or bed, for example).",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/poop",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5479600-1",
-            "partOfSpeech": "transitive verb",
-            "text": "To cause to become fatigued; tire.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/poop",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5479600-2",
-            "partOfSpeech": "phrasal verb",
-            "text": "To quit because of exhaustion.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/poop",
+            "id": "poop",
+            "partOfSpeech": "verb",
+            "text": "defecate",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop",
             "examples": [
-                "poop out of a race."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "So while my wife's horse trotted briskly off into the scenery, looking for low branches to run under, my horse just stood there, eating and pooping …"
+            ]
         },
         {
-            "id": "P5479600-3",
-            "partOfSpeech": "phrasal verb",
-            "text": "To decide not to participate, especially at the last moment.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/poop",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5479500-1",
+            "id": "poop",
             "partOfSpeech": "noun",
-            "text": "An enclosed superstructure at the stern of a ship.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/poop",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "feces, excrement",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop",
+            "examples": [
+                "As a brand-new father, a new substance plays a big role in my life: poop.",
+                "As the years go by, there's trouble in paradise, and it isn't just the ubiquitous goose poop.",
+                "I have a complaint against dog owners that take their dogs for a walk but do not take a bag, then let their dog stop by people's mailboxes and take a poop."
+            ]
         },
         {
-            "id": "P5479500-2",
+            "id": "poop",
             "partOfSpeech": "noun",
-            "text": "A poop deck.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/poop",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "the act of defecating",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop",
+            "examples": [
+                "As a brand-new father, a new substance plays a big role in my life: poop.",
+                "As the years go by, there's trouble in paradise, and it isn't just the ubiquitous goose poop.",
+                "I have a complaint against dog owners that take their dogs for a walk but do not take a bag, then let their dog stop by people's mailboxes and take a poop."
+            ]
         },
         {
-            "id": "P5479500-3",
-            "partOfSpeech": "transitive verb",
-            "text": "To break over the stern of (a ship). Used of a wave.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/poop",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "poop",
+            "partOfSpeech": "verb",
+            "text": "to become exhausted",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop",
+            "examples": [
+                "I was pooped by then."
+            ]
+        },
+        {
+            "id": "poop",
+            "partOfSpeech": "verb",
+            "text": "to put out of breath; also: to tire out —used with out",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop",
+            "examples": [
+                "I was pooped by then."
+            ]
+        },
+        {
+            "id": "poop",
+            "partOfSpeech": "noun",
+            "text": "an enclosed superstructure at the stern of a ship above the main deck",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop"
+        },
+        {
+            "id": "poop",
+            "partOfSpeech": "noun",
+            "text": "stern",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop"
+        },
+        {
+            "id": "poop",
+            "partOfSpeech": "verb",
+            "text": "to break over the stern of",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop"
+        },
+        {
+            "id": "poop",
+            "partOfSpeech": "verb",
+            "text": "to ship (a sea or wave) over the stern",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop"
+        },
+        {
+            "id": "poop",
+            "partOfSpeech": "noun",
+            "text": "information, scoop",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop"
+        },
+        {
+            "id": "poop deck",
+            "partOfSpeech": "noun",
+            "text": "a partial deck above a ship's main afterdeck",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poop"
         }
     ]
 }

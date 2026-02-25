@@ -1,127 +1,159 @@
 {
     "word": "picture",
     "date": "20250709",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "P5317600-1",
+            "id": "picture",
             "partOfSpeech": "noun",
-            "text": "A visual representation or image painted, drawn, photographed, or otherwise rendered on a flat surface.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/picture",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5317600-2",
-            "partOfSpeech": "noun",
-            "text": "A visible image, especially one on a flat surface or screen.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "text": "a design or representation made by various means (such as painting, drawing, or photography)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture",
             "examples": [
-                "the picture reflected in the lake; focused the picture on the movie screen."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "the book gives a detailed picture of what is happening",
+                "he was the picture of his father",
+                "she was the very picture of health",
+                "took a hard look at his financial picture"
+            ]
         },
         {
-            "id": "P5317600-3",
+            "id": "picture",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/picture",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5317600-4",
-            "partOfSpeech": "noun",
-            "text": "A vivid or realistic verbal description.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "text": "a description so vivid or graphic as to suggest a mental image or give an accurate idea of something",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture",
             "examples": [
-                "a Shakespearean picture of guilt."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "the book gives a detailed picture of what is happening",
+                "he was the picture of his father",
+                "she was the very picture of health",
+                "took a hard look at his financial picture"
+            ]
         },
         {
-            "id": "P5317600-5",
+            "id": "picture",
             "partOfSpeech": "noun",
-            "text": "A vivid mental image.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/picture",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5317600-6",
-            "partOfSpeech": "noun",
-            "text": "A person or object bearing a marked resemblance to another.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "text": "a mental image",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture",
             "examples": [
-                "She's the picture of her mother."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "the book gives a detailed picture of what is happening",
+                "he was the picture of his father",
+                "she was the very picture of health",
+                "took a hard look at his financial picture"
+            ]
         },
         {
-            "id": "P5317600-7",
+            "id": "picture",
+            "partOfSpeech": "verb",
+            "text": "to form a mental image of: imagine",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
+        },
+        {
+            "id": "picture",
+            "partOfSpeech": "verb",
+            "text": "to describe graphically in words",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
+        },
+        {
+            "id": "picture",
+            "partOfSpeech": "verb",
+            "text": "to paint or draw a representation, image, or visual conception of: depict; also: illustrate",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
+        },
+        {
+            "id": "picture-book",
+            "partOfSpeech": "adjective",
+            "text": "suitable for or suggestive of a picture book: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
+        },
+        {
+            "id": "picture-book",
+            "partOfSpeech": "adjective",
+            "text": "picturesque",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
+        },
+        {
+            "id": "picture-book",
+            "partOfSpeech": "adjective",
+            "text": "picture-perfect",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
+        },
+        {
+            "id": "picture book",
             "partOfSpeech": "noun",
-            "text": "A person, object, or scene that typifies or embodies an emotion, state of mind, or mood.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "text": "a book that consists wholly or chiefly of pictures",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
+        },
+        {
+            "id": "picture hat",
+            "partOfSpeech": "noun",
+            "text": "a woman's dressy hat with a broad brim",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
+        },
+        {
+            "id": "picture-perfect",
+            "partOfSpeech": "adjective",
+            "text": "completely flawless: perfect",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture",
             "examples": [
-                "Your face was the very picture of horror."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "made a picture-perfect landing"
+            ]
         },
         {
-            "id": "P5317600-8",
-            "partOfSpeech": "noun",
-            "text": "The chief circumstances of an event or time; the situation.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/picture",
+            "id": "picture-postcard",
+            "partOfSpeech": "adjective",
+            "text": "picturesque",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture",
             "examples": [
-                "How does the new boyfriend figure in the picture?"
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a picture-postcard village"
+            ]
         },
         {
-            "id": "P5317600-9",
+            "id": "picture puzzle",
             "partOfSpeech": "noun",
-            "text": "A movie.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/picture",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "jigsaw puzzle",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
         },
         {
-            "id": "P5317600-10",
+            "id": "picture tube",
             "partOfSpeech": "noun",
-            "text": "A tableau vivant.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/picture",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a cathode-ray tube on which the picture appears in a television",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
+        },
+        {
+            "id": "picture window",
+            "partOfSpeech": "noun",
+            "text": "an outsize usually single-paned window designed to frame an exterior view",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
         }
     ]
 }

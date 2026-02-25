@@ -1,117 +1,154 @@
 {
     "word": "vacuum",
     "date": "20250802",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "V5003800-1",
+            "id": "vacuum",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/vacuum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "emptiness of space",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum",
+            "examples": [
+                "… the power vacuum in Indochina after the departure of the French …",
+                "… people who live in a vacuum … so that the world outside them is of no moment …"
+            ]
         },
         {
-            "id": "V5003800-2",
+            "id": "vacuum",
             "partOfSpeech": "noun",
-            "text": "Absence of matter.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/vacuum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a space absolutely devoid of matter",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum",
+            "examples": [
+                "… the power vacuum in Indochina after the departure of the French …",
+                "… people who live in a vacuum … so that the world outside them is of no moment …"
+            ]
         },
         {
-            "id": "V5003800-3",
+            "id": "vacuum",
             "partOfSpeech": "noun",
-            "text": "A space empty of matter.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/vacuum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a space partially exhausted (as to the highest degree possible) by artificial means (such as an air pump)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum",
+            "examples": [
+                "… the power vacuum in Indochina after the departure of the French …",
+                "… people who live in a vacuum … so that the world outside them is of no moment …"
+            ]
         },
         {
-            "id": "V5003800-4",
-            "partOfSpeech": "noun",
-            "text": "A space relatively empty of matter.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/vacuum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "vacuum",
+            "partOfSpeech": "verb",
+            "text": "to use a vacuum device (such as a vacuum cleaner) on",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum",
+            "examples": [
+                "vacuum the living room"
+            ]
         },
         {
-            "id": "V5003800-5",
-            "partOfSpeech": "noun",
-            "text": "A space in which the pressure is significantly lower than atmospheric pressure.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/vacuum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "vacuum",
+            "partOfSpeech": "verb",
+            "text": "to draw or take in by or as if by suction",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum",
+            "examples": [
+                "vacuum the living room"
+            ]
         },
         {
-            "id": "V5003800-6",
-            "partOfSpeech": "noun",
-            "text": "A state of emptiness; a void.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/vacuum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "vacuum",
+            "partOfSpeech": "verb",
+            "text": "to operate a vacuum device",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum",
+            "examples": [
+                "vacuum the living room"
+            ]
         },
         {
-            "id": "V5003800-7",
-            "partOfSpeech": "noun",
-            "text": "A state of being sealed off from external or environmental influences; isolation.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/vacuum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "V5003800-8",
-            "partOfSpeech": "noun",
-            "text": "A vacuum cleaner.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/vacuum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "V5003800-9",
+            "id": "vacuum",
             "partOfSpeech": "adjective",
-            "text": "Of, relating to, or used to create a vacuum.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/vacuum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "of, containing, producing, or utilizing a partial vacuum",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum",
+            "examples": [
+                "separated by means of vacuum distillation"
+            ]
         },
         {
-            "id": "V5003800-10",
+            "id": "vacuum",
             "partOfSpeech": "adjective",
-            "text": "Containing air or other gas at a reduced pressure.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/vacuum",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "of or relating to a vacuum device or system",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum",
+            "examples": [
+                "separated by means of vacuum distillation"
+            ]
+        },
+        {
+            "id": "vacuum bottle",
+            "partOfSpeech": "noun",
+            "text": "thermos",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum"
+        },
+        {
+            "id": "vacuum cleaner",
+            "partOfSpeech": "noun",
+            "text": "a household appliance for cleaning floors, carpets, upholstery, etc. by suction —called also vacuum sweeper",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum"
+        },
+        {
+            "id": "vacuum flask",
+            "partOfSpeech": "noun",
+            "text": "thermos",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum"
+        },
+        {
+            "id": "vacuum gauge",
+            "partOfSpeech": "noun",
+            "text": "a gauge indicating degree of rarefaction below atmospheric pressure",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum"
+        },
+        {
+            "id": "vacuum-packed",
+            "partOfSpeech": "adjective",
+            "text": "having much of the air removed before being hermetically sealed",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum"
+        },
+        {
+            "id": "vacuum pan",
+            "partOfSpeech": "noun",
+            "text": "a tank with a vacuum pump for rapid evaporation and condensation (as of sugar syrup) by boiling at a low temperature",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum"
+        },
+        {
+            "id": "vacuum pump",
+            "partOfSpeech": "noun",
+            "text": "a pump for exhausting gas from an enclosed space",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum"
         }
     ]
 }

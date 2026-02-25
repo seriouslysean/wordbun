@@ -1,108 +1,114 @@
 {
     "word": "puppy",
     "date": "20251003",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "P5724300-1",
+            "id": "puppy",
             "partOfSpeech": "noun",
-            "text": "A young dog; a pup.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/puppy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a young domestic dog; specifically: one less than a year old",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/puppy",
+            "examples": [
+                "a computer that is one fast puppy"
+            ]
         },
         {
+            "id": "puppy",
             "partOfSpeech": "noun",
-            "text": "A doll; a puppet.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/puppy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "baby",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/puppy",
+            "examples": [
+                "a computer that is one fast puppy"
+            ]
         },
         {
+            "id": "puppy dog",
             "partOfSpeech": "noun",
-            "text": "A young dog; a whelp; also, by extension, a young seal or other young carnivore.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/puppy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a domestic dog; especially: one having the lovable attributes of a puppy",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/puppy"
         },
         {
+            "id": "puppy love",
             "partOfSpeech": "noun",
-            "text": "A conceited, frivolous, and impertinent man; a silly young fop or coxcomb: used in contempt.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/puppy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "transitory love or affection felt by a child or adolescent",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/puppy"
         },
         {
+            "id": "puppy mill",
             "partOfSpeech": "noun",
-            "text": "A white bowl or buoy used in the herring-fisheries to mark the position of the net nearest the fishing-boat.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/puppy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a commercial farming operation in which purebred dogs are raised in large numbers and often in substandard or poor conditions",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/puppy",
+            "examples": [
+                "Currently, hundreds of thousands of dogs languish in puppy mills, large commercial breeding operations that supply most pet stores across the United States and contribute heavily to the pet overpopulation problem."
+            ]
         },
         {
-            "text": "To bring forth puppies; whelp. Also <internalXref urlencoded=\"pup\">pup</internalXref>.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/puppy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
+            "id": "hush puppy",
             "partOfSpeech": "noun",
-            "text": "The young of a canine animal, esp. of the common dog; a whelp.",
-            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
-            "sourceDictionary": "gcide",
-            "sourceUrl": "https://www.wordnik.com/words/puppy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "cornmeal dough shaped into small balls and fried in deep fat —usually used in plural",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/puppy"
         },
         {
+            "id": "foster",
+            "partOfSpeech": "adjective",
+            "text": "having, relating to, or being the relationship between a foster parent and the child who the foster parent cares for",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/puppy",
+            "examples": [
+                "Although both girls lived with Ms. Ayala, Millison was the only one who was officially placed in her care as a foster child.",
+                "Twenty-three foster children now have a place to call home and family of their own following the Adoption Day at the Williamson County Courthouse in Marion on Friday.",
+                "a foster mother/father",
+                "her new foster brother/sister",
+                "living with a foster family",
+                "foster parenting",
+                "the foster system",
+                "foster pets",
+                "a foster dog/cat/puppy/kitten",
+                "found foster placements for the animals",
+                "For the past year, Melbourne social impact strategy consultant Lee Crockford has been a foster dad to Romeo, an adorable Labrador puppy and future seeing eye dog."
+            ]
+        },
+        {
+            "id": "foster",
+            "partOfSpeech": "adjective",
+            "text": "being, relating to, or involved in a situation in which temporary care is given to an animal (such as one that is injured or awaiting adoption) in a household or similar setting",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/puppy",
+            "examples": [
+                "Although both girls lived with Ms. Ayala, Millison was the only one who was officially placed in her care as a foster child.",
+                "Twenty-three foster children now have a place to call home and family of their own following the Adoption Day at the Williamson County Courthouse in Marion on Friday.",
+                "a foster mother/father",
+                "her new foster brother/sister",
+                "living with a foster family",
+                "foster parenting",
+                "the foster system",
+                "foster pets",
+                "a foster dog/cat/puppy/kitten",
+                "found foster placements for the animals",
+                "For the past year, Melbourne social impact strategy consultant Lee Crockford has been a foster dad to Romeo, an adorable Labrador puppy and future seeing eye dog."
+            ]
+        },
+        {
+            "id": "mudpuppy",
             "partOfSpeech": "noun",
-            "text": "A name of contemptuous reproach for a conceited and impertinent person.",
-            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
-            "sourceDictionary": "gcide",
-            "sourceUrl": "https://www.wordnik.com/words/puppy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "intransitive verb",
-            "text": "To bring forth whelps; to pup.",
-            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
-            "sourceDictionary": "gcide",
-            "sourceUrl": "https://www.wordnik.com/words/puppy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A young <xref>dog</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/puppy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a large North American salamander (Necturus maculosus) that has external gills and is gray to rusty brown usually with bluish-black spots",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/puppy"
         }
     ]
 }

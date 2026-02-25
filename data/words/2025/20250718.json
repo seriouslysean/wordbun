@@ -1,119 +1,91 @@
 {
     "word": "sticky",
     "date": "20250718",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "S5821400-1",
+            "id": "sticky",
             "partOfSpeech": "adjective",
-            "text": "Having the property of adhering or sticking to a surface; adhesive.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sticky",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5821400-2",
-            "partOfSpeech": "adjective",
-            "text": "Covered with an adhesive agent.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sticky",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5821400-3",
-            "partOfSpeech": "adjective",
-            "text": "Warm and humid; muggy.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "text": "adhesive",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sticky",
             "examples": [
-                "a sticky day."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a sticky material",
+                "sticky syrup",
+                "sticky little fingers",
+                "… it must have been just repainted, it looked so bright and sticky …",
+                "came to a sticky end",
+                "a sticky situation"
+            ]
         },
         {
-            "id": "S5821400-4",
+            "id": "sticky",
             "partOfSpeech": "adjective",
-            "text": "Painful or difficult.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "text": "viscous, gluey",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sticky",
             "examples": [
-                "a sticky situation."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a sticky material",
+                "sticky syrup",
+                "sticky little fingers",
+                "… it must have been just repainted, it looked so bright and sticky …",
+                "came to a sticky end",
+                "a sticky situation"
+            ]
         },
         {
-            "id": "S5821400-5",
+            "id": "sticky",
             "partOfSpeech": "adjective",
-            "text": "Tending to remain the same despite changes in the economy. Used of prices or wages.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sticky",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5821400-6",
-            "partOfSpeech": "adjective",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sticky",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5821400-7",
-            "partOfSpeech": "adjective",
-            "text": "Of or relating to an item of software or hardware, such as an onscreen graphic or mouse button, that remains active for a brief time after being touched.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sticky",
+            "text": "coated with a sticky substance",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sticky",
             "examples": [
-                "sticky keys; a sticky menu."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a sticky material",
+                "sticky syrup",
+                "sticky little fingers",
+                "… it must have been just repainted, it looked so bright and sticky …",
+                "came to a sticky end",
+                "a sticky situation"
+            ]
         },
         {
-            "id": "S5821400-8",
+            "id": "sticky bun",
+            "partOfSpeech": "noun",
+            "text": "a spiral-shaped cinnamon roll topped with melted brown sugar and butter",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sticky"
+        },
+        {
+            "id": "sticky note",
+            "partOfSpeech": "noun",
+            "text": "a slip of notepaper having an adhesive strip on the back that allows attachment to and removal from a surface",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sticky"
+        },
+        {
+            "id": "sticky-sweet",
             "partOfSpeech": "adjective",
-            "text": "Of or relating to content designed to increase the duration of visits to a website.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sticky",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "extremely or excessively sweet: sickly sweet",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sticky",
+            "examples": [
+                "sticky-sweet caramel",
+                "a love song full of sticky-sweet sentiment"
+            ]
         },
         {
-            "text": "Like a stick; stiff.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/sticky",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "text": "Having the property of adhering to a surface; inclining to stick; adhesive; viscous; viscid; glutinous; tenacious.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/sticky",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "sticky wicket",
+            "partOfSpeech": "noun",
+            "text": "a difficult or delicate problem or situation",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sticky"
         }
     ]
 }

@@ -1,125 +1,114 @@
 {
     "word": "antique",
     "date": "20250926",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "A5365400-1",
+            "id": "antique",
             "partOfSpeech": "adjective",
-            "text": "Belonging to, made in, or typical of an earlier period: <i>synonym</i>: <strong> old</strong>.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "text": "existing since or belonging to earlier times: ancient",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/antique",
             "examples": [
-                "antique furniture."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "antique trade routes to India",
+                "antique manners and graces",
+                "antique mirrors",
+                "an antique show"
+            ]
         },
         {
-            "id": "A5365400-2",
+            "id": "antique",
             "partOfSpeech": "adjective",
-            "text": "Of or belonging to ancient times, especially of, from, or characteristic of ancient Greece or Rome.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/antique",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "A5365400-3",
-            "partOfSpeech": "adjective",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/antique",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "A5365400-4",
-            "partOfSpeech": "adjective",
-            "text": "Relating to or dealing in antiques.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/antique",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "A5365400-5",
-            "partOfSpeech": "adjective",
-            "text": "Having the appearance of an antique.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/antique",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "A5365400-6",
-            "partOfSpeech": "adjective",
-            "text": "Old-fashioned; outdated.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/antique",
+            "text": "being in the style or fashion of former times",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/antique",
             "examples": [
-                "wore a suit of rather antique appearance."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "antique trade routes to India",
+                "antique manners and graces",
+                "antique mirrors",
+                "an antique show"
+            ]
         },
         {
-            "id": "A5365400-7",
+            "id": "antique",
+            "partOfSpeech": "adjective",
+            "text": "made in or representative of the work of an earlier period; also: being an antique",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/antique",
+            "examples": [
+                "antique trade routes to India",
+                "antique manners and graces",
+                "antique mirrors",
+                "an antique show"
+            ]
+        },
+        {
+            "id": "antique",
             "partOfSpeech": "noun",
-            "text": "An object having special value because of its age, especially a domestic item or piece of furniture or handicraft esteemed for its artistry, beauty, or period of origin.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/antique",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a relic or object of ancient times",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/antique"
         },
         {
-            "id": "A5365400-8",
+            "id": "antique",
             "partOfSpeech": "noun",
-            "text": "The style or manner of ancient times, especially that of ancient Greek or Roman art.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/antique",
-            "examples": [
-                "an admirer of the antique."
-            ],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a work of art, piece of furniture, or decorative object made at an earlier period and according to various customs laws at least 100 years ago",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/antique"
         },
         {
-            "id": "A5365400-9",
-            "partOfSpeech": "intransitive verb",
-            "text": "To give the appearance of an antique to.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/antique",
-            "examples": [
-                "antiqued an oak chest."
-            ],
-            "synonyms": [],
-            "antonyms": []
+            "id": "antique",
+            "partOfSpeech": "noun",
+            "text": "a manufactured product (such as an automobile) from an earlier period",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/antique"
         },
         {
-            "id": "A5365400-10",
-            "partOfSpeech": "intransitive verb",
-            "text": "To hunt or shop for antiques.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/antique",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "antique",
+            "partOfSpeech": "verb",
+            "text": "to finish or refinish in antique style: give an appearance of age to",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/antique",
+            "examples": [
+                "antique a table"
+            ]
+        },
+        {
+            "id": "antique",
+            "partOfSpeech": "verb",
+            "text": "to shop around for antiques",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/antique",
+            "examples": [
+                "antique a table"
+            ]
+        },
+        {
+            "id": "semi-antique",
+            "partOfSpeech": "adjective",
+            "text": "being approximately 50 to 100 years old",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/antique",
+            "examples": [
+                "a semi-antique carpet"
+            ]
+        },
+        {
+            "id": "verd antique",
+            "partOfSpeech": "noun",
+            "text": "a green mottled or veined serpentine marble or calcareous serpentine much used for indoor decoration especially by the ancient Romans",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/antique"
         }
     ]
 }

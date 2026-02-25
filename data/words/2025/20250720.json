@@ -1,108 +1,68 @@
 {
     "word": "kitty",
     "date": "20250720",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
+            "id": "kitty",
             "partOfSpeech": "noun",
-            "text": "Same as <internalXref urlencoded=\"kittiwake\">kittiwake</internalXref>. Also called <internalXref urlencoded=\"sea-kittie\">sea-kittie</internalXref>.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/kitty",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "cat; especially: kitten",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/kitty"
         },
         {
+            "id": "kitty",
             "partOfSpeech": "noun",
-            "text": "A large wooden bowl or tankard.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/kitty",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a fund in a poker game made up of contributions from each pot",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/kitty"
         },
         {
+            "id": "kitty",
             "partOfSpeech": "noun",
-            "text": "A kitten; a child's pet name for a cat.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/kitty",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a sum of money or collection of goods often made up of small contributions: pool",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/kitty"
         },
         {
-            "partOfSpeech": "noun",
-            "text": "A kit or company.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/kitty",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "kitty-corner",
+            "text": "in a diagonal or oblique position",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/kitty",
+            "examples": [
+                "the house stood kitty-corner across the square"
+            ]
         },
         {
-            "partOfSpeech": "noun",
-            "text": "A prison or jail: same as <internalXref urlencoded=\"kidcote\">kidcote</internalXref>.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/kitty",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "catercorner",
+            "text": "in a diagonal or oblique position",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/kitty",
+            "examples": [
+                "the house stood kitty-corner across the square"
+            ]
         },
         {
-            "partOfSpeech": "noun",
-            "text": "A pool into which each player in a card-game puts a certain amount of his winnings, to be used in meeting expenses, as for room-rent, refreshments, etc.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/kitty",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "catty-corner",
+            "text": "in a diagonal or oblique position",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/kitty",
+            "examples": [
+                "the house stood kitty-corner across the square"
+            ]
         },
         {
-            "partOfSpeech": "noun",
-            "text": "A kitten; also, a pet name or calling name for the cat.",
-            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
-            "sourceDictionary": "gcide",
-            "sourceUrl": "https://www.wordnik.com/words/kitty",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "The percentage taken out of a pool to pay for refreshments, or for the expenses of the table",
-            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
-            "sourceDictionary": "gcide",
-            "sourceUrl": "https://www.wordnik.com/words/kitty",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A <xref>kitten</xref> or young <xref>cat</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/kitty",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A pet name for a cat.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/kitty",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "Kill Devil:g",
+            "text": "hill in eastern North Carolina near the town of Kitty Hawk (population 3272) on a sand barrier opposite Albemarle Sound",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/kitty"
         }
     ]
 }

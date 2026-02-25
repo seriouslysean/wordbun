@@ -1,121 +1,164 @@
 {
     "word": "toy",
     "date": "20250715",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "T5323700-1",
+            "id": "toy",
             "partOfSpeech": "noun",
-            "text": "An object for a child to play with.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/toy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "T5323700-2",
-            "partOfSpeech": "noun",
-            "text": "Something that provides amusement.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/toy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "T5323700-3",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/toy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "T5323700-4",
-            "partOfSpeech": "noun",
-            "text": "A small ornament; a bauble.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/toy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "T5323700-5",
-            "partOfSpeech": "noun",
-            "text": "Something of little importance; a trifle.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/toy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "T5323700-6",
-            "partOfSpeech": "noun",
-            "text": "A diminutive thing, especially a dog of a very small breed or of a variety smaller than the standard variety of its breed.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/toy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "T5323700-7",
-            "partOfSpeech": "noun",
-            "text": "A loose covering for the head, formerly worn by women.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/toy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "T5323700-8",
-            "partOfSpeech": "noun",
-            "text": "A shooter marble.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/toy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "T5323700-9",
-            "partOfSpeech": "intransitive verb",
-            "text": "To amuse oneself idly; trifle.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "text": "something for a child to play with —often used before another noun",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy",
             "examples": [
-                "a cat toying with a mouse."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "The children played with their toys.",
+                "a plush/stuffed toy",
+                "plastic/wooden/electronic toys",
+                "a bath toy",
+                "a dog's chew toy",
+                "Among Greg Norman's toys is a 61-foot sportfishing boat …",
+                "The duster, a simple aerial crop dusting plane, is a toy in comparison to Delta's fleet now.",
+                "He's just her toy. = He's just a toy in her hands.",
+                "I'm referring to unilateral economic sanctions. This instrument of foreign policy has recently become a toy in the hands of our politicians …"
+            ]
         },
         {
-            "id": "T5323700-10",
-            "partOfSpeech": "intransitive verb",
-            "text": "To treat something casually or without seriousness: <i>synonym</i>: <strong> flirt</strong>.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/toy",
+            "id": "toy",
+            "partOfSpeech": "noun",
+            "text": "something resembling a child's toy especially in providing amusement or entertainment",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy",
             "examples": [
-                "toyed with the idea of writing a play."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "The children played with their toys.",
+                "a plush/stuffed toy",
+                "plastic/wooden/electronic toys",
+                "a bath toy",
+                "a dog's chew toy",
+                "Among Greg Norman's toys is a 61-foot sportfishing boat …",
+                "The duster, a simple aerial crop dusting plane, is a toy in comparison to Delta's fleet now.",
+                "He's just her toy. = He's just a toy in her hands.",
+                "I'm referring to unilateral economic sanctions. This instrument of foreign policy has recently become a toy in the hands of our politicians …"
+            ]
+        },
+        {
+            "id": "toy",
+            "partOfSpeech": "noun",
+            "text": "something that is or appears to be small; especially: a small animal (as of a small breed or variety)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy",
+            "examples": [
+                "The children played with their toys.",
+                "a plush/stuffed toy",
+                "plastic/wooden/electronic toys",
+                "a bath toy",
+                "a dog's chew toy",
+                "Among Greg Norman's toys is a 61-foot sportfishing boat …",
+                "The duster, a simple aerial crop dusting plane, is a toy in comparison to Delta's fleet now.",
+                "He's just her toy. = He's just a toy in her hands.",
+                "I'm referring to unilateral economic sanctions. This instrument of foreign policy has recently become a toy in the hands of our politicians …"
+            ]
+        },
+        {
+            "id": "toy",
+            "partOfSpeech": "verb",
+            "text": "to act or deal with something lightly or without vigor or purpose",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy",
+            "examples": [
+                "toyed with the idea",
+                "they're just toying with him"
+            ]
+        },
+        {
+            "id": "toy",
+            "partOfSpeech": "verb",
+            "text": "to amuse oneself as if with a toy: play",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy",
+            "examples": [
+                "toyed with the idea",
+                "they're just toying with him"
+            ]
+        },
+        {
+            "id": "toy",
+            "partOfSpeech": "verb",
+            "text": "to engage in flirtation",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy",
+            "examples": [
+                "toyed with the idea",
+                "they're just toying with him"
+            ]
+        },
+        {
+            "id": "toy",
+            "partOfSpeech": "adjective",
+            "text": "of diminutive size compared to a standard form or breed",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy",
+            "examples": [
+                "a toy dog",
+                "a toy stove"
+            ]
+        },
+        {
+            "id": "toy",
+            "partOfSpeech": "adjective",
+            "text": "designed or made for use as a toy",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy",
+            "examples": [
+                "a toy dog",
+                "a toy stove"
+            ]
+        },
+        {
+            "id": "toy fox terrier",
+            "partOfSpeech": "noun",
+            "text": "any of a breed of small, intelligent, alert terriers that have large, erect ears, are 8.5 to 11.5 inches (21.6 to 29.2 centimeters) in height and 3.5 to 7 pounds (1.6 to 3.2 kilograms) in weight, and were developed by crossing smooth fox terriers with various toy dogs (such as the Chihuahua, Italian greyhound, or toy Manchester terrier)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy"
+        },
+        {
+            "id": "toy Manchester terrier",
+            "partOfSpeech": "noun",
+            "text": "a small Manchester terrier that is 10 to 12 inches (25.4 to 30.5 centimeters) in height and not more than 12 pounds (5.4 kilograms) in weight —called also toy Manchester",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy"
+        },
+        {
+            "id": "toy poodle",
+            "partOfSpeech": "noun",
+            "text": "a poodle developed from the standard poodle that is not more than 10 inches (25 centimeters) high at the withers and that is often considered to constitute a separate breed",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy"
+        },
+        {
+            "id": "boy toy",
+            "partOfSpeech": "noun",
+            "text": "a usually young man considered as an object of sexual desire",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy"
+        },
+        {
+            "id": "English toy spaniel",
+            "partOfSpeech": "noun",
+            "text": "any of a breed of small blocky spaniels with well-rounded upper skull projecting forward toward the short turned-up nose",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/toy"
         }
     ]
 }

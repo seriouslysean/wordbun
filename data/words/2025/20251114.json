@@ -1,28 +1,39 @@
 {
     "word": "poopy",
     "date": "20251114",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
+            "id": "poopy",
             "partOfSpeech": "adjective",
-            "text": "<xref>depressed</xref>, <xref>weak</xref>, or <xref>worthless</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/poopy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "filled or covered with feces; also: contaminated with feces",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poopy",
+            "examples": [
+                "poopy diaper",
+                "Raising children forces adults into a life marked by spit-up stains, poopy diapers, homework assignments, …, hugs and kisses, circles under the eyes and, for those of us who work, bucketloads of guilt.",
+                "A Ph.D. in microbiology is not necessary to grasp the concept: Clean water is good. Poopy water is bad.",
+                "… the Upper East Side holds not only some of the poshest homes, but also the poopiest sidewalks. Findings … show a “concerning” level of turd-related pathogens …",
+                "poopy weather",
+                "Though it never lost money, profits were \"kind of poopy,\" says Johnny White."
+            ]
         },
         {
-            "partOfSpeech": "noun",
-            "text": "<xref>excrement</xref>; also spelled <xref>poopie</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/poopy",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "poopy",
+            "partOfSpeech": "adjective",
+            "text": "not good or pleasant: crappy",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/poopy",
+            "examples": [
+                "poopy diaper",
+                "Raising children forces adults into a life marked by spit-up stains, poopy diapers, homework assignments, …, hugs and kisses, circles under the eyes and, for those of us who work, bucketloads of guilt.",
+                "A Ph.D. in microbiology is not necessary to grasp the concept: Clean water is good. Poopy water is bad.",
+                "… the Upper East Side holds not only some of the poshest homes, but also the poopiest sidewalks. Findings … show a “concerning” level of turd-related pathogens …",
+                "poopy weather",
+                "Though it never lost money, profits were \"kind of poopy,\" says Johnny White."
+            ]
         }
     ]
 }

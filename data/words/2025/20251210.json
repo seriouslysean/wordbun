@@ -1,39 +1,18 @@
 {
     "word": "kraken",
     "date": "20251210",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "K5112500-1",
+            "id": "kraken",
             "partOfSpeech": "noun",
-            "text": "A huge sea monster in Norwegian legend.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/kraken",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A mythical sea-monster said to appear at times off the coast of Norway.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/kraken",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A fabulous Scandinavian sea monster, often represented as resembling an island, but sometimes as resembling an immense octopus.",
-            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
-            "sourceDictionary": "gcide",
-            "sourceUrl": "https://www.wordnik.com/words/kraken",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a gigantic tentacled sea monster of Scandinavian myth",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/kraken",
+            "examples": [
+                "Mythical krakens are now thought of as giant squid or octopuses, capable of bringing down a ship with their tentacled arms. But many of the earliest kraken reports were of creatures so enormous that they grew vegetation on their backs like islands."
+            ]
         }
     ]
 }

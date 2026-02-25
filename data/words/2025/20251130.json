@@ -1,101 +1,167 @@
 {
     "word": "cooking",
     "date": "20251130",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
+            "id": "cooking",
             "partOfSpeech": "noun",
-            "text": "the practice or manner of preparing food or the food so prepared; cookery.",
-            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
-            "sourceDictionary": "gcide",
-            "sourceUrl": "https://www.wordnik.com/words/cooking",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "the act of preparing something (as food) by the application of heat.",
-            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
-            "sourceDictionary": "gcide",
-            "sourceUrl": "https://www.wordnik.com/words/cooking",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "adjective",
-            "text": "In progress, <xref>happening</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/cooking",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "The <xref>process</xref> of preparing <xref>food</xref> by using <xref>heat</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/cooking",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "The process of preparing food.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/cooking",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "The result of that process, a <xref>meal</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/cooking",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "The <xref>style</xref> or <xref>genre</xref> of food preparation; <xref>cookery</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/cooking",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "verb",
-            "text": "Present participle of <xref>cook</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/cooking",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "the act of preparing something (as food) by the application of heat",
-            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
-            "sourceDictionary": "wordnet",
-            "sourceUrl": "https://www.wordnik.com/words/cooking",
+            "text": "the act of preparing food for eating especially by heating: the act of cooking food",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking",
             "examples": [
-                "people are needed who have experience in cookery",
-                "he left the preparation of meals to his wife"
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "I do most of the cooking for our family.",
+                "a technique used in French cooking",
+                "Do you like my cooking?"
+            ]
+        },
+        {
+            "id": "cooking",
+            "partOfSpeech": "noun",
+            "text": "a manner of preparing food: cuisine",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking",
+            "examples": [
+                "I do most of the cooking for our family.",
+                "a technique used in French cooking",
+                "Do you like my cooking?"
+            ]
+        },
+        {
+            "id": "cooking",
+            "partOfSpeech": "noun",
+            "text": "food that is cooked",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking",
+            "examples": [
+                "I do most of the cooking for our family.",
+                "a technique used in French cooking",
+                "Do you like my cooking?"
+            ]
+        },
+        {
+            "id": "cooking",
+            "partOfSpeech": "adjective",
+            "text": "suitable or used for cooking",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking",
+            "examples": [
+                "bought some cooking apples",
+                "cooking techniques",
+                "Cooking time is about 30 minutes."
+            ]
+        },
+        {
+            "id": "cook",
+            "partOfSpeech": "verb",
+            "text": "to prepare (food) for eating by a heating process",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking",
+            "examples": [
+                "Cook the vegetables over low heat for 10 minutes.",
+                "The fish was cooked in a wine sauce.",
+                "He cooked dinner for his guests.",
+                "The point is that every country's numbers are the result of a specific set of testing and accounting regimes. Everyone is cooking the data, one way or another.",
+                "Agents discovered a recipe for cooking meth at his lab …",
+                "We're too busy to cook tonight.",
+                "I enjoy cooking for friends.",
+                "The rice is cooking now.",
+                "She tried to find out what was cooking in the committee.",
+                "The jazz quartet was cooking along.",
+                "The party cooked right through the night."
+            ]
+        },
+        {
+            "id": "cook",
+            "partOfSpeech": "verb",
+            "text": "concoct, fabricate —usually used with up",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking",
+            "examples": [
+                "Cook the vegetables over low heat for 10 minutes.",
+                "The fish was cooked in a wine sauce.",
+                "He cooked dinner for his guests.",
+                "The point is that every country's numbers are the result of a specific set of testing and accounting regimes. Everyone is cooking the data, one way or another.",
+                "Agents discovered a recipe for cooking meth at his lab …",
+                "We're too busy to cook tonight.",
+                "I enjoy cooking for friends.",
+                "The rice is cooking now.",
+                "She tried to find out what was cooking in the committee.",
+                "The jazz quartet was cooking along.",
+                "The party cooked right through the night."
+            ]
+        },
+        {
+            "id": "cook",
+            "partOfSpeech": "verb",
+            "text": "to alter (something, such as records) with the intention of deceiving or misleading: falsify, doctor",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking",
+            "examples": [
+                "Cook the vegetables over low heat for 10 minutes.",
+                "The fish was cooked in a wine sauce.",
+                "He cooked dinner for his guests.",
+                "The point is that every country's numbers are the result of a specific set of testing and accounting regimes. Everyone is cooking the data, one way or another.",
+                "Agents discovered a recipe for cooking meth at his lab …",
+                "We're too busy to cook tonight.",
+                "I enjoy cooking for friends.",
+                "The rice is cooking now.",
+                "She tried to find out what was cooking in the committee.",
+                "The jazz quartet was cooking along.",
+                "The party cooked right through the night."
+            ]
+        },
+        {
+            "id": "cooking spray",
+            "partOfSpeech": "noun",
+            "text": "an aerosol that contains vegetable oil for spraying on cookware to prevent food from sticking",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking"
+        },
+        {
+            "id": "home cooking",
+            "partOfSpeech": "noun",
+            "text": "food that is cooked at home or is similar to food cooked at home",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking",
+            "examples": [
+                "… the lunchtime special … pays homage to his grandparents' simple home cooking …",
+                "… an antacid may save the day if that roadside diner doesn't live up to its \"home cooking\" claims."
+            ]
+        },
+        {
+            "id": "cook one's goose",
+            "text": "to make one's failure or ruin certain",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking"
+        },
+        {
+            "id": "cook off",
+            "partOfSpeech": "verb",
+            "text": "to fire as a result of overheating",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking"
+        },
+        {
+            "id": "cook the books",
+            "text": "to alter official accounting records in order to deceive or mislead",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cooking",
+            "examples": [
+                "Congress cooked the books with phony spending cuts and accounting gimmickry to appear to reduce the federal deficit."
+            ]
         }
     ]
 }

@@ -1,118 +1,147 @@
 {
     "word": "foam",
     "date": "20260106",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "F5221500-1",
+            "id": "foam",
             "partOfSpeech": "noun",
-            "text": "A colloidal dispersion of a gas in a liquid or solid medium, such as shaving cream, foam rubber, or a substance used to fight fires. A foam may be produced, especially on the surface of a liquid, by agitation or by a chemical reaction, such as fermentation.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/foam",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a light frothy mass of fine bubbles formed in or on the surface of a liquid or from a liquid: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
         },
         {
-            "id": "F5221500-2",
+            "id": "foam",
             "partOfSpeech": "noun",
-            "text": "Any of various light, porous, semirigid or spongy materials, usually the solidified form of a liquid full of gas bubbles, used as a building material or for thermal insulation or shock absorption, as in packaging.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/foam",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a frothy mass formed in salivating or sweating",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
         },
         {
-            "id": "F5221500-3",
+            "id": "foam",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/foam",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a stabilized froth produced chemically or mechanically and used especially in fighting oil fires",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
         },
         {
-            "id": "F5221500-4",
-            "partOfSpeech": "noun",
-            "text": "Frothy saliva produced especially as a result of physical exertion or a pathological condition.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/foam",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5221500-5",
-            "partOfSpeech": "noun",
-            "text": "The frothy sweat of a horse or other equine animal.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/foam",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5221500-6",
-            "partOfSpeech": "noun",
-            "text": "The sea.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/foam",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5221500-7",
-            "partOfSpeech": "intransitive verb",
-            "text": "To produce or issue as foam; froth.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/foam",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5221500-8",
-            "partOfSpeech": "intransitive verb",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/foam",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5221500-9",
-            "partOfSpeech": "intransitive verb",
-            "text": "To produce foam from the mouth, as from exertion or a pathological condition.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/foam",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5221500-10",
-            "partOfSpeech": "intransitive verb",
-            "text": "To be extremely angry; rage.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/foam",
+            "id": "foam",
+            "partOfSpeech": "verb",
+            "text": "to produce or form foam",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam",
             "examples": [
-                "was foaming over the disastrous budget cuts."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "… streets … foaming with life …"
+            ]
+        },
+        {
+            "id": "foam",
+            "partOfSpeech": "verb",
+            "text": "to froth at the mouth especially in anger; broadly: to be angry",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam",
+            "examples": [
+                "… streets … foaming with life …"
+            ]
+        },
+        {
+            "id": "foam",
+            "partOfSpeech": "verb",
+            "text": "to gush out in foam",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam",
+            "examples": [
+                "… streets … foaming with life …"
+            ]
+        },
+        {
+            "id": "foam cell",
+            "partOfSpeech": "noun",
+            "text": "a swollen vacuolated macrophage filled with lipid inclusions that often accumulates along arterial walls and is characteristic of some conditions of disturbed lipid metabolism",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
+        },
+        {
+            "id": "foam rubber",
+            "partOfSpeech": "noun",
+            "text": "spongy rubber of fine texture made from latex by foaming (as by whipping) before vulcanization",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
+        },
+        {
+            "id": "cell foam",
+            "partOfSpeech": "noun",
+            "text": "a lightweight foam resulting from the introduction of gas bubbles during manufacturing: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
+        },
+        {
+            "id": "cell foam",
+            "partOfSpeech": "noun",
+            "text": "closed cell foam",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
+        },
+        {
+            "id": "cell foam",
+            "partOfSpeech": "noun",
+            "text": "open cell foam",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
+        },
+        {
+            "id": "closed cell foam",
+            "partOfSpeech": "noun",
+            "text": "a stiff, dense foam resulting from the introduction of gas bubbles during manufacturing in which the air bubbles are completely enclosed and not connected to surrounding air bubbles",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam",
+            "examples": [
+                "In closed cell foam, the air bubbles are completely encapsulated, for a harder and denser foam with higher insulation value.",
+                "Closed-cell foam is denser and restricts airflow, making it ideal for insulating homes or buildings.",
+                "The closed cell foam insulation allows for two to three days of ice retention."
+            ]
+        },
+        {
+            "id": "memory foam",
+            "partOfSpeech": "noun",
+            "text": "a dense polyurethane foam that becomes more pliable when in contact with heat",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
+        },
+        {
+            "id": "open cell foam",
+            "partOfSpeech": "noun",
+            "text": "a spongy foam resulting from the introduction of gas bubbles during manufacturing in which the air bubbles are connected to surrounding air bubbles",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam",
+            "examples": [
+                "Closed cell foams form separate air pockets surrounded by a more solid material, while in open cell foams, the pockets interconnect.",
+                "Open-cell foam is the term used for foam made with bubbles that rupture during manufacture.",
+                "Open cell foam insulation has tiny air bubbles that are open to air and moisture.",
+                "Open cell foams: ceramic, metal, or polymer, have been used in a wide range of industrial areas since they typically possess high specific surface area, high porosity, and efficient thermal insulation."
+            ]
+        },
+        {
+            "id": "plastic foam",
+            "partOfSpeech": "noun",
+            "text": "expanded plastic",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
         }
     ]
 }

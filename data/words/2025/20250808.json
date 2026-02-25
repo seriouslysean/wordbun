@@ -1,115 +1,93 @@
 {
     "word": "rainbow",
     "date": "20250808",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "R5028000-1",
+            "id": "rainbow",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/rainbow",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "R5028000-2",
-            "partOfSpeech": "noun",
-            "text": "An arc of spectral colors, usually identified as red, orange, yellow, green, blue, indigo, and violet, that appears in the sky opposite the sun as a result of the refractive dispersion of sunlight in drops of rain or mist.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/rainbow",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "R5028000-3",
-            "partOfSpeech": "noun",
-            "text": "A similar arc or band, as one produced by a prism or by iridescence.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/rainbow",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "R5028000-4",
-            "partOfSpeech": "noun",
-            "text": "A graded display of colors.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/rainbow",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "R5028000-5",
-            "partOfSpeech": "noun",
-            "text": "An illusory hope.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/rainbow",
+            "text": "an arc or circle that exhibits in concentric bands the colors of the spectrum and that is formed opposite the sun by the refraction and reflection of the sun's rays in raindrops, spray, or mist",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rainbow",
             "examples": [
-                "chasing the rainbow of overnight success."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a rainbow of flavors"
+            ]
         },
         {
-            "id": "R5028000-6",
+            "id": "rainbow",
             "partOfSpeech": "noun",
-            "text": "A diverse assortment or collection.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/rainbow",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a multicolored array",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rainbow",
+            "examples": [
+                "a rainbow of flavors"
+            ]
         },
         {
+            "id": "rainbow",
             "partOfSpeech": "noun",
-            "text": "A bow, or an arc of a circle, consisting of the prismatic colors, formed by the refraction and reflection of rays of light from drops of rain or vapor, appearing in the part of the heavens opposite to the sun.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/rainbow",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a wide assortment or range",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rainbow",
+            "examples": [
+                "a rainbow of flavors"
+            ]
         },
         {
-            "partOfSpeech": "noun",
-            "text": "In <em>heraldry</em>, the representation of a half-ring divided into seven concentric narrow rings and arched upward, each end resting on a clump of clouds.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/rainbow",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "rainbow",
+            "partOfSpeech": "adjective",
+            "text": "having many colors",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rainbow",
+            "examples": [
+                "a rainbow coalition"
+            ]
         },
         {
-            "partOfSpeech": "noun",
-            "text": "In <em>ornithology</em>, a humming-bird of tho genus <em>Diphlogena</em>, containing two most brilliantly plumaged species, <em>D. iris</em> of Bolivia, and <em>D. hesperus</em> of Ecuador.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/rainbow",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "rainbow",
+            "partOfSpeech": "adjective",
+            "text": "of, relating to, or being people of different races or cultural backgrounds",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rainbow",
+            "examples": [
+                "a rainbow coalition"
+            ]
         },
         {
+            "id": "rainbow fish",
             "partOfSpeech": "noun",
-            "text": "The rainbow-fish.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/rainbow",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "any of numerous brilliantly colored fishes (such as a wrasse, parrotfish, or guppy)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rainbow"
+        },
+        {
+            "id": "rainbow runner",
+            "partOfSpeech": "noun",
+            "text": "a large brilliantly colored carangid food and sport fish (Elagatis bipinnulata) that is common in warm seas and is blue or dark green above and yellowish white below",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rainbow"
+        },
+        {
+            "id": "rainbow trout",
+            "partOfSpeech": "noun",
+            "text": "a large stout-bodied salmonid fish (Oncorhynchus mykiss synonym Salmo gairdneri) of western North America that is related to the Pacific salmon and is typically greenish above and white on the belly with a pink, red, or lavender stripe along each side of the body and with profuse black dots",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rainbow"
+        },
+        {
+            "id": "Rainbow Bridge National Monument:g",
+            "text": "reservation in southern Utah near the Arizona boundary containing Rainbow Bridge, a large natural bridge",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rainbow"
         }
     ]
 }

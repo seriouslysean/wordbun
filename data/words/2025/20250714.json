@@ -1,120 +1,198 @@
 {
     "word": "paper",
     "date": "20250714",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "P5054100-1",
+            "id": "paper",
             "partOfSpeech": "noun",
-            "text": "A material made of cellulose pulp, derived mainly from wood, rags, and certain grasses, processed into flexible sheets or rolls by deposit from an aqueous suspension, and used chiefly for writing, printing, drawing, wrapping, and covering walls.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/paper",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5054100-2",
-            "partOfSpeech": "noun",
-            "text": "A single sheet of this material.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/paper",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5054100-3",
-            "partOfSpeech": "noun",
-            "text": "One or more sheets of paper bearing writing or printing, especially.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/paper",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5054100-5",
-            "partOfSpeech": "noun",
-            "text": "A formal written composition intended to be published, presented, or read aloud; a scholarly essay or treatise.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/paper",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5054100-6",
-            "partOfSpeech": "noun",
-            "text": "A piece of written work for school; a report or theme.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/paper",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5054100-7",
-            "partOfSpeech": "noun",
-            "text": "An official document, especially one establishing the identity of the bearer.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/paper",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5054100-7",
-            "partOfSpeech": "noun",
-            "text": "A collection of letters, diaries, and other writings, especially by one person.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/paper",
+            "text": "a felted sheet of usually vegetable fibers laid down on a fine screen from a water suspension",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper",
             "examples": [
-                "the Madison papers."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "pedigree papers",
+                "presented a scholarly paper at the meeting"
+            ]
         },
         {
-            "id": "P5054100-8",
+            "id": "paper",
             "partOfSpeech": "noun",
-            "text": "Short-term debt instruments, especially commercial paper.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/paper",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a similar sheet of other material (such as plastic)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper",
+            "examples": [
+                "pedigree papers",
+                "presented a scholarly paper at the meeting"
+            ]
         },
         {
-            "id": "P5054100-9",
+            "id": "paper",
             "partOfSpeech": "noun",
-            "text": "A newspaper.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/paper",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a piece of paper",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper",
+            "examples": [
+                "pedigree papers",
+                "presented a scholarly paper at the meeting"
+            ]
         },
         {
-            "id": "P5054100-10",
+            "id": "paper",
+            "partOfSpeech": "verb",
+            "text": "to put down or describe in writing",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper",
+            "examples": [
+                "paper the theater for opening night"
+            ]
+        },
+        {
+            "id": "paper",
+            "partOfSpeech": "verb",
+            "text": "to fold or enclose in paper",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper",
+            "examples": [
+                "paper the theater for opening night"
+            ]
+        },
+        {
+            "id": "paper",
+            "partOfSpeech": "verb",
+            "text": "to cover or line with paper; especially: to apply wallpaper to",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper",
+            "examples": [
+                "paper the theater for opening night"
+            ]
+        },
+        {
+            "id": "paper",
+            "partOfSpeech": "adjective",
+            "text": "made of paper, cardboard, or papier-mâché",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper",
+            "examples": [
+                "a paper bag",
+                "a paper blockade",
+                "a paper audience",
+                "paper taffeta"
+            ]
+        },
+        {
+            "id": "paper",
+            "partOfSpeech": "adjective",
+            "text": "papery",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper",
+            "examples": [
+                "a paper bag",
+                "a paper blockade",
+                "a paper audience",
+                "paper taffeta"
+            ]
+        },
+        {
+            "id": "paper",
+            "partOfSpeech": "adjective",
+            "text": "of or relating to clerical work or written communication",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper",
+            "examples": [
+                "a paper bag",
+                "a paper blockade",
+                "a paper audience",
+                "paper taffeta"
+            ]
+        },
+        {
+            "id": "paper birch",
             "partOfSpeech": "noun",
-            "text": "Wallpaper.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/paper",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a North American birch (Betula papyrifera) with peeling white bark and toothed ovate leaves",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
+        },
+        {
+            "id": "paper chromatography",
+            "partOfSpeech": "noun",
+            "text": "chromatography that uses paper strips or sheets as the adsorbent stationary phase through which a solution flows",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
+        },
+        {
+            "id": "paper clip",
+            "partOfSpeech": "noun",
+            "text": "a length of wire bent into flat loops that is used to hold papers together",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
+        },
+        {
+            "id": "paper cutter",
+            "partOfSpeech": "noun",
+            "text": "paper knife",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
+        },
+        {
+            "id": "paper cutter",
+            "partOfSpeech": "noun",
+            "text": "a machine or device for cutting or trimming sheets of paper to required dimensions",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
+        },
+        {
+            "id": "paper knife",
+            "partOfSpeech": "noun",
+            "text": "a knife for slitting envelopes or uncut pages",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
+        },
+        {
+            "id": "paper knife",
+            "partOfSpeech": "noun",
+            "text": "the knife of a paper cutter",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
+        },
+        {
+            "id": "paper money",
+            "partOfSpeech": "noun",
+            "text": "money consisting of government notes and banknotes",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
+        },
+        {
+            "id": "paper money",
+            "partOfSpeech": "noun",
+            "text": "bank money",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
+        },
+        {
+            "id": "paper mulberry",
+            "partOfSpeech": "noun",
+            "text": "an Asian tree (Broussonetia papyrifera) of the mulberry family that is widely grown as a shade tree",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
         }
     ]
 }

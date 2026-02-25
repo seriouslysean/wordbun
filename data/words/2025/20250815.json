@@ -1,120 +1,168 @@
 {
     "word": "plant",
     "date": "20250815",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "P5382900-1",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/plant",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5382900-2",
-            "partOfSpeech": "noun",
-            "text": "Any of various photosynthetic, eukaryotic, multicellular organisms of the kingdom Plantae characteristically containing chloroplasts, having cell walls made of cellulose, producing embryos, and lacking the power of locomotion. Plants include trees, bushes, herbs, ferns, mosses, and certain green algae.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/plant",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5382900-3",
-            "partOfSpeech": "noun",
-            "text": "A plant having no permanent woody stem; an herb.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/plant",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5382900-4",
-            "partOfSpeech": "noun",
-            "text": "Any of various fungi, algae, or protists that resemble plants and were formerly classified in the plant kingdom. Not in scientific use.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/plant",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5382900-5",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/plant",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "P5382900-6",
-            "partOfSpeech": "noun",
-            "text": "A building or group of buildings for the manufacture of a product; a factory.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "id": "plant",
+            "partOfSpeech": "verb",
+            "text": "to put or set in the ground for growth",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant",
             "examples": [
-                "works in an auto plant."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "plant seeds",
+                "planted a hard blow on his chin"
+            ]
         },
         {
-            "id": "P5382900-7",
-            "partOfSpeech": "noun",
-            "text": "The buildings, fixtures, and equipment, including machinery, tools, and instruments, necessary for an industrial operation or an institution.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/plant",
+            "id": "plant",
+            "partOfSpeech": "verb",
+            "text": "to set or sow with seeds or plants",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant",
             "examples": [
-                "the university's mechanical plant."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "plant seeds",
+                "planted a hard blow on his chin"
+            ]
         },
         {
-            "id": "P5382900-8",
-            "partOfSpeech": "noun",
-            "text": "A person or thing put into place in order to mislead or function secretly, especially.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/plant",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "plant",
+            "partOfSpeech": "verb",
+            "text": "implant",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant",
+            "examples": [
+                "plant seeds",
+                "planted a hard blow on his chin"
+            ]
         },
         {
-            "id": "P5382900-10",
+            "id": "plant",
             "partOfSpeech": "noun",
-            "text": "A person placed in a group of spectators to influence behavior.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/plant",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a young tree, vine, shrub, or herb planted or suitable for planting",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
         },
         {
-            "id": "P5382900-11",
+            "id": "plant",
             "partOfSpeech": "noun",
-            "text": "A person stationed in a given location as a spy or observer.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/plant",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "any of a kingdom (Plantae) of multicellular eukaryotic mostly photosynthetic organisms typically lacking locomotive movement or obvious nervous or sensory organs and possessing cellulose cell walls",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
+        },
+        {
+            "id": "plant",
+            "partOfSpeech": "noun",
+            "text": "the land, buildings, machinery, apparatus, and fixtures employed in carrying on a trade or an industrial business",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
+        },
+        {
+            "id": "plant-based",
+            "partOfSpeech": "adjective",
+            "text": "made or derived from plants",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant",
+            "examples": [
+                "a plant-based burger",
+                "For postmenopausal women wary of hormones, \"all natural\" plant-based estrogens can be tempting.",
+                "Creating a sirloin steak, with its fibrous protein and marbled fat, from plant-based proteins is a tough recipe to perfect.",
+                "plant-based meals",
+                "For three months, the men followed a program that included a plant-based diet, moderate exercise, stress-reduction practices, and social support."
+            ]
+        },
+        {
+            "id": "plant-based",
+            "partOfSpeech": "adjective",
+            "text": "consisting primarily or entirely of food (such as vegetables, fruits, nuts, oils, and beans) derived from plants",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant",
+            "examples": [
+                "a plant-based burger",
+                "For postmenopausal women wary of hormones, \"all natural\" plant-based estrogens can be tempting.",
+                "Creating a sirloin steak, with its fibrous protein and marbled fat, from plant-based proteins is a tough recipe to perfect.",
+                "plant-based meals",
+                "For three months, the men followed a program that included a plant-based diet, moderate exercise, stress-reduction practices, and social support."
+            ]
+        },
+        {
+            "id": "plant food",
+            "partOfSpeech": "noun",
+            "text": "food",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
+        },
+        {
+            "id": "plant food",
+            "partOfSpeech": "noun",
+            "text": "fertilizer",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
+        },
+        {
+            "id": "plant hormone",
+            "partOfSpeech": "noun",
+            "text": "an organic substance other than a nutrient that in minute amounts modifies a plant physiological process; especially: one produced by a plant and active elsewhere than at the site of production",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
+        },
+        {
+            "id": "plant kingdom",
+            "partOfSpeech": "noun",
+            "text": "a basic group of natural objects that includes all living and extinct plants",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
+        },
+        {
+            "id": "plant louse",
+            "partOfSpeech": "noun",
+            "text": "aphid; also: any of various small insects (such as a jumping plant louse) of similar habits",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
+        },
+        {
+            "id": "Plant City:g",
+            "text": "city east of Tampa in west central Florida population 34,721",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
+        },
+        {
+            "id": "air plant",
+            "partOfSpeech": "noun",
+            "text": "a plant that derives its moisture and nutrients from the air and rain and grows usually on another plant: epiphyte; especially: any of a genus (Tillandsia) of evergreen perennial plants that are found in tropical regions of the western hemisphere and that grow on other plants, have minimal roots, and obtain nutrients and water solely from the air",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
+        },
+        {
+            "id": "air plant",
+            "partOfSpeech": "noun",
+            "text": "a succulent perennial plant (Kalanchoe pinnata) native to Madagascar that has bell-shaped pink flowers and elliptical serrated leaves which produce bulblets and that is commonly grown as an ornamental plant",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
+        },
+        {
+            "id": "castor-oil plant",
+            "partOfSpeech": "noun",
+            "text": "a tropical Old World herb (Ricinus communis) widely grown as an ornamental or for its oil-rich castor beans",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
         }
     ]
 }

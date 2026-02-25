@@ -1,121 +1,160 @@
 {
     "word": "flower",
     "date": "20250708",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "F5202600-1",
+            "id": "flower",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/flower",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5202600-2",
-            "partOfSpeech": "noun",
-            "text": "The reproductive structure of angiosperms, characteristically having either specialized male or female organs or both male and female organs, such as stamens and a pistil, enclosed in an outer envelope of petals and sepals.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/flower",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5202600-3",
-            "partOfSpeech": "noun",
-            "text": "Such a structure having showy or colorful parts; a blossom.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/flower",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5202600-4",
-            "partOfSpeech": "noun",
-            "text": "A flower head.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/flower",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5202600-5",
-            "partOfSpeech": "noun",
-            "text": "A plant that is cultivated or appreciated for its blossoms.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/flower",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5202600-6",
-            "partOfSpeech": "noun",
-            "text": "The condition or a time of having developed flowers.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "text": "the specialized part of an angiospermous plant that occurs singly or in clusters, possesses whorls of often colorful petals or sepals, and bears the reproductive structures (such as stamens or pistils) involved in the development of seeds and fruit: blossom",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower",
             "examples": [
-                "The azaleas were in full flower."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a hydrangea flower",
+                "planted flowers in the front yard",
+                "a bouquet of flowers",
+                "lilacs in full flower",
+                "the flower of our youth",
+                "wasted the flower of their lives",
+                "in full flower",
+                "flowers of sulfur"
+            ]
         },
         {
-            "id": "F5202600-7",
+            "id": "flower",
             "partOfSpeech": "noun",
-            "text": "The period of highest development or greatest vigor. <i>synonym</i>: <strong> bloom</strong>.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/flower",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "F5202600-8",
-            "partOfSpeech": "noun",
-            "text": "The highest example or best representative.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/flower",
+            "text": "a cluster of small flowers growing closely together that resembles and is often viewed as a single flower: inflorescence",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower",
             "examples": [
-                "the flower of our generation."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a hydrangea flower",
+                "planted flowers in the front yard",
+                "a bouquet of flowers",
+                "lilacs in full flower",
+                "the flower of our youth",
+                "wasted the flower of their lives",
+                "in full flower",
+                "flowers of sulfur"
+            ]
         },
         {
-            "id": "F5202600-9",
+            "id": "flower",
             "partOfSpeech": "noun",
-            "text": "A natural development or outgrowth.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/flower",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a plant grown or valued for its flowers",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower",
+            "examples": [
+                "a hydrangea flower",
+                "planted flowers in the front yard",
+                "a bouquet of flowers",
+                "lilacs in full flower",
+                "the flower of our youth",
+                "wasted the flower of their lives",
+                "in full flower",
+                "flowers of sulfur"
+            ]
         },
         {
-            "id": "F5202600-10",
+            "id": "flower",
+            "partOfSpeech": "verb",
+            "text": "develop",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower",
+            "examples": [
+                "flowered into young womanhood",
+                "a movement that flowered in the early 21st century"
+            ]
+        },
+        {
+            "id": "flower",
+            "partOfSpeech": "verb",
+            "text": "flourish",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower",
+            "examples": [
+                "flowered into young womanhood",
+                "a movement that flowered in the early 21st century"
+            ]
+        },
+        {
+            "id": "flower",
+            "partOfSpeech": "verb",
+            "text": "to produce flowers: blossom",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower",
+            "examples": [
+                "flowered into young womanhood",
+                "a movement that flowered in the early 21st century"
+            ]
+        },
+        {
+            "id": "flower bud",
             "partOfSpeech": "noun",
-            "text": "A fine powder produced by condensation or sublimation of a compound.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/flower",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a plant bud that produces only a flower",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower"
+        },
+        {
+            "id": "flower bug",
+            "partOfSpeech": "noun",
+            "text": "any of various small mostly black-and-white predaceous bugs (family Anthocoridae) that frequent flowers and feed on pest insects (such as aphids and thrips)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower"
+        },
+        {
+            "id": "flower child",
+            "partOfSpeech": "noun",
+            "text": "a hippie who advocates love, beauty, and peace",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower"
+        },
+        {
+            "id": "flower girl",
+            "partOfSpeech": "noun",
+            "text": "a young girl who carries flowers at a wedding",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower"
+        },
+        {
+            "id": "flower head",
+            "partOfSpeech": "noun",
+            "text": "a capitulum (as of a composite) having sessile flowers so arranged that the whole inflorescence looks like a single flower",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower"
+        },
+        {
+            "id": "flower people",
+            "partOfSpeech": "noun",
+            "text": "flower children",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower"
+        },
+        {
+            "id": "flower power",
+            "partOfSpeech": "noun",
+            "text": "a nonviolent ethic as advocated by hippies",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower"
+        },
+        {
+            "id": "Flower Mound:g",
+            "text": "town in northern Texas north of Arlington population 64,669",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/flower"
         }
     ]
 }

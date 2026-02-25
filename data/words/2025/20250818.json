@@ -1,116 +1,174 @@
 {
     "word": "button",
     "date": "20250818",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "B5598700-1",
+            "id": "button",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/button",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a small knob or disk secured to an article (as of clothing) and used as a fastener by passing it through a buttonhole or loop",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button",
+            "examples": [
+                "campaign button",
+                "has his finger on the button",
+                "knows how to push my buttons"
+            ]
         },
         {
-            "id": "B5598700-2",
+            "id": "button",
             "partOfSpeech": "noun",
-            "text": "A generally disk-shaped fastener used to join two parts of a garment by fitting through a buttonhole or loop.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/button",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a usually circular metal or plastic badge bearing a stamped design or printed slogan",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button",
+            "examples": [
+                "campaign button",
+                "has his finger on the button",
+                "knows how to push my buttons"
+            ]
         },
         {
-            "id": "B5598700-3",
+            "id": "button",
             "partOfSpeech": "noun",
-            "text": "Such an object used for decoration.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/button",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "something that resembles a button: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button",
+            "examples": [
+                "campaign button",
+                "has his finger on the button",
+                "knows how to push my buttons"
+            ]
         },
         {
-            "id": "B5598700-4",
-            "partOfSpeech": "noun",
-            "text": "Any of various objects resembling a button, especially.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/button",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "button",
+            "partOfSpeech": "verb",
+            "text": "to furnish or decorate with buttons",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button",
+            "examples": [
+                "I told you to button your lip.",
+                "This dress buttons at the back."
+            ]
         },
         {
-            "id": "B5598700-6",
-            "partOfSpeech": "noun",
-            "text": "A push-button switch.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/button",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "button",
+            "partOfSpeech": "verb",
+            "text": "to pass (a button) through a buttonhole or loop",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button",
+            "examples": [
+                "I told you to button your lip.",
+                "This dress buttons at the back."
+            ]
         },
         {
-            "id": "B5598700-7",
-            "partOfSpeech": "noun",
-            "text": "The blunt tip of a fencing foil.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/button",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "button",
+            "partOfSpeech": "verb",
+            "text": "to close or fasten with buttons —often used with up",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button",
+            "examples": [
+                "I told you to button your lip.",
+                "This dress buttons at the back."
+            ]
         },
         {
-            "id": "B5598700-8",
+            "id": "button bar",
             "partOfSpeech": "noun",
-            "text": "A fused metal or glass globule.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/button",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a collection of buttons on a computer screen arranged in a single strip or block",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button",
+            "examples": [
+                "This is the part that's not very obvious: There is no visible button to attach a photo. In the body of the email message, you need to touch the screen where you want to insert the photo. If you hold your finger on the screen for more than one second, you should see a black button bar appear."
+            ]
         },
         {
-            "id": "B5598700-8",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/button",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "button-down",
+            "partOfSpeech": "adjective",
+            "text": "having the ends fastened to the garment with buttons",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button",
+            "examples": [
+                "button-down businessmen"
+            ]
         },
         {
-            "id": "B5598700-9",
-            "partOfSpeech": "noun",
-            "text": "In graphical user interface systems, a well-defined area within the interface that is clicked to select a command.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/button",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "button-down",
+            "partOfSpeech": "adjective",
+            "text": "having a button-down collar",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button",
+            "examples": [
+                "button-down businessmen"
+            ]
         },
         {
-            "id": "B5598700-10",
+            "id": "button-down",
+            "partOfSpeech": "adjective",
+            "text": "having buttons from the collar to the waist",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button",
+            "examples": [
+                "button-down businessmen"
+            ]
+        },
+        {
+            "id": "button-down",
             "partOfSpeech": "noun",
-            "text": "In a hypertext database, an icon that when selected allows a user to view a particular associated object.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/button",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a shirt with a button-down collar",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button"
+        },
+        {
+            "id": "button man",
+            "partOfSpeech": "noun",
+            "text": "a low-ranking member of a criminal underworld organization",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button"
+        },
+        {
+            "id": "button mushroom",
+            "partOfSpeech": "noun",
+            "text": "a usually small white mushroom (Agaricus bisporus synonym A. brunnescens) in which the pileus has not yet expanded",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button"
+        },
+        {
+            "id": "button quail",
+            "partOfSpeech": "noun",
+            "text": "any of a family (Turnicidae) of small terrestrial Old World birds that resemble quails and have only three toes on a foot with the hind toe being absent",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button"
+        },
+        {
+            "id": "button snakeroot",
+            "partOfSpeech": "noun",
+            "text": "blazing star",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button"
+        },
+        {
+            "id": "button snakeroot",
+            "partOfSpeech": "noun",
+            "text": "a perennial herb (Eryngium yuccifolium) of the carrot family native to the eastern half of the U.S. that has a basal rosette of bluish-green, fibrous, parallel-veined, swordlike leaves that may reach a length of 30 inches (76 centimeters) and small greenish-white flowers clustered in dense flower heads resembling thistle: rattlesnake master",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/button"
         }
     ]
 }

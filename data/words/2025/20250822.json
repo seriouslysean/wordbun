@@ -1,121 +1,168 @@
 {
     "word": "water",
     "date": "20250822",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "W5046100-1",
+            "id": "water",
             "partOfSpeech": "noun",
-            "text": "A clear, colorless, odorless, and tasteless liquid, H<sub>2</sub>O, essential for most plant and animal life and the most widely used of all solvents. Freezing point 0°C (32°F); boiling point 100°C (212°F); specific gravity (4°C) 1.0000; weight per gallon (15°C) 8.338 pounds (3.782 kilograms).",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/water",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5046100-2",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/water",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5046100-3",
-            "partOfSpeech": "noun",
-            "text": "Any of various forms of water.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/water",
+            "text": "the liquid that descends from the clouds as rain, forms streams, lakes, and seas, and is a major constituent of all living matter and that when pure is an odorless, tasteless, very slightly compressible liquid oxide of hydrogen H2O which appears bluish in thick layers, freezes at 0°C and boils at 100°C, has a maximum density at 4°C and a high specific heat, is feebly ionized to hydrogen and hydroxyl ions, and is a poor conductor of electricity and a good solvent",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water",
             "examples": [
-                "waste water."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "threatened to turn off the water",
+                "we went by water",
+                "a scholar of the first water"
+            ]
         },
         {
-            "id": "W5046100-4",
+            "id": "water",
             "partOfSpeech": "noun",
-            "text": "Naturally occurring mineral water, as at a spa.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/water",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5046100-5",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/water",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5046100-6",
-            "partOfSpeech": "noun",
-            "text": "A body of water such as a sea, lake, river, or stream.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/water",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5046100-7",
-            "partOfSpeech": "noun",
-            "text": "A particular stretch of sea or ocean, especially that of a state or country.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/water",
+            "text": "a natural mineral water —usually used in plural",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water",
             "examples": [
-                "escorted out of British waters."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "threatened to turn off the water",
+                "we went by water",
+                "a scholar of the first water"
+            ]
         },
         {
-            "id": "W5046100-8",
+            "id": "water",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/water",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5046100-9",
-            "partOfSpeech": "noun",
-            "text": "A supply of water.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/water",
+            "text": "a particular quantity or body of water: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water",
             "examples": [
-                "had to turn off the water while repairing the broken drain."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "threatened to turn off the water",
+                "we went by water",
+                "a scholar of the first water"
+            ]
         },
         {
-            "id": "W5046100-10",
+            "id": "water",
+            "partOfSpeech": "verb",
+            "text": "to moisten, sprinkle, or soak with water",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water",
+            "examples": [
+                "water the lawn",
+                "water cattle",
+                "lands watered by the river",
+                "the boat docked to water"
+            ]
+        },
+        {
+            "id": "water",
+            "partOfSpeech": "verb",
+            "text": "to supply with water for drink",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water",
+            "examples": [
+                "water the lawn",
+                "water cattle",
+                "lands watered by the river",
+                "the boat docked to water"
+            ]
+        },
+        {
+            "id": "water",
+            "partOfSpeech": "verb",
+            "text": "to supply water to",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water",
+            "examples": [
+                "water the lawn",
+                "water cattle",
+                "lands watered by the river",
+                "the boat docked to water"
+            ]
+        },
+        {
+            "id": "water bag",
             "partOfSpeech": "noun",
-            "text": "A water supply system.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/water",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a bag for holding water; especially: one designed to keep water cool for drinking by evaporation through a slightly porous surface",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
+        },
+        {
+            "id": "water bag",
+            "partOfSpeech": "noun",
+            "text": "bag of waters —used especially of domestic animals",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
+        },
+        {
+            "id": "water balance",
+            "partOfSpeech": "noun",
+            "text": "the ratio between the water assimilated into the body and that lost from the body; also: the condition of the body when this ratio approximates equilibrium",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
+        },
+        {
+            "id": "water ballet",
+            "partOfSpeech": "noun",
+            "text": "a synchronized sequence of movements performed by a group of swimmers",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
+        },
+        {
+            "id": "water bear",
+            "partOfSpeech": "noun",
+            "text": "tardigrade",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
+        },
+        {
+            "id": "Water Bearer",
+            "partOfSpeech": "noun",
+            "text": "aquarius",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
+        },
+        {
+            "id": "Water Bearer",
+            "partOfSpeech": "noun",
+            "text": "aquarius",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
+        },
+        {
+            "id": "water beetle",
+            "partOfSpeech": "noun",
+            "text": "any of numerous oval flattened aquatic beetles (such as a diving beetle or whirligig beetle) that swim by means of their fringed hind legs which act together as oars",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
+        },
+        {
+            "id": "water biscuit",
+            "partOfSpeech": "noun",
+            "text": "a cracker of flour and water and sometimes fat",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
+        },
+        {
+            "id": "water blister",
+            "partOfSpeech": "noun",
+            "text": "a blister with a clear watery content",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
         }
     ]
 }

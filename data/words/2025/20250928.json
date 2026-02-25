@@ -1,117 +1,128 @@
 {
     "word": "shirt",
     "date": "20250928",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "S5377800-1",
+            "id": "shirt",
             "partOfSpeech": "noun",
-            "text": "A garment for the upper part of the body, typically having a collar, sleeves, and a front opening.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/shirt",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5377800-2",
-            "partOfSpeech": "noun",
-            "text": "An undershirt.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/shirt",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5377800-3",
-            "partOfSpeech": "noun",
-            "text": "A nightshirt.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/shirt",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5377800-4",
-            "partOfSpeech": "idiom",
-            "text": "(<em>keep (one's) shirt on</em>)  To remain calm or patient.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "text": "a garment for the upper part of the body: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt",
             "examples": [
-                "The plane doesn't land for another hour, so keep your shirt on."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "lost his shirt on that business deal"
+            ]
         },
         {
-            "id": "S5377800-5",
-            "partOfSpeech": "idiom",
-            "text": "(<em>lose (one's) shirt</em>)  To lose everything one has or owns.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/shirt",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5377800-6",
-            "partOfSpeech": "idiom",
-            "text": "(<em>the shirt off (one's) back</em>)  The maximum one is able to give or lose.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/shirt",
+            "id": "shirt",
+            "partOfSpeech": "noun",
+            "text": "a cloth garment usually having a collar, sleeves, a front opening, and a tail long enough to be tucked inside trousers or a skirt",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt",
             "examples": [
-                "The only thing those swindlers didn't take was the shirt off my back."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "lost his shirt on that business deal"
+            ]
         },
         {
+            "id": "shirt",
             "partOfSpeech": "noun",
-            "text": "A garment, formerly the chief under-garment of both sexes.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/shirt",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "undershirt",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt",
+            "examples": [
+                "lost his shirt on that business deal"
+            ]
         },
         {
+            "id": "shirt jacket",
             "partOfSpeech": "noun",
-            "text": "The amnion, or some part of it.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/shirt",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a jacket designed in the style of a shirt —called also shirt-jac",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
         },
         {
+            "id": "aloha shirt",
             "partOfSpeech": "noun",
-            "text": "In a blast-furnace, an interior lining.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/shirt",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "hawaiian shirt",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
         },
         {
-            "text": "To clothe with a shirt; hence, by extension, to clothe; cover.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/shirt",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "bloody shirt",
+            "partOfSpeech": "noun",
+            "text": "something intended to stir up or revive partisan animosity —usually used in the phrase wave the bloody shirt",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
+        },
+        {
+            "id": "body shirt",
+            "partOfSpeech": "noun",
+            "text": "a close-fitting shirt or blouse",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
+        },
+        {
+            "id": "body shirt",
+            "partOfSpeech": "noun",
+            "text": "a woman's close-fitting top made with a sewn-in or snapped crotch",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
+        },
+        {
+            "id": "bush shirt",
+            "partOfSpeech": "noun",
+            "text": "a usually loose-fitting cotton shirt with patch pockets",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
+        },
+        {
+            "id": "camp shirt",
+            "partOfSpeech": "noun",
+            "text": "a usually short-sleeved shirt having a notched collar and often patch pockets",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
+        },
+        {
+            "id": "dress shirt",
+            "partOfSpeech": "noun",
+            "text": "a shirt especially for wear with evening attire; broadly: a shirt with buttons, cuffs, and a collar that is suitable for wear with a necktie",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
+        },
+        {
+            "id": "hair shirt",
+            "partOfSpeech": "noun",
+            "text": "a shirt made of rough animal hair worn next to the skin as a penance",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
+        },
+        {
+            "id": "hair shirt",
+            "partOfSpeech": "noun",
+            "text": "one that irritates like a hair shirt",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
+        },
+        {
+            "id": "Hawaiian shirt",
+            "partOfSpeech": "noun",
+            "text": "a usually short-sleeved sport shirt with a colorful pattern",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
         }
     ]
 }

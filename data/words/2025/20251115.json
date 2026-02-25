@@ -1,117 +1,61 @@
 {
     "word": "marker",
     "date": "20251115",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "M5119300-1",
+            "id": "marker",
             "partOfSpeech": "noun",
-            "text": "One that marks or serves as a mark, as.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/marker",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "one that marks",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/marker",
+            "examples": [
+                "drew a tree with green and brown markers",
+                "used a permanent marker to label the boxes",
+                "a pin marker for hemlines"
+            ]
         },
         {
-            "id": "M5119300-3",
+            "id": "marker",
             "partOfSpeech": "noun",
-            "text": "A bookmark.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/marker",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "something used for marking: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/marker",
+            "examples": [
+                "drew a tree with green and brown markers",
+                "used a permanent marker to label the boxes",
+                "a pin marker for hemlines"
+            ]
         },
         {
-            "id": "M5119300-4",
+            "id": "marker",
             "partOfSpeech": "noun",
-            "text": "A tombstone.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/marker",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a type of felt tip pen that makes wide lines",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/marker",
+            "examples": [
+                "drew a tree with green and brown markers",
+                "used a permanent marker to label the boxes",
+                "a pin marker for hemlines"
+            ]
         },
         {
-            "id": "M5119300-5",
+            "id": "genetic marker",
             "partOfSpeech": "noun",
-            "text": "A milestone.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/marker",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a readily recognizable genetic trait, gene, DNA segment, or gene product used for identification especially when closely linked to a trait or genetic material that is difficult to identify",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/marker"
         },
         {
-            "id": "M5119300-5",
-            "partOfSpeech": "noun",
-            "text": "An implement, especially a felt-tipped pen, used for marking or writing.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/marker",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5119300-6",
-            "partOfSpeech": "noun",
-            "text": "One who marks objects, especially for industrial purposes.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/marker",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5119300-7",
-            "partOfSpeech": "noun",
-            "text": "One who grades student papers.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/marker",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5119300-8",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/marker",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5119300-9",
-            "partOfSpeech": "noun",
-            "text": "A device, such as a line, stake, or flag, set on a playing field and showing the playing or scoring position.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/marker",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "M5119300-10",
-            "partOfSpeech": "noun",
-            "text": "A player who guards an opponent, as in soccer.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/marker",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "Magic Marker",
+            "text": "—used for a felt-tipped pen",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/marker"
         }
     ]
 }

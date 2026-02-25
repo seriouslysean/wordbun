@@ -1,118 +1,133 @@
 {
     "word": "hair",
     "date": "20250713",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "H5015700-1",
+            "id": "hair",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hair",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "H5015700-2",
-            "partOfSpeech": "noun",
-            "text": "Any of the cylindrical, keratinized, often pigmented filaments characteristically growing from the epidermis of a mammal.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hair",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "H5015700-3",
-            "partOfSpeech": "noun",
-            "text": "A growth of such filaments, as that forming the coat of an animal or covering the scalp of a human.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hair",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "H5015700-4",
-            "partOfSpeech": "noun",
-            "text": "A filamentous projection or bristle similar to a hair, such as a seta of an arthropod or an epidermal process of a plant.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hair",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "H5015700-5",
-            "partOfSpeech": "noun",
-            "text": "Fabric made from the hair of certain animals.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "text": "a slender threadlike outgrowth of the epidermis of an animal; especially: one of the usually pigmented filaments that form the characteristic coat of a mammal",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair",
             "examples": [
-                "a coat of alpaca hair."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "won by a hair",
+                "aligned to a hair",
+                "leaf hair"
+            ]
         },
         {
-            "id": "H5015700-6",
+            "id": "hair",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hair",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "H5015700-7",
-            "partOfSpeech": "noun",
-            "text": "A minute distance or narrow margin.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "text": "the hairy covering of an animal or a body part; especially: the coating of hairs on a human head",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair",
             "examples": [
-                "won by a hair."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "won by a hair",
+                "aligned to a hair",
+                "leaf hair"
+            ]
         },
         {
-            "id": "H5015700-8",
+            "id": "hair",
             "partOfSpeech": "noun",
-            "text": "A precise or exact degree.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/hair",
+            "text": "haircloth",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair",
             "examples": [
-                "calibrated to a hair."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "won by a hair",
+                "aligned to a hair",
+                "leaf hair"
+            ]
         },
         {
-            "text": "To produce or grow hair.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/hair",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "hair ball",
+            "partOfSpeech": "noun",
+            "text": "a compact mass of hair formed in the stomach especially of a shedding animal (such as a cat) that cleanses its coat by licking",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
         },
         {
-            "text": "Another spelling of <internalXref urlencoded=\"hare\">hare</internalXref>.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/hair",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "hair cell",
+            "partOfSpeech": "noun",
+            "text": "a cell with hairlike processes; especially: one of the sensory cells in the auditory epithelium of the organ of Corti",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
+        },
+        {
+            "id": "hair follicle",
+            "partOfSpeech": "noun",
+            "text": "the tubular epithelial sheath that surrounds the lower part of the hair shaft and encloses at the bottom a vascular papilla supplying the growing basal part of the hair with nourishment",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
+        },
+        {
+            "id": "hair gel",
+            "partOfSpeech": "noun",
+            "text": "a gelatinous preparation used in styling hair",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair",
+            "examples": [
+                "… a tall, thin man named Artie, who manages, with enough hair gel, to slick back a crewcut.",
+                "Her hair is back, not the locks I loved so much, but a shorter, goofier version that grows unevenly and will only stay in place with hair gel."
+            ]
+        },
+        {
+            "id": "hair-raiser",
+            "partOfSpeech": "noun",
+            "text": "thriller",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
+        },
+        {
+            "id": "hair-raising",
+            "partOfSpeech": "adjective",
+            "text": "causing terror, excitement, or astonishment",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair",
+            "examples": [
+                "hair-raising stories"
+            ]
+        },
+        {
+            "id": "hair seal",
+            "partOfSpeech": "noun",
+            "text": "any of a family (Phocidae) of seals having a coarse hairy coat, the hind limbs reduced to swimming flippers, and no external ears —called also true seal",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
+        },
+        {
+            "id": "hair shirt",
+            "partOfSpeech": "noun",
+            "text": "a shirt made of rough animal hair worn next to the skin as a penance",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
+        },
+        {
+            "id": "hair shirt",
+            "partOfSpeech": "noun",
+            "text": "one that irritates like a hair shirt",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
+        },
+        {
+            "id": "hair spray",
+            "partOfSpeech": "noun",
+            "text": "a liquid sprayed on the hair to keep it in place after styling",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
         }
     ]
 }

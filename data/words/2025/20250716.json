@@ -1,126 +1,130 @@
 {
     "word": "window",
     "date": "20250716",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "W5179300-1",
+            "id": "window",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/window",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5179300-2",
-            "partOfSpeech": "noun",
-            "text": "An opening constructed in a wall, door, or roof that functions to admit light or air to an enclosure and is often framed and spanned with glass mounted to permit opening and closing.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/window",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5179300-3",
-            "partOfSpeech": "noun",
-            "text": "A framework enclosing a pane of glass for such an opening; a sash.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/window",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5179300-4",
-            "partOfSpeech": "noun",
-            "text": "A pane of glass or similar material enclosed in such a framework.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/window",
+            "text": "an opening especially in the wall of a building for admission of light and air that is usually closed by casements or sashes containing transparent material (such as glass) and capable of being opened and shut",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window",
             "examples": [
-                "The ball broke the window."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a bank teller's window",
+                "a window on history",
+                "a window of vulnerability"
+            ]
         },
         {
-            "id": "W5179300-5",
+            "id": "window",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/window",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5179300-6",
-            "partOfSpeech": "noun",
-            "text": "An opening or transparent part that resembles a window in function or appearance.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/window",
+            "text": "windowpane",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window",
             "examples": [
-                "a sail window."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a bank teller's window",
+                "a window on history",
+                "a window of vulnerability"
+            ]
         },
         {
-            "id": "W5179300-7",
+            "id": "window",
             "partOfSpeech": "noun",
-            "text": "The transparent panel on a window envelope.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/window",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "W5179300-8",
-            "partOfSpeech": "noun",
-            "text": "The area or space immediately behind a window, especially at the front of a shop.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/window",
+            "text": "a space behind a window of a retail store containing displayed merchandise",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window",
             "examples": [
-                "goods displayed in the window."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a bank teller's window",
+                "a window on history",
+                "a window of vulnerability"
+            ]
         },
         {
-            "id": "W5179300-9",
+            "id": "window box",
             "partOfSpeech": "noun",
-            "text": "A means of access or observation.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/window",
-            "examples": [
-                "St. Petersburg was Peter the Great's window onto the Baltic."
-            ],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a box designed to hold soil for growing plants at a windowsill",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window"
         },
         {
-            "id": "W5179300-10",
+            "id": "window dressing",
             "partOfSpeech": "noun",
-            "text": "An interval of time during which an activity can or must take place.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/window",
+            "text": "the display of merchandise in a retail store window",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window"
+        },
+        {
+            "id": "window dressing",
+            "partOfSpeech": "noun",
+            "text": "the act or an instance of making something appear deceptively attractive or favorable",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window"
+        },
+        {
+            "id": "window dressing",
+            "partOfSpeech": "noun",
+            "text": "something used to create a deceptively favorable or attractive impression",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window"
+        },
+        {
+            "id": "window envelope",
+            "partOfSpeech": "noun",
+            "text": "an envelope having an opening through which the address on the enclosure is visible",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window"
+        },
+        {
+            "id": "window seat",
+            "partOfSpeech": "noun",
+            "text": "a seat built into a window recess",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window"
+        },
+        {
+            "id": "window seat",
+            "partOfSpeech": "noun",
+            "text": "a seat next to a window (as in a bus or airplane)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window"
+        },
+        {
+            "id": "window shade",
+            "partOfSpeech": "noun",
+            "text": "a shade or curtain for a window",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window"
+        },
+        {
+            "id": "window-shop",
+            "partOfSpeech": "verb",
+            "text": "to look at the displays in retail store windows without going inside the stores to make purchases",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window"
+        },
+        {
+            "id": "window treatment",
+            "partOfSpeech": "noun",
+            "text": "a decorative covering (such as a curtain, shade, or valance) for a window or part of a window",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/window",
             "examples": [
-                "a window of opportunity for a space mission; a window of vulnerability when the air force was subject to attack."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "Much of the fabric and other decorative materials for window treatments, as the curtains are called, were donated by manufacturers.",
+                "“Window treatments, such as shades and drapes, are little luxuries that make mornings more serene. … ,” [Alessandra] Woods says."
+            ]
         }
     ]
 }

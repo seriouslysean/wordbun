@@ -1,120 +1,141 @@
 {
     "word": "ramp",
     "date": "20250726",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "R5037400-1",
+            "id": "ramp",
             "partOfSpeech": "noun",
-            "text": "An inclined surface or roadway connecting different levels.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/ramp",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a sloping way or plane: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
         },
         {
-            "id": "R5037400-2",
+            "id": "ramp",
             "partOfSpeech": "noun",
-            "text": "A mobile staircase by which passengers board and leave an aircraft.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/ramp",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a sloping floor, walk, or roadway leading from one level to another",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
         },
         {
-            "id": "R5037400-3",
+            "id": "ramp",
             "partOfSpeech": "noun",
-            "text": "A concave bend of a handrail where a sharp change in level or direction occurs, as at a stair landing.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/ramp",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a slope for launching boats",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
         },
         {
-            "id": "R5037400-4",
-            "partOfSpeech": "phrasal verb",
-            "text": "To decrease in volume, amount, or rate.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/ramp",
+            "id": "ramp",
+            "partOfSpeech": "verb",
+            "text": "to speed up, expand, or increase especially quickly or at a constant rate —used with up",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
+        },
+        {
+            "id": "ramp",
+            "partOfSpeech": "verb",
+            "text": "to increase, expand, or decrease especially quickly or at a constant rate —usually used with up or down",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
+        },
+        {
+            "id": "ramp",
+            "partOfSpeech": "noun",
+            "text": "any of various alliums used for food",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
+        },
+        {
+            "id": "ramp",
+            "partOfSpeech": "verb",
+            "text": "to stand or advance menacingly with forelegs or with arms raised",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
+        },
+        {
+            "id": "ramp",
+            "partOfSpeech": "verb",
+            "text": "to move or act furiously",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
+        },
+        {
+            "id": "ramp",
+            "partOfSpeech": "verb",
+            "text": "to creep up —used especially of plants",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
+        },
+        {
+            "id": "ramp",
+            "partOfSpeech": "noun",
+            "text": "the act or an instance of ramping",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp",
             "examples": [
-                "As the project ramped down, several employees were laid off."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "It is the ramp of the lion by the side of the … snarl of the cur.",
+                "… the whirr / Of the crickets is lost in the roar / And the ramp of the southern gale …"
+            ]
         },
         {
-            "id": "R5037400-5",
-            "partOfSpeech": "phrasal verb",
-            "text": "To increase in volume, amount, or rate.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/ramp",
-            "examples": [
-                "The factory ramped up production to meet the increased demand."
-            ],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "R5037500-1",
-            "partOfSpeech": "intransitive verb",
-            "text": "To rush around or act in a threatening or violent manner.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/ramp",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "R5037500-2",
-            "partOfSpeech": "intransitive verb",
-            "text": "To assume a threatening stance, as in rearing up on hindlegs.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/ramp",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "R5037500-3",
-            "partOfSpeech": "intransitive verb",
-            "text": "To stand in the rampant position.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/ramp",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "R5037600-1",
+            "id": "ramp-up",
             "partOfSpeech": "noun",
-            "text": "A plant <em>(Allium tricoccum)</em> of the eastern United States having small bulbs and young leaves that are edible and have a pungent onionlike flavor.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/ramp",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "buildup, increase",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
         },
         {
-            "text": "To rise by climbing or shooting up, as a plant; run or grow up rapidly; spring up in growth.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/ramp",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "off-ramp",
+            "partOfSpeech": "noun",
+            "text": "a ramp by which one leaves a limited-access highway",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
+        },
+        {
+            "id": "on-ramp",
+            "partOfSpeech": "noun",
+            "text": "a ramp by which one enters a limited-access highway",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp"
+        },
+        {
+            "id": "curb cut",
+            "partOfSpeech": "noun",
+            "text": "a ramp cut into a street curb to provide access (as for wheelchairs or strollers) between a sidewalk and the street",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp",
+            "examples": [
+                "… and only 20 percent of our sidewalks have curb cuts. We are far behind ADA standards.",
+                "The project also calls for the replacement of curb ramps at crosswalks around the parking lot and across from it …",
+                "We'll spend months in the planning process focused on where the curb cuts for the driveway will be."
+            ]
+        },
+        {
+            "id": "curb cut",
+            "partOfSpeech": "noun",
+            "text": "a ramp cut into a street curb to provide vehicular access to a driveway or parking space",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/ramp",
+            "examples": [
+                "… and only 20 percent of our sidewalks have curb cuts. We are far behind ADA standards.",
+                "The project also calls for the replacement of curb ramps at crosswalks around the parking lot and across from it …",
+                "We'll spend months in the planning process focused on where the curb cuts for the driveway will be."
+            ]
         }
     ]
 }

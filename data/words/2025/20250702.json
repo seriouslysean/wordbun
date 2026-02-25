@@ -1,128 +1,245 @@
 {
     "word": "sign",
     "date": "20250702",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "S5430700-1",
+            "id": "sign",
             "partOfSpeech": "noun",
-            "text": "Something that suggests the presence or existence of a fact, condition, or quality.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "text": "a motion or gesture by which a thought is expressed or a command or wish made known",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
             "examples": [
-                "A high temperature is a sign of fever."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "signs include words, morphemes, and punctuation",
+                "signs of success",
+                "a sign of the times",
+                "signs of an early spring",
+                "red fox sign"
+            ]
         },
         {
-            "id": "S5430700-2",
+            "id": "sign",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sign",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5430700-3",
-            "partOfSpeech": "noun",
-            "text": "An act or gesture used to convey an idea, a desire, information, or a command: <i>synonym</i>: <strong> gesture</strong>.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "text": "signal",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
             "examples": [
-                "gave the go-ahead sign."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "signs include words, morphemes, and punctuation",
+                "signs of success",
+                "a sign of the times",
+                "signs of an early spring",
+                "red fox sign"
+            ]
         },
         {
-            "id": "S5430700-4",
+            "id": "sign",
             "partOfSpeech": "noun",
-            "text": "Sign language.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sign",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5430700-5",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sign",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5430700-6",
-            "partOfSpeech": "noun",
-            "text": "A displayed structure bearing lettering or symbols, used to identify or advertise a place of business.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "text": "a fundamental linguistic unit that designates an object or relation or has a purely syntactic function",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
             "examples": [
-                "a motel with a flashing neon sign outside."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "signs include words, morphemes, and punctuation",
+                "signs of success",
+                "a sign of the times",
+                "signs of an early spring",
+                "red fox sign"
+            ]
         },
         {
-            "id": "S5430700-7",
-            "partOfSpeech": "noun",
-            "text": "A posted notice bearing a designation, direction, or command.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "id": "sign",
+            "partOfSpeech": "verb",
+            "text": "cross",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
             "examples": [
-                "an EXIT sign above a door; a traffic sign."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "sign a trail",
+                "signed the contract",
+                "sign a bill into law",
+                "sign a confession",
+                "signed over his property to his brother",
+                "Please sign your name here.",
+                "a signed review",
+                "signed for the packages",
+                "signed with the team for one season"
+            ]
         },
         {
-            "id": "S5430700-8",
-            "partOfSpeech": "noun",
-            "text": "A conventional figure or device that stands for a word, phrase, or operation; a symbol, as in mathematics or in musical notation.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sign",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5430700-9",
-            "partOfSpeech": "noun",
-            "text": "An indicator, such as a dropping or footprint, of the trail of an animal.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "id": "sign",
+            "partOfSpeech": "verb",
+            "text": "to place a sign on or mark by signs",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
             "examples": [
-                "looking for deer sign."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "sign a trail",
+                "signed the contract",
+                "sign a bill into law",
+                "sign a confession",
+                "signed over his property to his brother",
+                "Please sign your name here.",
+                "a signed review",
+                "signed for the packages",
+                "signed with the team for one season"
+            ]
         },
         {
-            "id": "S5430700-10",
-            "partOfSpeech": "noun",
-            "text": "A trace or vestige.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/sign",
+            "id": "sign",
+            "partOfSpeech": "verb",
+            "text": "to represent or indicate by a sign",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
             "examples": [
-                "no sign of life."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "sign a trail",
+                "signed the contract",
+                "sign a bill into law",
+                "sign a confession",
+                "signed over his property to his brother",
+                "Please sign your name here.",
+                "a signed review",
+                "signed for the packages",
+                "signed with the team for one season"
+            ]
+        },
+        {
+            "id": "sign in",
+            "partOfSpeech": "verb",
+            "text": "to make a record of arrival by signing a register or punching a time clock",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign"
+        },
+        {
+            "id": "sign in",
+            "partOfSpeech": "verb",
+            "text": "to record arrival of (a person) or receipt of (an article) by signing",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign"
+        },
+        {
+            "id": "sign language",
+            "partOfSpeech": "noun",
+            "text": "any of various formal languages employing a system of hand gestures and their placement relative to the upper body, facial expressions, body postures, and finger spelling especially for communication by and with deaf people",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
+            "examples": [
+                "But true sign languages are in fact complete in themselves: their syntax, grammar, and semantics are complete, but they have a different character from that of any spoken or written language.",
+                "Sign language relies mainly on the signer's hand, but facial expressions and body movements are also important.",
+                "I decided to cadge a lift from a Lebanese who only spoke Arabic, so we had to converse in sign language."
+            ]
+        },
+        {
+            "id": "sign language",
+            "partOfSpeech": "noun",
+            "text": "an unsystematic method of communicating chiefly by manual gestures (as by people speaking different languages)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
+            "examples": [
+                "But true sign languages are in fact complete in themselves: their syntax, grammar, and semantics are complete, but they have a different character from that of any spoken or written language.",
+                "Sign language relies mainly on the signer's hand, but facial expressions and body movements are also important.",
+                "I decided to cadge a lift from a Lebanese who only spoke Arabic, so we had to converse in sign language."
+            ]
+        },
+        {
+            "id": "sign of aggregation",
+            "partOfSpeech": "noun",
+            "text": "any of various conventional devices (such as braces, brackets, parentheses, or vinculums) used in mathematics to indicate that two or more terms are to be treated as one quantity",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign"
+        },
+        {
+            "id": "sign off",
+            "partOfSpeech": "verb",
+            "text": "to announce the end of something (such as a message or broadcast)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
+            "examples": [
+                "sign off on a memo"
+            ]
+        },
+        {
+            "id": "sign off",
+            "partOfSpeech": "verb",
+            "text": "to approve or acknowledge something by or as if by a signature",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
+            "examples": [
+                "sign off on a memo"
+            ]
+        },
+        {
+            "id": "sign of the cross",
+            "partOfSpeech": "noun",
+            "text": "a gesture of the hand forming a cross especially on forehead, breast, and shoulders to profess Christian faith or invoke divine protection or blessing",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign"
+        },
+        {
+            "id": "sign on",
+            "partOfSpeech": "verb",
+            "text": "to engage oneself by or as if by a signature",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
+            "examples": [
+                "signed on to the new project"
+            ]
+        },
+        {
+            "id": "sign on",
+            "partOfSpeech": "verb",
+            "text": "to announce the start of broadcasting for the day",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
+            "examples": [
+                "signed on to the new project"
+            ]
+        },
+        {
+            "id": "sign out",
+            "partOfSpeech": "verb",
+            "text": "to indicate departure by signing a register",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
+            "examples": [
+                "signed out the library books for a week"
+            ]
+        },
+        {
+            "id": "sign out",
+            "partOfSpeech": "verb",
+            "text": "to record or approve the release or departure of",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
+            "examples": [
+                "signed out the library books for a week"
+            ]
+        },
+        {
+            "id": "sign up",
+            "partOfSpeech": "verb",
+            "text": "to sign one's name (as to a contract) in order to obtain, do, or join something",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sign",
+            "examples": [
+                "sign up for insurance",
+                "sign up for classes"
+            ]
         }
     ]
 }

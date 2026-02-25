@@ -1,117 +1,142 @@
 {
     "word": "bat",
     "date": "20250829",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "B5110400-1",
+            "id": "bat",
             "partOfSpeech": "noun",
-            "text": "Any of various nocturnal flying mammals of the order Chiroptera, having membranous wings that extend from the forelimbs to the hind limbs or tail and anatomical adaptations for echolocation, by which they navigate and hunt prey.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a stout solid stick: club",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat",
+            "examples": [
+                "a right-handed bat",
+                "we need his bat in the lineup"
+            ]
         },
         {
-            "id": "B5110400-2",
-            "partOfSpeech": "idiom",
-            "text": "(<em>have bats in (one's) belfry</em>)  To behave in an eccentric, bizarre manner.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5110600-1",
+            "id": "bat",
             "partOfSpeech": "noun",
-            "text": "A binge; a spree.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a sharp blow: stroke",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat",
+            "examples": [
+                "a right-handed bat",
+                "we need his bat in the lineup"
+            ]
         },
         {
-            "id": "B5110300-1",
+            "id": "bat",
             "partOfSpeech": "noun",
-            "text": "A stout wooden stick; a cudgel.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a usually wooden implement used for hitting the ball in various games",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat",
+            "examples": [
+                "a right-handed bat",
+                "we need his bat in the lineup"
+            ]
         },
         {
-            "id": "B5110300-2",
+            "id": "bat",
+            "partOfSpeech": "verb",
+            "text": "to strike or hit with or as if with a bat",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
+        },
+        {
+            "id": "bat",
+            "partOfSpeech": "verb",
+            "text": "to advance (a base runner) by batting",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
+        },
+        {
+            "id": "bat",
+            "partOfSpeech": "verb",
+            "text": "to have a batting average of",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
+        },
+        {
+            "id": "bat",
             "partOfSpeech": "noun",
-            "text": "A blow, such as one delivered with a stick.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "any of a widely distributed order (Chiroptera) of nocturnal usually frugivorous or insectivorous flying mammals that have wings formed from four elongated digits of the forelimb covered by a cutaneous membrane and that have adequate visual capabilities but often rely on echolocation",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
         },
         {
-            "id": "B5110300-3",
+            "id": "bat",
+            "partOfSpeech": "verb",
+            "text": "to wink especially in surprise or emotion; also: flutter",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat",
+            "examples": [
+                "never batted an eye",
+                "batted his eyelashes"
+            ]
+        },
+        {
+            "id": "BAT",
+            "text": "bachelor of arts in teaching",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
+        },
+        {
+            "id": "batt",
             "partOfSpeech": "noun",
-            "text": "A rounded, often wooden club, wider and heavier at the hitting end and tapering at the handle, used to strike the ball.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "batting; also: an often square piece of batting",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
         },
         {
-            "id": "B5110300-4",
+            "id": "bat-eared fox",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a large-eared yellowish-gray fox (Otocyon megalotis) that inhabits arid unforested areas of eastern and southern Africa",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
         },
         {
-            "id": "B5110300-5",
+            "id": "bat girl",
             "partOfSpeech": "noun",
-            "text": "A club used in cricket, having a broad, flat-surfaced hitting end and a distinct, narrow handle.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a girl or woman employed to look after the equipment (such as bats) of a baseball team",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
         },
         {
-            "id": "B5110300-6",
+            "id": "bat mitzvah",
             "partOfSpeech": "noun",
-            "text": "The racket used in various games, such as table tennis or racquets.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a Jewish girl who at 12 or more years of age assumes religious responsibilities",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
         },
         {
-            "id": "B5110300-7",
-            "partOfSpeech": "intransitive verb",
-            "text": "To hit with or as if with a bat.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/bat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "bat mitzvah",
+            "partOfSpeech": "noun",
+            "text": "the initiatory ceremony recognizing a girl as a bat mitzvah",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
+        },
+        {
+            "id": "bat mitzvah",
+            "partOfSpeech": "verb",
+            "text": "to administer the ceremony of bat mitzvah to",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
         }
     ]
 }

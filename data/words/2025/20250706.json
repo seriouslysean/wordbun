@@ -1,116 +1,176 @@
 {
     "word": "grass",
     "date": "20250706",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "G5242900-1",
+            "id": "grass",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/grass",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "herbage suitable or used for grazing animals",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass",
+            "examples": [
+                "keep off the grass",
+                "the horse had never won on grass",
+                "put out to grass"
+            ]
         },
         {
-            "id": "G5242900-2",
+            "id": "grass",
             "partOfSpeech": "noun",
-            "text": "A member of the grass family.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/grass",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "any of a large family (Gramineae synonym Poaceae) of monocotyledonous mostly herbaceous plants with jointed stems, slender sheathing leaves, and flowers borne in spikelets of bracts",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass",
+            "examples": [
+                "keep off the grass",
+                "the horse had never won on grass",
+                "put out to grass"
+            ]
         },
         {
-            "id": "G5242900-3",
+            "id": "grass",
             "partOfSpeech": "noun",
-            "text": "The members of the grass family considered as a group.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/grass",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "land (such as a lawn or a turf racetrack) covered with growing grass",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass",
+            "examples": [
+                "keep off the grass",
+                "the horse had never won on grass",
+                "put out to grass"
+            ]
         },
         {
-            "id": "G5242900-4",
-            "partOfSpeech": "noun",
-            "text": "Any of various plants having slender leaves similar to those of a grass.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/grass",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "grass",
+            "partOfSpeech": "verb",
+            "text": "to feed (livestock) on grass sometimes without grain or other concentrates",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
         },
         {
-            "id": "G5242900-5",
-            "partOfSpeech": "noun",
-            "text": "An expanse of ground, such as a lawn, covered with grass or similar plants.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/grass",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "grass",
+            "partOfSpeech": "verb",
+            "text": "to cover with grass; especially: to seed to grass",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
         },
         {
-            "id": "G5242900-6",
-            "partOfSpeech": "noun",
-            "text": "Grazing land; pasture.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/grass",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "grass",
+            "partOfSpeech": "verb",
+            "text": "to produce grass",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
         },
         {
-            "id": "G5242900-7",
-            "partOfSpeech": "noun",
-            "text": "Marijuana.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/grass",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "Grass:b",
+            "text": "Günter Wilhelm 1927—2015 German writer",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
         },
         {
-            "id": "G5242900-8",
+            "id": "grass carp",
             "partOfSpeech": "noun",
-            "text": "Small variations in amplitude of an oscilloscope display caused by electrical noise.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/grass",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a freshwater cyprinid fish (Ctenopharyngodon idella) of eastern Asia that is olive-brown with a silvery-white belly and that has been introduced into non-native waters where it is often considered an invasive species —called also white amur",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass",
+            "examples": [
+                "Native to Asia, grass carp were first imported here in 1963 by the U.S. Fish and Wildlife Service to evaluate as an alternative to herbicides and mechanical weed control."
+            ]
         },
         {
-            "id": "G5242900-9",
+            "id": "grass cloth",
             "partOfSpeech": "noun",
-            "text": "An informer.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/grass",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a lustrous plain textile of usually loosely woven fibers",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
         },
         {
-            "id": "G5242900-10",
-            "partOfSpeech": "intransitive verb",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/grass",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "grass court",
+            "partOfSpeech": "noun",
+            "text": "a tennis court with a grass surface",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
+        },
+        {
+            "id": "grass roots",
+            "partOfSpeech": "noun",
+            "text": "the very foundation or source",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass",
+            "examples": [
+                "You must attack the problem at the grass roots.",
+                "was losing touch with the party's grass roots"
+            ]
+        },
+        {
+            "id": "grass roots",
+            "partOfSpeech": "noun",
+            "text": "the basic level of society or of an organization especially as viewed in relation to higher or more centralized positions of power",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass",
+            "examples": [
+                "You must attack the problem at the grass roots.",
+                "was losing touch with the party's grass roots"
+            ]
+        },
+        {
+            "id": "grass tree",
+            "partOfSpeech": "noun",
+            "text": "any of a genus (Xanthorrhoea) of Australian plants of the lily family with a thick woody trunk bearing a cluster of stiff linear leaves and a terminal spike of small flowers",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
+        },
+        {
+            "id": "grass widow",
+            "partOfSpeech": "noun",
+            "text": "a discarded mistress",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
+        },
+        {
+            "id": "grass widow",
+            "partOfSpeech": "noun",
+            "text": "a woman who has had an illegitimate child",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
+        },
+        {
+            "id": "grass widow",
+            "partOfSpeech": "noun",
+            "text": "a woman whose husband is temporarily away from her",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
+        },
+        {
+            "id": "grass widower",
+            "partOfSpeech": "noun",
+            "text": "a man divorced or separated from his wife",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
+        },
+        {
+            "id": "grass widower",
+            "partOfSpeech": "noun",
+            "text": "a man whose wife is temporarily away from him",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
         }
     ]
 }

@@ -1,95 +1,177 @@
 {
     "word": "words",
     "date": "20250710",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
+            "id": "word",
             "partOfSpeech": "noun",
-            "text": "Plural form of <xref>word</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/words",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a speech sound or series of speech sounds that symbolizes and communicates a meaning usually without being divisible into smaller units capable of independent use",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/words",
+            "examples": [
+                "the order of words in a phrase",
+                "the meaning of a word",
+                "a word that rhymes with her name",
+                "… signage shows visitors how to sign the word “goat”—while a goat pokes his head through the fence.",
+                "The word go also has the forms goes, going, went, and gone.",
+                "the number of words to a line",
+                "a word of advice",
+                "I would like to have a word with you.",
+                "For the first time through his own words, witness the journey of a shy but prodigious musical talent who would soon become one of the defining artists of his generation.",
+                "putting one's feelings into words",
+                "wonderful beyond words =beyond what can be expressed in language",
+                "Don't move till I give the word.",
+                "We will wait for your word before we serve dinner.",
+                "sent word that they would be late",
+                "Any word on how they are?",
+                "If word gets out, we're all in trouble.",
+                "Word has it that the event is going to be cancelled.",
+                "kept their word",
+                "I won't go back on my word.",
+                "… the Dodgers have lived up to their word.",
+                "… the precepts of God's Word: \"Thou shalt love thy neighbor as thyself.\"",
+                "… preach the Word to those of their people who had formerly floundered without it.",
+                "… the Incarnation, the belief that in Christ the Word was made flesh.",
+                "loyal in word and deed",
+                "One remembers his first modest advertisements headed with the magic word Thrift, Thrift, Thrift, thrice repeated …"
+            ]
         },
         {
+            "id": "word",
             "partOfSpeech": "noun",
-            "text": "An angry discussion.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/words",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a gesture or series of gestures that symbolizes and communicates a meaning of an object or concept: sign",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/words",
+            "examples": [
+                "the order of words in a phrase",
+                "the meaning of a word",
+                "a word that rhymes with her name",
+                "… signage shows visitors how to sign the word “goat”—while a goat pokes his head through the fence.",
+                "The word go also has the forms goes, going, went, and gone.",
+                "the number of words to a line",
+                "a word of advice",
+                "I would like to have a word with you.",
+                "For the first time through his own words, witness the journey of a shy but prodigious musical talent who would soon become one of the defining artists of his generation.",
+                "putting one's feelings into words",
+                "wonderful beyond words =beyond what can be expressed in language",
+                "Don't move till I give the word.",
+                "We will wait for your word before we serve dinner.",
+                "sent word that they would be late",
+                "Any word on how they are?",
+                "If word gets out, we're all in trouble.",
+                "Word has it that the event is going to be cancelled.",
+                "kept their word",
+                "I won't go back on my word.",
+                "… the Dodgers have lived up to their word.",
+                "… the precepts of God's Word: \"Thou shalt love thy neighbor as thyself.\"",
+                "… preach the Word to those of their people who had formerly floundered without it.",
+                "… the Incarnation, the belief that in Christ the Word was made flesh.",
+                "loyal in word and deed",
+                "One remembers his first modest advertisements headed with the magic word Thrift, Thrift, Thrift, thrice repeated …"
+            ]
         },
         {
+            "id": "word",
+            "partOfSpeech": "noun",
+            "text": "the entire set of linguistic forms produced by combining a single base with various inflectional elements without change in the part of speech elements",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/words",
+            "examples": [
+                "the order of words in a phrase",
+                "the meaning of a word",
+                "a word that rhymes with her name",
+                "… signage shows visitors how to sign the word “goat”—while a goat pokes his head through the fence.",
+                "The word go also has the forms goes, going, went, and gone.",
+                "the number of words to a line",
+                "a word of advice",
+                "I would like to have a word with you.",
+                "For the first time through his own words, witness the journey of a shy but prodigious musical talent who would soon become one of the defining artists of his generation.",
+                "putting one's feelings into words",
+                "wonderful beyond words =beyond what can be expressed in language",
+                "Don't move till I give the word.",
+                "We will wait for your word before we serve dinner.",
+                "sent word that they would be late",
+                "Any word on how they are?",
+                "If word gets out, we're all in trouble.",
+                "Word has it that the event is going to be cancelled.",
+                "kept their word",
+                "I won't go back on my word.",
+                "… the Dodgers have lived up to their word.",
+                "… the precepts of God's Word: \"Thou shalt love thy neighbor as thyself.\"",
+                "… preach the Word to those of their people who had formerly floundered without it.",
+                "… the Incarnation, the belief that in Christ the Word was made flesh.",
+                "loyal in word and deed",
+                "One remembers his first modest advertisements headed with the magic word Thrift, Thrift, Thrift, thrice repeated …"
+            ]
+        },
+        {
+            "id": "word",
             "partOfSpeech": "verb",
-            "text": "Third-person singular simple present indicative form of <xref>word</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/words",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "words making up the dialogue of a play",
-            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
-            "sourceDictionary": "wordnet",
-            "sourceUrl": "https://www.wordnik.com/words/words",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "the words that are spoken",
-            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
-            "sourceDictionary": "wordnet",
-            "sourceUrl": "https://www.wordnik.com/words/words",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "the text of a popular song or musical-comedy number",
-            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
-            "sourceDictionary": "wordnet",
-            "sourceUrl": "https://www.wordnik.com/words/words",
+            "text": "to express in words: phrase",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/words",
             "examples": [
-                "he wrote both words and music",
-                "the song uses colloquial language"
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a carefully worded reply",
+                "Could we word the headline differently?",
+                "The exact way to word the conversation depends on you—and your friendship."
+            ]
         },
         {
-            "partOfSpeech": "noun",
-            "text": "an angry dispute",
-            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
-            "sourceDictionary": "wordnet",
-            "sourceUrl": "https://www.wordnik.com/words/words",
+            "id": "word",
+            "partOfSpeech": "verb",
+            "text": "speak",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/words",
             "examples": [
-                "they had words"
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a carefully worded reply",
+                "Could we word the headline differently?",
+                "The exact way to word the conversation depends on you—and your friendship."
+            ]
         },
         {
-            "partOfSpeech": "noun",
-            "text": "language that is spoken or written",
-            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
-            "sourceDictionary": "wordnet",
-            "sourceUrl": "https://www.wordnik.com/words/words",
+            "id": "eat one's words",
+            "text": "to retract what one has said",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/words"
+        },
+        {
+            "id": "in so many words",
+            "text": "using exactly those terms",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/words",
             "examples": [
-                "she put her thoughts into words"
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "implied that such actions were criminal but did not say so in so many words",
+                "In so many words, she wasn't fit to be seen."
+            ]
+        },
+        {
+            "id": "in so many words",
+            "text": "using plain forthright language",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/words",
+            "examples": [
+                "implied that such actions were criminal but did not say so in so many words",
+                "In so many words, she wasn't fit to be seen."
+            ]
+        },
+        {
+            "id": "of few words",
+            "text": "not inclined to say more than is necessary: laconic",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/words",
+            "examples": [
+                "a person of few words"
+            ]
         }
     ]
 }

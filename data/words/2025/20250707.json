@@ -1,117 +1,174 @@
 {
     "word": "cup",
     "date": "20250707",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "C5838300-1",
+            "id": "cup",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cup",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "an open usually bowl-shaped drinking vessel",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup",
+            "examples": [
+                "a fruit cup"
+            ]
         },
         {
-            "id": "C5838300-2",
+            "id": "cup",
             "partOfSpeech": "noun",
-            "text": "A small open container, usually with a flat bottom and a handle, used for drinking.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cup",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a drinking vessel and its contents",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup",
+            "examples": [
+                "a fruit cup"
+            ]
         },
         {
-            "id": "C5838300-3",
+            "id": "cup",
             "partOfSpeech": "noun",
-            "text": "Such a container and its contents.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cup",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "the consecrated wine of the Communion",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup",
+            "examples": [
+                "a fruit cup"
+            ]
         },
         {
-            "id": "C5838300-4",
-            "partOfSpeech": "noun",
-            "text": "A unit of capacity or volume equal to 16 tablespoons or 8 fluid ounces (237 milliliters).",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cup",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "cup",
+            "partOfSpeech": "verb",
+            "text": "to treat by cupping",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup",
+            "examples": [
+                "cupped his hands around his mouth"
+            ]
         },
         {
-            "id": "C5838300-5",
-            "partOfSpeech": "noun",
-            "text": "The bowl of a drinking vessel.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cup",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "cup",
+            "partOfSpeech": "verb",
+            "text": "to curve into the shape of a cup",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup",
+            "examples": [
+                "cupped his hands around his mouth"
+            ]
         },
         {
-            "id": "C5838300-6",
-            "partOfSpeech": "noun",
-            "text": "The chalice or the wine used in the celebration of the Eucharist.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cup",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "cup",
+            "partOfSpeech": "verb",
+            "text": "to place in or as if in a cup",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup",
+            "examples": [
+                "cupped his hands around his mouth"
+            ]
         },
         {
-            "id": "C5838300-7",
+            "id": "cup fungus",
             "partOfSpeech": "noun",
-            "text": "A decorative cup-shaped vessel awarded as a prize or trophy.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cup",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "any of an order (Pezizales) of mostly saprophytic ascomycetous fungi with a fleshy or horny apothecium that is often colored and typically shaped like a cup, saucer, or disk",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
         },
         {
-            "id": "C5838300-8",
+            "id": "cup of tea",
             "partOfSpeech": "noun",
-            "text": "A golf hole or the metal container inside a hole.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cup",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "something one likes or excels in; also: a person suited to one's taste",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup",
+            "examples": [
+                "I see already that storytelling isn't my cup of tea …",
+                "… poltergeists are a different cup of tea …"
+            ]
         },
         {
-            "id": "C5838300-9",
+            "id": "cup of tea",
             "partOfSpeech": "noun",
-            "text": "Either of the two parts of a brassiere that fit over the breasts.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cup",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a thing to be reckoned with: matter",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup",
+            "examples": [
+                "I see already that storytelling isn't my cup of tea …",
+                "… poltergeists are a different cup of tea …"
+            ]
         },
         {
-            "id": "C5838300-10",
+            "id": "go-cup",
             "partOfSpeech": "noun",
-            "text": "An athletic supporter having a protective reinforcement of rigid plastic or metal.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/cup",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a plastic or paper cup used especially for taking a beverage off the premises of a bar, restaurant, etc.; especially: such a cup used (as in New Orleans) for carrying an alcoholic beverage",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup",
+            "examples": [
+                "It was full of noise and talk and men and women in uniform. They had go-cups of coffee, they were making notes, they were reading bulletins, they were getting ready to head out.",
+                "Nagin joked about seeing some librarians with go-cups in the French quarter …",
+                "Another night spot is Bourbon Street. Visit on a weekday when it's calmer, or brave it on Friday night when it's in full-on party mode, filled with revellers touting “go cups”—plastic containers which allow drinks purchased in bars to be consumed on the street."
+            ]
+        },
+        {
+            "id": "loving cup",
+            "partOfSpeech": "noun",
+            "text": "a large ornamental drinking vessel with two or more handles",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
+        },
+        {
+            "id": "loving cup",
+            "partOfSpeech": "noun",
+            "text": "a loving cup given as a token or trophy",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
+        },
+        {
+            "id": "optic cup",
+            "partOfSpeech": "noun",
+            "text": "the optic vesicle after invaginating to form a 2-layered cup from which the retina and pigmented layer of the eye will develop —called also eyecup",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
+        },
+        {
+            "id": "painted cup",
+            "partOfSpeech": "noun",
+            "text": "indian paintbrush",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
+        },
+        {
+            "id": "sippy cup",
+            "partOfSpeech": "noun",
+            "text": "a cup that has a detachable lid with a projecting hole designed to help a young child sip liquid from the cup without spilling it",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
+        },
+        {
+            "id": "stirrup cup",
+            "partOfSpeech": "noun",
+            "text": "a small serving of drink (as wine) taken by a rider about to depart; also: the vessel in which it is served",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
+        },
+        {
+            "id": "stirrup cup",
+            "partOfSpeech": "noun",
+            "text": "a farewell cup",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
         }
     ]
 }

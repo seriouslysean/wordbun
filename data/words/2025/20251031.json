@@ -1,39 +1,18 @@
 {
     "word": "trick or treat",
     "date": "20251031",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "T5385600-1",
-            "partOfSpeech": "interjection",
-            "text": "Used as a greeting when trick-or-treating.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/trick%20or%20treat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "partOfSpeech": "interjection",
-            "text": "A form of <xref>extortion</xref> by which children get <xref>candy</xref> on <xref>Halloween</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/trick%20or%20treat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
+            "id": "trick or treat",
             "partOfSpeech": "noun",
-            "text": "a request by children on Halloween; they pass from door to door asking for goodies and threatening to play tricks on those who refuse",
-            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
-            "sourceDictionary": "wordnet",
-            "sourceUrl": "https://www.wordnik.com/words/trick%20or%20treat",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a Halloween practice in which children wearing costumes go from door to door in a neighborhood saying \"trick or treat\" when a door is opened to ask for treats with the implied threat of playing tricks on those who refuse",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/trick%20or%20treat",
+            "examples": [
+                "… a whimsical 1951 Saturday Evening Post cover on which costumed children are surprised by a disguised adult who opens the door for trick-or-treat."
+            ]
         }
     ]
 }

@@ -1,117 +1,285 @@
 {
     "word": "blue",
     "date": "20251228",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "B5350600-1",
-            "partOfSpeech": "noun",
-            "text": "The hue of that portion of the visible spectrum lying between green and indigo, evoked in the human observer by radiant energy with wavelengths of approximately 420 to 490 nanometers; any of a group of colors that may vary in lightness and saturation, whose hue is that of a clear daytime sky; one of the additive or light primaries; one of the psychological primary hues.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blue",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5350600-2",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blue",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5350600-3",
-            "partOfSpeech": "noun",
-            "text": "A pigment or dye imparting this hue.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blue",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5350600-4",
-            "partOfSpeech": "noun",
-            "text": "Bluing.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blue",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5350600-5",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blue",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5350600-6",
-            "partOfSpeech": "noun",
-            "text": "An object having this hue.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blue",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "B5350600-7",
-            "partOfSpeech": "noun",
-            "text": "Dress or clothing of this hue.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blue",
+            "id": "blue",
+            "partOfSpeech": "adjective",
+            "text": "of the color whose hue is that of the clear sky: of the color blue",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
             "examples": [
-                "The ushers wore blue."
-            ],
-            "synonyms": [],
-            "antonyms": []
+                "a blue jacket",
+                "her bright blue eyes",
+                "The house is blue with white shutters.",
+                "the blue haze of tobacco smoke",
+                "blue with cold",
+                "a blue cat",
+                "has been feeling blue",
+                "a blue funk",
+                "things looked blue",
+                "the blue team",
+                "… the ladies were very blue and well-informed …",
+                "… a blue Sunday city …",
+                "a blue movie",
+                "blue jokes",
+                "a blue song",
+                "As has become increasingly clear over the past few general elections, with their red states and blue states, an American Presidential campaign is no longer truly national."
+            ]
         },
         {
-            "id": "B5350600-8",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blue",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "blue",
+            "partOfSpeech": "adjective",
+            "text": "bluish",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
+            "examples": [
+                "a blue jacket",
+                "her bright blue eyes",
+                "The house is blue with white shutters.",
+                "the blue haze of tobacco smoke",
+                "blue with cold",
+                "a blue cat",
+                "has been feeling blue",
+                "a blue funk",
+                "things looked blue",
+                "the blue team",
+                "… the ladies were very blue and well-informed …",
+                "… a blue Sunday city …",
+                "a blue movie",
+                "blue jokes",
+                "a blue song",
+                "As has become increasingly clear over the past few general elections, with their red states and blue states, an American Presidential campaign is no longer truly national."
+            ]
         },
         {
-            "id": "B5350600-9",
-            "partOfSpeech": "noun",
-            "text": "A person who wears a blue uniform.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blue",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "blue",
+            "partOfSpeech": "adjective",
+            "text": "discolored by or as if by bruising",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
+            "examples": [
+                "a blue jacket",
+                "her bright blue eyes",
+                "The house is blue with white shutters.",
+                "the blue haze of tobacco smoke",
+                "blue with cold",
+                "a blue cat",
+                "has been feeling blue",
+                "a blue funk",
+                "things looked blue",
+                "the blue team",
+                "… the ladies were very blue and well-informed …",
+                "… a blue Sunday city …",
+                "a blue movie",
+                "blue jokes",
+                "a blue song",
+                "As has become increasingly clear over the past few general elections, with their red states and blue states, an American Presidential campaign is no longer truly national."
+            ]
         },
         {
-            "id": "B5350600-10",
+            "id": "blue",
             "partOfSpeech": "noun",
-            "text": "A dress blue uniform, especially that of the US Army.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/blue",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a color whose hue is that of the clear sky or that of the portion of the color spectrum lying between green and violet",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
+            "examples": [
+                "Blue is his favorite color.",
+                "shades of blue",
+                "adding blue to the laundry",
+                "will be wearing blue",
+                "wearing their dress blues",
+                "the Blue versus the Gray",
+                "disappeared into the blue",
+                "the horse that won the blue =blue ribbon",
+                "… is bartered … like a stack of blues =blue chips in a Reno casino.",
+                "praised the writings of her fellow blues",
+                "fishing for blues",
+                "One cannot have a single quark on its own because it would have a color (red, green, or blue). Instead, a red quark has to be joined to a green and a blue quark by a \"string\" of gluons (red + green + blue = white). Such a triplet constitutes a proton or a neutron."
+            ]
+        },
+        {
+            "id": "blue",
+            "partOfSpeech": "noun",
+            "text": "a pigment or dye that colors blue",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
+            "examples": [
+                "Blue is his favorite color.",
+                "shades of blue",
+                "adding blue to the laundry",
+                "will be wearing blue",
+                "wearing their dress blues",
+                "the Blue versus the Gray",
+                "disappeared into the blue",
+                "the horse that won the blue =blue ribbon",
+                "… is bartered … like a stack of blues =blue chips in a Reno casino.",
+                "praised the writings of her fellow blues",
+                "fishing for blues",
+                "One cannot have a single quark on its own because it would have a color (red, green, or blue). Instead, a red quark has to be joined to a green and a blue quark by a \"string\" of gluons (red + green + blue = white). Such a triplet constitutes a proton or a neutron."
+            ]
+        },
+        {
+            "id": "blue",
+            "partOfSpeech": "noun",
+            "text": "bluing",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
+            "examples": [
+                "Blue is his favorite color.",
+                "shades of blue",
+                "adding blue to the laundry",
+                "will be wearing blue",
+                "wearing their dress blues",
+                "the Blue versus the Gray",
+                "disappeared into the blue",
+                "the horse that won the blue =blue ribbon",
+                "… is bartered … like a stack of blues =blue chips in a Reno casino.",
+                "praised the writings of her fellow blues",
+                "fishing for blues",
+                "One cannot have a single quark on its own because it would have a color (red, green, or blue). Instead, a red quark has to be joined to a green and a blue quark by a \"string\" of gluons (red + green + blue = white). Such a triplet constitutes a proton or a neutron."
+            ]
+        },
+        {
+            "id": "blue",
+            "partOfSpeech": "verb",
+            "text": "to make (something) blue in color: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
+            "examples": [
+                "Last, the generation of the grandmothers, in immaculately blued hair …",
+                "Tattoos blued his upper arms.",
+                "the blued barrel of the gun",
+                "Between banks shrouded with snow, the river gleamed darkly, like blued steel with gold chips of sunlight dancing on each riffle.",
+                "their blueing fingers"
+            ]
+        },
+        {
+            "id": "blue",
+            "partOfSpeech": "verb",
+            "text": "to dye, tint, or paint (something) blue",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
+            "examples": [
+                "Last, the generation of the grandmothers, in immaculately blued hair …",
+                "Tattoos blued his upper arms.",
+                "the blued barrel of the gun",
+                "Between banks shrouded with snow, the river gleamed darkly, like blued steel with gold chips of sunlight dancing on each riffle.",
+                "their blueing fingers"
+            ]
+        },
+        {
+            "id": "blue",
+            "partOfSpeech": "verb",
+            "text": "to heat (iron or steel) to about 550 to 600°F (288 to 316°C) so that it acquires a bluish protective coating",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
+            "examples": [
+                "Last, the generation of the grandmothers, in immaculately blued hair …",
+                "Tattoos blued his upper arms.",
+                "the blued barrel of the gun",
+                "Between banks shrouded with snow, the river gleamed darkly, like blued steel with gold chips of sunlight dancing on each riffle.",
+                "their blueing fingers"
+            ]
+        },
+        {
+            "id": "blue agave",
+            "partOfSpeech": "noun",
+            "text": "a Mexican agave (Agave tequilana) that has bluish- to greenish-gray swordlike leaves with spiny margins and is typically cultivated for the production of tequila and sometimes grown as an ornamental",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue"
+        },
+        {
+            "id": "Blue Alert",
+            "partOfSpeech": "noun",
+            "text": "a widely publicized bulletin that alerts law enforcement agencies, the media, and the public to the ongoing search for a person suspected of killing, seriously wounding, or seeking to kill or seriously wound a law enforcement officer in connection with the officer's duties",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
+            "examples": [
+                "A Blue Alert was issued … as officials searched for a man charged in connection with the death of a Houston-area police officer.",
+                "Blue Alerts can also be issued when a suspect poses an imminent and credible threat to law enforcement …",
+                "Blue alerts also are used when an officer goes missing while on duty and the circumstances around their disappearance cause concern for the officer's safety."
+            ]
+        },
+        {
+            "id": "blue baby",
+            "partOfSpeech": "noun",
+            "text": "an infant with cyanosis usually from a congenital heart defect in which venous and arterial blood are mingled",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue"
+        },
+        {
+            "id": "blue blood",
+            "partOfSpeech": "noun",
+            "text": "membership in a noble or socially prominent family",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue"
+        },
+        {
+            "id": "blue blood",
+            "partOfSpeech": "noun",
+            "text": "a member of a noble or socially prominent family",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue"
+        },
+        {
+            "id": "blue book",
+            "partOfSpeech": "noun",
+            "text": "a register especially of socially prominent persons",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue"
+        },
+        {
+            "id": "blue book",
+            "partOfSpeech": "noun",
+            "text": "a book of specialized information often published under government auspices",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue"
+        },
+        {
+            "id": "blue book",
+            "partOfSpeech": "noun",
+            "text": "a blue-covered booklet used for writing examinations",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue"
+        },
+        {
+            "id": "blue catfish",
+            "partOfSpeech": "noun",
+            "text": "a large bluish catfish (Ictalurus furcatus) of the Mississippi River valley that may weigh over 100 pounds (45 kilograms)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue"
+        },
+        {
+            "id": "blue cheese",
+            "partOfSpeech": "noun",
+            "text": "a cheese marked with veins of greenish-blue mold",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/blue",
+            "examples": [
+                "Where does the blue in blue cheese come from? Mold. But it's harmless mold, so enjoy!",
+                "The beef was a perfect medium-rare, and the sauce was robust, ideal for the meat with just the right touch of bleu cheese."
+            ]
         }
     ]
 }

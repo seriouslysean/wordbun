@@ -1,48 +1,118 @@
 {
     "word": "glasses",
     "date": "20250812",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "partOfSpeech": "noun plural",
-            "text": "Same as <xref urlencoded=\"eyeglasses\">eyeglasses</xref>. See <xref urlencoded=\"eyeglass\">eyeglass</xref>{1}.",
-            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
-            "sourceDictionary": "gcide",
-            "sourceUrl": "https://www.wordnik.com/words/glasses",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "glass",
+            "partOfSpeech": "noun",
+            "text": "any of various amorphous materials formed from a melt by cooling to rigidity without crystallization: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses"
         },
         {
+            "id": "glass",
             "partOfSpeech": "noun",
-            "text": "Plural form of <xref>glass</xref>.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/glasses",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a usually transparent or translucent material consisting typically of a mixture of silicates",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses"
         },
         {
+            "id": "glass",
             "partOfSpeech": "noun",
-            "text": "<xref>spectacles</xref>, frames bearing two lenses worn in front of the eyes",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/glasses",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a material (such as obsidian) produced by fast cooling of magma",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses"
         },
         {
+            "id": "glass",
+            "partOfSpeech": "verb",
+            "text": "to provide with glass: glaze",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses",
+            "examples": [
+                "the sunroom was glassed in"
+            ]
+        },
+        {
+            "id": "glass",
+            "partOfSpeech": "verb",
+            "text": "to enclose, case, or wall with glass",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses",
+            "examples": [
+                "the sunroom was glassed in"
+            ]
+        },
+        {
+            "id": "glass",
+            "partOfSpeech": "verb",
+            "text": "to make glassy",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses",
+            "examples": [
+                "the sunroom was glassed in"
+            ]
+        },
+        {
+            "id": "aviator glasses",
             "partOfSpeech": "noun",
-            "text": "optical instrument consisting of a frame that holds a pair of lenses for correcting defective vision",
-            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
-            "sourceDictionary": "wordnet",
-            "sourceUrl": "https://www.wordnik.com/words/glasses",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "eyeglasses having a lightweight metal frame and relatively large usually tinted lenses —called also aviators",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses"
+        },
+        {
+            "id": "granny glasses",
+            "partOfSpeech": "noun",
+            "text": "spectacles with usually small oval, round, or square lenses and metal frames",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses"
+        },
+        {
+            "id": "half-glasses",
+            "partOfSpeech": "noun",
+            "text": "eyeglasses for reading that have about half the vertical dimension of typical eyeglasses",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses"
+        },
+        {
+            "id": "reading glasses",
+            "partOfSpeech": "noun",
+            "text": "eyeglasses used for reading or close work",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses",
+            "examples": [
+                "… each button on the phone has one large number and three tiny letters squeezed about it so you have to squint real hard, especially if you don't have your reading glasses on."
+            ]
+        },
+        {
+            "id": "rose-colored glasses",
+            "partOfSpeech": "noun",
+            "text": "favorably disposed opinions: optimistic eyes",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses",
+            "examples": [
+                "views the world through rose-colored glasses"
+            ]
+        },
+        {
+            "id": "art glass",
+            "partOfSpeech": "noun",
+            "text": "articles of glass designed primarily for decorative purposes; especially: novelty glassware",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses"
         }
     ]
 }

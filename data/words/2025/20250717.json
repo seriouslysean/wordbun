@@ -1,116 +1,55 @@
 {
     "word": "skeleton",
     "date": "20250717",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "S5482300-1",
+            "id": "skeleton",
             "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/skeleton",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a usually rigid supportive or protective structure or framework of an organism; especially: the bony or more or less cartilaginous framework supporting the soft tissues and protecting the internal organs of a vertebrate",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/skeleton"
         },
         {
-            "id": "S5482300-2",
+            "id": "skeleton",
             "partOfSpeech": "noun",
-            "text": "The internal structure that protects and supports the soft organs, tissues, and other parts of a vertebrate organism, and is composed of bone and cartilage or, in certain animals, cartilage alone.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/skeleton",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "something reduced to its minimum form or essential parts",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/skeleton"
         },
         {
-            "id": "S5482300-3",
+            "id": "skeleton",
             "partOfSpeech": "noun",
-            "text": "The hard external structure that supports, protects, or contains the body of many invertebrates, such as mollusks, crustaceans, and corals, and certain vertebrates, such as turtles.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/skeleton",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "an emaciated person or animal",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/skeleton"
         },
         {
-            "id": "S5482300-4",
-            "partOfSpeech": "noun",
-            "text": "A supporting structure or framework, as of a building.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/skeleton",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "skeleton",
+            "partOfSpeech": "adjective",
+            "text": "of, consisting of, or resembling a skeleton",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/skeleton"
         },
         {
-            "id": "S5482300-5",
+            "id": "skeleton key",
             "partOfSpeech": "noun",
-            "text": "An outline or sketch.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/skeleton",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a key with a large part of the bit filed away to enable it to open low quality locks as a master key —called also passkey",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/skeleton"
         },
         {
-            "id": "S5482300-6",
+            "id": "axial skeleton",
             "partOfSpeech": "noun",
-            "text": "Something reduced to its basic or minimal parts.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/skeleton",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5482300-7",
-            "partOfSpeech": "noun",
-            "text": "One that is very thin or emaciated.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/skeleton",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5482300-8",
-            "partOfSpeech": "noun",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/skeleton",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5482300-9",
-            "partOfSpeech": "noun",
-            "text": "A sport in which a person glides down an icy track head-first lying on one's stomach on a compact, simple sled that lacks steering or brakes.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/skeleton",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
-        },
-        {
-            "id": "S5482300-10",
-            "partOfSpeech": "noun",
-            "text": "The sled used in such a sport.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/skeleton",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "the skeleton of the trunk and head",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/skeleton"
         }
     ]
 }

@@ -2,7 +2,6 @@
     "word": "lightroom",
     "date": "20251002",
     "adapter": "wordnik",
-    "preserveCase": false,
     "data": [
         {
             "partOfSpeech": "noun",

@@ -1,118 +1,114 @@
 {
     "word": "whack",
     "date": "20250905",
-    "adapter": "wordnik",
-    "preserveCase": false,
+    "adapter": "merriam-webster",
     "data": [
         {
-            "id": "W5110700-1",
-            "partOfSpeech": "intransitive verb",
-            "text": "To strike (someone or something) with a sharp blow; slap.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/whack",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "whack",
+            "partOfSpeech": "verb",
+            "text": "to strike with a smart or resounding blow",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/whack",
+            "examples": [
+                "whack the ball"
+            ]
         },
         {
-            "id": "W5110700-2",
-            "partOfSpeech": "intransitive verb",
-            "text": "To kill deliberately; murder.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/whack",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "whack",
+            "partOfSpeech": "verb",
+            "text": "to cut with or as if with a whack: chop",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/whack",
+            "examples": [
+                "whack the ball"
+            ]
         },
         {
-            "id": "W5110700-3",
-            "partOfSpeech": "intransitive verb",
-            "text": "To deal a sharp, resounding blow.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/whack",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "whack",
+            "partOfSpeech": "verb",
+            "text": "to get the better of: defeat",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/whack",
+            "examples": [
+                "whack the ball"
+            ]
         },
         {
-            "id": "W5110700-4",
+            "id": "whack",
             "partOfSpeech": "noun",
-            "text": "A sharp, swift blow.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/whack",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a smart or resounding blow; also: the sound of or as if of such a blow",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/whack",
+            "examples": [
+                "take a whack at it",
+                "borrowed $50 all at one whack"
+            ]
         },
         {
-            "id": "W5110700-5",
+            "id": "whack",
             "partOfSpeech": "noun",
-            "text": "The sound made by a sharp, swift blow.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/whack",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "text": "a critical attack",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/whack",
+            "examples": [
+                "take a whack at it",
+                "borrowed $50 all at one whack"
+            ]
         },
         {
-            "id": "W5110700-6",
-            "partOfSpeech": "phrasal verb",
-            "text": "To masturbate.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/whack",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "whack",
+            "partOfSpeech": "noun",
+            "text": "portion, share",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/whack",
+            "examples": [
+                "take a whack at it",
+                "borrowed $50 all at one whack"
+            ]
         },
         {
-            "id": "W5110700-7",
-            "partOfSpeech": "idiom",
-            "text": "(<em>have</em><em>/take</em>)  To try out; attempt.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/whack",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "whack off",
+            "partOfSpeech": "verb",
+            "text": "masturbate",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/whack"
         },
         {
-            "id": "W5110700-8",
-            "partOfSpeech": "idiom",
-            "text": "(<em>out of whack</em>)  Improperly ordered or balanced; not functioning correctly.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/whack",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "whack up",
+            "partOfSpeech": "verb",
+            "text": "to divide into shares",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/whack"
         },
         {
-            "id": "W5110700-9",
-            "partOfSpeech": "idiom",
-            "text": "(<em>whacked out</em>)  Exhausted.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/whack",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "out of whack",
+            "text": "out of proper order or shape",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/whack",
+            "examples": [
+                "threw his knee out of whack",
+                "… feeling out of whack with her contemporaries …"
+            ]
         },
         {
-            "id": "W5110700-10",
-            "partOfSpeech": "idiom",
-            "text": "(<em>whacked out</em>)  Crazy.",
-            "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
-            "sourceDictionary": "ahd-5",
-            "sourceUrl": "https://www.wordnik.com/words/whack",
-            "examples": [],
-            "synonyms": [],
-            "antonyms": []
+            "id": "out of whack",
+            "text": "not in accord",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/whack",
+            "examples": [
+                "threw his knee out of whack",
+                "… feeling out of whack with her contemporaries …"
+            ]
         }
     ]
 }
