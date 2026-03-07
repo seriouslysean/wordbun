@@ -1,0 +1,43 @@
+{
+    "word": "penguin",
+    "date": "20260307",
+    "adapter": "wiktionary",
+    "preserveCase": false,
+    "data": [
+        {
+            "partOfSpeech": "noun",
+            "text": "Any of several flightless sea birds, of order Sphenisciformes, found in the Southern Hemisphere, marked by their usual upright stance, walking on short legs, and (generally) their stark black and white plumage.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/penguin"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An auk (sometimes especially a great auk), a bird of the Northern Hemisphere.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/penguin"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A nun (association through appearance, because of the black and white habit).",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/penguin"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A type of catch where the palm of the hand is facing towards the leg with the arm stretched downward, resembling the flipper of a penguin.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/penguin"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A spiny bromeliad with egg-shaped fleshy fruit, Bromelia pinguin.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/penguin"
+        }
+    ]
+}
