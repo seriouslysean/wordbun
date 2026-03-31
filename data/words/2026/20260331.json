@@ -1,0 +1,50 @@
+{
+    "word": "robot",
+    "date": "20260331",
+    "adapter": "wiktionary",
+    "preserveCase": false,
+    "data": [
+        {
+            "partOfSpeech": "noun",
+            "text": "A machine built to carry out some complex task or group of tasks by physically moving, especially one which can be programmed.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/robot"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An intelligent mechanical being designed to look like a human or other creature, and usually made from metal.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/robot"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A person who does not seem to have any emotions.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/robot"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A traffic light (from earlier robot policeman).",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/robot"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A theodolite which follows the movements of a prism and can be used by a one-man crew.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/robot"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A style of dance popular in disco in which the dancer imitates the stiff movements of a stereotypical android robot.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/robot"
+        }
+    ]
+}
