@@ -1,0 +1,178 @@
+{
+    "word": "tree",
+    "date": "20260413",
+    "adapter": "wiktionary",
+    "preserveCase": false,
+    "data": [
+        {
+            "partOfSpeech": "noun",
+            "text": "Fast growing function based on Kruskal's tree theorem.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A perennial woody plant, not exactly defined, but differentiated from a shrub by its larger size (typically over a few meters in height) or growth habit, usually having a single (or few) main axis or trunk unbranched for some distance above the ground and a head of branches and foliage.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "examples": [
+                "Birds have a nest in a tree in the garden."
+            ]
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Any plant that is reminiscent of the above but not classified as a tree (in any botanical sense).",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "examples": [
+                "the banana tree"
+            ]
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An object made from a tree trunk and having multiple hooks or storage platforms.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "examples": [
+                "He had the choice of buying a scratching post or a cat tree."
+            ]
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A device used to hold or stretch a shoe open.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "examples": [
+                "He put a shoe tree in each of his shoes."
+            ]
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The structural frame of a saddle.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A connected graph with no cycles or, if the graph is finite, equivalently a connected graph with n vertices and n−1 edges.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A recursive data structure in which each node has zero or more nodes as children.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A display or listing of entries or elements such that there are primary and secondary entries shown, usually linked by drawn lines or by indenting to the right.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "examples": [
+                "We’ll show it as a tree list."
+            ]
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Any structure or construct having branches representing divergence or possible choices.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "examples": [
+                "family tree; skill tree"
+            ]
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The structure or wooden frame used in the construction of a saddle used in horse riding.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "(in the plural) Marijuana.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A cross or gallows.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "examples": [
+                "Tyburn tree"
+            ]
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Wood; timber.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A mass of crystals, aggregated in arborescent forms, obtained by precipitation of a metal from solution.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The fifth Lenormand card.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "To chase (an animal or person) up a tree.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "examples": [
+                "The dog treed the cat."
+            ]
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "To place in a tree.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "examples": [
+                "Black bears can tree their cubs for protection, but grizzly bears cannot."
+            ]
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "To place upon a tree; to fit with a tree; to stretch upon a tree.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "examples": [
+                "to tree a boot"
+            ]
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "To take refuge in a tree.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+        }
+    ]
+}
