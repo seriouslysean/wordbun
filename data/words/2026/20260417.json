@@ -1,0 +1,112 @@
+{
+    "word": "fan",
+    "date": "20260417",
+    "adapter": "wiktionary",
+    "preserveCase": false,
+    "data": [
+        {
+            "partOfSpeech": "noun",
+            "text": "A hand-held device consisting of concertinaed material, or slats of material, gathered together at one end, that may be opened out into the shape of a sector of a circle and waved back and forth in order to move air towards oneself and cool oneself.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An electrical or mechanical device for moving air, used for cooling people, machinery, etc.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "The action of fanning; agitation of the air.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "Anything resembling a hand-held fan in shape, e.g., a peacock’s tail.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "An instrument for winnowing grain, by moving which the grain is tossed and agitated, and the chaff is separated and blown away.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A small vane or sail, used to keep the large sails of a smock mill always in the direction of the wind.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "noun",
+            "text": "A section of a tree having a finite number of branches",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "To blow air on (something) by means of a fan (hand-held, mechanical or electrical) or otherwise.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan",
+            "examples": [
+                "We enjoyed standing at the edge of the cliff, being fanned by the wind."
+            ]
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "To slap (a behind, especially).",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "(usually to fan out) To move or spread in multiple directions from one point, in the shape of a hand-held fan.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "To dispel by waving a hand-held fan.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan",
+            "examples": [
+                "I attempted to fan the disagreeable odour out of the room."
+            ]
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "To perform a maneuver that involves flicking the top rear of an old-style gun.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "(metaphoric) To invigorate, like flames when fanned.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        },
+        {
+            "partOfSpeech": "verb",
+            "text": "To winnow grain.",
+            "attributionText": "from Wiktionary",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+        }
+    ]
+}
