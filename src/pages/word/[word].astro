@@ -11,7 +11,7 @@ export async function getStaticPaths() {
     pool
       .filter(w => w.date !== currentDate)
       .slice()
-      .sort((a, b) => a.word.localeCompare(b.word))
+      .sort((a, b) => b.date.localeCompare(a.date))
       .slice(0, RELATED_LIMIT);
 
   const allWords = await getWordsFromCollection();
@@ -45,10 +45,8 @@ export async function getStaticPaths() {
           firstLetter,
           partOfSpeech,
           year,
-          lengthCount: lengthBucket.length,
-          letterCount: letterBucket.length,
-          partOfSpeechCount: partOfSpeechBucket.length,
           relatedByLength: pickRelated(lengthBucket, wordData.date),
+          relatedByLetter: pickRelated(letterBucket, wordData.date),
           relatedByPartOfSpeech: pickRelated(partOfSpeechBucket, wordData.date),
           relatedByYear: pickRelated(yearBucket, wordData.date),
         },
