@@ -20,7 +20,7 @@ const sections: Array<{ key: string; label: string; words: WordData[] }> = [];
 if (byLength.length > 0) {
   sections.push({
     key: 'length',
-    label: t('word.more_by_length', { length: wordLength }),
+    label: t('word.length_label', { length: wordLength }),
     words: byLength,
   });
 }
@@ -28,7 +28,7 @@ if (byLength.length > 0) {
 if (partOfSpeech && byPartOfSpeech.length > 0) {
   sections.push({
     key: 'pos',
-    label: t('word.more_by_part_of_speech', { partOfSpeech }),
+    label: t(`parts_of_speech.${partOfSpeech}`),
     words: byPartOfSpeech,
   });
 }
@@ -36,7 +36,7 @@ if (partOfSpeech && byPartOfSpeech.length > 0) {
 if (year && byYear.length > 0) {
   sections.push({
     key: 'year',
-    label: t('word.more_from_year', { year }),
+    label: year,
     words: byYear,
   });
 }
@@ -79,10 +79,8 @@ const hasAny = sections.length > 0;
   .word-related__group-title {
     font-size: var(--font-size-small);
     font-weight: var(--font-weight-normal);
-    color: var(--color-primary);
+    color: var(--color-text-light);
     margin: 0 0 var(--spacing-small);
-    padding-bottom: var(--spacing-xs);
-    border-bottom: 1px solid var(--color-border);
   }
 
   .word-related__list {
