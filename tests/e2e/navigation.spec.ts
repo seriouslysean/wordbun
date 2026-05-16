@@ -112,19 +112,28 @@ test.describe('user journeys', () => {
 	test('related words section links to another word page', async ({ page }) => {
 		await page.goto('/');
 
-		// Reach a word page through the homepage's past words
 		await page.locator('.past-words a.word-link').first().click();
 		const originUrl = page.url();
 
-		// The related section appears with at least one subsection
-		const relatedSection = page.locator('.word-related');
+		const relatedSection = page.locator('.word-context');
 		await expect(relatedSection).toBeVisible();
-		await expect(relatedSection.locator('.word-related__subheading').first()).toBeVisible();
+		await expect(relatedSection.locator('.word-context__group-title').first()).toBeVisible();
 
-		// Click the first related word — should navigate to a different word page
-		await relatedSection.locator('.word-related__item a.word-link').first().click();
+		await relatedSection.locator('.word-context__list a.word-link').first().click();
 
 		expect(page.url()).not.toBe(originUrl);
 		await expect(page.locator('#word-title')).toBeVisible();
+	});
+
+	test('related words category title links to the browse page', async ({ page }) => {
+		await page.goto('/');
+		await page.locator('.past-words a.word-link').first().click();
+
+		const groupLink = page.locator('.word-context__group-link').first();
+		const href = await groupLink.getAttribute('href');
+		expect(href).toMatch(/^\/browse\//);
+
+		await groupLink.click();
+		await expect(page.locator('#main-content')).toBeVisible();
 	});
 });

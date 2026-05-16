@@ -1,77 +1,145 @@
 ---
 import SectionHeading from '#components/SectionHeading.astro';
-import SiteLink from '#components/SiteLink.astro';
-import { getLengthUrl, getLetterUrl, getPartOfSpeechUrl } from '#astro-utils/url-utils';
+import WordLink from '#components/WordLink.astro';
+import type { WordData } from '#types';
+import { getLengthUrl, getLetterUrl, getPartOfSpeechUrl, getWordsYearUrl } from '#astro-utils/url-utils';
 import { t } from '#utils/i18n-utils';
 
 interface Props {
   wordLength: number;
   firstLetter: string;
   partOfSpeech?: string;
-  lengthCount: number;
-  letterCount: number;
-  partOfSpeechCount?: number;
+  year?: string;
+  relatedByLength?: WordData[];
+  relatedByLetter?: WordData[];
+  relatedByPartOfSpeech?: WordData[];
+  relatedByYear?: WordData[];
 }
 
-const { wordLength, firstLetter, partOfSpeech, lengthCount, letterCount, partOfSpeechCount } = Astro.props;
+const {
+  wordLength,
+  firstLetter,
+  partOfSpeech,
+  year,
+  relatedByLength = [],
+  relatedByLetter = [],
+  relatedByPartOfSpeech = [],
+  relatedByYear = [],
+} = Astro.props;
+
+interface Group {
+  key: string;
+  href: string;
+  label: string;
+  words: WordData[];
+}
+
+const groups: Group[] = [];
+
+if (relatedByLength.length > 0) {
+  groups.push({
+    key: 'length',
+    href: getLengthUrl(wordLength),
+    label: t('word.length_label', { length: wordLength }),
+    words: relatedByLength,
+  });
+}
+
+if (firstLetter && relatedByLetter.length > 0) {
+  groups.push({
+    key: 'letter',
+    href: getLetterUrl(firstLetter),
+    label: t('word.letter_words', { letter: firstLetter.toUpperCase() }),
+    words: relatedByLetter,
+  });
+}
+
+if (partOfSpeech && relatedByPartOfSpeech.length > 0) {
+  groups.push({
+    key: 'pos',
+    href: getPartOfSpeechUrl(partOfSpeech),
+    label: t(`parts_of_speech.${partOfSpeech}`),
+    words: relatedByPartOfSpeech,
+  });
+}
+
+if (year && relatedByYear.length > 0) {
+  groups.push({
+    key: 'year',
+    href: getWordsYearUrl(year),
+    label: year,
+    words: relatedByYear,
+  });
+}
+
+const hasGroups = groups.length > 0;
 ---
 
-<section class="word-context">
-  <SectionHeading text={t('word.related_words')} />
-  <div class="word-context__grid">
-    <SiteLink
-      href={getLengthUrl(wordLength)}
-      variant="primary"
-      class="word-context__item"
-      title={t('common.title_with_length', { count: lengthCount, value: wordLength })}
-    >
-      {t('word.length_label', { length: wordLength })}
-    </SiteLink>
-    <SiteLink
-      href={getLetterUrl(firstLetter)}
-      variant="primary"
-      class="word-context__item"
-      title={t('common.title_starting_with', { count: letterCount, value: firstLetter.toUpperCase() })}
-    >
-      {t('word.letter_words', { letter: firstLetter.toUpperCase() })}
-    </SiteLink>
-    {partOfSpeech && partOfSpeechCount && (
-      <SiteLink
-        href={getPartOfSpeechUrl(partOfSpeech)}
-        variant="primary"
-        class="word-context__item"
-        title={t('common.title_with_part_of_speech', { count: partOfSpeechCount, value: partOfSpeech })}
-      >
-        {t(`parts_of_speech.${partOfSpeech}`)}
-      </SiteLink>
-    )}
-  </div>
-</section>
+{hasGroups && (
+  <section class="word-context" aria-label={t('word.related_words')}>
+    <SectionHeading text={t('word.related_words')} />
+    <div class="word-context__groups">
+      {groups.map(group => (
+        <div class="word-context__group">
+          <h3 class="word-context__group-title">
+            <a href={group.href} class="word-context__group-link">{group.label}</a>
+          </h3>
+          <ul class="word-context__list">
+            {group.words.map(word => (
+              <li><WordLink word={word} compact /></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
 
 <style>
   .word-context {
     width: 100%;
     max-width: var(--content-width-small);
-    margin: var(--spacing-large) auto calc(var(--spacing-large) * 2);
+    margin: var(--spacing-large) auto;
     padding: 0 var(--spacing-base);
   }
 
-  .word-context__grid {
+  .word-context__groups {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 0.5rem;
-    margin: 1rem 0;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-large);
   }
 
-  .word-context__item {
-    padding: 0.5rem 1rem;
-    text-align: center;
+  .word-context__group-title {
+    margin: 0 0 var(--spacing-small);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--color-border);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .word-context__group-link {
+    color: var(--color-primary);
     text-decoration: none;
   }
 
+  .word-context__group-link:hover,
+  .word-context__group-link:focus-visible {
+    text-decoration: underline;
+  }
+
+  .word-context__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
   @media (min-width: 768px) {
-    .word-context__grid {
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    .word-context__groups {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: var(--spacing-large);
     }
   }
 </style>
