@@ -1,94 +1,77 @@
 ---
 import SectionHeading from '#components/SectionHeading.astro';
-import WordSection from '#components/WordSection.astro';
-import type { WordData } from '#types';
-import { getLengthUrl, getLetterUrl, getPartOfSpeechUrl, getWordsYearUrl } from '#astro-utils/url-utils';
+import SiteLink from '#components/SiteLink.astro';
+import { getLengthUrl, getLetterUrl, getPartOfSpeechUrl } from '#astro-utils/url-utils';
 import { t } from '#utils/i18n-utils';
 
 interface Props {
   wordLength: number;
   firstLetter: string;
   partOfSpeech?: string;
-  year?: string;
-  relatedByLength?: WordData[];
-  relatedByLetter?: WordData[];
-  relatedByPartOfSpeech?: WordData[];
-  relatedByYear?: WordData[];
+  lengthCount: number;
+  letterCount: number;
+  partOfSpeechCount?: number;
 }
 
-const {
-  wordLength,
-  firstLetter,
-  partOfSpeech,
-  year,
-  relatedByLength = [],
-  relatedByLetter = [],
-  relatedByPartOfSpeech = [],
-  relatedByYear = [],
-} = Astro.props;
-
-interface Group {
-  key: string;
-  href: string;
-  label: string;
-  words: WordData[];
-}
-
-const groups: Group[] = [];
-
-if (relatedByLength.length > 0) {
-  groups.push({
-    key: 'length',
-    href: getLengthUrl(wordLength),
-    label: t('word.length_label', { length: wordLength }),
-    words: relatedByLength,
-  });
-}
-
-if (firstLetter && relatedByLetter.length > 0) {
-  groups.push({
-    key: 'letter',
-    href: getLetterUrl(firstLetter),
-    label: t('word.letter_words', { letter: firstLetter.toUpperCase() }),
-    words: relatedByLetter,
-  });
-}
-
-if (partOfSpeech && relatedByPartOfSpeech.length > 0) {
-  groups.push({
-    key: 'pos',
-    href: getPartOfSpeechUrl(partOfSpeech),
-    label: t(`parts_of_speech.${partOfSpeech}`),
-    words: relatedByPartOfSpeech,
-  });
-}
-
-if (year && relatedByYear.length > 0) {
-  groups.push({
-    key: 'year',
-    href: getWordsYearUrl(year),
-    label: year,
-    words: relatedByYear,
-  });
-}
-
-const hasGroups = groups.length > 0;
+const { wordLength, firstLetter, partOfSpeech, lengthCount, letterCount, partOfSpeechCount } = Astro.props;
 ---
 
-{hasGroups && (
-  <section class="word-context" aria-label={t('word.related_words')}>
-    <SectionHeading text={t('word.related_words')} />
-    {groups.map(group => (
-      <WordSection title={group.label} href={group.href} words={group.words} columns={1} />
-    ))}
-  </section>
-)}
+<section class="word-context">
+  <SectionHeading text={t('word.related_words')} />
+  <div class="word-context__grid">
+    <SiteLink
+      href={getLengthUrl(wordLength)}
+      variant="primary"
+      class="word-context__item"
+      title={t('common.title_with_length', { count: lengthCount, value: wordLength })}
+    >
+      {t('word.length_label', { length: wordLength })}
+    </SiteLink>
+    <SiteLink
+      href={getLetterUrl(firstLetter)}
+      variant="primary"
+      class="word-context__item"
+      title={t('common.title_starting_with', { count: letterCount, value: firstLetter.toUpperCase() })}
+    >
+      {t('word.letter_words', { letter: firstLetter.toUpperCase() })}
+    </SiteLink>
+    {partOfSpeech && partOfSpeechCount && (
+      <SiteLink
+        href={getPartOfSpeechUrl(partOfSpeech)}
+        variant="primary"
+        class="word-context__item"
+        title={t('common.title_with_part_of_speech', { count: partOfSpeechCount, value: partOfSpeech })}
+      >
+        {t(`parts_of_speech.${partOfSpeech}`)}
+      </SiteLink>
+    )}
+  </div>
+</section>
 
 <style>
   .word-context {
     width: 100%;
     max-width: var(--content-width-small);
-    margin: var(--spacing-large) auto;
+    margin: var(--spacing-large) auto calc(var(--spacing-large) * 2);
     padding: 0 var(--spacing-base);
+  }
+
+  .word-context__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .word-context__item {
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  @media (min-width: 768px) {
+    .word-context__grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
   }
 </style>

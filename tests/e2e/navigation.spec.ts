@@ -108,20 +108,4 @@ test.describe('user journeys', () => {
 
 		expect(response?.status()).toBe(404);
 	});
-
-	test('related words section links to another word page', async ({ page }) => {
-		await page.goto('/');
-
-		await page.locator('.past-words a.word-link').first().click();
-		const originUrl = page.url();
-
-		const relatedSection = page.locator('.word-context');
-		await expect(relatedSection).toBeVisible();
-		await expect(relatedSection.locator('.section-heading__link').first()).toBeVisible();
-
-		await relatedSection.locator('.word-list a.word-link').first().click();
-
-		expect(page.url()).not.toBe(originUrl);
-		await expect(page.locator('#word-title')).toBeVisible();
-	});
 });
