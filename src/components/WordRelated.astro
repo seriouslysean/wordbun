@@ -47,13 +47,13 @@ const hasAny = sections.length > 0;
 {hasAny && (
   <section class="word-related" aria-label={t('word.related_more_section')}>
     <SectionHeading text={t('word.related_more_section')} />
-    <div class="word-related__sections">
+    <div class="word-related__groups">
       {sections.map(section => (
-        <div class="word-related__section">
-          <h3 class="word-related__subheading">{section.label}</h3>
+        <div class="word-related__group">
+          <h3 class="word-related__group-title">{section.label}</h3>
           <ul class="word-related__list">
             {section.words.map(word => (
-              <li class="word-related__item"><WordLink word={word} compact /></li>
+              <li><WordLink word={word} compact /></li>
             ))}
           </ul>
         </div>
@@ -66,22 +66,23 @@ const hasAny = sections.length > 0;
   .word-related {
     width: 100%;
     max-width: var(--content-width-small);
-    margin: var(--spacing-large) auto calc(var(--spacing-large) * 2);
+    margin: 0 auto var(--spacing-large);
     padding: 0 var(--spacing-base);
   }
 
-  .word-related__sections {
+  .word-related__groups {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--spacing-large);
-    margin-top: var(--spacing-base);
   }
 
-  .word-related__subheading {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem;
-    color: var(--color-text);
+  .word-related__group-title {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-primary);
+    margin: 0 0 var(--spacing-small);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .word-related__list {
@@ -90,16 +91,13 @@ const hasAny = sections.length > 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .word-related__item {
-    padding: 0;
+    gap: var(--spacing-xs);
   }
 
   @media (min-width: 768px) {
-    .word-related__sections {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    .word-related__groups {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      column-gap: var(--spacing-large);
     }
   }
 </style>
