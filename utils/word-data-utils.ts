@@ -1,4 +1,4 @@
-import type { WordData } from '#types';
+import type { DictionaryDefinition, WordData } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
 
 /**
@@ -9,18 +9,16 @@ import { isBasePartOfSpeech } from '#constants/parts-of-speech';
  * @param definitions - Array of dictionary definitions
  * @returns First valid definition or null if none found
  */
-export function findValidDefinition(definitions: any[]): { text: string; partOfSpeech: string } | null {
+export function findValidDefinition(definitions: DictionaryDefinition[]): { text: string; partOfSpeech: string } | null {
   if (!definitions || !Array.isArray(definitions) || definitions.length === 0) {
     return null;
   }
 
   for (const item of definitions) {
-    // Skip definitions without a part of speech
     if (!item.partOfSpeech) {
       continue;
     }
 
-    // Handle text as either string or array (Wordnik API inconsistency)
     const textValue = Array.isArray(item.text) ? item.text.join(' ') : item.text;
 
     if (textValue && typeof textValue === 'string' && textValue.trim()) {

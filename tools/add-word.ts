@@ -58,10 +58,8 @@ interface AddWordOptions {
  */
 async function addWord(input: string, options: AddWordOptions = {}): Promise<void> {
   const { date, overwrite = false, preserveCase = false } = options;
+  const word = input?.trim();
   try {
-    const word = input?.trim();
-
-    // Validate inputs
     if (!word) {
       logger.error('Word is required', { providedInput: input });
       await exit(1);
