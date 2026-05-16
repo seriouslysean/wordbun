@@ -108,4 +108,23 @@ test.describe('user journeys', () => {
 
 		expect(response?.status()).toBe(404);
 	});
+
+	test('related words section links to another word page', async ({ page }) => {
+		await page.goto('/');
+
+		// Reach a word page through the homepage's past words
+		await page.locator('.past-words a.word-link').first().click();
+		const originUrl = page.url();
+
+		// The related section appears with at least one subsection
+		const relatedSection = page.locator('.word-related');
+		await expect(relatedSection).toBeVisible();
+		await expect(relatedSection.locator('.word-related__subheading').first()).toBeVisible();
+
+		// Click the first related word — should navigate to a different word page
+		await relatedSection.locator('.word-related__item a.word-link').first().click();
+
+		expect(page.url()).not.toBe(originUrl);
+		await expect(page.locator('#word-title')).toBeVisible();
+	});
 });
