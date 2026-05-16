@@ -184,3 +184,48 @@ export const getWordsByPartOfSpeech = (partOfSpeech: string, words: WordData[]):
     );
   });
 };
+
+/**
+ * Group all words by length in a single pass. Caller looks up by `groups[length]`.
+ * Avoids the O(n^2) build-time cost of calling getWordsByLength once per word.
+ */
+export const groupWordsByLength = (words: WordData[]): Record<number, WordData[]> =>
+  Object.groupBy(words, word => word.word.length) as Record<number, WordData[]>;
+
+/**
+ * Group all words by first letter (lowercase) in a single pass.
+ */
+export const groupWordsByLetter = (words: WordData[]): Record<string, WordData[]> =>
+  Object.groupBy(words, word => word.word.charAt(0).toLowerCase()) as Record<string, WordData[]>;
+
+/**
+ * Group all words by year (YYYY from word.date) in a single pass.
+ */
+export const groupWordsByYear = (words: WordData[]): Record<string, WordData[]> =>
+  Object.groupBy(words, word => word.date.substring(0, 4)) as Record<string, WordData[]>;
+
+/**
+ * Group words by every normalized part of speech they carry. A word appears in
+ * every bucket whose POS it has a definition for.
+ */
+export const groupWordsByPartOfSpeech = (words: WordData[]): Record<string, WordData[]> => {
+  const groups: Record<string, WordData[]> = {};
+  for (const word of words) {
+    if (!Array.isArray(word.data)) {
+      continue;
+    }
+    const seen = new Set<string>();
+    for (const def of word.data) {
+      if (!def.partOfSpeech) {
+        continue;
+      }
+      const normalized = normalizePartOfSpeech(def.partOfSpeech);
+      if (seen.has(normalized)) {
+        continue;
+      }
+      seen.add(normalized);
+      (groups[normalized] ??= []).push(word);
+    }
+  }
+  return groups;
+};

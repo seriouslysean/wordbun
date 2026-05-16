@@ -138,7 +138,11 @@
     "source": "Source",
     "related_words": "Related Words",
     "letter_words": "{{letter}} Words",
-    "length_label": "{{length}}-Letter Words"
+    "length_label": "{{length}}-Letter Words",
+    "related_more_section": "More Words Like This",
+    "more_by_length": "More {{length}}-letter words",
+    "more_by_part_of_speech": "More {{partOfSpeech}} words",
+    "more_from_year": "More from {{year}}"
   },
   "parts_of_speech": {
     "adjective": "Adjective",
