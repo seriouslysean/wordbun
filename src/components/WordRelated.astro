@@ -1,0 +1,101 @@
+---
+import SectionHeading from '#components/SectionHeading.astro';
+import WordLink from '#components/WordLink.astro';
+import type { WordData } from '#types';
+import { t } from '#utils/i18n-utils';
+
+interface Props {
+  wordLength: number;
+  partOfSpeech?: string;
+  year?: string;
+  byLength: WordData[];
+  byPartOfSpeech: WordData[];
+  byYear: WordData[];
+}
+
+const { wordLength, partOfSpeech, year, byLength, byPartOfSpeech, byYear } = Astro.props;
+
+const sections: Array<{ key: string; label: string; words: WordData[] }> = [];
+
+if (byLength.length > 0) {
+  sections.push({
+    key: 'length',
+    label: t('word.length_label', { length: wordLength }),
+    words: byLength,
+  });
+}
+
+if (partOfSpeech && byPartOfSpeech.length > 0) {
+  sections.push({
+    key: 'pos',
+    label: t(`parts_of_speech.${partOfSpeech}`),
+    words: byPartOfSpeech,
+  });
+}
+
+if (year && byYear.length > 0) {
+  sections.push({
+    key: 'year',
+    label: year,
+    words: byYear,
+  });
+}
+
+const hasAny = sections.length > 0;
+---
+
+{hasAny && (
+  <section class="word-related" aria-label={t('word.related_more_section')}>
+    <SectionHeading text={t('word.related_more_section')} />
+    <div class="word-related__groups">
+      {sections.map(section => (
+        <div class="word-related__group">
+          <h3 class="word-related__group-title">{section.label}</h3>
+          <ul class="word-related__list">
+            {section.words.map(word => (
+              <li><WordLink word={word} compact /></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .word-related {
+    width: 100%;
+    max-width: var(--content-width-small);
+    margin: 0 auto var(--spacing-large);
+    padding: 0 var(--spacing-base);
+  }
+
+  .word-related__groups {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-large);
+  }
+
+  .word-related__group-title {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-light);
+    margin: 0 0 var(--spacing-small);
+  }
+
+  .word-related__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  @media (min-width: 768px) {
+    .word-related__groups {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      column-gap: var(--spacing-large);
+    }
+  }
+</style>
