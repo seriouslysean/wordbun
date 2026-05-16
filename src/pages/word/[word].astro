@@ -7,12 +7,11 @@ import { slugify } from '#astro-utils/url-utils';
 export async function getStaticPaths() {
   const RELATED_LIMIT = 3;
 
-  // Date descending: most recent first. Excludes the current word.
-  const pickRecent = (pool: import('#types').WordData[], currentDate: string) =>
+  const pickRelated = (pool: import('#types').WordData[], currentDate: string) =>
     pool
       .filter(w => w.date !== currentDate)
       .slice()
-      .sort((a, b) => b.date.localeCompare(a.date))
+      .sort((a, b) => a.word.localeCompare(b.word))
       .slice(0, RELATED_LIMIT);
 
   const allWords = await getWordsFromCollection();
@@ -46,10 +45,12 @@ export async function getStaticPaths() {
           firstLetter,
           partOfSpeech,
           year,
-          relatedByLength: pickRecent(lengthBucket, wordData.date),
-          relatedByLetter: pickRecent(letterBucket, wordData.date),
-          relatedByPartOfSpeech: pickRecent(partOfSpeechBucket, wordData.date),
-          relatedByYear: pickRecent(yearBucket, wordData.date),
+          lengthCount: lengthBucket.length,
+          letterCount: letterBucket.length,
+          partOfSpeechCount: partOfSpeechBucket.length,
+          relatedByLength: pickRelated(lengthBucket, wordData.date),
+          relatedByPartOfSpeech: pickRelated(partOfSpeechBucket, wordData.date),
+          relatedByYear: pickRelated(yearBucket, wordData.date),
         },
       },
     };
