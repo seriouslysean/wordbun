@@ -1,4 +1,4 @@
-import type { DictionaryDefinition, WordData } from '#types';
+import type { DictionaryDefinition, WordData, WordGrouping } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
 
 /**
@@ -189,27 +189,27 @@ export const getWordsByPartOfSpeech = (partOfSpeech: string, words: WordData[]):
  * Group all words by length in a single pass. Caller looks up by `groups[length]`.
  * Avoids the O(n^2) build-time cost of calling getWordsByLength once per word.
  */
-export const groupWordsByLength = (words: WordData[]): Record<number, WordData[]> =>
-  Object.groupBy(words, word => word.word.length) as Record<number, WordData[]>;
+export const groupWordsByLength = (words: WordData[]): WordGrouping<number> =>
+  Object.groupBy(words, word => word.word.length) as WordGrouping<number>;
 
 /**
  * Group all words by first letter (lowercase) in a single pass.
  */
-export const groupWordsByLetter = (words: WordData[]): Record<string, WordData[]> =>
-  Object.groupBy(words, word => word.word.charAt(0).toLowerCase()) as Record<string, WordData[]>;
+export const groupWordsByLetter = (words: WordData[]): WordGrouping<string> =>
+  Object.groupBy(words, word => word.word.charAt(0).toLowerCase()) as WordGrouping<string>;
 
 /**
  * Group all words by year (YYYY from word.date) in a single pass.
  */
-export const groupWordsByYear = (words: WordData[]): Record<string, WordData[]> =>
-  Object.groupBy(words, word => word.date.substring(0, 4)) as Record<string, WordData[]>;
+export const groupWordsByYear = (words: WordData[]): WordGrouping<string> =>
+  Object.groupBy(words, word => word.date.substring(0, 4)) as WordGrouping<string>;
 
 /**
  * Group words by every normalized part of speech they carry. A word appears in
  * every bucket whose POS it has a definition for.
  */
-export const groupWordsByPartOfSpeech = (words: WordData[]): Record<string, WordData[]> => {
-  const groups: Record<string, WordData[]> = {};
+export const groupWordsByPartOfSpeech = (words: WordData[]): WordGrouping<string> => {
+  const groups: WordGrouping<string> = {};
   for (const word of words) {
     if (!Array.isArray(word.data)) {
       continue;
