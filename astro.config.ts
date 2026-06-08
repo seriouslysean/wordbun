@@ -152,6 +152,22 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: 'hover',
   },
+  security: {
+    csp: {
+      // Astro auto-hashes its own bundled scripts and processed styles.
+      // Dynamic content is served from same-origin endpoints (theme.css,
+      // ga-init.js) covered by 'self'. The only external script is Google's
+      // gtag.js loader. connect-src/img-src are intentionally left
+      // unrestricted so GA and Sentry beacons are not enumerated per site.
+      scriptDirective: {
+        resources: ["'self'", 'https://www.googletagmanager.com'],
+      },
+      directives: [
+        "object-src 'none'",
+        "base-uri 'self'",
+      ],
+    },
+  },
   integrations: [
     ...(sentryEnabled ? [sentry({
       sourceMapsUploadOptions: {
