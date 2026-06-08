@@ -568,9 +568,11 @@ CSP is enabled via `security.csp` in `astro.config.ts`. Astro auto-hashes its bu
 | `src/pages/theme.css.ts` | Theme color custom properties (replaces inline `<style>`) |
 | `src/pages/ga-init.js.ts` | GA bootstrap (replaces inline `<script>`) |
 
-Only external script source: `https://www.googletagmanager.com` (gtag.js loader). Hardening: `object-src 'none'`, `base-uri 'self'`. `connect-src`/`img-src` intentionally unrestricted (GA/Sentry beacons).
+Only external script source: `https://www.googletagmanager.com` (gtag.js loader). Hardening: `object-src 'none'`, `base-uri 'self'`. `worker-src 'self' blob:` allows Sentry Session Replay's compression worker. `connect-src`/`img-src` intentionally unrestricted (GA/Sentry beacons).
 
 **Pattern**: Dynamic inline content must become a same-origin endpoint. Neither `<style set:html>` nor `<script is:inline>` is auto-hashed. `define:vars` produces CSP-blocked inline style attributes.
+
+Markdown syntax highlighting is disabled (`markdown.syntaxHighlight: false`): Shiki's inline styles are CSP-incompatible and the site renders no markdown.
 
 ## Constraints
 

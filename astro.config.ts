@@ -152,6 +152,11 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: 'hover',
   },
+  markdown: {
+    // No markdown content; disable Shiki, whose inline styles are
+    // incompatible with the CSP below (Astro warns otherwise).
+    syntaxHighlight: false,
+  },
   security: {
     csp: {
       // Astro auto-hashes its own bundled scripts and processed styles.
@@ -165,6 +170,8 @@ export default defineConfig({
       directives: [
         "object-src 'none'",
         "base-uri 'self'",
+        // Sentry Session Replay compresses data in a blob-URL web worker
+        "worker-src 'self' blob:",
       ],
     },
   },
