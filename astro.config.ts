@@ -16,7 +16,7 @@ function getCodeHash() {
     .trim()
     .split('\n')
     .filter(file => file.length > 0)
-    .sort();
+    .toSorted();
 
   srcFiles.forEach(file => {
     try {
@@ -155,8 +155,9 @@ export default defineConfig({
       },
     },
   },
-  experimental: {
-    rustCompiler: true,
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover',
   },
   integrations: [
     ...(sentryEnabled ? [sentry({

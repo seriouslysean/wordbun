@@ -1,5 +1,3 @@
-import { format } from 'date-fns';
-
 import { URL_PATTERNS, BASE_PATHS, BROWSE_PATHS, ROUTES, STATS_SLUGS } from '#constants/urls';
 
 import type { WordData } from '#types';
@@ -473,7 +471,8 @@ export function getPageTitle(path: string): string {
   if (monthMatch && monthMatch[2]) {
     const monthNumber = monthSlugToNumber(monthMatch[2]);
     if (monthNumber) {
-      return format(new Date(2000, monthNumber - 1), 'MMMM');
+      const name = MONTH_NAMES[monthNumber - 1];
+      return name ? name.charAt(0).toUpperCase() + name.slice(1) : '';
     }
   }
 
@@ -535,7 +534,8 @@ export function getPageMetadata(path: string, words: WordData[] = []): PageMetad
     const year = monthMatch[1];
     const monthNumber = monthSlugToNumber(monthMatch[2]);
     if (monthNumber) {
-      const monthName = format(new Date(2000, monthNumber - 1), 'MMMM');
+      const rawName = MONTH_NAMES[monthNumber - 1];
+      const monthName = rawName ? rawName.charAt(0).toUpperCase() + rawName.slice(1) : '';
       return {
         title: monthName,
         description: `Words from ${monthName} ${year}.`,
@@ -644,7 +644,7 @@ export function getAllPageMetadata(words: WordData[]) {
   // Get static pages (excluding root '/')
   const staticPages = Object.keys(PAGE_METADATA)
     .filter(path => path !== '/')
-    .map(path => ({ path, ...getPageMetadata(path, words) }));
+    .map(path => (Object.assign({ path }, getPageMetadata(path, words))));
 
   // Get dynamic year pages
   const years = getAvailableYears(words);
@@ -668,19 +668,19 @@ export function getAllPageMetadata(words: WordData[]) {
   // Get dynamic word length pages
   const lengthPages = getAvailableLengths(words).map(length => {
     const path = getLengthUrl(length);
-    return { path, ...getPageMetadata(path, words) };
+    return Object.assign({ path }, getPageMetadata(path, words));
   });
 
   // Get dynamic word letter pages  
   const letterPages = getAvailableLetters(words).map(letter => {
     const path = getLetterUrl(letter);
-    return { path, ...getPageMetadata(path, words) };
+    return Object.assign({ path }, getPageMetadata(path, words));
   });
 
   // Get dynamic part-of-speech pages  
   const partOfSpeechPages = getAvailablePartsOfSpeech(words).map(partOfSpeech => {
     const path = getPartOfSpeechUrl(partOfSpeech);
-    return { path, ...getPageMetadata(path, words) };
+    return Object.assign({ path }, getPageMetadata(path, words));
   });
 
   return [...staticPages, ...yearPages, ...monthPages, ...lengthPages, ...letterPages, ...partOfSpeechPages];
