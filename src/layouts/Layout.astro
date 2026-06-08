@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from 'astro:transitions';
 import {
   COLOR_PRIMARY, COLOR_PRIMARY_LIGHT, COLOR_PRIMARY_DARK,
   COLOR_DARK_PRIMARY, COLOR_DARK_PRIMARY_LIGHT, COLOR_DARK_PRIMARY_DARK,
@@ -15,13 +14,12 @@ import Header from '#components/Header.astro';
 import SiteBreadcrumbs from '#components/SiteBreadcrumbs.astro';
 import StructuredData from '#components/StructuredData.astro';
 import type { WordData } from '#types';
-import { getBuildData } from '#astro-utils/build-utils.ts';
 import { getSocialImageUrl } from '#astro-utils/image-utils';
 import { STRUCTURED_DATA_TYPE } from '#astro-utils/schema-utils.ts';
 import { getMetaDescription, seoConfig } from '#astro-utils/seo-utils.ts';
 import { getAsciiArt } from '#astro-utils/static-file-utils';
 import { getFullUrl,getUrl } from '#astro-utils/url-utils';
-import { extractWordDefinition,getWordsFromCollection } from '#astro-utils/word-data-utils';
+import { extractWordDefinition } from '#astro-utils/word-data-utils';
 import { t } from '#utils/i18n-utils';
 
 const { title, word, description, structuredDataType, noindex, nofollow, itemCount } = Astro.props;
@@ -54,10 +52,6 @@ const formatPageTitle = (baseTitle: string, currentWord: WordData) => {
 };
 
 const finalTitle = word ? formatPageTitle(pageTitle, word) : pageTitle;
-
-// Get all words for build data using shared utility
-const allWords = await getWordsFromCollection();
-const buildData = getBuildData(allWords);
 
 // Get ASCII art for HTML comment
 const asciiArt = getAsciiArt();
@@ -101,11 +95,13 @@ const wordSchemaData = word ? (() => {
 <!doctype html>
 <html lang={seoConfig.locale}>
   <head>
-	<ClientRouter />
 	<Fragment set:html={asciiComment} />
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover" />
 	<meta name="generator" content={Astro.generator} />
+	{GA_ENABLED && GA_MEASUREMENT_ID && (
+		<link rel="preconnect" href="https://www.googletagmanager.com" />
+	)}
 
 		<title>{finalTitle}</title>
 		<meta name="description" content={metaDescription} />
@@ -166,16 +162,9 @@ const wordSchemaData = word ? (() => {
 					function gtag(){dataLayer.push(arguments);}
 					gtag('js', new Date());
 					gtag('config', '${GA_MEASUREMENT_ID}', {
-						send_page_view: false,
 						cookie_flags: 'SameSite=None;Secure',
 						allow_google_signals: false,
 						allow_ad_personalization_signals: false
-					});
-					document.addEventListener('astro:page-load', function() {
-						gtag('event', 'page_view', {
-							page_path: window.location.pathname,
-							page_title: document.title
-						});
 					});
 				`}></script>
 			</>
@@ -195,11 +184,6 @@ const wordSchemaData = word ? (() => {
 	</main>
 	<SiteBreadcrumbs />
 	<Footer />
-	<script define:vars={{ buildData }} is:inline>
-	  if (typeof window !== 'undefined' && !window.app) {
-		window.app = buildData;
-	  }
-	</script>
   </body>
 </html>
 
