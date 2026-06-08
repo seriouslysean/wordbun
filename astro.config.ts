@@ -121,13 +121,6 @@ export default defineConfig({
       BASE_PATH: envField.string({ context: 'client', access: 'public', default: '/' }),
     },
   },
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
-    routing: {
-      prefixDefaultLocale: false,
-    },
-  },
   vite: {
     define: {
       __VERSION__: JSON.stringify(pkg.version),
