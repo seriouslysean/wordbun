@@ -23,7 +23,11 @@ import {
   getWordsByLength as getWordsByLengthPure,
   getWordsByLetter as getWordsByLetterPure,
   getWordsByPartOfSpeech as getWordsByPartOfSpeechPure,
+  groupWordsByYear as groupWordsByYearPure,
+  groupWordsByLength as groupWordsByLengthPure,
+  groupWordsByLetter as groupWordsByLetterPure,
 } from '#utils/word-data-utils';
+import { getErrorMessage } from '#utils/text-utils';
 import {
   getWordStats,
   getLetterPatternStats,
@@ -51,7 +55,7 @@ export async function getWordsFromCollection(): Promise<WordData[]> {
       };
       return wordData;
     })
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .toSorted((a, b) => b.date.localeCompare(a.date));
 }
 
 /**
@@ -86,7 +90,7 @@ async function getAllWords(): Promise<WordData[]> {
       wordCache.value = await getWordsFromCollection();
       logger.info('Loaded words successfully', { count: wordCache.value.length });
     } catch (error) {
-      logger.error('Failed to load words', { error: error instanceof Error ? error.message : String(error) });
+      logger.error('Failed to load words', { error: getErrorMessage(error) });
       wordCache.value = [];
     }
   }
@@ -330,7 +334,7 @@ export const groupWordsByMonth = (year: string, words: WordData[] = allWords): {
  * @returns {string} SHA-256 hash in hexadecimal format
  */
 export const generateWordDataHash = (words: string[]): string => {
-  const sorted = [...words].sort();
+  const sorted = [...words].toSorted();
   const input = `${sorted.length}:${sorted.join(',')}`;
   return crypto.createHash('sha256').update(input).digest('hex');
 };
@@ -343,12 +347,11 @@ export const generateWordDataHash = (words: string[]): string => {
  * @returns {WordGroupByYearResult} Object with years as keys and word arrays as values
  */
 export const groupWordsByYear = (words: WordData[]): WordGroupByYearResult => {
-  const groups = Object.groupBy(words, word => word.date.substring(0, 4));
+  const groups = groupWordsByYearPure(words);
   return Object.fromEntries(
     Object.entries(groups).map(([key, value]) => [key, value ?? []]),
   );
 };
-
 
 /**
  * Groups an array of word data by length.
@@ -359,11 +362,10 @@ export const groupWordsByYear = (words: WordData[]): WordGroupByYearResult => {
  * @returns {WordGroupByLengthResult} Object with lengths as keys and word arrays as values, sorted by length
  */
 export const groupWordsByLength = (words: WordData[]): WordGroupByLengthResult => {
-  const groups = Object.groupBy(words, word => word.word.length);
-
+  const groups = groupWordsByLengthPure(words);
   return Object.fromEntries(
     Object.entries(groups)
-      .sort(([a], [b]) => Number(a) - Number(b))
+      .toSorted(([a], [b]) => Number(a) - Number(b))
       .map(([key, value]) => [key, value ?? []]),
   );
 };
@@ -387,12 +389,11 @@ export const getWordsByLength = (length: number, words: WordData[] = allWords): 
  */
 export const groupWordsByLetter = (words: WordData[]): Record<string, WordData[]> => {
   const alphabeticWords = words.filter(word => /^[a-z]/i.test(word.word));
-  const groups = Object.groupBy(alphabeticWords, word => word.word.charAt(0).toLowerCase());
-
+  const groups = groupWordsByLetterPure(alphabeticWords);
   return Object.fromEntries(
     Object.entries(groups)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([letter, letterWords]) => [letter, (letterWords ?? []).sort((a, b) => a.word.localeCompare(b.word))])
+      .toSorted(([a], [b]) => a.localeCompare(b))
+      .map(([letter, letterWords]) => [letter, (letterWords ?? []).toSorted((a, b) => a.word.localeCompare(b.word))])
   );
 };
 
@@ -414,37 +415,22 @@ export const getWordsByLetter = (letter: string, words: WordData[] = allWords): 
  * @returns {WordGroupByPartOfSpeechResult} Object with part of speech keys and word arrays
  */
 export const groupWordsByPartOfSpeech = (words: WordData[]): WordGroupByPartOfSpeechResult => {
-  const groups = words.reduce<Record<string, WordData[]>>((acc, word) => {
-    if (word.data && Array.isArray(word.data)) {
-      // Get all unique normalized parts of speech for this word
-      const partsOfSpeech = new Set<string>();
-      word.data.forEach(definition => {
-        if (definition.partOfSpeech) {
-          const normalized = normalizeToBasePOS(definition.partOfSpeech);
-          if (normalized) {
-            partsOfSpeech.add(normalized);
-          }
-        }
-      });
-
-      // Add word to each part of speech group
-      partsOfSpeech.forEach(partOfSpeech => {
-        acc[partOfSpeech] = acc[partOfSpeech] || [];
-        // Only add if not already present (avoid duplicates)
-        if (!acc[partOfSpeech].some(existing => existing.date === word.date)) {
-          acc[partOfSpeech].push(word);
-        }
-      });
+  const groups: Record<string, WordData[]> = {};
+  for (const word of words) {
+    if (!Array.isArray(word.data)) { continue; }
+    const seen = new Set<string>();
+    for (const def of word.data) {
+      if (!def.partOfSpeech) { continue; }
+      const normalized = normalizeToBasePOS(def.partOfSpeech);
+      if (!normalized || seen.has(normalized)) { continue; }
+      seen.add(normalized);
+      (groups[normalized] ??= []).push(word);
     }
-
-    return acc;
-  }, {});
-
-  // Sort parts of speech alphabetically and sort words within each group by word name
+  }
   return Object.fromEntries(
     Object.entries(groups)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([partOfSpeech, words]) => [partOfSpeech, words.sort((a, b) => a.word.localeCompare(b.word))])
+      .toSorted(([a], [b]) => a.localeCompare(b))
+      .map(([pos, posWords]) => [pos, posWords.toSorted((a, b) => a.word.localeCompare(b.word))])
   );
 };
 
