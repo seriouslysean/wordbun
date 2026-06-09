@@ -25,6 +25,11 @@
     "random_word": "Random Word",
     "random_word_title": "Go to a random word page"
   },
+  "search": {
+    "label": "Search words",
+    "placeholder": "Search by word or definition",
+    "no_results": "No matching words."
+  },
   "home": {
     "heading": "Word of the Day",
     "description": "Today's word is \"{{word}}\".",

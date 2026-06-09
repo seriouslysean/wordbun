@@ -3,6 +3,7 @@ import DescriptionText from '#components/DescriptionText.astro';
 import Heading from '#components/Heading.astro';
 import Layout from '#layouts/Layout.astro';
 import SectionHeading from '#components/SectionHeading.astro';
+import WordSearch from '#components/WordSearch.astro';
 import WordSection from '#components/WordSection.astro';
 import { getPageMetadata } from '#astro-utils/page-metadata.ts';
 import { STRUCTURED_DATA_TYPE } from '#astro-utils/schema-utils.ts';
@@ -23,13 +24,17 @@ const { title, description, secondaryText } = getPageMetadata(Astro.url.pathname
 <Layout title={title} description={description} structuredDataType={STRUCTURED_DATA_TYPE.WORD_LIST} itemCount={allWords.length}>
   <Heading text={title} secondaryText={secondaryText} />
   <DescriptionText text={description} />
-  
-  {sortedYearEntries.map(([year, words]) => (
-    <section class="words__section">
-      <SectionHeading text={year} href={getWordsYearUrl(year)} />
-      <WordSection words={words} columns={3} />
-    </section>
-  ))}
+
+  <WordSearch />
+
+  <div class="words__list" id="words-list">
+    {sortedYearEntries.map(([year, words]) => (
+      <section class="words__section">
+        <SectionHeading text={year} href={getWordsYearUrl(year)} />
+        <WordSection words={words} columns={3} />
+      </section>
+    ))}
+  </div>
 
 </Layout>
 

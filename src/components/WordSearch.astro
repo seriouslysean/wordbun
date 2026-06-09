@@ -1,0 +1,183 @@
+---
+import { t } from '#utils/i18n-utils';
+---
+
+{/* hidden by default; the script reveals it so no-JS users never see a dead control */}
+<div class="word-search" id="word-search" hidden>
+  <label class="word-search__label" for="word-search-input">{t('search.label')}</label>
+  <input
+    type="search"
+    id="word-search-input"
+    class="word-search__input"
+    placeholder={t('search.placeholder')}
+    autocomplete="off"
+    enterkeyhint="search"
+  />
+  <ul class="word-search__results" id="word-search-results" aria-live="polite" hidden></ul>
+  <p class="word-search__empty" id="word-search-empty" hidden>{t('search.no_results')}</p>
+</div>
+
+<script>
+import { getUrl } from '#astro-utils/url-utils';
+
+interface SearchEntry { word: string; definition: string; url: string; }
+
+const container = document.getElementById('word-search');
+const input = document.getElementById('word-search-input') as HTMLInputElement | null;
+const results = document.getElementById('word-search-results');
+const empty = document.getElementById('word-search-empty');
+const wordList = document.getElementById('words-list');
+
+const cache = { data: null as SearchEntry[] | null };
+
+// Progressive enhancement: only show the search box once JS is running.
+if (container) {
+  container.hidden = false;
+}
+
+async function loadIndex(): Promise<SearchEntry[]> {
+  if (cache.data) {
+    return cache.data;
+  }
+  const response = await fetch(getUrl('/search-index.json'));
+  if (!response.ok) {
+    throw new Error('Failed to load search index');
+  }
+  cache.data = await response.json();
+  return cache.data ?? [];
+}
+
+// Rank word matches above definition matches, prefix matches above mid-string.
+function rank(entries: SearchEntry[], query: string): SearchEntry[] {
+  const prefix: SearchEntry[] = [];
+  const wordMatch: SearchEntry[] = [];
+  const defMatch: SearchEntry[] = [];
+  for (const entry of entries) {
+    const word = entry.word.toLowerCase();
+    if (word.startsWith(query)) {
+      prefix.push(entry);
+    } else if (word.includes(query)) {
+      wordMatch.push(entry);
+    } else if (entry.definition.toLowerCase().includes(query)) {
+      defMatch.push(entry);
+    }
+  }
+  return [...prefix, ...wordMatch, ...defMatch];
+}
+
+function render(matches: SearchEntry[]): void {
+  if (!results || !empty) {
+    return;
+  }
+  results.replaceChildren();
+  for (const entry of matches.slice(0, 50)) {
+    const item = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = entry.url;
+    // textContent (never innerHTML) keeps this XSS-safe and special-char-safe.
+    link.textContent = entry.word;
+    item.appendChild(link);
+    results.appendChild(item);
+  }
+  results.hidden = matches.length === 0;
+  empty.hidden = matches.length > 0;
+}
+
+function showFullList(): void {
+  if (wordList) {
+    wordList.hidden = false;
+  }
+  if (results) {
+    results.hidden = true;
+  }
+  if (empty) {
+    empty.hidden = true;
+  }
+}
+
+async function onInput(): Promise<void> {
+  if (!input) {
+    return;
+  }
+  const query = input.value.trim().toLowerCase();
+  if (query.length === 0) {
+    showFullList();
+    return;
+  }
+
+  try {
+    // Fetch before hiding the list so there is no blank flash, and so a failed
+    // index load leaves the navigable fallback list in place.
+    const matches = rank(await loadIndex(), query);
+    // Ignore a resolved fetch whose query is already stale (rapid typing).
+    if (input.value.trim().toLowerCase() !== query) {
+      return;
+    }
+    if (wordList) {
+      wordList.hidden = true;
+    }
+    render(matches);
+  } catch {
+    showFullList();
+  }
+}
+
+if (input) {
+  input.addEventListener('input', onInput);
+}
+</script>
+
+<style>
+  .word-search {
+    width: 100%;
+    max-width: var(--content-width-small);
+    margin: 0 auto var(--spacing-large);
+  }
+
+  .word-search__label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+  }
+
+  .word-search__input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--spacing-small) var(--spacing-base);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    background: var(--color-background-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+
+  .word-search__input:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .word-search__results {
+    list-style: none;
+    margin: var(--spacing-base) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .word-search__results a {
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  .word-search__results a:hover {
+    text-decoration: underline;
+  }
+
+  .word-search__empty {
+    margin: var(--spacing-base) 0 0;
+    color: var(--color-text-light);
+    font-size: var(--font-size-small);
+  }
+</style>
