@@ -3,6 +3,10 @@ import DefinitionList from '#components/DefinitionList.astro';
 import DescriptionText from '#components/DescriptionText.astro';
 import StatsSection from '#components/StatsSection.astro';
 import BarChart from '#components/BarChart.astro';
+import CalendarHeatmap from '#components/CalendarHeatmap.astro';
+import WordGraph from '#components/WordGraph.astro';
+import { WORD_GRAPH_MIN_WORDS } from '#constants/text-patterns';
+import { buildWordGraph } from '#utils/word-graph-utils';
 import { getPageMetadata } from '#astro-utils/page-metadata.ts';
 import {
   getWordsUrl,
@@ -148,6 +152,11 @@ const wordFactsRegularItems = [
   ...(allVowels.length > 0 ? [{ label: t('stats.all_vowels'), value: allVowels.length, href: getAllVowelsUrl() }] : [])
 ];
 
+// Connections graph shows only on a large-enough corpus that also has in-corpus
+// relationships; built once here so the section heading never renders empty.
+const wordGraph = buildWordGraph(allWords);
+const showWordGraph = totalWords >= WORD_GRAPH_MIN_WORDS && wordGraph.nodes.length > 0;
+
 const { title, description, secondaryText } = getPageMetadata(Astro.url.pathname);
 ---
 <Layout title={title} description={description}>
@@ -184,6 +193,12 @@ const { title, description, secondaryText } = getPageMetadata(Astro.url.pathname
       )}
     </StatsSection>
 
+    {totalWords > 0 && (
+      <StatsSection title={t('stats.activity_heading')}>
+        <CalendarHeatmap dates={allWords.map(word => word.date)} />
+      </StatsSection>
+    )}
+
 {hasLetterPatterns && (
       <StatsSection title={t('stats.letter_patterns_heading')} href={getLetterPatternsUrl()}>
         <DefinitionList items={letterPatternItems.map(item => ({
@@ -201,6 +216,12 @@ const { title, description, secondaryText } = getPageMetadata(Astro.url.pathname
           value: item.count,
           href: item.href
         }))} />
+      </StatsSection>
+    )}
+
+    {showWordGraph && (
+      <StatsSection title={t('stats.connections_heading')}>
+        <WordGraph graph={wordGraph} />
       </StatsSection>
     )}
   </main>

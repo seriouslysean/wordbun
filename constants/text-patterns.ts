@@ -25,6 +25,13 @@ export const MAX_PAST_WORDS_DISPLAY = 5;
 export const MAX_WORD_EXAMPLES = 6;
 
 /**
+ * Minimum corpus size before the word-connections graph is shown. Below this the
+ * graph is too sparse to be meaningful, so small sites hide it; larger corpora
+ * (e.g. mature downstream sites) surface it.
+ */
+export const WORD_GRAPH_MIN_WORDS = 25;
+
+/**
  * Number of recent words to include in RSS feed.
  */
 export const RSS_FEED_WORD_COUNT = 14;

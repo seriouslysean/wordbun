@@ -132,7 +132,12 @@
     "composition_heading": "Letter Composition",
     "frequency_heading": "Letter Frequency",
     "special_heading": "Special Words",
-    "overview_heading": "Overview"
+    "overview_heading": "Overview",
+    "activity_heading": "Publishing Activity",
+    "activity_aria": "Words published in {{year}}",
+    "connections_heading": "Word Connections",
+    "connections_aria": "Graph of related words in the collection",
+    "year_summary_heading": "{{year}} Summary"
   },
   "error": {
     "heading": "404",
