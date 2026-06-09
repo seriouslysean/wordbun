@@ -19,16 +19,12 @@
     "stats": "Stats",
     "previous_word": "Previous Word",
     "next_word": "Next Word",
-    "previous_alpha": "Previous (A-Z)",
-    "next_alpha": "Next (A-Z)",
-    "alpha_nav_label": "Alphabetical word navigation",
     "random_word": "Random Word",
     "random_word_title": "Go to a random word page"
   },
   "search": {
     "label": "Search words",
-    "placeholder": "Search by word or definition",
-    "no_results": "No matching words."
+    "placeholder": "Search words"
   },
   "home": {
     "heading": "Word of the Day",
@@ -136,6 +132,7 @@
     "activity_heading": "Publishing Activity",
     "activity_aria": "Words published in {{year}}",
     "connections_heading": "Word Connections",
+    "connections_description": "Words in the collection that share a synonym or related term are linked here. Select any word to open it.",
     "connections_aria": "Graph of related words in the collection",
     "year_summary_heading": "{{year}} Summary"
   },
@@ -154,6 +151,8 @@
     "letter_words": "{{letter}} Words",
     "length_label": "{{length}}-Letter Words",
     "senses_label": "Definitions",
+    "prev_sense": "Previous definition",
+    "next_sense": "Next definition",
     "examples_heading": "Examples",
     "synonyms_heading": "Synonyms",
     "antonyms_heading": "Antonyms",

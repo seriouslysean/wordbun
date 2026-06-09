@@ -22,7 +22,7 @@ export const MAX_PAST_WORDS_DISPLAY = 5;
 /**
  * Maximum number of example sentences to display on a word page.
  */
-export const MAX_WORD_EXAMPLES = 6;
+export const MAX_WORD_EXAMPLES = 3;
 
 /**
  * Minimum corpus size before the word-connections graph is shown. Below this the

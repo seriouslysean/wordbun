@@ -36,8 +36,6 @@ import {
   getWordSenses,
   collectExamples,
   splitKnownWords,
-  sortWordsAlphabetically,
-  getAlphabeticalNeighbors,
 } from '#utils/word-data-utils';
 import {
   extractWordDefinition,
@@ -679,7 +677,7 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
         ],
       };
       const examples = collectExamples(word);
-      expect(examples).toHaveLength(6);
+      expect(examples).toHaveLength(3);
       expect(examples[0]).toBe('She loves reading.');
       expect(examples).not.toContain('Compound example, excluded.');
     });
@@ -699,39 +697,4 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
     });
   });
 
-  describe('sortWordsAlphabetically', () => {
-    it('sorts case-insensitively without mutating the input', () => {
-      const input = [
-        { word: 'banana', date: '1', adapter: 'a', data: [] },
-        { word: 'Apple', date: '2', adapter: 'a', data: [] },
-        { word: 'cherry', date: '3', adapter: 'a', data: [] },
-      ];
-      expect(sortWordsAlphabetically(input).map(w => w.word)).toEqual(['Apple', 'banana', 'cherry']);
-      expect(input.map(w => w.word)).toEqual(['banana', 'Apple', 'cherry']);
-    });
-  });
-
-  describe('getAlphabeticalNeighbors', () => {
-    const sorted = [
-      { word: 'apple', date: '1', adapter: 'a', data: [] },
-      { word: 'banana', date: '2', adapter: 'a', data: [] },
-      { word: 'cherry', date: '3', adapter: 'a', data: [] },
-    ];
-
-    it('returns the surrounding words', () => {
-      const result = getAlphabeticalNeighbors(sorted[1], sorted);
-      expect(result.previousWord?.word).toBe('apple');
-      expect(result.nextWord?.word).toBe('cherry');
-    });
-
-    it('returns null at the ends', () => {
-      expect(getAlphabeticalNeighbors(sorted[0], sorted).previousWord).toBeNull();
-      expect(getAlphabeticalNeighbors(sorted[2], sorted).nextWord).toBeNull();
-    });
-
-    it('returns both null when the word is not present', () => {
-      const missing = { word: 'durian', date: '9', adapter: 'a', data: [] };
-      expect(getAlphabeticalNeighbors(missing, sorted)).toEqual({ previousWord: null, nextWord: null });
-    });
-  });
 });

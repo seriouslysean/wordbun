@@ -221,6 +221,7 @@ const { title, description, secondaryText } = getPageMetadata(Astro.url.pathname
 
     {showWordGraph && (
       <StatsSection title={t('stats.connections_heading')}>
+        <DescriptionText text={t('stats.connections_description')} />
         <WordGraph graph={wordGraph} />
       </StatsSection>
     )}

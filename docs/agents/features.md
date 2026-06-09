@@ -10,12 +10,12 @@ enrichment, search, and build-time visualizations. All code is site-agnostic
 (ships downstream on sync); enrichment *data* is regenerated per site via
 `npm run tool:regenerate-all-words --force` (each site's keys + corpus).
 
-- **Word-page surfacing.** Example sentences; all definitions via a CSS-only
-  scroll-snap slider (one sense at a time, compound entries excluded by
-  headword id with a fallback); a pronunciation/syllable/rarity meta line;
-  alphabetical neighbors; self-hiding synonym/antonym/associated-word and
-  etymology blocks. Components: `WordSenses`, `WordMeta`, `WordExamples`,
-  `WordSynonyms`, `WordEtymology`, `WordAlphaNav`.
+- **Word-page surfacing.** Example sentences; all definitions via a CSS
+  scroll-snap slider (one sense at a time with arrows + dots, compound entries
+  excluded by headword id with a fallback); a pronunciation/syllable/rarity meta
+  line; self-hiding synonym/antonym/associated-word and etymology blocks.
+  Components: `WordSenses`, `WordMeta`, `WordExamples`, `WordSynonyms`,
+  `WordEtymology`.
 - **Offline build-time enrichment.** SUBTLEX rarity band (`word-frequency-utils`)
   and CMU pronunciation/IPA + authoritative syllable count (`pronunciation-utils`),
   computed at build from the word string, never stored. Pinned ISC datasets in
@@ -28,11 +28,10 @@ enrichment, search, and build-time visualizations. All code is site-agnostic
   etymology from existing responses. Shared `buildWordData` keeps add-word and
   the backfill in sync; backfill preserves `preserveCase`. Datamuse credited in
   the footer.
-- **Static search.** Zero-dependency client search on `/word` over a build-time
-  `search-index.json` (word + definition + base-correct url). CSP-clean processed
-  script, XSS-safe rendering, hidden until JS reveals it; the year-grouped list is
-  the no-JS fallback. Chosen over MiniSearch for simplicity; MiniSearch remains a
-  one-file upgrade.
+- **Static search.** Zero-dependency search behind a header magnifying-glass
+  icon — a starts-with filter over the existing `/words.json`. CSP-clean
+  processed script, XSS-safe rendering, hidden until JS reveals it; the All Words
+  page is the no-JS fallback. Chosen over MiniSearch for simplicity.
 - **Build-time visualizations** (sections on `/stats` and `/browse/[year]`): a
   CSS-Grid publishing-activity heatmap, a deterministic hand-rolled SVG
   word-connections graph gated behind `WORD_GRAPH_MIN_WORDS` (and self-hiding
@@ -385,10 +384,9 @@ See [backlog.md](backlog.md).
 
 ### ✅ Client-Side Search — SHIPPED
 
-Zero-dependency client search on `/word` over a dedicated build-time
-`search-index.json` endpoint (the original `/words.json` is words-only).
-Progressive enhancement with a no-JS fallback. See the Word Enrichment Bucket
-above.
+Zero-dependency starts-with search behind a header magnifying-glass icon, over
+the existing `/words.json`. Progressive enhancement with a no-JS fallback (the
+All Words page). See the Word Enrichment Bucket above.
 
 ## Tier 3: Lower Impact
 

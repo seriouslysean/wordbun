@@ -1,4 +1,4 @@
-import type { DictionaryDefinition, WordAdjacentResult, WordData, WordGrouping, WordSense } from '#types';
+import type { DictionaryDefinition, WordData, WordGrouping, WordSense } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { MAX_WORD_EXAMPLES } from '#constants/text-patterns';
 import { slugify } from '#utils/text-utils';
@@ -330,24 +330,3 @@ export const splitKnownWords = (
   return { known: inCorpus, unknown: notInCorpus };
 };
 
-/**
- * Returns a new array sorted alphabetically (case-insensitive) by word.
- */
-export const sortWordsAlphabetically = (words: WordData[]): WordData[] =>
-  [...words].toSorted((a, b) => a.word.toLowerCase().localeCompare(b.word.toLowerCase()));
-
-/**
- * Finds the alphabetically adjacent words around a given word. Matches by word
- * and date (a word may recur on different dates). `sorted` must come from
- * sortWordsAlphabetically.
- */
-export const getAlphabeticalNeighbors = (current: WordData, sorted: WordData[]): WordAdjacentResult => {
-  const index = sorted.findIndex(word => word.word === current.word && word.date === current.date);
-  if (index === -1) {
-    return { previousWord: null, nextWord: null };
-  }
-  return {
-    previousWord: sorted[index - 1] ?? null,
-    nextWord: sorted[index + 1] ?? null,
-  };
-};

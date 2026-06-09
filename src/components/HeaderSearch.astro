@@ -1,0 +1,206 @@
+---
+import { t } from '#utils/i18n-utils';
+---
+
+<div class="site-search">
+  <button
+    type="button"
+    class="site-search__toggle"
+    id="site-search-toggle"
+    aria-label={t('search.label')}
+    aria-expanded="false"
+    aria-controls="site-search-panel"
+    hidden
+  >
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="11" cy="11" r="7"></circle>
+      <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+    </svg>
+  </button>
+
+  <div class="site-search__panel" id="site-search-panel" hidden>
+    <input
+      type="search"
+      id="site-search-input"
+      class="site-search__input"
+      placeholder={t('search.placeholder')}
+      autocomplete="off"
+      enterkeyhint="search"
+    />
+    <ul class="site-search__results" id="site-search-results" aria-live="polite"></ul>
+  </div>
+</div>
+
+<script>
+import { getUrl, getWordUrl } from '#astro-utils/url-utils';
+
+const toggle = document.getElementById('site-search-toggle');
+const panel = document.getElementById('site-search-panel');
+const input = document.getElementById('site-search-input') as HTMLInputElement | null;
+const results = document.getElementById('site-search-results');
+
+const cache = { data: null as string[] | null };
+
+// Progressive enhancement: reveal the icon only when JS can drive it.
+if (toggle) {
+  toggle.hidden = false;
+}
+
+async function loadWords(): Promise<string[]> {
+  if (cache.data) {
+    return cache.data;
+  }
+  const response = await fetch(getUrl('/words.json'));
+  cache.data = response.ok ? await response.json() : [];
+  return cache.data ?? [];
+}
+
+function closePanel(): void {
+  if (panel) {
+    panel.hidden = true;
+  }
+  toggle?.setAttribute('aria-expanded', 'false');
+  if (results) {
+    results.replaceChildren();
+  }
+}
+
+function openPanel(): void {
+  if (panel) {
+    panel.hidden = false;
+  }
+  toggle?.setAttribute('aria-expanded', 'true');
+  void loadWords();
+  input?.focus();
+}
+
+toggle?.addEventListener('click', () => {
+  if (panel?.hidden) {
+    openPanel();
+  } else {
+    closePanel();
+  }
+});
+
+async function onInput(): Promise<void> {
+  if (!input || !results) {
+    return;
+  }
+  const query = input.value.trim().toLowerCase();
+  results.replaceChildren();
+  // Empty query: no dropdown.
+  if (!query) {
+    return;
+  }
+  const words = await loadWords();
+  // Starts-with match on the word itself — predictable, no definition fuzz.
+  const matches = words.filter(word => word.toLowerCase().startsWith(query)).slice(0, 30);
+  for (const word of matches) {
+    const item = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = getUrl(getWordUrl(word));
+    link.textContent = word;
+    item.appendChild(link);
+    results.appendChild(item);
+  }
+}
+
+input?.addEventListener('input', onInput);
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && panel && !panel.hidden) {
+    closePanel();
+    toggle?.focus();
+  }
+});
+</script>
+
+<style>
+  .site-search {
+    position: absolute;
+    top: var(--spacing-base);
+    right: var(--spacing-base);
+  }
+
+  .site-search__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xs);
+    border: none;
+    background: none;
+    color: var(--color-text-light);
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    transition: color var(--transition);
+  }
+
+  /* The class sets display:flex, which would otherwise beat the hidden
+     attribute's UA display:none — keep it hidden until JS reveals it. */
+  .site-search__toggle[hidden] {
+    display: none;
+  }
+
+  .site-search__toggle:hover,
+  .site-search__toggle[aria-expanded='true'] {
+    color: var(--color-text-primary);
+  }
+
+  .site-search__toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .site-search__panel {
+    position: absolute;
+    top: calc(100% + var(--spacing-xs));
+    right: 0;
+    width: min(320px, 80vw);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-small);
+    box-shadow: 0 4px 16px hsl(var(--shadow-color) / 0.12);
+    z-index: 1000;
+  }
+
+  .site-search__input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--spacing-small);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    background: var(--color-background-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+
+  .site-search__input:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+  }
+
+  .site-search__results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  .site-search__results li {
+    margin-top: var(--spacing-xs);
+  }
+
+  .site-search__results a {
+    display: block;
+    padding: var(--spacing-xs) var(--spacing-small);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+  }
+
+  .site-search__results a:hover {
+    background: var(--color-background-light);
+  }
+</style>

@@ -126,7 +126,7 @@ test.describe('user journeys', () => {
 		await expect(page.locator('.word-senses')).toBeVisible();
 	});
 
-	test('word page surfaces senses, meta line, and alphabetical navigation', async ({ page }) => {
+	test('word page surfaces the senses slider and meta line', async ({ page }) => {
 		await page.goto('/');
 		await page.locator('.past-words a.word-link').first().click();
 		await expect(page.locator('#word-title')).toBeVisible();
@@ -135,15 +135,7 @@ test.describe('user journeys', () => {
 		await expect(page.locator('.word-meta__facts')).toBeVisible();
 
 		// Senses slider renders the definition(s)
-		await expect(page.locator('.word-senses__track')).toBeVisible();
-
-		// Alphabetical navigation reaches a different word page
-		const originUrl = page.url();
-		const alphaLink = page.locator('.word-alpha-nav a.word-link').first();
-		await expect(alphaLink).toBeVisible();
-		await alphaLink.click();
-		expect(page.url()).not.toBe(originUrl);
-		await expect(page.locator('#word-title')).toBeVisible();
+		await expect(page.locator('.word-senses')).toBeVisible();
 	});
 
 	test('non-existent route returns 404', async ({ page }) => {

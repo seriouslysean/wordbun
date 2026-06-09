@@ -11,10 +11,9 @@ Word pages link to other words by length, part of speech, and year via
 
 ### ✅ Client-Side Search — SHIPPED
 
-Zero-dependency client search on `/word` over a dedicated
-`src/pages/search-index.json.ts` endpoint (word + definition + base-correct
-url). Progressive enhancement; the year-grouped list is the no-JS fallback.
-`words.json` remains words-only for the random-word button.
+Zero-dependency starts-with search behind a header magnifying-glass icon, over
+the existing `/words.json` (shared with the random-word button). Progressive
+enhancement; the All Words page is the no-JS fallback.
 
 ### Error Handling Consistency
 

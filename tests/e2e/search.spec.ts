@@ -1,54 +1,47 @@
 import { expect, test } from '@playwright/test';
 
-// The search box is a progressive enhancement on the All Words page: hidden
-// without JS (the page's year-grouped list is the fallback), live filtering with JS.
+// Header search is a progressive enhancement: a magnifying-glass icon (revealed
+// by JS) opens a panel that filters words by starts-with.
 
-test.describe('word search', () => {
-  test('enhances the All Words page with live filtering and navigates to a result', async ({ page }) => {
-    await page.goto('/word');
+test.describe('header search', () => {
+  test('opens from the header icon, filters by starts-with, and navigates', async ({ page }) => {
+    await page.goto('/');
 
-    const input = page.locator('#word-search-input');
+    const toggle = page.locator('#site-search-toggle');
+    await expect(toggle).toBeVisible();
+    await toggle.click();
+
+    const input = page.locator('#site-search-input');
     await expect(input).toBeVisible();
+    await input.fill('wor');
 
-    // Discover a real word from the list, then search a prefix of it (no hardcoded words).
-    const firstWord = ((await page.locator('#words-list a.word-link .word-link__word').first().textContent()) ?? '').trim();
-    expect(firstWord.length).toBeGreaterThan(0);
+    const results = page.locator('#site-search-results a');
+    await expect(results.first()).toBeVisible();
+    for (const text of await results.allTextContents()) {
+      expect(text.toLowerCase().startsWith('wor')).toBe(true);
+    }
 
-    await input.fill(firstWord.slice(0, 3).toLowerCase());
-
-    const results = page.locator('#word-search-results');
-    await expect(results).toBeVisible();
-    await expect(page.locator('#words-list')).toBeHidden();
-
-    const firstResult = results.locator('a').first();
-    await expect(firstResult).toBeVisible();
-    await firstResult.click();
+    await results.first().click();
     await expect(page.locator('#word-title')).toBeVisible();
   });
 
-  test('shows a no-results message and restores the list when cleared', async ({ page }) => {
-    await page.goto('/word');
-    const input = page.locator('#word-search-input');
+  test('clearing the query removes the results', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('#site-search-toggle').click();
 
-    await input.fill('zzznotarealword');
-    await expect(page.locator('#word-search-empty')).toBeVisible();
+    const input = page.locator('#site-search-input');
+    await input.fill('wor');
+    await expect(page.locator('#site-search-results a').first()).toBeVisible();
 
     await input.fill('');
-    await expect(page.locator('#words-list')).toBeVisible();
+    await expect(page.locator('#site-search-results a')).toHaveCount(0);
   });
 
-  test('degrades gracefully without JavaScript', async ({ browser }) => {
+  test('the search icon is hidden without JavaScript', async ({ browser }) => {
     const context = await browser.newContext({ javaScriptEnabled: false });
     const page = await context.newPage();
-    await page.goto('/word');
-
-    // No dead control, and the full list is present and navigable.
-    await expect(page.locator('#word-search')).toBeHidden();
-    const wordLink = page.locator('#words-list a.word-link').first();
-    await expect(wordLink).toBeVisible();
-    await wordLink.click();
-    await expect(page.locator('#word-title')).toBeVisible();
-
+    await page.goto('/');
+    await expect(page.locator('#site-search-toggle')).toBeHidden();
     await context.close();
   });
 });
