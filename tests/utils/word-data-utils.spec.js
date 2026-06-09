@@ -34,7 +34,8 @@ import {
   findValidDefinition,
   isValidDefinition,
   getWordSenses,
-  splitKnownWords,
+  corpusRelationMatch,
+  corpusRelations,
 } from '#utils/word-data-utils';
 import {
   extractWordDefinition,
@@ -683,13 +684,53 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
     });
   });
 
-  describe('splitKnownWords', () => {
-    it('partitions terms by a case-insensitive known set, preserving original casing', () => {
-      const known = new Set(['cat', 'fish']);
-      expect(splitKnownWords(['Cat', 'dog', 'Fish'], known)).toEqual({
-        known: ['Cat', 'Fish'],
-        unknown: ['dog'],
-      });
+  describe('corpusRelationMatch', () => {
+    const corpus = new Set(['joy', 'knowledge', 'reading', 'the', 'they', 'day']);
+
+    it('returns the lowercased headword on a case-insensitive exact match', () => {
+      expect(corpusRelationMatch('Joy', corpus)).toBe('joy');
+    });
+
+    it('resolves a term that is a corpus headword plus a derivational suffix', () => {
+      expect(corpusRelationMatch('joyful', corpus)).toBe('joy');
+      expect(corpusRelationMatch('knowledgeability', corpus)).toBe('knowledge');
+    });
+
+    it('resolves a term whose derivational form is the corpus headword', () => {
+      // `read` -> corpus headword `reading` (read + -ing)
+      expect(corpusRelationMatch('read', corpus)).toBe('reading');
+    });
+
+    it('prefers an exact match over a derivational one so `they` never becomes `the`', () => {
+      expect(corpusRelationMatch('they', corpus)).toBe('they');
+    });
+
+    it('rejects a derivational base shorter than three characters', () => {
+      // `an` + nothing recognized, and no 2-char base may seed a suffix match
+      expect(corpusRelationMatch('any', new Set(['an']))).toBeNull();
+      expect(corpusRelationMatch('ofs', new Set(['of']))).toBeNull();
+    });
+
+    it('returns null when nothing matches', () => {
+      expect(corpusRelationMatch('pizzicato', corpus)).toBeNull();
+    });
+  });
+
+  describe('corpusRelations', () => {
+    const corpus = new Set(['joy', 'happy', 'knowledge']);
+
+    it('maps terms to corpus headwords, dropping non-matches', () => {
+      expect(corpusRelations('happy', ['joyful', 'pizzicato', 'knowledge'], corpus))
+        .toEqual(['joy', 'knowledge']);
+    });
+
+    it('drops self-links back to the source word', () => {
+      // joy page lists its own derivational forms; they must not link to joy
+      expect(corpusRelations('joy', ['joyful', 'joyous'], corpus)).toEqual([]);
+    });
+
+    it('dedupes when several terms resolve to the same headword', () => {
+      expect(corpusRelations('happy', ['joyful', 'joyous'], corpus)).toEqual(['joy']);
     });
   });
 

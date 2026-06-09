@@ -302,22 +302,73 @@ export const getWordSenses = (wordData: WordData): WordSense[] => {
 };
 
 /**
- * Partitions related terms into those present in our own corpus (linkable to a
- * word page) and those that are not (rendered as plain text).
+ * Derivational suffixes used to match a relation term to a corpus headword that
+ * is a derivational form of it (or vice versa) -- e.g. `joyful` -> `joy`,
+ * `knowledgeability` -> `knowledge`, `reading` -> `read`. Prefix + suffix (not a
+ * lossy stemmer) keeps false positives low: a match requires one string to equal
+ * the other plus exactly one of these suffixes.
  */
-export const splitKnownWords = (
-  terms: string[],
-  known: Set<string>,
-): { known: string[]; unknown: string[] } => {
-  const inCorpus: string[] = [];
-  const notInCorpus: string[] = [];
-  for (const term of terms) {
-    if (known.has(term.toLowerCase())) {
-      inCorpus.push(term);
-    } else {
-      notInCorpus.push(term);
+const DERIVATIONAL_SUFFIXES = new Set([
+  's', 'es', 'ed', 'ing', 'er', 'ly', 'y', 'ful', 'less', 'ness',
+  'ity', 'ous', 'al', 'ic', 'ical', 'ment', 'tion', 'ation', 'ability',
+]);
+
+/**
+ * Minimum base length for a derivational match, so demo function words
+ * (`a`, `of`, `the`) don't mis-link off a short base + common suffix.
+ */
+const MIN_DERIVATION_BASE = 3;
+
+/** True when `derived` is `base` plus exactly one recognized derivational suffix. */
+const isDerivedForm = (base: string, derived: string): boolean => {
+  if (base.length < MIN_DERIVATION_BASE || derived.length <= base.length || !derived.startsWith(base)) {
+    return false;
+  }
+  return DERIVATIONAL_SUFFIXES.has(derived.slice(base.length));
+};
+
+/**
+ * Matches a relation term to a corpus headword, returning the matched headword
+ * (lowercased) or null. Exact match wins outright -- checked against the whole
+ * set before any suffix scan -- so `they` resolves to itself, never `the` + -y.
+ * Failing exact, a bidirectional derivational match links `term` to a headword
+ * when either is the other plus a recognized suffix.
+ */
+export const corpusRelationMatch = (term: string, corpus: Set<string>): string | null => {
+  const lower = term.toLowerCase();
+  if (corpus.has(lower)) {
+    return lower;
+  }
+  for (const headword of corpus) {
+    if (isDerivedForm(headword, lower) || isDerivedForm(lower, headword)) {
+      return headword;
     }
   }
-  return { known: inCorpus, unknown: notInCorpus };
+  return null;
+};
+
+/**
+ * Resolves relation terms to the corpus headwords they link to: maps each term
+ * through {@link corpusRelationMatch}, drops non-matches, drops self-links to
+ * `source` (e.g. the joy page's own `joyful`/`joyous`), and dedupes. Returns
+ * lowercased corpus headwords ready to display and link.
+ */
+export const corpusRelations = (
+  source: string,
+  terms: string[],
+  corpus: Set<string>,
+): string[] => {
+  const sourceLower = source.toLowerCase();
+  const seen = new Set<string>();
+  const result: string[] = [];
+  for (const term of terms) {
+    const match = corpusRelationMatch(term, corpus);
+    if (!match || match === sourceLower || seen.has(match)) {
+      continue;
+    }
+    seen.add(match);
+    result.push(match);
+  }
+  return result;
 };
 

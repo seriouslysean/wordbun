@@ -42,5 +42,12 @@ describe('word-graph-utils', () => {
       expect(graph.nodes).toEqual([]);
       expect(graph.edges).toEqual([]);
     });
+
+    it('connects words through derivational forms, not just exact matches', () => {
+      // `joyful` is not a corpus word but resolves to `joy` via the shared matcher
+      const graph = buildWordGraph([word('happy', { related: ['joyful'] }), word('joy')]);
+      expect(graph.nodes.map(node => node.word).toSorted()).toEqual(['happy', 'joy']);
+      expect(graph.edges).toHaveLength(1);
+    });
   });
 });

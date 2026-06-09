@@ -26,17 +26,22 @@ const enrichment = word.enrichment ?? null;
 ---
 
 <article class="word">
-  <time class="word__date" datetime={formatISODate(word.date)} title={formatDate(word.date)}>{formatDate(word.date) || ' '}</time>
-  <Heading level={1} text={word.word} id="word-title" preserveCase={word.preserveCase} />
-  {word.date && <WordMeta word={word.word} enrichment={enrichment} />}
-  <WordSenses senses={senses} meta={meta} />
-  <WordSynonyms
-    synonyms={enrichment?.synonyms}
-    antonyms={enrichment?.antonyms}
-    related={enrichment?.related}
-    knownWords={corpusWordSet}
-  />
-  <WordEtymology etymology={enrichment?.etymology} />
+  <div class="word__hero">
+    <time class="word__date" datetime={formatISODate(word.date)} title={formatDate(word.date)}>{formatDate(word.date) || ' '}</time>
+    <Heading level={1} text={word.word} id="word-title" preserveCase={word.preserveCase} />
+    {word.date && <WordMeta word={word.word} enrichment={enrichment} />}
+    <WordSenses senses={senses} meta={meta} />
+  </div>
+  <div class="word__details">
+    <WordEtymology etymology={enrichment?.etymology} />
+    <WordSynonyms
+      word={word.word}
+      synonyms={enrichment?.synonyms}
+      antonyms={enrichment?.antonyms}
+      related={enrichment?.related}
+      knownWords={corpusWordSet}
+    />
+  </div>
 </article>
 
 <style>
@@ -45,6 +50,16 @@ const enrichment = word.enrichment ?? null;
         width: 100%;
         max-width: var(--content-width-full);
         margin: 0 auto;
+    }
+
+    /* Hero: word + meta + senses fill ~the first viewport, vertically centered.
+       min-height (never height) lets a long sense list grow and push the details
+       below the fold rather than clipping the top of the hero. */
+    .word__hero {
+        min-height: calc(100svh - var(--header-height));
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .word__date {

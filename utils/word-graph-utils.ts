@@ -1,5 +1,7 @@
 import type { WordData } from '#types';
 
+import { corpusRelationMatch } from '#utils/word-data-utils';
+
 export interface GraphNode {
   word: string;
   x: number;
@@ -26,11 +28,20 @@ const LAYOUT_PADDING = 70;
 
 /**
  * Builds an undirected relationship graph from word enrichment: an edge joins
- * two words when one lists the other (synonym or associated word) AND that word
- * also exists in the corpus. Only connected words become nodes. Nodes are laid
- * out deterministically on a circle (sorted by word), so the SVG is stable
- * across builds with no physics simulation or dependencies. Empty graph when
- * there are no in-corpus relationships, so the caller can self-hide.
+ * two words when one lists the other (synonym or associated word) AND that term
+ * resolves to a corpus headword via {@link corpusRelationMatch} (exact or
+ * derivational, e.g. `joyful` -> `joy`). The page-level relation display shares
+ * the same matcher, so graph edges and on-page links stay consistent.
+ *
+ * Antonyms are intentionally NOT graphed: edges represent associative closeness,
+ * and an antonym is a semantic opposite, not a neighbour. A word page may still
+ * link a corpus-matched antonym without a corresponding edge here -- that
+ * divergence is by design.
+ *
+ * Only connected words become nodes. Nodes are laid out deterministically on a
+ * circle (sorted by word), so the SVG is stable across builds with no physics
+ * simulation or dependencies. Empty graph when there are no in-corpus
+ * relationships, so the caller can self-hide.
  */
 export const buildWordGraph = (words: WordData[], options: BuildOptions = {}): WordGraph => {
   const size = options.size ?? 600;
@@ -39,6 +50,7 @@ export const buildWordGraph = (words: WordData[], options: BuildOptions = {}): W
 
   // Map lowercase -> original casing for display; the corpus set drives edges.
   const display = new Map(words.map(word => [word.word.toLowerCase(), word.word]));
+  const corpus = new Set(display.keys());
   const adjacency = new Map<string, Set<string>>();
 
   const connect = (a: string, b: string): void => {
@@ -52,8 +64,8 @@ export const buildWordGraph = (words: WordData[], options: BuildOptions = {}): W
     const source = word.word.toLowerCase();
     const terms = [...(word.enrichment?.synonyms ?? []), ...(word.enrichment?.related ?? [])];
     for (const term of terms) {
-      const target = term.toLowerCase();
-      if (target === source || !display.has(target)) {
+      const target = corpusRelationMatch(term, corpus);
+      if (!target || target === source) {
         continue;
       }
       connect(source, target);
