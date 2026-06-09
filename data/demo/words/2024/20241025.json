@@ -119,5 +119,19 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/coffee"
         }
-    ]
+    ],
+    "enrichment": {
+        "etymology": "From Dutch koffie, from Ottoman Turkish kahve, from Arabic qahwah.",
+        "synonyms": [
+            "java",
+            "brew"
+        ],
+        "related": [
+            "espresso",
+            "caffeine",
+            "latte",
+            "cafe",
+            "brew"
+        ]
+    }
 }

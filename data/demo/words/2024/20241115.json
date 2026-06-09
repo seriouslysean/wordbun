@@ -139,5 +139,23 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/speed"
         }
-    ]
+    ],
+    "enrichment": {
+        "synonyms": [
+            "velocity",
+            "pace",
+            "rapidity",
+            "swiftness",
+            "quickness"
+        ],
+        "antonyms": [
+            "slowness"
+        ],
+        "related": [
+            "acceleration",
+            "motion",
+            "race",
+            "velocity"
+        ]
+    }
 }

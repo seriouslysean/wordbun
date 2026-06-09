@@ -85,5 +85,25 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/knowledge"
         }
-    ]
+    ],
+    "enrichment": {
+        "synonyms": [
+            "understanding",
+            "awareness",
+            "comprehension",
+            "wisdom",
+            "insight",
+            "learning"
+        ],
+        "antonyms": [
+            "ignorance"
+        ],
+        "related": [
+            "education",
+            "information",
+            "wisdom",
+            "book",
+            "learned"
+        ]
+    }
 }

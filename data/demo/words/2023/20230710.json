@@ -50,5 +50,25 @@
                 "We were awed by the beauty of the mountains."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "synonyms": [
+            "wonder",
+            "reverence",
+            "amazement",
+            "astonishment",
+            "admiration"
+        ],
+        "antonyms": [
+            "contempt",
+            "indifference"
+        ],
+        "related": [
+            "wonder",
+            "reverence",
+            "fear",
+            "respect",
+            "sublime"
+        ]
+    }
 }

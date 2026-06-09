@@ -5,8 +5,10 @@ import path from 'path';
 import sharp from 'sharp';
 
 import { fetchWithFallback } from '#adapters';
+import { fetchDatamuseRelations } from '#adapters/datamuse';
+import type { DatamuseRelations } from '#adapters/datamuse';
 import { paths } from '#config/paths';
-import type { CreateWordEntryResult, WordData } from '#types';
+import type { CreateWordEntryResult, DictionaryResponse, WordData, WordEnrichment } from '#types';
 import { formatDate, isValidDate } from '#utils/date-utils';
 import { getErrorMessage, logger } from '#utils/logger';
 import { slugify } from '#utils/text-utils';
@@ -289,6 +291,78 @@ export async function generateGenericShareImage(
 // Word entry creation
 // ---------------------------------------------------------------------------
 
+/**
+ * Merges adapter-captured headword data and Datamuse relations into one
+ * word-level enrichment object, omitting empty fields. Returns undefined when
+ * there is nothing to store so absent enrichment self-hides on render.
+ */
+function composeEnrichment(
+  headword: DictionaryResponse['headword'],
+  relations: DatamuseRelations | null,
+): WordEnrichment | undefined {
+  const enrichment: WordEnrichment = {};
+  if (headword?.pronunciation) {
+    enrichment.pronunciation = headword.pronunciation;
+  }
+  if (headword?.audio) {
+    enrichment.audio = headword.audio;
+  }
+  if (headword?.etymology) {
+    enrichment.etymology = headword.etymology;
+  }
+  if (relations?.synonyms.length) {
+    enrichment.synonyms = relations.synonyms;
+  }
+  if (relations?.antonyms.length) {
+    enrichment.antonyms = relations.antonyms;
+  }
+  if (relations?.related.length) {
+    enrichment.related = relations.related;
+  }
+  return Object.keys(enrichment).length > 0 ? enrichment : undefined;
+}
+
+/**
+ * Assembles the stored WordData from a dictionary response plus optional Datamuse
+ * relations. Shared by add-word and regenerate-all-words so a backfill produces
+ * the same shape and never strips enrichment or preserveCase.
+ */
+export function buildWordData(params: {
+  word: string;
+  date: string;
+  adapterName: string;
+  response: DictionaryResponse;
+  relations?: DatamuseRelations | null;
+  preserveCase?: boolean;
+}): WordData {
+  const { word, date, adapterName, response, relations = null, preserveCase = false } = params;
+  const enrichment = composeEnrichment(response.headword, relations);
+  const wordData: WordData = {
+    word,
+    date,
+    adapter: adapterName,
+    preserveCase,
+    data: response.definitions,
+  };
+  if (enrichment) {
+    wordData.enrichment = enrichment;
+  }
+  return wordData;
+}
+
+/**
+ * Fetches Datamuse relations, swallowing failures so enrichment never blocks
+ * word creation. Returns null when unavailable.
+ */
+export async function tryFetchRelations(word: string): Promise<DatamuseRelations | null> {
+  try {
+    return await fetchDatamuseRelations(word);
+  } catch (error) {
+    logger.warn('Datamuse enrichment failed, continuing without it', { word, error: getErrorMessage(error) });
+    return null;
+  }
+}
+
 interface CreateWordEntryOptions {
   date: string;
   overwrite?: boolean;
@@ -334,13 +408,8 @@ export async function createWordEntry(word: string, options: CreateWordEntryOpti
     throw new Error(`No valid definitions found for word: ${finalWord}`);
   }
 
-  const wordData: WordData = {
-    word: finalWord,
-    date,
-    adapter: adapterName,
-    preserveCase,
-    data,
-  };
+  const relations = await tryFetchRelations(finalWord);
+  const wordData = buildWordData({ word: finalWord, date, adapterName, response, relations, preserveCase });
 
   fs.writeFileSync(filePath, JSON.stringify(wordData, null, 4));
 

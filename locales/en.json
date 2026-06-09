@@ -135,7 +135,8 @@
     "recent_words": "Recent Words"
   },
   "footer": {
-    "powered_by": "Powered by Wordnik"
+    "powered_by": "Powered by Wordnik",
+    "datamuse": "Related words via Datamuse"
   },
   "word": {
     "source": "Source",
