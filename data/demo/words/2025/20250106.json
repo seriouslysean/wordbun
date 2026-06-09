@@ -2,6 +2,7 @@
     "word": "learned",
     "date": "20250106",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "learned",
@@ -94,19 +95,20 @@
         "synonyms": [
             "erudite",
             "scholarly",
+            "knowing",
             "knowledgeable",
-            "educated",
-            "well-read"
-        ],
-        "antonyms": [
-            "ignorant",
-            "uneducated"
+            "lettered",
+            "well-educated",
+            "well-read",
+            "educated"
         ],
         "related": [
-            "scholar",
-            "academic",
-            "knowledge",
-            "wisdom"
+            "eruditeness",
+            "erudition",
+            "knowledgeability",
+            "knowledgeableness",
+            "awareness",
+            "consciousness"
         ]
     }
 }

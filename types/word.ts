@@ -43,7 +43,7 @@ export interface WordData {
   date: string; // YYYYMMDD format
   adapter: string; // Which dictionary adapter was used
   data: DictionaryDefinition[];
-  // Optional word-level enrichment (Datamuse relations + adapter headword capture)
+  // Optional word-level enrichment (WordNet relations + adapter headword capture)
   enrichment?: WordEnrichment;
   // Optionally store the raw API response for debugging or migration
   rawData?: unknown;

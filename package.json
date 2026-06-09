@@ -60,7 +60,8 @@
     "subtlex-word-frequencies": "2.0.0",
     "tsx": "^4.22.0",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.8",
+    "wordpos": "^2.1.0"
   },
   "imports": {
     "#components/*": "./src/components/*",

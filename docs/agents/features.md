@@ -22,12 +22,12 @@ enrichment, search, and build-time visualizations. All code is site-agnostic
   devDependencies. Syllable counting consolidated to one source
   (`getSyllableCount`) across word pages and stats.
 - **Capture-time enrichment.** Optional word-level `enrichment` object (schema +
-  type) populated at add-word/regenerate time: Datamuse synonyms/antonyms/
-  associated words (`adapters/datamuse.ts`, keyless, best-effort, not in the
-  fallback chain) plus Merriam-Webster/Wordnik pronunciation, audio URL, and
-  etymology from existing responses. Shared `buildWordData` keeps add-word and
-  the backfill in sync; backfill preserves `preserveCase`. Datamuse credited in
-  the footer.
+  type) populated at add-word/regenerate time: WordNet synonyms/antonyms/related
+  terms (`adapters/wordnet.ts`, local lookup via `wordpos`/`wordnet-db`,
+  offline, POS-filtered + sense-capped, best-effort) plus Merriam-Webster/Wordnik
+  pronunciation, audio URL, and etymology from existing responses. Shared
+  `buildWordData` keeps add-word and the backfill in sync; backfill preserves
+  `preserveCase`. WordNet credited in `CREDITS.md` (no UI attribution required).
 - **Static search.** Zero-dependency search behind a header magnifying-glass
   icon — a starts-with filter over the existing `/words.json`. CSP-clean
   processed script, XSS-safe rendering, hidden until JS reveals it; the All Words

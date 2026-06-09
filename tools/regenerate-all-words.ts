@@ -3,7 +3,7 @@ import fs from 'fs';
 import { fetchWithFallback } from '#adapters';
 import { isEntryPoint } from '#tools/entry';
 import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
-import { buildWordData, getWordFiles, tryFetchRelations } from '#tools/utils';
+import { buildWordData, getWordFiles, primaryPartOfSpeech, tryFetchRelations } from '#tools/utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { isValidDictionaryData } from '#utils/word-validation';
 
@@ -54,7 +54,7 @@ async function regenerateWordFile(word: string, date: string, originalPath: stri
       return false;
     }
 
-    const relations = await tryFetchRelations(word);
+    const relations = await tryFetchRelations(word, primaryPartOfSpeech(response.definitions));
     const preserveCase = readPreserveCase(originalPath);
     const wordData = buildWordData({
       // Keep original casing for preserveCase words; backfill must not lowercase them.
