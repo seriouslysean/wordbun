@@ -1,0 +1,152 @@
+---
+import type { SourceMeta, WordSense } from '#types';
+import { t } from '#utils/i18n-utils';
+
+interface Props {
+  senses: WordSense[];
+  meta?: SourceMeta | null;
+}
+
+const { senses, meta = null } = Astro.props;
+const sourceUrl = meta?.sourceUrl;
+const hasMultiple = senses.length > 1;
+---
+
+{senses.length > 0 && (
+  <section class="word-senses">
+    <ol
+      class:list={['word-senses__track', { 'word-senses__track--single': !hasMultiple }]}
+      aria-label={t('word.senses_label')}
+      tabindex={hasMultiple ? 0 : undefined}
+    >
+      {senses.map((sense, index) => (
+        <li class="word-senses__slide" id={`sense-${index + 1}`}>
+          <p class="word-senses__text">
+            {sense.partOfSpeech && (
+              <span class="word-senses__pos">{sense.partOfSpeech}.</span>
+            )}<span set:html={sense.text}></span>
+          </p>
+        </li>
+      ))}
+    </ol>
+
+    {hasMultiple && (
+      <ol class="word-senses__dots" aria-hidden="true">
+        {senses.map((_, index) => (
+          <li>
+            <a class="word-senses__dot" href={`#sense-${index + 1}`} tabindex="-1">{index + 1}</a>
+          </li>
+        ))}
+      </ol>
+    )}
+
+    {sourceUrl && (
+      <a class="word-senses__source" href={sourceUrl} target="_blank" rel="noopener noreferrer">
+        {t('word.source')}
+      </a>
+    )}
+  </section>
+)}
+
+<style>
+  .word-senses {
+    width: 100%;
+    max-width: min(var(--content-width-small), 85%);
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  /* Horizontal scroll-snap carousel: one sense per view, all content present
+     so it degrades to a readable scrollable list with no JS. */
+  .word-senses__track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--spacing-base);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    scrollbar-width: thin;
+  }
+
+  .word-senses__track--single {
+    overflow-x: visible;
+  }
+
+  .word-senses__track:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--border-radius);
+  }
+
+  .word-senses__slide {
+    flex: 0 0 100%;
+    box-sizing: border-box;
+    scroll-snap-align: center;
+    padding: var(--spacing-base) var(--spacing-large);
+    background: hsl(0 0% 100% / 0.05);
+    border-radius: var(--border-radius);
+  }
+
+  .word-senses__text {
+    margin: 0;
+    font-style: italic;
+    color: var(--color-text);
+    line-height: 1.6;
+    font-size: var(--font-size-base);
+  }
+
+  .word-senses__pos {
+    color: var(--color-text-light);
+    font-weight: 500;
+  }
+
+  .word-senses__dots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-small);
+    list-style: none;
+    margin: var(--spacing-base) 0 0;
+    padding: 0;
+  }
+
+  .word-senses__dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    padding: 0 var(--spacing-xs);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    color: var(--color-text-light);
+    font-size: var(--font-size-xs);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .word-senses__dot:hover {
+    border-color: var(--color-primary);
+    color: var(--color-text-primary);
+  }
+
+  .word-senses__source {
+    display: block;
+    margin-top: var(--spacing-small);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-light);
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .word-senses__source:hover {
+    text-decoration: underline;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .word-senses__track {
+      scroll-behavior: smooth;
+    }
+  }
+</style>

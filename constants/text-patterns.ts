@@ -20,6 +20,11 @@ export const MIN_ALPHABETICAL_SEQUENCE_LENGTH = 3;
 export const MAX_PAST_WORDS_DISPLAY = 5;
 
 /**
+ * Maximum number of example sentences to display on a word page.
+ */
+export const MAX_WORD_EXAMPLES = 6;
+
+/**
  * Number of recent words to include in RSS feed.
  */
 export const RSS_FEED_WORD_COUNT = 14;

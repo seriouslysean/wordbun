@@ -29,6 +29,12 @@ export interface WordEnrichment {
   etymology?: string;
 }
 
+/** A single displayable sense of a word (one slide in the senses slider). */
+export interface WordSense {
+  partOfSpeech: string;
+  text: string;
+}
+
 // Our main word file structure (adapter-agnostic)
 export interface WordData {
   word: string;

@@ -1,0 +1,71 @@
+---
+import type { WordEnrichment } from '#types';
+import { countSyllables } from '#utils/text-utils';
+import { t, tp } from '#utils/i18n-utils';
+import { getPronunciation } from '#utils/pronunciation-utils';
+import { getFrequencyBand } from '#utils/word-frequency-utils';
+
+interface Props {
+  word: string;
+  enrichment?: WordEnrichment | null;
+}
+
+const { word, enrichment = null } = Astro.props;
+
+// Single CMU lookup drives both the IPA and the syllable count, so the line is
+// internally consistent. Prefer the captured dictionary respelling; fall back to
+// derived IPA (wrapped in slashes to read as a pronunciation).
+const pron = getPronunciation(word);
+const pronunciation = enrichment?.pronunciation ?? (pron ? `/${pron.ipa}/` : '');
+const audio = enrichment?.audio;
+const syllables = pron?.syllableCount ?? countSyllables(word);
+const { band } = getFrequencyBand(word);
+---
+
+<div class="word-meta">
+  <p class="word-meta__facts">
+    {pronunciation && <span class="word-meta__pronunciation">{pronunciation}</span>}
+    <span>{tp('word.syllables', syllables)}</span>
+    <span class="word-meta__rarity">{t(`word.rarity.${band}`)}</span>
+  </p>
+  {audio && (
+    <audio class="word-meta__audio" controls preload="none" src={audio}></audio>
+  )}
+</div>
+
+<style>
+  .word-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-small);
+    margin-bottom: var(--spacing-base);
+  }
+
+  .word-meta__facts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: var(--spacing-small);
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-light);
+  }
+
+  /* Middot separator between facts (gap handles the leading space). */
+  .word-meta__facts > * + *::before {
+    content: '·';
+    margin-right: var(--spacing-small);
+    color: var(--color-border);
+  }
+
+  .word-meta__pronunciation {
+    font-style: italic;
+  }
+
+  .word-meta__audio {
+    width: 100%;
+    max-width: 18rem;
+  }
+</style>

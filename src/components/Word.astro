@@ -1,9 +1,14 @@
 ---
 import Heading from '#components/Heading.astro';
-import WordDescription from '#components/WordDescription.astro';
+import WordEtymology from '#components/WordEtymology.astro';
+import WordExamples from '#components/WordExamples.astro';
+import WordMeta from '#components/WordMeta.astro';
+import WordSenses from '#components/WordSenses.astro';
+import WordSynonyms from '#components/WordSynonyms.astro';
 import type { WordData } from '#types';
 import { formatDate, formatISODate } from '#utils/date-utils';
-import { getWordDetails } from '#astro-utils/word-data-utils';
+import { collectExamples, getWordSenses } from '#utils/word-data-utils';
+import { corpusWordSet, getWordDetails } from '#astro-utils/word-data-utils';
 
 interface Props {
   word: WordData | null;
@@ -16,17 +21,25 @@ if (!word) {
   throw new Error('Word not found');
 }
 
-const { partOfSpeech, definition, meta } = getWordDetails(word);
+const { meta } = getWordDetails(word);
+const senses = getWordSenses(word);
+const examples = collectExamples(word);
+const enrichment = word.enrichment ?? null;
 ---
 
 <article class="word">
-  <time class="word__date" datetime={formatISODate(word.date)} title={formatDate(word.date)}>{formatDate(word.date) || '\u00A0'}</time>
+  <time class="word__date" datetime={formatISODate(word.date)} title={formatDate(word.date)}>{formatDate(word.date) || ' '}</time>
   <Heading level={1} text={word.word} id="word-title" preserveCase={word.preserveCase} />
-  <WordDescription
-    partOfSpeech={partOfSpeech}
-    definition={definition}
-    meta={meta}
+  {word.date && <WordMeta word={word.word} enrichment={enrichment} />}
+  <WordSenses senses={senses} meta={meta} />
+  <WordExamples examples={examples} />
+  <WordSynonyms
+    synonyms={enrichment?.synonyms}
+    antonyms={enrichment?.antonyms}
+    related={enrichment?.related}
+    knownWords={corpusWordSet}
   />
+  <WordEtymology etymology={enrichment?.etymology} />
 </article>
 
 <style>

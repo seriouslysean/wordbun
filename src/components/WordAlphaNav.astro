@@ -1,0 +1,107 @@
+---
+import WordLink from '#components/WordLink.astro';
+import type { WordData } from '#types';
+import { t } from '#utils/i18n-utils';
+
+interface Props {
+  previousWord: WordData | null;
+  nextWord: WordData | null;
+}
+
+const { previousWord, nextWord } = Astro.props;
+---
+
+{(previousWord || nextWord) && (
+  <nav class="word-alpha-nav" aria-label={t('nav.alpha_nav_label')}>
+    <div class="word-alpha-nav__container">
+      <div class="word-alpha-nav__previous">
+        {previousWord && (
+          <>
+            <span class="word-alpha-nav__label">{t('nav.previous_alpha')}</span>
+            <WordLink word={previousWord} />
+          </>
+        )}
+      </div>
+      {nextWord && (
+        <div class="word-alpha-nav__next">
+          <span class="word-alpha-nav__label">{t('nav.next_alpha')}</span>
+          <WordLink word={nextWord} />
+        </div>
+      )}
+    </div>
+  </nav>
+)}
+
+<style>
+  .word-alpha-nav {
+    width: 100%;
+    margin: var(--spacing-base) 0 var(--spacing-large);
+  }
+
+  .word-alpha-nav__container {
+    width: 100%;
+    max-width: var(--content-width-medium);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-base);
+  }
+
+  .word-alpha-nav__previous,
+  .word-alpha-nav__next {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    min-width: 120px;
+  }
+
+  .word-alpha-nav__next {
+    text-align: right;
+  }
+
+  .word-alpha-nav__label {
+    font-size: var(--font-size-small);
+    color: var(--color-text-light);
+  }
+
+  .word-alpha-nav__next .word-alpha-nav__label {
+    align-self: flex-end;
+  }
+
+  .word-alpha-nav__previous :global(.word-link),
+  .word-alpha-nav__next :global(.word-link) {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .word-alpha-nav__previous :global(.word-link) {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .word-alpha-nav__previous :global(.word-link__date) {
+    margin-left: var(--spacing-base);
+    margin-right: 0;
+  }
+
+  .word-alpha-nav__next :global(.word-link) {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+  }
+
+  .word-alpha-nav__next :global(.word-link__word) {
+    margin-left: 0;
+  }
+
+  .word-alpha-nav__next :global(.word-link__date) {
+    margin-left: 0;
+    margin-right: var(--spacing-base);
+  }
+
+  @media (min-width: 1025px) {
+    .word-alpha-nav__previous,
+    .word-alpha-nav__next {
+      min-width: 160px;
+    }
+  }
+</style>

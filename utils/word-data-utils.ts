@@ -1,5 +1,7 @@
-import type { DictionaryDefinition, WordData, WordGrouping } from '#types';
+import type { DictionaryDefinition, WordAdjacentResult, WordData, WordGrouping, WordSense } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
+import { MAX_WORD_EXAMPLES } from '#constants/text-patterns';
+import { slugify } from '#utils/text-utils';
 
 /**
  * Finds the first valid definition with a part of speech from word data.
@@ -228,4 +230,124 @@ export const groupWordsByPartOfSpeech = (words: WordData[]): WordGrouping<string
     }
   }
   return groups;
+};
+
+/**
+ * Normalized definition text: joins array text (Wordnik inconsistency) and trims.
+ */
+const getDefinitionText = (def: DictionaryDefinition): string => {
+  const text = Array.isArray(def.text) ? def.text.join(' ') : def.text;
+  return typeof text === 'string' ? text.trim() : '';
+};
+
+/**
+ * True when a definition has a part of speech and non-empty text.
+ */
+export const isValidDefinition = (def: DictionaryDefinition): boolean =>
+  Boolean(def.partOfSpeech) && getDefinitionText(def).length > 0;
+
+/**
+ * Returns every displayable sense of a word for the senses slider. Excludes
+ * compound/derived entries (MW stores e.g. "reading desk" under the "reading"
+ * lookup; its `id` differs from the headword) while keeping homographs (same
+ * `id`). Falls back to the single best definition when the id filter matches
+ * nothing, so a word never shows fewer senses than the legacy single display.
+ */
+export const getWordSenses = (wordData: WordData): WordSense[] => {
+  if (!wordData?.data || !Array.isArray(wordData.data)) {
+    return [];
+  }
+
+  const wordSlug = slugify(wordData.word);
+  const senses = wordData.data
+    .filter(def => isValidDefinition(def) && (!def.id || slugify(def.id) === wordSlug))
+    .map(def => ({
+      partOfSpeech: normalizeToBasePOS(def.partOfSpeech ?? ''),
+      text: getDefinitionText(def),
+    }));
+
+  if (senses.length > 0) {
+    return senses;
+  }
+
+  const fallback = findValidDefinition(wordData.data);
+  return fallback
+    ? [{ partOfSpeech: normalizeToBasePOS(fallback.partOfSpeech), text: fallback.text }]
+    : [];
+};
+
+/**
+ * Collects de-duplicated example sentences for a word, drawn from the same
+ * headword-filtered senses, capped at MAX_WORD_EXAMPLES. MW repeats one example
+ * across every shortdef of an entry, so case-insensitive de-duplication matters.
+ */
+export const collectExamples = (wordData: WordData): string[] => {
+  if (!wordData?.data || !Array.isArray(wordData.data)) {
+    return [];
+  }
+
+  const wordSlug = slugify(wordData.word);
+  const seen = new Set<string>();
+  const examples: string[] = [];
+
+  for (const def of wordData.data) {
+    if (def.id && slugify(def.id) !== wordSlug) {
+      continue;
+    }
+    if (!Array.isArray(def.examples)) {
+      continue;
+    }
+    for (const example of def.examples) {
+      const trimmed = example.trim();
+      const key = trimmed.toLowerCase();
+      if (trimmed && !seen.has(key)) {
+        seen.add(key);
+        examples.push(trimmed);
+      }
+    }
+  }
+
+  return examples.slice(0, MAX_WORD_EXAMPLES);
+};
+
+/**
+ * Partitions related terms into those present in our own corpus (linkable to a
+ * word page) and those that are not (rendered as plain text).
+ */
+export const splitKnownWords = (
+  terms: string[],
+  known: Set<string>,
+): { known: string[]; unknown: string[] } => {
+  const inCorpus: string[] = [];
+  const notInCorpus: string[] = [];
+  for (const term of terms) {
+    if (known.has(term.toLowerCase())) {
+      inCorpus.push(term);
+    } else {
+      notInCorpus.push(term);
+    }
+  }
+  return { known: inCorpus, unknown: notInCorpus };
+};
+
+/**
+ * Returns a new array sorted alphabetically (case-insensitive) by word.
+ */
+export const sortWordsAlphabetically = (words: WordData[]): WordData[] =>
+  [...words].toSorted((a, b) => a.word.toLowerCase().localeCompare(b.word.toLowerCase()));
+
+/**
+ * Finds the alphabetically adjacent words around a given word. Matches by word
+ * and date (a word may recur on different dates). `sorted` must come from
+ * sortWordsAlphabetically.
+ */
+export const getAlphabeticalNeighbors = (current: WordData, sorted: WordData[]): WordAdjacentResult => {
+  const index = sorted.findIndex(word => word.word === current.word && word.date === current.date);
+  if (index === -1) {
+    return { previousWord: null, nextWord: null };
+  }
+  return {
+    previousWord: sorted[index - 1] ?? null,
+    nextWord: sorted[index + 1] ?? null,
+  };
 };

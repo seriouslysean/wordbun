@@ -32,6 +32,12 @@ import {
   getAvailablePartsOfSpeech,
   normalizePartOfSpeech,
   findValidDefinition,
+  isValidDefinition,
+  getWordSenses,
+  collectExamples,
+  splitKnownWords,
+  sortWordsAlphabetically,
+  getAlphabeticalNeighbors,
 } from '#utils/word-data-utils';
 import {
   extractWordDefinition,
@@ -606,5 +612,126 @@ describe('pure groupWords* helpers (utils/word-data-utils)', () => {
     expect(gle([])).toEqual({});
     expect(gy([])).toEqual({});
     expect(gp([])).toEqual({});
+  });
+});
+
+describe('word-page surfacing helpers (utils/word-data-utils)', () => {
+  describe('isValidDefinition', () => {
+    it('requires a part of speech and non-empty text', () => {
+      expect(isValidDefinition({ partOfSpeech: 'noun', text: 'a thing' })).toBe(true);
+      expect(isValidDefinition({ text: 'a thing' })).toBe(false);
+      expect(isValidDefinition({ partOfSpeech: 'noun', text: '   ' })).toBe(false);
+      expect(isValidDefinition({ partOfSpeech: 'noun' })).toBe(false);
+    });
+
+    it('joins array text (Wordnik inconsistency)', () => {
+      expect(isValidDefinition({ partOfSpeech: 'noun', text: ['a', 'thing'] })).toBe(true);
+    });
+  });
+
+  describe('getWordSenses', () => {
+    const reading = {
+      word: 'reading',
+      date: '20250101',
+      adapter: 'merriam-webster',
+      data: [
+        { id: 'reading', partOfSpeech: 'noun', text: 'the act of reading' },
+        { id: 'reading', partOfSpeech: 'verb', text: 'to read aloud' },
+        { id: 'reading desk', partOfSpeech: 'noun', text: 'a desk for reading' },
+        { id: 'reading', text: 'no part of speech' },
+      ],
+    };
+
+    it('returns every valid headword sense and excludes compound entries', () => {
+      const senses = getWordSenses(reading);
+      expect(senses).toEqual([
+        { partOfSpeech: 'noun', text: 'the act of reading' },
+        { partOfSpeech: 'verb', text: 'to read aloud' },
+      ]);
+    });
+
+    it('falls back to the single best definition when the id filter matches nothing', () => {
+      const word = {
+        word: 'xyz',
+        date: '20250101',
+        adapter: 'wordnik',
+        data: [{ id: 'unrelated', partOfSpeech: 'noun', text: 'a definition' }],
+      };
+      expect(getWordSenses(word)).toEqual([{ partOfSpeech: 'noun', text: 'a definition' }]);
+    });
+
+    it('returns an empty array for missing or invalid data', () => {
+      expect(getWordSenses({ word: 'x', date: '1', adapter: 'a', data: [] })).toEqual([]);
+      expect(getWordSenses(null)).toEqual([]);
+    });
+  });
+
+  describe('collectExamples', () => {
+    it('de-duplicates case-insensitively and caps at the maximum', () => {
+      const word = {
+        word: 'reading',
+        date: '20250101',
+        adapter: 'merriam-webster',
+        data: [
+          { id: 'reading', partOfSpeech: 'noun', text: 'a', examples: ['She loves reading.', 'she loves reading.'] },
+          { id: 'reading', partOfSpeech: 'verb', text: 'b', examples: ['Keep reading.', 'A long one.', 'Two.', 'Three.', 'Four.', 'Five.', 'Six.'] },
+          { id: 'reading desk', partOfSpeech: 'noun', text: 'c', examples: ['Compound example, excluded.'] },
+        ],
+      };
+      const examples = collectExamples(word);
+      expect(examples).toHaveLength(6);
+      expect(examples[0]).toBe('She loves reading.');
+      expect(examples).not.toContain('Compound example, excluded.');
+    });
+
+    it('returns an empty array when there are no examples', () => {
+      expect(collectExamples({ word: 'x', date: '1', adapter: 'a', data: [{ partOfSpeech: 'noun', text: 'd' }] })).toEqual([]);
+    });
+  });
+
+  describe('splitKnownWords', () => {
+    it('partitions terms by a case-insensitive known set, preserving original casing', () => {
+      const known = new Set(['cat', 'fish']);
+      expect(splitKnownWords(['Cat', 'dog', 'Fish'], known)).toEqual({
+        known: ['Cat', 'Fish'],
+        unknown: ['dog'],
+      });
+    });
+  });
+
+  describe('sortWordsAlphabetically', () => {
+    it('sorts case-insensitively without mutating the input', () => {
+      const input = [
+        { word: 'banana', date: '1', adapter: 'a', data: [] },
+        { word: 'Apple', date: '2', adapter: 'a', data: [] },
+        { word: 'cherry', date: '3', adapter: 'a', data: [] },
+      ];
+      expect(sortWordsAlphabetically(input).map(w => w.word)).toEqual(['Apple', 'banana', 'cherry']);
+      expect(input.map(w => w.word)).toEqual(['banana', 'Apple', 'cherry']);
+    });
+  });
+
+  describe('getAlphabeticalNeighbors', () => {
+    const sorted = [
+      { word: 'apple', date: '1', adapter: 'a', data: [] },
+      { word: 'banana', date: '2', adapter: 'a', data: [] },
+      { word: 'cherry', date: '3', adapter: 'a', data: [] },
+    ];
+
+    it('returns the surrounding words', () => {
+      const result = getAlphabeticalNeighbors(sorted[1], sorted);
+      expect(result.previousWord?.word).toBe('apple');
+      expect(result.nextWord?.word).toBe('cherry');
+    });
+
+    it('returns null at the ends', () => {
+      expect(getAlphabeticalNeighbors(sorted[0], sorted).previousWord).toBeNull();
+      expect(getAlphabeticalNeighbors(sorted[2], sorted).nextWord).toBeNull();
+    });
+
+    it('returns both null when the word is not present', () => {
+      const missing = { word: 'durian', date: '9', adapter: 'a', data: [] };
+      expect(getAlphabeticalNeighbors(missing, sorted)).toEqual({ previousWord: null, nextWord: null });
+    });
   });
 });
