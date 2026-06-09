@@ -34,7 +34,6 @@ import {
   findValidDefinition,
   isValidDefinition,
   getWordSenses,
-  collectExamples,
   splitKnownWords,
 } from '#utils/word-data-utils';
 import {
@@ -643,8 +642,8 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
     it('returns every valid headword sense and excludes compound entries', () => {
       const senses = getWordSenses(reading);
       expect(senses).toEqual([
-        { partOfSpeech: 'noun', text: 'the act of reading' },
-        { partOfSpeech: 'verb', text: 'to read aloud' },
+        { partOfSpeech: 'noun', text: 'the act of reading', examples: [] },
+        { partOfSpeech: 'verb', text: 'to read aloud', examples: [] },
       ]);
     });
 
@@ -655,35 +654,32 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
         adapter: 'wordnik',
         data: [{ id: 'unrelated', partOfSpeech: 'noun', text: 'a definition' }],
       };
-      expect(getWordSenses(word)).toEqual([{ partOfSpeech: 'noun', text: 'a definition' }]);
+      expect(getWordSenses(word)).toEqual([{ partOfSpeech: 'noun', text: 'a definition', examples: [] }]);
     });
 
     it('returns an empty array for missing or invalid data', () => {
       expect(getWordSenses({ word: 'x', date: '1', adapter: 'a', data: [] })).toEqual([]);
       expect(getWordSenses(null)).toEqual([]);
     });
-  });
 
-  describe('collectExamples', () => {
-    it('de-duplicates case-insensitively and caps at the maximum', () => {
+    it('attaches per-sense examples: capped, de-duplicated across slides, compounds excluded', () => {
       const word = {
         word: 'reading',
         date: '20250101',
         adapter: 'merriam-webster',
         data: [
-          { id: 'reading', partOfSpeech: 'noun', text: 'a', examples: ['She loves reading.', 'she loves reading.'] },
-          { id: 'reading', partOfSpeech: 'verb', text: 'b', examples: ['Keep reading.', 'A long one.', 'Two.', 'Three.', 'Four.', 'Five.', 'Six.'] },
+          // 'she loves reading.' is a case-insensitive dup; the 4th example exceeds the cap.
+          { id: 'reading', partOfSpeech: 'noun', text: 'a', examples: ['She loves reading.', 'she loves reading.', 'A quiet reading.', 'Reading is fun.'] },
+          // 'She loves reading.' was already claimed by the noun slide, so only the new one shows.
+          { id: 'reading', partOfSpeech: 'verb', text: 'b', examples: ['She loves reading.', 'Keep reading.'] },
           { id: 'reading desk', partOfSpeech: 'noun', text: 'c', examples: ['Compound example, excluded.'] },
         ],
       };
-      const examples = collectExamples(word);
-      expect(examples).toHaveLength(3);
-      expect(examples[0]).toBe('She loves reading.');
-      expect(examples).not.toContain('Compound example, excluded.');
-    });
-
-    it('returns an empty array when there are no examples', () => {
-      expect(collectExamples({ word: 'x', date: '1', adapter: 'a', data: [{ partOfSpeech: 'noun', text: 'd' }] })).toEqual([]);
+      const senses = getWordSenses(word);
+      expect(senses).toHaveLength(2);
+      expect(senses[0].examples).toEqual(['She loves reading.', 'A quiet reading.']);
+      expect(senses[1].examples).toEqual(['Keep reading.']);
+      expect(senses.flatMap(sense => sense.examples)).not.toContain('Compound example, excluded.');
     });
   });
 

@@ -38,6 +38,18 @@ describe('calendar-utils', () => {
       expect(calendars.find(c => c.year === '2024')?.total).toBe(1);
     });
 
+    it('pads every year to a uniform columns x 7 grid (capped at 54)', () => {
+      const calendars = buildActivityCalendar(['20230101', '20240101', '20250101']);
+      const columns = calendars.map(c => c.columns);
+      // All years share one column count, so the grids align at the same width.
+      expect(new Set(columns).size).toBe(1);
+      expect(columns[0]).toBeLessThanOrEqual(54);
+      // Trailing nulls bring each year to exactly columns x 7 cells.
+      for (const calendar of calendars) {
+        expect(calendar.cells.length).toBe(calendar.columns * 7);
+      }
+    });
+
     it('returns an empty array for no dates', () => {
       expect(buildActivityCalendar([])).toEqual([]);
     });

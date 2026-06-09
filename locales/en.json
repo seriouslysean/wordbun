@@ -132,7 +132,7 @@
     "activity_heading": "Publishing Activity",
     "activity_aria": "Words published in {{year}}",
     "connections_heading": "Word Connections",
-    "connections_description": "Words in the collection that share a synonym or related term are linked here. Select any word to open it.",
+    "connections_description": "Two words are linked when one names the other as a synonym or related term. Select a word to open it.",
     "connections_aria": "Graph of related words in the collection",
     "year_summary_heading": "{{year}} Summary"
   },
@@ -153,7 +153,6 @@
     "senses_label": "Definitions",
     "prev_sense": "Previous definition",
     "next_sense": "Next definition",
-    "examples_heading": "Examples",
     "synonyms_heading": "Synonyms",
     "antonyms_heading": "Antonyms",
     "related_terms_heading": "Associated Words",

@@ -33,6 +33,8 @@ export interface WordEnrichment {
 export interface WordSense {
   partOfSpeech: string;
   text: string;
+  // Up to MAX_SENSE_EXAMPLES example sentences for this sense (may be empty).
+  examples: string[];
 }
 
 // Our main word file structure (adapter-agnostic)

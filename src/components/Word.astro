@@ -1,13 +1,12 @@
 ---
 import Heading from '#components/Heading.astro';
 import WordEtymology from '#components/WordEtymology.astro';
-import WordExamples from '#components/WordExamples.astro';
 import WordMeta from '#components/WordMeta.astro';
 import WordSenses from '#components/WordSenses.astro';
 import WordSynonyms from '#components/WordSynonyms.astro';
 import type { WordData } from '#types';
 import { formatDate, formatISODate } from '#utils/date-utils';
-import { collectExamples, getWordSenses } from '#utils/word-data-utils';
+import { getWordSenses } from '#utils/word-data-utils';
 import { corpusWordSet, getWordDetails } from '#astro-utils/word-data-utils';
 
 interface Props {
@@ -23,7 +22,6 @@ if (!word) {
 
 const { meta } = getWordDetails(word);
 const senses = getWordSenses(word);
-const examples = collectExamples(word);
 const enrichment = word.enrichment ?? null;
 ---
 
@@ -32,7 +30,6 @@ const enrichment = word.enrichment ?? null;
   <Heading level={1} text={word.word} id="word-title" preserveCase={word.preserveCase} />
   {word.date && <WordMeta word={word.word} enrichment={enrichment} />}
   <WordSenses senses={senses} meta={meta} />
-  <WordExamples examples={examples} />
   <WordSynonyms
     synonyms={enrichment?.synonyms}
     antonyms={enrichment?.antonyms}

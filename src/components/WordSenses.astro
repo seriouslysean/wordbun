@@ -28,6 +28,13 @@ const hasMultiple = senses.length > 1;
                 <span class="word-senses__pos">{sense.partOfSpeech}.</span>
               )}<span set:html={sense.text}></span>
             </p>
+            {sense.examples.length > 0 && (
+              <ul class="word-senses__examples">
+                {sense.examples.map(example => (
+                  <li class="word-senses__example">{example}</li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ol>
@@ -38,20 +45,23 @@ const hasMultiple = senses.length > 1;
       )}
     </div>
 
-    {hasMultiple && (
-      <ol class="word-senses__dots" aria-hidden="true">
-        {senses.map((_, index) => (
-          <li>
-            <a class="word-senses__dot" href={`#sense-${index + 1}`} tabindex="-1"></a>
-          </li>
-        ))}
-      </ol>
-    )}
-
-    {sourceUrl && (
-      <a class="word-senses__source" href={sourceUrl} target="_blank" rel="noopener noreferrer">
-        {t('word.source')}
-      </a>
+    {(hasMultiple || sourceUrl) && (
+      <div class="word-senses__footer">
+        {hasMultiple && (
+          <ol class="word-senses__dots" aria-hidden="true">
+            {senses.map((_, index) => (
+              <li>
+                <a class="word-senses__dot" href={`#sense-${index + 1}`} tabindex="-1"></a>
+              </li>
+            ))}
+          </ol>
+        )}
+        {sourceUrl && (
+          <a class="word-senses__source" href={sourceUrl} target="_blank" rel="noopener noreferrer">
+            {t('word.source')}
+          </a>
+        )}
+      </div>
     )}
   </section>
 )}
@@ -63,8 +73,20 @@ const hasMultiple = senses.length > 1;
 const section = document.querySelector('.word-senses[data-multiple="true"]');
 const track = section?.querySelector<HTMLElement>('.word-senses__track');
 
+// Disabled buttons swallow their own clicks, so dimming the end arrows also
+// stops scrolling past the first/last slide.
+const setDisabled = (arrow: HTMLButtonElement | null, disabled: boolean) => {
+  if (!arrow) {
+    return;
+  }
+  arrow.disabled = disabled;
+  arrow.setAttribute('aria-disabled', String(disabled));
+};
+
 if (section && track) {
   const dots = Array.from(section.querySelectorAll<HTMLElement>('.word-senses__dot'));
+  const prev = section.querySelector<HTMLButtonElement>('.word-senses__arrow--prev');
+  const next = section.querySelector<HTMLButtonElement>('.word-senses__arrow--next');
 
   for (const arrow of section.querySelectorAll<HTMLElement>('.word-senses__arrow')) {
     arrow.hidden = false;
@@ -73,12 +95,14 @@ if (section && track) {
     });
   }
 
-  const syncActiveDot = () => {
+  const syncControls = () => {
     const index = Math.round(track.scrollLeft / track.clientWidth);
     dots.forEach((dot, i) => dot.classList.toggle('word-senses__dot--active', i === index));
+    setDisabled(prev, index <= 0);
+    setDisabled(next, index >= dots.length - 1);
   };
-  track.addEventListener('scroll', () => requestAnimationFrame(syncActiveDot), { passive: true });
-  syncActiveDot();
+  track.addEventListener('scroll', () => requestAnimationFrame(syncControls), { passive: true });
+  syncControls();
 }
 </script>
 
@@ -119,16 +143,18 @@ if (section && track) {
     flex: 0 0 100%;
     box-sizing: border-box;
     scroll-snap-align: center;
-    padding: var(--spacing-base) var(--spacing-large);
+    /* Horizontal padding clears the inset arrows so text never sits under a chevron. */
+    padding: var(--spacing-base) calc(var(--spacing-large) + var(--spacing-base));
     background: hsl(0 0% 100% / 0.05);
     border-radius: var(--border-radius);
+    text-align: left;
   }
 
   .word-senses__text {
     margin: 0;
     font-style: italic;
     color: var(--color-text);
-    line-height: 1.6;
+    line-height: 1.5;
     font-size: var(--font-size-base);
   }
 
@@ -137,12 +163,30 @@ if (section && track) {
     font-weight: 500;
   }
 
-  /* Edge-to-edge prev/next arrows. */
+  /* Per-sense example sentences, set apart from the italic definition by an
+     upright muted treatment and a quote-style left rule (no heading). */
+  .word-senses__examples {
+    list-style: none;
+    margin: var(--spacing-base) 0 0;
+    padding: 0 0 0 var(--spacing-small);
+    border-left: 2px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .word-senses__example {
+    color: var(--color-text-light);
+    line-height: 1.5;
+    font-size: var(--font-size-small);
+  }
+
+  /* Inset prev/next arrows, padded clear of the slide text. */
   .word-senses__arrow {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 2.25rem;
+    top: var(--spacing-small);
+    bottom: var(--spacing-small);
+    width: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -161,18 +205,34 @@ if (section && track) {
     display: none;
   }
 
-  .word-senses__arrow:hover {
+  .word-senses__arrow:hover:not(:disabled) {
     color: var(--color-text-primary);
   }
 
+  /* Dim and inert at the ends of the track (JS toggles `disabled`). */
+  .word-senses__arrow:disabled {
+    opacity: 0.25;
+    cursor: default;
+  }
+
   .word-senses__arrow--prev {
-    left: 0;
+    left: var(--spacing-small);
     border-radius: var(--border-radius) 0 0 var(--border-radius);
   }
 
   .word-senses__arrow--next {
-    right: 0;
+    right: var(--spacing-small);
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  }
+
+  /* Pagination dots centered; source attribution pinned to the right of the
+     same row (centered on its own when there are no dots). */
+  .word-senses__footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--spacing-base);
   }
 
   .word-senses__dots {
@@ -181,7 +241,7 @@ if (section && track) {
     justify-content: center;
     gap: var(--spacing-small);
     list-style: none;
-    margin: var(--spacing-base) 0 0;
+    margin: 0;
     padding: 0;
   }
 
@@ -199,12 +259,17 @@ if (section && track) {
   }
 
   .word-senses__source {
-    display: block;
-    margin-top: var(--spacing-small);
     font-size: var(--font-size-xs);
     color: var(--color-text-light);
-    text-align: center;
     text-decoration: none;
+  }
+
+  /* Alongside the dots, pin to the right edge; alone, the flex row centers it. */
+  .word-senses__source:not(:only-child) {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .word-senses__source:hover {

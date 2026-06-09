@@ -20,9 +20,10 @@ export const MIN_ALPHABETICAL_SEQUENCE_LENGTH = 3;
 export const MAX_PAST_WORDS_DISPLAY = 5;
 
 /**
- * Maximum number of example sentences to display on a word page.
+ * Maximum number of example sentences to display per sense (one slide) on a
+ * word page. Examples render inside the senses slider, under each definition.
  */
-export const MAX_WORD_EXAMPLES = 3;
+export const MAX_SENSE_EXAMPLES = 2;
 
 /**
  * Minimum corpus size before the word-connections graph is shown. Below this the

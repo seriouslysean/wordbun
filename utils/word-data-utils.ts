@@ -1,6 +1,6 @@
 import type { DictionaryDefinition, WordData, WordGrouping, WordSense } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
-import { MAX_WORD_EXAMPLES } from '#constants/text-patterns';
+import { MAX_SENSE_EXAMPLES } from '#constants/text-patterns';
 import { slugify } from '#utils/text-utils';
 
 /**
@@ -250,8 +250,11 @@ export const isValidDefinition = (def: DictionaryDefinition): boolean =>
  * Returns every displayable sense of a word for the senses slider. Excludes
  * compound/derived entries (MW stores e.g. "reading desk" under the "reading"
  * lookup; its `id` differs from the headword) while keeping homographs (same
- * `id`). Falls back to the single best definition when the id filter matches
- * nothing, so a word never shows fewer senses than the legacy single display.
+ * `id`). Each sense carries up to MAX_SENSE_EXAMPLES of its own examples,
+ * de-duplicated across the whole word so MW's habit of repeating one example on
+ * every shortdef shows each sentence once, on the first sense that carries it.
+ * Falls back to the single best definition when the id filter matches nothing,
+ * so a word never shows fewer senses than the legacy single display.
  */
 export const getWordSenses = (wordData: WordData): WordSense[] => {
   if (!wordData?.data || !Array.isArray(wordData.data)) {
@@ -259,11 +262,33 @@ export const getWordSenses = (wordData: WordData): WordSense[] => {
   }
 
   const wordSlug = slugify(wordData.word);
+  // Shared across senses so a repeated example is claimed by the first slide.
+  const seenExamples = new Set<string>();
+  const collectSenseExamples = (def: DictionaryDefinition): string[] => {
+    if (!Array.isArray(def.examples)) {
+      return [];
+    }
+    const examples: string[] = [];
+    for (const example of def.examples) {
+      const trimmed = example.trim();
+      const key = trimmed.toLowerCase();
+      if (trimmed && !seenExamples.has(key)) {
+        seenExamples.add(key);
+        examples.push(trimmed);
+        if (examples.length >= MAX_SENSE_EXAMPLES) {
+          break;
+        }
+      }
+    }
+    return examples;
+  };
+
   const senses = wordData.data
     .filter(def => isValidDefinition(def) && (!def.id || slugify(def.id) === wordSlug))
     .map(def => ({
       partOfSpeech: normalizeToBasePOS(def.partOfSpeech ?? ''),
       text: getDefinitionText(def),
+      examples: collectSenseExamples(def),
     }));
 
   if (senses.length > 0) {
@@ -272,42 +297,8 @@ export const getWordSenses = (wordData: WordData): WordSense[] => {
 
   const fallback = findValidDefinition(wordData.data);
   return fallback
-    ? [{ partOfSpeech: normalizeToBasePOS(fallback.partOfSpeech), text: fallback.text }]
+    ? [{ partOfSpeech: normalizeToBasePOS(fallback.partOfSpeech), text: fallback.text, examples: [] }]
     : [];
-};
-
-/**
- * Collects de-duplicated example sentences for a word, drawn from the same
- * headword-filtered senses, capped at MAX_WORD_EXAMPLES. MW repeats one example
- * across every shortdef of an entry, so case-insensitive de-duplication matters.
- */
-export const collectExamples = (wordData: WordData): string[] => {
-  if (!wordData?.data || !Array.isArray(wordData.data)) {
-    return [];
-  }
-
-  const wordSlug = slugify(wordData.word);
-  const seen = new Set<string>();
-  const examples: string[] = [];
-
-  for (const def of wordData.data) {
-    if (def.id && slugify(def.id) !== wordSlug) {
-      continue;
-    }
-    if (!Array.isArray(def.examples)) {
-      continue;
-    }
-    for (const example of def.examples) {
-      const trimmed = example.trim();
-      const key = trimmed.toLowerCase();
-      if (trimmed && !seen.has(key)) {
-        seen.add(key);
-        examples.push(trimmed);
-      }
-    }
-  }
-
-  return examples.slice(0, MAX_WORD_EXAMPLES);
 };
 
 /**

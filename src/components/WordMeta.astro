@@ -49,6 +49,7 @@ const { band } = getFrequencyBand(word);
     align-items: baseline;
     gap: var(--spacing-small);
     margin: 0;
+    padding: 0 var(--spacing-base);
     font-size: var(--font-size-xs);
     color: var(--color-text-light);
   }
@@ -57,7 +58,7 @@ const { band } = getFrequencyBand(word);
   .word-meta__facts > * + *::before {
     content: '·';
     margin-right: var(--spacing-small);
-    color: var(--color-border);
+    color: var(--color-text-light);
   }
 
   .word-meta__pronunciation {
