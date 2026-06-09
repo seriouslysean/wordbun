@@ -14,8 +14,7 @@ enrichment, search, and build-time visualizations. All code is site-agnostic
   scroll-snap slider (one sense at a time with arrows + dots, compound entries
   excluded by headword id with a fallback); a pronunciation/syllable/rarity meta
   line; self-hiding synonym/antonym/associated-word and etymology blocks.
-  Components: `WordSenses`, `WordMeta`, `WordExamples`, `WordSynonyms`,
-  `WordEtymology`.
+  Components: `WordSenses`, `WordMeta`, `WordSynonyms`, `WordEtymology`.
 - **Offline build-time enrichment.** SUBTLEX rarity band (`word-frequency-utils`)
   and CMU pronunciation/IPA + authoritative syllable count (`pronunciation-utils`),
   computed at build from the word string, never stored. Pinned ISC datasets in

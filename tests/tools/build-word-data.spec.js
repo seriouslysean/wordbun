@@ -23,7 +23,7 @@ describe('buildWordData', () => {
     expect(wordData.adapter).toBe('merriam-webster');
   });
 
-  it('folds headword capture and Datamuse relations into one enrichment object, omitting empties', () => {
+  it('folds headword capture and WordNet relations into one enrichment object, omitting empties', () => {
     const wordData = buildWordData({
       word: 'speed',
       date: '20250101',
