@@ -19,6 +19,10 @@ export interface WordGraph {
   size: number;
 }
 
+export interface WordCluster {
+  words: string[];
+}
+
 interface BuildOptions {
   size?: number;
 }
@@ -26,29 +30,28 @@ interface BuildOptions {
 /** Inset (px) from the viewBox edge, leaving room for node labels. */
 const LAYOUT_PADDING = 70;
 
-/**
- * Builds an undirected relationship graph from word enrichment: an edge joins
- * two words when one lists the other (synonym or associated word) AND that term
- * resolves to a corpus headword via {@link corpusRelationMatch} (exact or
- * derivational, e.g. `joyful` -> `joy`). The page-level relation display shares
- * the same matcher, so graph edges and on-page links stay consistent.
- *
- * Antonyms are intentionally NOT graphed: edges represent associative closeness,
- * and an antonym is a semantic opposite, not a neighbour. A word page may still
- * link a corpus-matched antonym without a corresponding edge here -- that
- * divergence is by design.
- *
- * Only connected words become nodes. Nodes are laid out deterministically on a
- * circle (sorted by word), so the SVG is stable across builds with no physics
- * simulation or dependencies. Empty graph when there are no in-corpus
- * relationships, so the caller can self-hide.
- */
-export const buildWordGraph = (words: WordData[], options: BuildOptions = {}): WordGraph => {
-  const size = options.size ?? 600;
-  const radius = size / 2 - LAYOUT_PADDING;
-  const center = size / 2;
+/** Case-insensitive word sort, shared by cluster ordering. */
+const byWord = (a: string, b: string): number => a.toLowerCase().localeCompare(b.toLowerCase());
 
-  // Map lowercase -> original casing for display; the corpus set drives edges.
+interface Adjacency {
+  /** Lowercase word -> set of lowercase connected words (connected words only). */
+  adjacency: Map<string, Set<string>>;
+  /** Lowercase word -> original display casing. */
+  display: Map<string, string>;
+}
+
+/**
+ * Builds the undirected corpus adjacency shared by the graph and cluster views:
+ * an edge joins two words when one lists the other (synonym or related term) AND
+ * that term resolves to a corpus headword via {@link corpusRelationMatch} (exact
+ * or derivational, e.g. `joyful` -> `joy`). Page relation chips share the same
+ * matcher, so links stay consistent across all three surfaces.
+ *
+ * Antonyms are intentionally excluded: edges represent associative closeness, and
+ * an antonym is a semantic opposite, not a neighbour. Only connected words appear
+ * as keys, so callers can self-hide on an empty result.
+ */
+const buildAdjacency = (words: WordData[]): Adjacency => {
   const display = new Map(words.map(word => [word.word.toLowerCase(), word.word]));
   const corpus = new Set(display.keys());
   const adjacency = new Map<string, Set<string>>();
@@ -72,6 +75,22 @@ export const buildWordGraph = (words: WordData[], options: BuildOptions = {}): W
       connect(target, source);
     }
   }
+
+  return { adjacency, display };
+};
+
+/**
+ * Lays the corpus adjacency out as a node-link graph: words on a circle (sorted
+ * by word) with one edge per relationship. The deterministic layout keeps the SVG
+ * stable across builds with no physics simulation or dependencies. Empty graph
+ * when there are no in-corpus relationships, so the caller can self-hide.
+ */
+export const buildWordGraph = (words: WordData[], options: BuildOptions = {}): WordGraph => {
+  const size = options.size ?? 600;
+  const radius = size / 2 - LAYOUT_PADDING;
+  const center = size / 2;
+
+  const { adjacency, display } = buildAdjacency(words);
 
   const connectedWords = [...adjacency.keys()].toSorted();
   const indexOf = new Map(connectedWords.map((word, index) => [word, index]));
@@ -105,4 +124,43 @@ export const buildWordGraph = (words: WordData[], options: BuildOptions = {}): W
   }
 
   return { nodes, edges, size };
+};
+
+/**
+ * Groups the corpus adjacency into connected components -- each maximal set of
+ * transitively related words. A mobile-friendly, SVG-free reading of the same
+ * relationships the graph draws (every word links to its page). Clusters are
+ * sorted largest-first then alphabetically, and words within a cluster
+ * alphabetically (case-insensitive), so the output is deterministic.
+ */
+export const getWordClusters = (words: WordData[]): WordCluster[] => {
+  const { adjacency, display } = buildAdjacency(words);
+  const visited = new Set<string>();
+  const clusters: WordCluster[] = [];
+
+  for (const start of [...adjacency.keys()].toSorted()) {
+    if (visited.has(start)) {
+      continue;
+    }
+    const component: string[] = [];
+    const stack = [start];
+    while (stack.length > 0) {
+      const node = stack.pop();
+      if (node === undefined || visited.has(node)) {
+        continue;
+      }
+      visited.add(node);
+      component.push(display.get(node) ?? node);
+      for (const neighbour of adjacency.get(node) ?? []) {
+        if (!visited.has(neighbour)) {
+          stack.push(neighbour);
+        }
+      }
+    }
+    clusters.push({ words: component.toSorted(byWord) });
+  }
+
+  return clusters.toSorted((a, b) =>
+    b.words.length - a.words.length || byWord(a.words[0] ?? '', b.words[0] ?? ''),
+  );
 };

@@ -4,9 +4,10 @@ import DescriptionText from '#components/DescriptionText.astro';
 import StatsSection from '#components/StatsSection.astro';
 import BarChart from '#components/BarChart.astro';
 import CalendarHeatmap from '#components/CalendarHeatmap.astro';
+import WordClusters from '#components/WordClusters.astro';
 import WordGraph from '#components/WordGraph.astro';
 import { WORD_GRAPH_MIN_WORDS } from '#constants/text-patterns';
-import { buildWordGraph } from '#utils/word-graph-utils';
+import { buildWordGraph, getWordClusters } from '#utils/word-graph-utils';
 import { getPageMetadata } from '#astro-utils/page-metadata.ts';
 import {
   getWordsUrl,
@@ -152,10 +153,13 @@ const wordFactsRegularItems = [
   ...(allVowels.length > 0 ? [{ label: t('stats.all_vowels'), value: allVowels.length, href: getAllVowelsUrl() }] : [])
 ];
 
-// Connections graph shows only on a large-enough corpus that also has in-corpus
-// relationships; built once here so the section heading never renders empty.
+// Connections show only on a large-enough corpus that also has in-corpus
+// relationships; built once here so the section heading never renders empty. The
+// node-link graph (wide screens) and the cluster list (narrow screens) read the
+// same adjacency, so they always agree.
 const wordGraph = buildWordGraph(allWords);
-const showWordGraph = totalWords >= WORD_GRAPH_MIN_WORDS && wordGraph.nodes.length > 0;
+const wordClusters = getWordClusters(allWords);
+const showConnections = totalWords >= WORD_GRAPH_MIN_WORDS && wordGraph.nodes.length > 0;
 
 const { title, description, secondaryText } = getPageMetadata(Astro.url.pathname);
 ---
@@ -219,10 +223,15 @@ const { title, description, secondaryText } = getPageMetadata(Astro.url.pathname
       </StatsSection>
     )}
 
-    {showWordGraph && (
+    {showConnections && (
       <StatsSection title={t('stats.connections_heading')}>
         <DescriptionText text={t('stats.connections_description')} />
-        <WordGraph graph={wordGraph} />
+        <div class="stats__connections-graph">
+          <WordGraph graph={wordGraph} />
+        </div>
+        <div class="stats__connections-clusters">
+          <WordClusters clusters={wordClusters} />
+        </div>
       </StatsSection>
     )}
   </main>
@@ -232,6 +241,22 @@ const { title, description, secondaryText } = getPageMetadata(Astro.url.pathname
     .stats {
         max-width: var(--content-width-medium);
         margin: 0 auto;
+    }
+
+    /* Connections: clusters on narrow screens (legible, tappable), the node-link
+       graph once there's room for it. Both render; CSS picks one per viewport. */
+    .stats__connections-graph {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        .stats__connections-graph {
+            display: block;
+        }
+
+        .stats__connections-clusters {
+            display: none;
+        }
     }
 
     .stats__section {
