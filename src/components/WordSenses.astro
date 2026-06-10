@@ -109,7 +109,7 @@ if (section && track) {
 <style>
   .word-senses {
     width: 100%;
-    max-width: min(var(--content-width-small), 85%);
+    max-width: var(--content-width-small);
     margin: 0 auto;
     text-align: left;
   }
@@ -143,8 +143,9 @@ if (section && track) {
     flex: 0 0 100%;
     box-sizing: border-box;
     scroll-snap-align: center;
-    /* Horizontal padding clears the inset arrows so text never sits under a chevron. */
-    padding: var(--spacing-base) calc(var(--spacing-large) + var(--spacing-base));
+    /* Horizontal padding keeps the text clear of the arrows (which now sit just
+       outside the slide) without crowding the description + examples on mobile. */
+    padding: var(--spacing-base) var(--spacing-large);
     background: hsl(0 0% 100% / 0.05);
     border-radius: var(--border-radius);
     text-align: left;
