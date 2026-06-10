@@ -153,26 +153,32 @@ document.addEventListener('keydown', event => {
 
   .site-search__panel {
     position: absolute;
-    top: calc(100% + var(--spacing-xs));
+    top: calc(100% + var(--spacing-small));
     right: 0;
-    width: min(320px, 80vw);
+    width: min(340px, 85vw);
     background: var(--color-background);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
-    padding: var(--spacing-small);
+    padding: var(--spacing-base);
     box-shadow: 0 4px 16px hsl(var(--shadow-color) / 0.12);
     z-index: 1000;
+    /* The header centers its contents; the field and results read left-aligned. */
+    text-align: left;
   }
 
   .site-search__input {
     width: 100%;
     box-sizing: border-box;
-    padding: var(--spacing-small);
+    padding: var(--spacing-small) var(--spacing-base);
     font-size: var(--font-size-base);
     color: var(--color-text);
-    background: var(--color-background-light);
+    background: var(--color-background);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
+  }
+
+  .site-search__input::placeholder {
+    color: var(--color-text-light);
   }
 
   .site-search__input:focus-visible {
@@ -180,6 +186,8 @@ document.addEventListener('keydown', event => {
     outline-offset: 1px;
   }
 
+  /* Results sit below the field with their own breathing room; only present
+     once there are matches, so the gap collapses on an empty query. */
   .site-search__results {
     list-style: none;
     margin: 0;
@@ -188,16 +196,21 @@ document.addEventListener('keydown', event => {
     overflow-y: auto;
   }
 
-  .site-search__results li {
+  .site-search__results:not(:empty) {
+    margin-top: var(--spacing-base);
+  }
+
+  .site-search__results li + li {
     margin-top: var(--spacing-xs);
   }
 
   .site-search__results a {
     display: block;
-    padding: var(--spacing-xs) var(--spacing-small);
+    padding: var(--spacing-small) var(--spacing-base);
     color: var(--color-text-primary);
     text-decoration: none;
     border-radius: var(--border-radius);
+    transition: background var(--transition);
   }
 
   .site-search__results a:hover {
