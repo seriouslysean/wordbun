@@ -55,20 +55,14 @@ const calendars = buildActivityCalendar(dates).toReversed();
      keeps them square. Every year shares the same column count (set by the util)
      so all grids align; the count is baked into a static class because a strict
      CSP forbids inline style attributes. */
+  /* Fluid gap -- ~1px where 53 columns crowd on phones, up to 2px on wider
+     screens -- so the cells read as a contiguous grid at any width, no breakpoint. */
   .heatmap__grid {
     display: grid;
     grid-template-rows: repeat(7, 1fr);
     grid-auto-flow: column;
-    gap: 2px;
+    gap: clamp(1px, 0.3vw, 2px);
     width: 100%;
-  }
-
-  /* Across 53 columns the cells get small on phones; shrink the gap so they read
-     as a contiguous grid rather than scattered dots. */
-  @media (max-width: 480px) {
-    .heatmap__grid {
-      gap: 1px;
-    }
   }
 
   .heatmap__grid--cols-53 {
