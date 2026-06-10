@@ -39,14 +39,15 @@ const panel = document.getElementById('site-search-panel');
 const input = document.getElementById('site-search-input') as HTMLInputElement | null;
 const results = document.getElementById('site-search-results');
 
-const cache = { data: null as string[] | null };
+type SearchWord = { word: string; date: string };
+const cache = { data: null as SearchWord[] | null };
 
 // Progressive enhancement: reveal the icon only when JS can drive it.
 if (toggle) {
   toggle.hidden = false;
 }
 
-async function loadWords(): Promise<string[]> {
+async function loadWords(): Promise<SearchWord[]> {
   if (cache.data) {
     return cache.data;
   }
@@ -94,12 +95,19 @@ async function onInput(): Promise<void> {
   }
   const words = await loadWords();
   // Starts-with match on the word itself — predictable, no definition fuzz.
-  const matches = words.filter(word => word.toLowerCase().startsWith(query)).slice(0, 30);
-  for (const word of matches) {
+  const matches = words.filter(entry => entry.word.toLowerCase().startsWith(query)).slice(0, 30);
+  for (const entry of matches) {
     const item = document.createElement('li');
     const link = document.createElement('a');
-    link.href = getUrl(getWordUrl(word));
-    link.textContent = word;
+    link.href = getUrl(getWordUrl(entry.word));
+    link.className = 'site-search__result';
+    const word = document.createElement('span');
+    word.className = 'site-search__result-word';
+    word.textContent = entry.word;
+    const date = document.createElement('time');
+    date.className = 'site-search__result-date';
+    date.textContent = entry.date;
+    link.append(word, date);
     item.appendChild(link);
     results.appendChild(item);
   }
@@ -200,20 +208,39 @@ document.addEventListener('keydown', event => {
     margin-top: var(--spacing-base);
   }
 
-  .site-search__results li + li {
-    margin-top: var(--spacing-xs);
-  }
-
-  .site-search__results a {
-    display: block;
-    padding: var(--spacing-small) var(--spacing-base);
-    color: var(--color-text-primary);
+  /* Result rows are created client-side, so they carry no scope attribute --
+     style them via :global, anchored under the (scoped) results list so the
+     rules stay contained. Word-list-style rows: word left, featured date right,
+     with a >=44px touch target (WCAG); long words shrink/wrap, the date stays
+     on one line. */
+  .site-search__results :global(.site-search__result) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-base);
+    min-height: 2.75rem;
+    padding: var(--spacing-xs) var(--spacing-base);
     text-decoration: none;
     border-radius: var(--border-radius);
     transition: background var(--transition);
   }
 
-  .site-search__results a:hover {
+  .site-search__results :global(.site-search__result:hover) {
     background: var(--color-background-light);
+  }
+
+  .site-search__results :global(.site-search__result-word) {
+    min-width: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    word-break: break-word;
+  }
+
+  .site-search__results :global(.site-search__result-date) {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+    white-space: nowrap;
   }
 </style>
