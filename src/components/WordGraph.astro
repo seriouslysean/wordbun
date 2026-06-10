@@ -28,8 +28,8 @@ const { graph } = Astro.props;
       })}
       {graph.nodes.map(node => (
         <a href={getUrl(getWordUrl(node.word))} class="word-graph__node" aria-label={node.word}>
-          <circle cx={node.x} cy={node.y} r="6" class="word-graph__dot" />
-          <text x={node.x} y={node.y - 12} text-anchor="middle" class="word-graph__label">{node.word}</text>
+          <circle cx={node.x} cy={node.y} r="9" class="word-graph__dot" />
+          <text x={node.x} y={node.y - 15} text-anchor="middle" class="word-graph__label">{node.word}</text>
         </a>
       ))}
     </svg>
@@ -50,7 +50,7 @@ const { graph } = Astro.props;
 
   .word-graph__edge {
     stroke: var(--color-border);
-    stroke-width: 1.5;
+    stroke-width: 2;
   }
 
   .word-graph__dot {
@@ -60,7 +60,7 @@ const { graph } = Astro.props;
 
   .word-graph__label {
     fill: var(--color-text-light);
-    font-size: 0.75rem;
+    font-size: 1rem;
   }
 
   .word-graph__node:hover .word-graph__dot,

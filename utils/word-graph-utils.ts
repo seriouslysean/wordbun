@@ -19,19 +19,12 @@ export interface WordGraph {
   size: number;
 }
 
-export interface WordCluster {
-  words: string[];
-}
-
 interface BuildOptions {
   size?: number;
 }
 
 /** Inset (px) from the viewBox edge, leaving room for node labels. */
 const LAYOUT_PADDING = 70;
-
-/** Case-insensitive word sort, shared by cluster ordering. */
-const byWord = (a: string, b: string): number => a.toLowerCase().localeCompare(b.toLowerCase());
 
 interface Adjacency {
   /** Lowercase word -> set of lowercase connected words (connected words only). */
@@ -41,11 +34,11 @@ interface Adjacency {
 }
 
 /**
- * Builds the undirected corpus adjacency shared by the graph and cluster views:
- * an edge joins two words when one lists the other (synonym or related term) AND
- * that term resolves to a corpus headword via {@link corpusRelationMatch} (exact
- * or derivational, e.g. `joyful` -> `joy`). Page relation chips share the same
- * matcher, so links stay consistent across all three surfaces.
+ * Builds the undirected corpus adjacency the graph is laid out from: an edge
+ * joins two words when one lists the other (synonym or related term) AND that
+ * term resolves to a corpus headword via {@link corpusRelationMatch} (exact or
+ * derivational, e.g. `joyful` -> `joy`). Page relation chips share the same
+ * matcher, so links stay consistent.
  *
  * Antonyms are intentionally excluded: edges represent associative closeness, and
  * an antonym is a semantic opposite, not a neighbour. Only connected words appear
@@ -124,43 +117,4 @@ export const buildWordGraph = (words: WordData[], options: BuildOptions = {}): W
   }
 
   return { nodes, edges, size };
-};
-
-/**
- * Groups the corpus adjacency into connected components -- each maximal set of
- * transitively related words. A mobile-friendly, SVG-free reading of the same
- * relationships the graph draws (every word links to its page). Clusters are
- * sorted largest-first then alphabetically, and words within a cluster
- * alphabetically (case-insensitive), so the output is deterministic.
- */
-export const getWordClusters = (words: WordData[]): WordCluster[] => {
-  const { adjacency, display } = buildAdjacency(words);
-  const visited = new Set<string>();
-  const clusters: WordCluster[] = [];
-
-  for (const start of [...adjacency.keys()].toSorted()) {
-    if (visited.has(start)) {
-      continue;
-    }
-    const component: string[] = [];
-    const stack = [start];
-    while (stack.length > 0) {
-      const node = stack.pop();
-      if (node === undefined || visited.has(node)) {
-        continue;
-      }
-      visited.add(node);
-      component.push(display.get(node) ?? node);
-      for (const neighbour of adjacency.get(node) ?? []) {
-        if (!visited.has(neighbour)) {
-          stack.push(neighbour);
-        }
-      }
-    }
-    clusters.push({ words: component.toSorted(byWord) });
-  }
-
-  return clusters.toSorted((a, b) =>
-    b.words.length - a.words.length || byWord(a.words[0] ?? '', b.words[0] ?? ''),
-  );
 };

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { buildWordGraph, getWordClusters } from '#utils/word-graph-utils';
+import { buildWordGraph } from '#utils/word-graph-utils';
 
 const word = (name, enrichment) => ({ word: name, date: '20250101', adapter: 'a', data: [], enrichment });
 
@@ -48,27 +48,6 @@ describe('word-graph-utils', () => {
       const graph = buildWordGraph([word('happy', { related: ['joyful'] }), word('joy')]);
       expect(graph.nodes.map(node => node.word).toSorted()).toEqual(['happy', 'joy']);
       expect(graph.edges).toHaveLength(1);
-    });
-  });
-
-  describe('getWordClusters', () => {
-    it('groups connected words into components, largest-first then alphabetical', () => {
-      const clusters = getWordClusters([
-        word('knowledge', { related: ['book', 'learned'] }),
-        word('book'),
-        word('learned'),
-        word('happy', { related: ['joyful'] }),
-        word('joy'),
-        word('lonely', { related: ['absent'] }),
-      ]);
-      expect(clusters.map(cluster => cluster.words)).toEqual([
-        ['book', 'knowledge', 'learned'],
-        ['happy', 'joy'],
-      ]);
-    });
-
-    it('returns an empty array when there are no in-corpus relationships', () => {
-      expect(getWordClusters([word('alone', { related: ['absent'] }), word('solo')])).toEqual([]);
     });
   });
 });
