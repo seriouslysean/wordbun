@@ -94,8 +94,11 @@ async function onInput(): Promise<void> {
     return;
   }
   const words = await loadWords();
-  // Starts-with match on the word itself — predictable, no definition fuzz.
-  const matches = words.filter(entry => entry.word.toLowerCase().startsWith(query)).slice(0, 30);
+  // Starts-with match, sorted alphabetically so results read predictably as you type.
+  const matches = words
+    .filter(entry => entry.word.toLowerCase().startsWith(query))
+    .toSorted((a, b) => a.word.toLowerCase().localeCompare(b.word.toLowerCase()))
+    .slice(0, 30);
   for (const entry of matches) {
     const item = document.createElement('li');
     const link = document.createElement('a');
