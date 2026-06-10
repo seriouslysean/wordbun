@@ -2,6 +2,7 @@
     "word": "flower",
     "date": "20250708",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "flower",
@@ -156,5 +157,36 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/flower"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈflau̇(-ə)r",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/f/flower01.mp3",
+        "etymology": "Middle English flour, flur \"blossom of a plant, prime of life, best of a class, ground grain free of bran,\" borrowed from Anglo-French flour, flur (also continental Old French), going back to Latin flōr-, flōs \"flower, bloom, flourishing condition, choicest part, best of a class,\" going back to Indo-European *bhleh3-os, s-stem derivative from the verbal base *bhleh3- \"bloom, break into flower\" ",
+        "synonyms": [
+            "bloom",
+            "blossom"
+        ],
+        "related": [
+            "angiosperm",
+            "flowering plant",
+            "flowery",
+            "bloomer",
+            "peony",
+            "paeony",
+            "lesser celandine",
+            "pilewort",
+            "pheasant's-eye",
+            "Adonis annua",
+            "anemone",
+            "windflower",
+            "rue anemone",
+            "Anemonella thalictroides",
+            "columbine",
+            "aquilegia",
+            "rocket larkspur",
+            "Consolida ambigua",
+            "delphinium",
+            "nigella"
+        ]
+    }
 }

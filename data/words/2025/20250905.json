@@ -2,6 +2,7 @@
     "word": "whack",
     "date": "20250905",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "whack",
@@ -110,5 +111,23 @@
                 "… feeling out of whack with her contemporaries …"
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈ(h)wak",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/w/whack001.mp3",
+        "etymology": "probably imitative of the sound of a blow",
+        "synonyms": [
+            "wham",
+            "whop",
+            "wallop"
+        ],
+        "related": [
+            "hit",
+            "walloper",
+            "knock",
+            "belt",
+            "beating",
+            "thrashing"
+        ]
+    }
 }

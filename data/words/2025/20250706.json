@@ -2,6 +2,7 @@
     "word": "grass",
     "date": "20250706",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "grass",
@@ -172,5 +173,36 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/grass"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈgras",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/g/grass001.mp3",
+        "etymology": "Middle English gras, from Old English græs; akin to Old High German gras grass, Old English grōwan to grow",
+        "synonyms": [
+            "Gunter Grass",
+            "Gunter Wilhelm Grass"
+        ],
+        "related": [
+            "gramineous plant",
+            "graminaceous plant",
+            "grassy",
+            "grass over",
+            "beach grass",
+            "bunchgrass",
+            "bunch grass",
+            "midgrass",
+            "shortgrass",
+            "short-grass",
+            "sword grass",
+            "tallgrass",
+            "tall-grass",
+            "lemongrass",
+            "lemon grass",
+            "goat grass",
+            "Aegilops triuncalis",
+            "wheatgrass",
+            "wheat-grass",
+            "bent"
+        ]
+    }
 }

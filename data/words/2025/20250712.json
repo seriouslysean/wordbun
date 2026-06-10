@@ -2,6 +2,7 @@
     "word": "pencil",
     "date": "20250712",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "pencil",
@@ -92,5 +93,17 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/pencil"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpen(t)-səl",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/pencel01.mp3",
+        "etymology": "Middle English pensel, from Anglo-French pincel, from Vulgar Latin *penicellus, alteration of Latin penicillus, diminutive of peniculus brush, from diminutive of penis tail, penis",
+        "related": [
+            "writing implement",
+            "lead pencil",
+            "slate pencil",
+            "graphite",
+            "black lead"
+        ]
+    }
 }

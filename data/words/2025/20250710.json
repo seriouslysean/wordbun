@@ -2,6 +2,7 @@
     "word": "words",
     "date": "20250710",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "word",
@@ -173,5 +174,23 @@
                 "a person of few words"
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈwərd",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/w/word0001.mp3",
+        "etymology": "Middle English, from Old English; akin to Old High German wort word, Latin verbum, Greek eirein to say, speak, Hittite weriya- to call, name",
+        "synonyms": [
+            "lyric",
+            "language"
+        ],
+        "related": [
+            "speech",
+            "speech communication",
+            "text",
+            "textual matter",
+            "lyricist",
+            "lyrist",
+            "love lyric"
+        ]
+    }
 }

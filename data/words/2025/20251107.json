@@ -2,6 +2,7 @@
     "word": "tiger",
     "date": "20251107",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "tiger",
@@ -130,5 +131,22 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/tiger"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈtī-gər",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/t/tiger001.mp3",
+        "etymology": "Middle English tigre, from Old English tiger & Anglo-French tigre, both from Latin tigris, from Greek, probably of Iranian origin; akin to Avestan tighra- pointed; akin to Greek stizein to tattoo ",
+        "synonyms": [
+            "Panthera tigris"
+        ],
+        "related": [
+            "person",
+            "individual",
+            "big cat",
+            "cat",
+            "tiger cub",
+            "Bengal tiger",
+            "tigress"
+        ]
+    }
 }

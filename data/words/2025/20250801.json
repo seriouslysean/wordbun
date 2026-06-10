@@ -2,6 +2,7 @@
     "word": "stuffy",
     "date": "20250801",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "stuffy",
@@ -42,5 +43,22 @@
                 "stuffy formalities"
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈstə-fē",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/s/stuffy01.mp3",
+        "synonyms": [
+            "airless",
+            "close",
+            "unaired",
+            "unventilated",
+            "stodgy",
+            "conventional"
+        ],
+        "related": [
+            "stuffiness",
+            "closeness",
+            "stodginess"
+        ]
+    }
 }

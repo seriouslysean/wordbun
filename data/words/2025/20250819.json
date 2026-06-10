@@ -2,6 +2,7 @@
     "word": "rocketship",
     "date": "20250819",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "rocket ship",

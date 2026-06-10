@@ -2,6 +2,7 @@
     "word": "pajamas",
     "date": "20251018",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "pajamas",
@@ -27,5 +28,10 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/pajamas"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "pə-ˈjä-məz",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/pajama04.mp3",
+        "etymology": "plural of pajama"
+    }
 }

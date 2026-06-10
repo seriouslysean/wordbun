@@ -2,6 +2,7 @@
     "word": "window",
     "date": "20250716",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "window",
@@ -126,5 +127,32 @@
                 "“Window treatments, such as shades and drapes, are little luxuries that make mornings more serene. … ,” [Alessandra] Woods says."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈwin-(ˌ)dō",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/w/window01.mp3",
+        "etymology": "Middle English windowe, from Old Norse vindauga, from vindr wind (akin to Old English wind) + auga eye; akin to Old English ēage eye ",
+        "related": [
+            "framework",
+            "frame",
+            "bay window",
+            "bow window",
+            "casement window",
+            "clerestory",
+            "clearstory",
+            "display window",
+            "shop window",
+            "dormer",
+            "dormer window",
+            "double glazing",
+            "double-hung window",
+            "fanlight",
+            "lancet window",
+            "louvered window",
+            "jalousie",
+            "oeil de boeuf",
+            "picture window",
+            "pivoting window"
+        ]
+    }
 }

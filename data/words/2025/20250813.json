@@ -2,6 +2,7 @@
     "word": "sack",
     "date": "20250813",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "sack",
@@ -135,5 +136,26 @@
                 "… a sad sack so unlucky in love that when his girlfriend splits, his family sides with her."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈsak",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/s/sack0001.mp3",
+        "etymology": "Middle English sak bag, sackcloth, from Old English sacc, from Latin saccus bag & Late Latin saccus sackcloth, both from Greek sakkos bag, sackcloth, of Semitic origin; akin to Hebrew śaq bag, sackcloth",
+        "synonyms": [
+            "poke",
+            "paper bag",
+            "carrier bag",
+            "pouch",
+            "sac",
+            "pocket"
+        ],
+        "related": [
+            "bag",
+            "doggie bag",
+            "doggy bag",
+            "grocery bag",
+            "cavity",
+            "enclosed space"
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "word": "bandit",
     "date": "20251128",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "bandit",
@@ -35,5 +36,17 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/bandit"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈban-dət",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/bandit01.mp3",
+        "etymology": "borrowed from Italian bandito (earlier in English also bandetto, probably by association with the Italian diminutive suffix -etto), noun derivative of bandito \"put under a ban, outlawed, exiled,\" from past participle of bandire \"(of a government or other authority) to announce, proclaim, proscribe, outlaw,\" probably borrowed (directly or via Old Occitan bandir) from Gothic bandwjan \"to give a sign, show, reveal,\" derivative of bandwo \"sign, signal\" ",
+        "synonyms": [
+            "brigand"
+        ],
+        "related": [
+            "thief",
+            "stealer"
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "word": "bag",
     "date": "20250725",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "bag",
@@ -146,5 +147,32 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/bag"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈbag",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/bag00001.mp3",
+        "etymology": "Middle English bagge, from Old Norse baggi",
+        "related": [
+            "container",
+            "air bag",
+            "backpack",
+            "back pack",
+            "beanbag",
+            "bladder",
+            "body bag",
+            "personnel pouch",
+            "book bag",
+            "burn bag",
+            "carryall",
+            "holdall",
+            "drawstring bag",
+            "dust bag",
+            "vacuum bag",
+            "envelope",
+            "gasbag",
+            "gamebag",
+            "golf bag",
+            "gunnysack"
+        ]
+    }
 }

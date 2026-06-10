@@ -2,6 +2,7 @@
     "word": "bum",
     "date": "20250728",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "bum",
@@ -175,5 +176,35 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/bum"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈbəm",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/bum00001.mp3",
+        "etymology": "Middle English bom",
+        "synonyms": [
+            "rotter",
+            "dirty dog",
+            "rat",
+            "skunk",
+            "stinker",
+            "stinkpot",
+            "puke",
+            "crumb",
+            "lowlife",
+            "scum bag",
+            "so-and-so",
+            "git",
+            "tramp",
+            "hobo"
+        ],
+        "related": [
+            "unpleasant person",
+            "disagreeable person",
+            "cheap",
+            "vagrant",
+            "drifter",
+            "dosser",
+            "street person"
+        ]
+    }
 }

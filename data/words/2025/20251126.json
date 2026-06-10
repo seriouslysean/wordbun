@@ -2,6 +2,7 @@
     "word": "peanut",
     "date": "20251126",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "peanut",
@@ -82,5 +83,19 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/peanut"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpē-(ˌ)nət",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/peanut01.mp3",
+        "synonyms": [
+            "peanut vine",
+            "Arachis hypogaea"
+        ],
+        "related": [
+            "pod",
+            "seedpod",
+            "legume",
+            "leguminous plant"
+        ]
+    }
 }

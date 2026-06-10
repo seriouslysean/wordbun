@@ -1,178 +1,182 @@
 {
     "word": "tree",
     "date": "20260413",
-    "adapter": "wiktionary",
+    "adapter": "merriam-webster",
     "preserveCase": false,
     "data": [
         {
+            "id": "tree",
             "partOfSpeech": "noun",
-            "text": "Fast growing function based on Kruskal's tree theorem.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A perennial woody plant, not exactly defined, but differentiated from a shrub by its larger size (typically over a few meters in height) or growth habit, usually having a single (or few) main axis or trunk unbranched for some distance above the ground and a head of branches and foliage.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "text": "a woody perennial plant having a single usually elongated main stem generally with few or no branches on its lower part",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree",
             "examples": [
-                "Birds have a nest in a tree in the garden."
+                "rose trees",
+                "a banana tree",
+                "a genealogical tree",
+                "phylogenetic trees",
+                "the vascular tree"
             ]
         },
         {
+            "id": "tree",
             "partOfSpeech": "noun",
-            "text": "Any plant that is reminiscent of the above but not classified as a tree (in any botanical sense).",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "text": "a shrub or herb of arborescent form",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree",
             "examples": [
-                "the banana tree"
+                "rose trees",
+                "a banana tree",
+                "a genealogical tree",
+                "phylogenetic trees",
+                "the vascular tree"
             ]
         },
         {
+            "id": "tree",
             "partOfSpeech": "noun",
-            "text": "An object made from a tree trunk and having multiple hooks or storage platforms.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "text": "something in the form of or resembling a tree: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree",
             "examples": [
-                "He had the choice of buying a scratching post or a cat tree."
+                "rose trees",
+                "a banana tree",
+                "a genealogical tree",
+                "phylogenetic trees",
+                "the vascular tree"
             ]
         },
         {
-            "partOfSpeech": "noun",
-            "text": "A device used to hold or stretch a shoe open.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
-            "examples": [
-                "He put a shoe tree in each of his shoes."
-            ]
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "The structural frame of a saddle.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A connected graph with no cycles or, if the graph is finite, equivalently a connected graph with n vertices and n−1 edges.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A recursive data structure in which each node has zero or more nodes as children.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A display or listing of entries or elements such that there are primary and secondary entries shown, usually linked by drawn lines or by indenting to the right.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
-            "examples": [
-                "We’ll show it as a tree list."
-            ]
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "Any structure or construct having branches representing divergence or possible choices.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
-            "examples": [
-                "family tree; skill tree"
-            ]
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "The structure or wooden frame used in the construction of a saddle used in horse riding.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "(in the plural) Marijuana.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A cross or gallows.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
-            "examples": [
-                "Tyburn tree"
-            ]
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "Wood; timber.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A mass of crystals, aggregated in arborescent forms, obtained by precipitation of a metal from solution.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "The fifth Lenormand card.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
-        },
-        {
+            "id": "tree",
             "partOfSpeech": "verb",
-            "text": "To chase (an animal or person) up a tree.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "text": "to drive to or up a tree",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree",
             "examples": [
-                "The dog treed the cat."
+                "treed by a bull",
+                "dogs treeing game"
             ]
         },
         {
+            "id": "tree",
             "partOfSpeech": "verb",
-            "text": "To place in a tree.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "text": "to put into a position of extreme disadvantage: corner; especially: to bring to bay",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree",
             "examples": [
-                "Black bears can tree their cubs for protection, but grizzly bears cannot."
+                "treed by a bull",
+                "dogs treeing game"
             ]
         },
         {
+            "id": "tree",
             "partOfSpeech": "verb",
-            "text": "To place upon a tree; to fit with a tree; to stretch upon a tree.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE",
+            "text": "to furnish or fit (a shoe) with a tree",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree",
             "examples": [
-                "to tree a boot"
+                "treed by a bull",
+                "dogs treeing game"
             ]
         },
         {
-            "partOfSpeech": "verb",
-            "text": "To take refuge in a tree.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/TREE"
+            "id": "Tree:b",
+            "text": "Sir Herbert (Draper) Beerbohm 1853—1917 English actor-manager",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree"
+        },
+        {
+            "id": "tree ear",
+            "partOfSpeech": "noun",
+            "text": "wood ear",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree"
+        },
+        {
+            "id": "tree farm",
+            "partOfSpeech": "noun",
+            "text": "an area of forest land managed to ensure continuous commercial production",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree"
+        },
+        {
+            "id": "tree fern",
+            "partOfSpeech": "noun",
+            "text": "any of various ferns (especially families Cyatheaceae and Dicksoniaceae) of arborescent habit with a woody stem",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree"
+        },
+        {
+            "id": "tree frog",
+            "partOfSpeech": "noun",
+            "text": "any of numerous small anuran amphibians (especially family Hylidae) that often live in trees and typically have adhesive disks on the toes",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree"
+        },
+        {
+            "id": "tree house",
+            "partOfSpeech": "noun",
+            "text": "a structure (such as a playhouse) built among the branches of a tree",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree"
+        },
+        {
+            "id": "tree hugger",
+            "partOfSpeech": "noun",
+            "text": "environmentalist; especially: an advocate for the preservation of woodlands",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree"
+        },
+        {
+            "id": "tree line",
+            "partOfSpeech": "noun",
+            "text": "timberline",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/tree"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈtrē",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/t/tree0001.mp3",
+        "etymology": "Middle English, from Old English trēow; akin to Old Norse trē tree, Greek drys, Sanskrit dāru wood",
+        "synonyms": [
+            "tree diagram"
+        ],
+        "related": [
+            "woody plant",
+            "ligneous plant",
+            "treelet",
+            "yellowwood",
+            "yellowwood tree",
+            "lancewood",
+            "lancewood tree",
+            "Guinea pepper",
+            "negro pepper",
+            "anise tree",
+            "winter's bark",
+            "winter's bark tree",
+            "zebrawood",
+            "zebrawood tree",
+            "granadilla tree",
+            "granadillo",
+            "acacia",
+            "coralwood",
+            "coral-wood",
+            "albizzia"
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "word": "button",
     "date": "20250818",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "button",
@@ -170,5 +171,32 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/button"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈbə-tᵊn",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/button01.mp3",
+        "etymology": "Middle English boton, from Anglo-French butun rose hip, stud, from buter to thrust ",
+        "synonyms": [
+            "push button",
+            "push"
+        ],
+        "related": [
+            "fastener",
+            "fastening",
+            "beady",
+            "beadlike",
+            "buttony",
+            "coat button",
+            "shirt button",
+            "switch",
+            "electric switch",
+            "bell push",
+            "doorbell",
+            "bell",
+            "horn button",
+            "mouse button",
+            "panic button",
+            "reset button"
+        ]
+    }
 }

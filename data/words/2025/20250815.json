@@ -2,6 +2,7 @@
     "word": "plant",
     "date": "20250815",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "plant",
@@ -164,5 +165,39 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/plant"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈplant",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/plant001.mp3",
+        "etymology": "Middle English, from Old English plantian, from Late Latin plantare to plant, fix in place, from Latin, to plant, from planta plant",
+        "synonyms": [
+            "set",
+            "implant",
+            "engraft",
+            "embed",
+            "imbed"
+        ],
+        "related": [
+            "put",
+            "flora",
+            "planter",
+            "planting",
+            "root",
+            "puddle",
+            "checkrow",
+            "bed",
+            "dibble",
+            "afforest",
+            "forest",
+            "replant",
+            "tree",
+            "insert",
+            "infix",
+            "implantation",
+            "nidation",
+            "pot",
+            "nest",
+            "bury"
+        ]
+    }
 }

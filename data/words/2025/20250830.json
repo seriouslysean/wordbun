@@ -2,6 +2,7 @@
     "word": "kitty-cat",
     "date": "20250830",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "partOfSpeech": "noun",
@@ -23,5 +24,17 @@
             "synonyms": [],
             "antonyms": []
         }
-    ]
+    ],
+    "enrichment": {
+        "synonyms": [
+            "kitty",
+            "puss",
+            "pussy",
+            "pussycat"
+        ],
+        "related": [
+            "domestic cat",
+            "house cat"
+        ]
+    }
 }

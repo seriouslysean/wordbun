@@ -2,6 +2,7 @@
     "word": "puppy",
     "date": "20251003",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "puppy",
@@ -110,5 +111,20 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/puppy"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpə-pē",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/puppy001.mp3",
+        "etymology": "Middle English popi, from Middle French poupée doll, toy, from *poupe",
+        "synonyms": [
+            "pup"
+        ],
+        "related": [
+            "whelp",
+            "dog",
+            "domestic dog",
+            "young person",
+            "youth"
+        ]
+    }
 }

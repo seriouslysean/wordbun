@@ -2,6 +2,7 @@
     "word": "monkey",
     "date": "20251017",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "monkey",
@@ -108,5 +109,33 @@
                 "threw a monkey wrench into the peace negotiations"
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈməŋ-kē",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/m/monkey01.mp3",
+        "etymology": "probably of Low German origin; akin to Moneke, name of an ape, probably of Romance origin; akin to Old Spanish mona monkey",
+        "synonyms": [
+            "imp",
+            "scamp",
+            "rascal",
+            "rapscallion",
+            "scalawag",
+            "scallywag"
+        ],
+        "related": [
+            "primate",
+            "Old World monkey",
+            "catarrhine",
+            "New World monkey",
+            "platyrrhine",
+            "child",
+            "kid",
+            "devilish",
+            "rascally",
+            "tamper",
+            "fiddle",
+            "terror",
+            "brat"
+        ]
+    }
 }

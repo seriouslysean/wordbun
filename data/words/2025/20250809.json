@@ -2,6 +2,7 @@
     "word": "telephone",
     "date": "20250809",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "telephone",
@@ -128,5 +129,37 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/telephone"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈte-lə-ˌfōn",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/t/teleph01.mp3",
+        "etymology": " + ",
+        "synonyms": [
+            "phone",
+            "telephone set",
+            "telephony"
+        ],
+        "related": [
+            "electronic equipment",
+            "call",
+            "desk phone",
+            "dial telephone",
+            "dial phone",
+            "extension",
+            "telephone extension",
+            "handset",
+            "French telephone",
+            "pay-phone",
+            "pay-station",
+            "radiotelephone",
+            "radiophone",
+            "speakerphone",
+            "telecommunication",
+            "telecom",
+            "telephonic",
+            "telephone operator",
+            "telephonist",
+            "voice mail"
+        ]
+    }
 }

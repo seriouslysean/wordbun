@@ -2,6 +2,7 @@
     "word": "glasses",
     "date": "20250812",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "glass",
@@ -114,5 +115,24 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/glasses"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈglas",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/g/glass001.mp3",
+        "etymology": "Middle English glas, from Old English glæs; akin to Old English geolu yellow ",
+        "synonyms": [
+            "spectacles",
+            "specs",
+            "eyeglasses"
+        ],
+        "related": [
+            "optical instrument",
+            "bifocals",
+            "goggles",
+            "lorgnette",
+            "pince-nez",
+            "sunglasses",
+            "dark glasses"
+        ]
+    }
 }

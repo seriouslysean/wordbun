@@ -2,6 +2,7 @@
     "word": "teak",
     "date": "20250828",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "teak",
@@ -19,5 +20,18 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/teak"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈtēk",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/t/teak0001.mp3",
+        "etymology": "Portuguese teca, from Malayalam tēkka",
+        "synonyms": [
+            "teakwood",
+            "Tectona grandis"
+        ],
+        "related": [
+            "wood",
+            "tree"
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "word": "paper",
     "date": "20250714",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "paper",
@@ -194,5 +195,37 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/paper"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpā-pər",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/paper001.mp3",
+        "etymology": "Middle English papir, from Anglo-French, from Latin papyrus papyrus, paper, from Greek papyros papyrus",
+        "synonyms": [
+            "composition",
+            "report",
+            "theme"
+        ],
+        "related": [
+            "material",
+            "stuff",
+            "papery",
+            "chartaceous",
+            "wallpaper",
+            "card",
+            "confetti",
+            "sheet",
+            "piece of paper",
+            "art paper",
+            "blotting paper",
+            "blotter",
+            "blueprint paper",
+            "carbon paper",
+            "carbon",
+            "cardboard",
+            "composition board",
+            "cartridge paper",
+            "chad",
+            "computer paper"
+        ]
+    }
 }

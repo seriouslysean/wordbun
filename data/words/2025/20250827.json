@@ -2,6 +2,7 @@
     "word": "tic-tac-toe",
     "date": "20250827",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "tic-tac-toe",
@@ -11,5 +12,20 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/tic-tac-toe"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˌtik-ˌtak-ˈtō",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/t/tickta02.mp3",
+        "etymology": "tic-tac-toe, former game in which players with eyes shut brought a pencil down on a slate marked with numbers and scored the number hit",
+        "synonyms": [
+            "ticktacktoe",
+            "ticktacktoo",
+            "tick-tack-toe",
+            "tit-tat-toe",
+            "noughts and crosses"
+        ],
+        "related": [
+            "board game"
+        ]
+    }
 }

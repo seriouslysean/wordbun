@@ -2,6 +2,7 @@
     "word": "birthday",
     "date": "20251120",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "birthday",
@@ -92,5 +93,18 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/birthday"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈbərth-ˌdā",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/birthd01.mp3",
+        "synonyms": [
+            "natal day"
+        ],
+        "related": [
+            "anniversary",
+            "day of remembrance",
+            "date",
+            "day of the month"
+        ]
+    }
 }

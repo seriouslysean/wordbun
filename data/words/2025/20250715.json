@@ -2,6 +2,7 @@
     "word": "toy",
     "date": "20250715",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "toy",
@@ -139,7 +140,7 @@
         {
             "id": "toy poodle",
             "partOfSpeech": "noun",
-            "text": "a poodle developed from the standard poodle that is not more than 10 inches (25 centimeters) high at the withers and that is often considered to constitute a separate breed",
+            "text": "a variety of poodle that was developed from the standard poodle and is not more than 10 inches (25 centimeters) high at the withers",
             "attributionText": "from Merriam-Webster's Collegiate Dictionary",
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/toy"
@@ -160,5 +161,35 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/toy"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈtȯi",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/t/toy00001.mp3",
+        "etymology": "Middle English toye",
+        "synonyms": [
+            "plaything"
+        ],
+        "related": [
+            "artifact",
+            "artefact",
+            "play",
+            "ball",
+            "balloon",
+            "cockhorse",
+            "doll",
+            "dolly",
+            "dollhouse",
+            "doll's house",
+            "Frisbee",
+            "hobby",
+            "hobbyhorse",
+            "hula-hoop",
+            "jack-in-the-box",
+            "jungle gym",
+            "jumping jack",
+            "kaleidoscope",
+            "kite",
+            "Lego"
+        ]
+    }
 }

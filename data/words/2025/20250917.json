@@ -2,6 +2,7 @@
     "word": "grunt",
     "date": "20250917",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "grunt",
@@ -60,5 +61,18 @@
                 "blueberry grunt"
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈgrənt",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/g/grunt001.mp3",
+        "etymology": "Middle English, from Old English grunnettan, frequentative of grunian, of imitative origin",
+        "related": [
+            "utter",
+            "emit",
+            "oink",
+            "grunter",
+            "hog",
+            "pig"
+        ]
+    }
 }

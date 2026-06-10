@@ -2,6 +2,7 @@
     "word": "balance beam",
     "date": "20250823",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "balance beam",
@@ -19,5 +20,14 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/balance%20beam"
         }
-    ]
+    ],
+    "enrichment": {
+        "synonyms": [
+            "beam"
+        ],
+        "related": [
+            "gymnastic apparatus",
+            "exerciser"
+        ]
+    }
 }

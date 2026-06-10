@@ -2,6 +2,7 @@
     "word": "sticky",
     "date": "20250718",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "sticky",
@@ -68,6 +69,19 @@
             "sourceUrl": "https://www.merriam-webster.com/dictionary/sticky"
         },
         {
+            "id": "sticky rice",
+            "partOfSpeech": "noun",
+            "text": "a cultivated short-grain rice that is plump and sticky when cooked: glutinous rice",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/sticky",
+            "examples": [
+                "… sticky rice contains the highest amount of amylopectin and no amylose. Sticky rice is used to make signature sweet dishes in Asia.",
+                "Sticky rice is the primary kind of rice consumed here [in northeast Thailand]. It's perfect to pack for lunch out on the farm, because it has high caloric density and can be eaten without utensils.",
+                "… sticky rice doesn't actually contain sugar (though it can easily be worked into a … dough to make mochi, and a vast range of sweets)."
+            ]
+        },
+        {
             "id": "sticky-sweet",
             "partOfSpeech": "adjective",
             "text": "extremely or excessively sweet: sickly sweet",
@@ -87,5 +101,33 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/sticky"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈsti-kē",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/s/sticky01.mp3",
+        "synonyms": [
+            "gluey",
+            "glutinous",
+            "gummy",
+            "mucilaginous",
+            "pasty",
+            "viscid",
+            "viscous",
+            "adhesive",
+            "wet"
+        ],
+        "related": [
+            "cohesiveness",
+            "glueyness",
+            "stickiness",
+            "paste",
+            "library paste",
+            "glue",
+            "gum",
+            "mucilage",
+            "gluten",
+            "gelatinousness",
+            "glutinosity"
+        ]
+    }
 }

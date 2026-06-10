@@ -2,6 +2,7 @@
     "word": "crab",
     "date": "20250824",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "crab",
@@ -143,5 +144,35 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/crab"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈkrab",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/crab0001.mp3",
+        "etymology": "Middle English crabbe, from Old English crabba; akin to Old High German krebiz crab and perhaps to Old English ceorfan to carve ",
+        "synonyms": [
+            "crabby person"
+        ],
+        "related": [
+            "decapod crustacean",
+            "decapod",
+            "stone crab",
+            "Menippe mercenaria",
+            "hard-shell crab",
+            "soft-shell crab",
+            "soft-shelled crab",
+            "Dungeness crab",
+            "Cancer magister",
+            "rock crab",
+            "Cancer irroratus",
+            "Jonah crab",
+            "Cancer borealis",
+            "swimming crab",
+            "fiddler crab",
+            "pea crab",
+            "king crab",
+            "Alaska crab",
+            "spider crab",
+            "grouch"
+        ]
+    }
 }

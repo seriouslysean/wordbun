@@ -2,6 +2,7 @@
     "word": "terminus",
     "date": "20251211",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "terminus",
@@ -68,5 +69,26 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/terminus"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈtər-mə-nəs",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/t/termin13.mp3",
+        "etymology": "Latin, boundary marker, limit ",
+        "synonyms": [
+            "end point",
+            "endpoint",
+            "termination",
+            "destination"
+        ],
+        "related": [
+            "end",
+            "terminal",
+            "stop",
+            "goal",
+            "terminate",
+            "destine",
+            "fate",
+            "intend"
+        ]
+    }
 }

@@ -1,43 +1,90 @@
 {
     "word": "penguin",
     "date": "20260307",
-    "adapter": "wiktionary",
+    "adapter": "merriam-webster",
     "preserveCase": false,
     "data": [
         {
+            "id": "penguin",
             "partOfSpeech": "noun",
-            "text": "Any of several flightless sea birds, of order Sphenisciformes, found in the Southern Hemisphere, marked by their usual upright stance, walking on short legs, and (generally) their stark black and white plumage.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/penguin"
+            "text": "any of various erect short-legged flightless aquatic birds (family Spheniscidae) of the southern hemisphere",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/penguin"
         },
         {
+            "id": "Adelie penguin",
             "partOfSpeech": "noun",
-            "text": "An auk (sometimes especially a great auk), a bird of the Northern Hemisphere.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/penguin"
+            "text": "a small antarctic penguin (Pygoscelis adeliae) —called also Adélie",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/penguin"
         },
         {
+            "id": "chinstrap penguin",
             "partOfSpeech": "noun",
-            "text": "A nun (association through appearance, because of the black and white habit).",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/penguin"
+            "text": "a penguin (Pygoscelis antarcticus) with a narrow band of black feathers from ear to ear under its chin that breeds on the Antarctic Peninsula and nearby islands —called also chinstrap",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/penguin"
         },
         {
+            "id": "emperor penguin",
             "partOfSpeech": "noun",
-            "text": "A type of catch where the palm of the hand is facing towards the leg with the arm stretched downward, resembling the flipper of a penguin.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/penguin"
+            "text": "a penguin (Aptenodytes forsteri) that is the largest known and that is noted for the male's habit of incubating the egg between the feet and a fold of abdominal skin resembling a pouch —called also emperor",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/penguin"
         },
         {
+            "id": "gentoo penguin",
             "partOfSpeech": "noun",
-            "text": "A spiny bromeliad with egg-shaped fleshy fruit, Bromelia pinguin.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/penguin"
+            "text": "a penguin (Pygoscelis papua) of Antarctica and nearby islands with a gray back and throat, white underparts, and white spots above the eyes —called also gentoo",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/penguin"
+        },
+        {
+            "id": "king penguin",
+            "partOfSpeech": "noun",
+            "text": "a large penguin (Aptenodytes patagonicus) chiefly of subantarctic areas with a yellow patch on the upper breast",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/penguin"
+        },
+        {
+            "id": "macaroni penguin",
+            "partOfSpeech": "noun",
+            "text": "a small penguin (Eudyptes chrysolophus) that has an orange, yellow, and black crest on the head and a black chin and that breeds on subantarctic islands",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/penguin"
+        },
+        {
+            "id": "Magellanic penguin",
+            "partOfSpeech": "noun",
+            "text": "a penguin (Spheniscus magellanicus) of the southern tip of South America and surrounding islands that has a pink mark above the eyes and two broad black bands on the neck and upper chest",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/penguin"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpen-gwən",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/pengui01.mp3",
+        "etymology": "obsolete English penguin great auk, perhaps from Welsh pen gwyn white head (applied to the bird in winter plumage)",
+        "related": [
+            "sphenisciform seabird",
+            "Adelie",
+            "Adelie penguin",
+            "king penguin",
+            "Aptenodytes patagonica",
+            "emperor penguin",
+            "Aptenodytes forsteri",
+            "jackass penguin",
+            "Spheniscus demersus",
+            "rock hopper",
+            "crested penguin"
+        ]
+    }
 }

@@ -1,15 +1,133 @@
 {
     "word": "vitamin",
     "date": "20260319",
-    "adapter": "wiktionary",
+    "adapter": "merriam-webster",
     "preserveCase": false,
     "data": [
         {
+            "id": "vitamin",
             "partOfSpeech": "noun",
-            "text": "Any of a specific group of organic compounds essential in small quantities for healthy human growth, metabolism, development, and body function; found in minute amounts in plant and animal foods or sometimes produced synthetically; deficiencies of specific vitamins produce specific disorders.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/vitamin"
+            "text": "any of various organic substances that are essential in minute quantities to the nutrition of most animals and some plants, act especially as coenzymes and precursors of coenzymes in the regulation of metabolic processes but do not provide energy or serve as building units, and are present in natural foodstuffs or sometimes produced within the body",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin A",
+            "partOfSpeech": "noun",
+            "text": "any of several fat-soluble vitamins (such as retinol) that are found especially in green or orange vegetables (such as carrots or spinach) and in animal products (such as egg yolk, butter, or liver) and whose deficiency in the animal body causes epithelial tissues to become keratinous (as in the eye with resulting visual defects)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin B",
+            "partOfSpeech": "noun",
+            "text": "vitamin b complex",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin B",
+            "partOfSpeech": "noun",
+            "text": "thiamine",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin B complex",
+            "partOfSpeech": "noun",
+            "text": "a group of water-soluble vitamins that are found especially in yeast, seed germs, eggs, liver and flesh, and vegetables and that have varied metabolic functions and include coenzymes and growth factors —called also B complex",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin B6",
+            "partOfSpeech": "noun",
+            "text": "pyridoxine or a closely related compound found widely in combined form and considered essential to vertebrate nutrition",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin B12",
+            "partOfSpeech": "noun",
+            "text": "a complex cobalt-containing compound C63H88CoN14O14P that occurs especially in liver, is essential to normal blood formation, neural function, and growth, and is used especially in treating pernicious and related anemias and in animal feed as a growth factor —called also cyanocobalamin",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin B12",
+            "partOfSpeech": "noun",
+            "text": "any of several compounds similar to vitamin B12 in action but having different chemistry",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin B2",
+            "partOfSpeech": "noun",
+            "text": "riboflavin",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin C",
+            "partOfSpeech": "noun",
+            "text": "a water-soluble vitamin C6H8O6 found in plants and especially in fruits and leafy vegetables or made synthetically and used in the prevention and treatment of scurvy and as an antioxidant for foods —called also ascorbic acid",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin D",
+            "partOfSpeech": "noun",
+            "text": "any or all of several fat-soluble vitamins chemically related to steroids, essential for normal bone and tooth structure, and found especially in fish-liver oils, egg yolk, and milk or produced by activation (as by ultraviolet irradiation) of sterols: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin D",
+            "partOfSpeech": "noun",
+            "text": "calciferol",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin D",
+            "partOfSpeech": "noun",
+            "text": "cholecalciferol",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
+        },
+        {
+            "id": "vitamin E",
+            "partOfSpeech": "noun",
+            "text": "any of several fat-soluble vitamins that are chemically tocopherols whose lack in the human body is associated especially with neurological symptoms (as ataxia and muscle weakness), that are found especially in wheat germ, vegetable oils, egg yolk, and green leafy vegetables or are made synthetically, and that are used chiefly in animal feeds and as antioxidants; especially: alpha-tocopherol",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/vitamin"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈvī-tə-mən",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/v/vitami01.mp3",
+        "etymology": "alteration of vitamine, from Latin vita life + English amine",
+        "related": [
+            "nutriment",
+            "nourishment",
+            "vitaminize",
+            "vitaminise",
+            "fat-soluble vitamin",
+            "water-soluble vitamin"
+        ]
+    }
 }

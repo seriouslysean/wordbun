@@ -2,6 +2,7 @@
     "word": "picture",
     "date": "20250709",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "picture",
@@ -155,5 +156,38 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/picture"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpik-chər",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/pictur01.mp3",
+        "etymology": "Middle English, from Latin pictura, from pictus, past participle of pingere to paint ",
+        "synonyms": [
+            "image",
+            "icon",
+            "ikon",
+            "painting"
+        ],
+        "related": [
+            "representation",
+            "iconic",
+            "visualize",
+            "visualise",
+            "pictorial",
+            "pictural",
+            "depict",
+            "bitmap",
+            "electronic image",
+            "chiaroscuro",
+            "collage",
+            "montage",
+            "foil",
+            "transparency",
+            "graphic",
+            "computer graphic",
+            "iconography",
+            "inset",
+            "likeness",
+            "semblance"
+        ]
+    }
 }

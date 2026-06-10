@@ -2,6 +2,7 @@
     "word": "sign",
     "date": "20250702",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "sign",
@@ -241,5 +242,26 @@
                 "sign up for classes"
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈsīn",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/s/sign0001.mp3",
+        "etymology": "Middle English signe, from Anglo-French, from Latin signum mark, token, sign, image, seal; perhaps akin to Latin secare to cut ",
+        "synonyms": [
+            "mark"
+        ],
+        "related": [
+            "clue",
+            "clew",
+            "notice",
+            "signify",
+            "token",
+            "communication",
+            "poster",
+            "posting",
+            "street sign",
+            "signpost",
+            "guidepost"
+        ]
+    }
 }

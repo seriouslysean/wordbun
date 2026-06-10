@@ -2,6 +2,7 @@
     "word": "tea",
     "date": "20250921",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "tea",
@@ -135,5 +136,28 @@
                 "You could create a whole miniature village of houses, each one with a battery-powered tealight inside."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈtē",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/t/tea00001.mp3",
+        "etymology": "borrowed from Chinese (Xiamen) dé",
+        "synonyms": [
+            "afternoon tea",
+            "teatime"
+        ],
+        "related": [
+            "beverage",
+            "drink",
+            "cambric tea",
+            "cuppa",
+            "cupper",
+            "herb tea",
+            "herbal tea",
+            "ice tea",
+            "iced tea",
+            "sun tea",
+            "meal",
+            "repast"
+        ]
+    }
 }

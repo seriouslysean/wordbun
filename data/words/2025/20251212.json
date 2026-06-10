@@ -2,6 +2,7 @@
     "word": "hat",
     "date": "20251212",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "hat",
@@ -160,5 +161,36 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/hat"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈhat",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/h/hat00001.mp3",
+        "etymology": "Middle English, from Old English hæt; akin to Old High German huot head covering ",
+        "synonyms": [
+            "chapeau",
+            "lid"
+        ],
+        "related": [
+            "headdress",
+            "headgear",
+            "hatmaker",
+            "hatter",
+            "bearskin",
+            "busby",
+            "boater",
+            "leghorn",
+            "bonnet",
+            "poke bonnet",
+            "bowler hat",
+            "bowler",
+            "campaign hat",
+            "cavalier hat",
+            "slouch hat",
+            "cocked hat",
+            "cowboy hat",
+            "ten-gallon hat",
+            "deerstalker",
+            "dress hat"
+        ]
+    }
 }

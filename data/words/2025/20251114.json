@@ -2,6 +2,7 @@
     "word": "poopy",
     "date": "20251114",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "poopy",
@@ -35,5 +36,10 @@
                 "Though it never lost money, profits were \"kind of poopy,\" says Johnny White."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpü-pē",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/poopy.mp3",
+        "etymology": " + "
+    }
 }

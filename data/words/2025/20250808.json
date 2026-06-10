@@ -2,6 +2,7 @@
     "word": "rainbow",
     "date": "20250808",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "rainbow",
@@ -89,5 +90,15 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/rainbow"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈrān-ˌbō",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/r/rainbo01.mp3",
+        "related": [
+            "bow",
+            "arc",
+            "promise",
+            "hope"
+        ]
+    }
 }

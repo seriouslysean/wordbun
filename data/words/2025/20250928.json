@@ -2,6 +2,7 @@
     "word": "shirt",
     "date": "20250928",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "shirt",
@@ -124,5 +125,26 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/shirt"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈshərt",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/s/shirt001.mp3",
+        "etymology": "Middle English shirte, from Old English scyrte; akin to Old Norse skyrta shirt, Old English scort short",
+        "related": [
+            "garment",
+            "camise",
+            "dashiki",
+            "daishiki",
+            "dress shirt",
+            "evening shirt",
+            "hair shirt",
+            "jersey",
+            "T-shirt",
+            "kurta",
+            "polo shirt",
+            "sport shirt",
+            "tank top",
+            "work-shirt"
+        ]
+    }
 }

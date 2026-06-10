@@ -2,6 +2,7 @@
     "word": "antique",
     "date": "20250926",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "antique",
@@ -110,5 +111,25 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/antique"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "(ˌ)an-ˈtēk",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/a/antiqu07.mp3",
+        "etymology": "Middle French, from Latin antiquus, from ante before ",
+        "synonyms": [
+            "old",
+            "demode",
+            "ex",
+            "old-fashioned",
+            "old-hat",
+            "outmoded",
+            "passe",
+            "passee",
+            "unfashionable"
+        ],
+        "related": [
+            "antiquity",
+            "old-fashionedness"
+        ]
+    }
 }

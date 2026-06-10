@@ -1,112 +1,198 @@
 {
     "word": "fan",
     "date": "20260417",
-    "adapter": "wiktionary",
+    "adapter": "merriam-webster",
     "preserveCase": false,
     "data": [
         {
+            "id": "fan",
             "partOfSpeech": "noun",
-            "text": "A hand-held device consisting of concertinaed material, or slats of material, gathered together at one end, that may be opened out into the shape of a sector of a circle and waved back and forth in order to move air towards oneself and cool oneself.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "An electrical or mechanical device for moving air, used for cooling people, machinery, etc.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "The action of fanning; agitation of the air.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "Anything resembling a hand-held fan in shape, e.g., a peacock’s tail.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "An instrument for winnowing grain, by moving which the grain is tossed and agitated, and the chaff is separated and blown away.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A small vane or sail, used to keep the large sails of a smock mill always in the direction of the wind.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A section of a tree having a finite number of branches",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
-        },
-        {
-            "partOfSpeech": "verb",
-            "text": "To blow air on (something) by means of a fan (hand-held, mechanical or electrical) or otherwise.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan",
+            "text": "any of various devices for winnowing grain",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan",
             "examples": [
-                "We enjoyed standing at the edge of the cliff, being fanned by the wind."
+                "a ceiling fan to stir the air"
             ]
         },
         {
-            "partOfSpeech": "verb",
-            "text": "To slap (a behind, especially).",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
-        },
-        {
-            "partOfSpeech": "verb",
-            "text": "(usually to fan out) To move or spread in multiple directions from one point, in the shape of a hand-held fan.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
-        },
-        {
-            "partOfSpeech": "verb",
-            "text": "To dispel by waving a hand-held fan.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan",
+            "id": "fan",
+            "partOfSpeech": "noun",
+            "text": "an instrument for producing a current of air: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan",
             "examples": [
-                "I attempted to fan the disagreeable odour out of the room."
+                "a ceiling fan to stir the air"
             ]
         },
         {
-            "partOfSpeech": "verb",
-            "text": "To perform a maneuver that involves flicking the top rear of an old-style gun.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+            "id": "fan",
+            "partOfSpeech": "noun",
+            "text": "a device that is held in the hand and moved back and forth to cool a person and that is usually shaped like a segment of a circle and composed of material (such as feathers or paper) mounted on thin rods or slats moving about a pivot so that the device may be closed compactly when not in use",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan",
+            "examples": [
+                "a ceiling fan to stir the air"
+            ]
         },
         {
+            "id": "fan",
             "partOfSpeech": "verb",
-            "text": "(metaphoric) To invigorate, like flames when fanned.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+            "text": "to drive away the chaff of (grain) by means of a current of air",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan",
+            "examples": [
+                "the breeze fanning her hair",
+                "fanning the fires of nationalism",
+                "the peacock fanned his tail"
+            ]
         },
         {
+            "id": "fan",
             "partOfSpeech": "verb",
-            "text": "To winnow grain.",
-            "attributionText": "from Wiktionary",
-            "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://en.wiktionary.org/wiki/fan"
+            "text": "to eliminate (chaff) by winnowing",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan",
+            "examples": [
+                "the breeze fanning her hair",
+                "fanning the fires of nationalism",
+                "the peacock fanned his tail"
+            ]
+        },
+        {
+            "id": "fan",
+            "partOfSpeech": "verb",
+            "text": "to move or impel (air) with a fan",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan",
+            "examples": [
+                "the breeze fanning her hair",
+                "fanning the fires of nationalism",
+                "the peacock fanned his tail"
+            ]
+        },
+        {
+            "id": "fan",
+            "partOfSpeech": "noun",
+            "text": "an enthusiastic devotee (as of a sport or a performing art) usually as a spectator",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan",
+            "examples": [
+                "science-fiction fans"
+            ]
+        },
+        {
+            "id": "fan",
+            "partOfSpeech": "noun",
+            "text": "an ardent admirer or enthusiast (as of a celebrity or a pursuit)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan",
+            "examples": [
+                "science-fiction fans"
+            ]
+        },
+        {
+            "id": "Fang",
+            "partOfSpeech": "noun",
+            "text": "a member of a Bantu-speaking people of northern Gabon, mainland Equatorial Guinea, and southern Cameroon",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan"
+        },
+        {
+            "id": "Fang",
+            "partOfSpeech": "noun",
+            "text": "the language of the Fang people",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan"
+        },
+        {
+            "id": "fan art",
+            "partOfSpeech": "noun",
+            "text": "artwork based on popular works of fiction (such as books or movies) that is created by fans",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan",
+            "examples": [
+                "Fan art is unofficial drawings and other renderings of famous characters. \"Push the boundaries,\" said Brian Kesinger, an artist at Walt Disney Animation Studios who sells his own prints on the side. \"Fan art isn't about rules. It's about expressing yourself.\"",
+                "They filmed the kiss twenty times before it was all over, and the work paid off: it has now taken on a life of its own, becoming the subject of fan art.",
+                "And the Slender Man story itself inspired everything from video games to fanart to a … horror film."
+            ]
+        },
+        {
+            "id": "fan base",
+            "partOfSpeech": "noun",
+            "text": "a group of fans for a particular sport, musical group, celebrity, book or film franchise, etc.",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan",
+            "examples": [
+                "… the Los Angeles Lakers and the Milwaukee Bucks—the last two NBA champions—had fan bases spending the most money on team merchandise and gear.",
+                "Yet her three albums with the Epic label failed to earn her a popular audience, beyond country's traditional fan base …",
+                "But sales figures don't fully capture the fan base among shojo readers, who can whip through a volume in half an hour in a bookstore and often pass along copies to friends.",
+                "The fervent passion of [Justin] Bieber's fan base almost obscured the rampant self-indulgence of his hour-and-a-half set."
+            ]
+        },
+        {
+            "id": "fan fiction",
+            "partOfSpeech": "noun",
+            "text": "stories involving popular fictional characters that are written by fans and often posted on the Internet —called also fanfic",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan"
+        },
+        {
+            "id": "fan-jet",
+            "partOfSpeech": "noun",
+            "text": "a jet engine having a fan that operates in a duct and draws in extra air whose compression and expulsion provide extra thrust; also: an airplane powered by a fan-jet engine",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan"
+        },
+        {
+            "id": "fan letter",
+            "partOfSpeech": "noun",
+            "text": "a letter sent to a public figure by an admirer",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan"
+        },
+        {
+            "id": "fan mail",
+            "partOfSpeech": "noun",
+            "text": "fan letters",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/fan"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈfan",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/f/fan00001.mp3",
+        "etymology": "Middle English, from Old English fann, from Latin vannus ",
+        "synonyms": [
+            "sports fan",
+            "rooter"
+        ],
+        "related": [
+            "device",
+            "electric fan",
+            "blower",
+            "exhaust fan",
+            "punkah",
+            "enthusiast",
+            "partisan",
+            "fandom",
+            "aficionado",
+            "railbird"
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "word": "water",
     "date": "20250822",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "water",
@@ -164,5 +165,36 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/water"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈwȯ-tər",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/w/water002.mp3",
+        "etymology": "Middle English, from Old English wæter; akin to Old High German wazzar water, Greek hydōr, Latin unda wave",
+        "synonyms": [
+            "H2O",
+            "body of water"
+        ],
+        "related": [
+            "binary compound",
+            "liquid",
+            "watery",
+            "irrigate",
+            "tap water",
+            "bath water",
+            "dishwater",
+            "distilled water",
+            "holy water",
+            "ground water",
+            "spring water",
+            "hard water",
+            "limewater",
+            "meltwater",
+            "seawater",
+            "saltwater",
+            "fresh water",
+            "freshwater",
+            "slush",
+            "soft water"
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "word": "door",
     "date": "20250711",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "door",
@@ -115,5 +116,36 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/door"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈdȯr",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/d/door0001.mp3",
+        "etymology": "Middle English dure, dor, from Old English duru door & dor gate; akin to Old High German turi door, Latin fores, Greek thyra",
+        "synonyms": [
+            "doorway",
+            "room access",
+            "threshold"
+        ],
+        "related": [
+            "movable barrier",
+            "car door",
+            "cargo door",
+            "double door",
+            "fire door",
+            "French door",
+            "interior door",
+            "revolving door",
+            "revolver",
+            "screen door",
+            "sliding door",
+            "storm door",
+            "swing door",
+            "swinging door",
+            "trap door",
+            "entrance",
+            "entranceway",
+            "exterior door",
+            "outside door"
+        ]
+    }
 }

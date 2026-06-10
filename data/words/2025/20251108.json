@@ -2,6 +2,7 @@
     "word": "scary",
     "date": "20251108",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "scary",
@@ -36,5 +37,22 @@
                 "a scary story"
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈsker-ē",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/s/scary001.mp3",
+        "synonyms": [
+            "chilling",
+            "shivery",
+            "shuddery",
+            "alarming"
+        ],
+        "related": [
+            "frisson",
+            "shiver",
+            "scare",
+            "panic attack",
+            "panic"
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "word": "bat",
     "date": "20250829",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "bat",
@@ -138,5 +139,24 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/bat"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈbat",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/bat00001.mp3",
+        "etymology": "Middle English, from Old English batt",
+        "synonyms": [
+            "chiropteran",
+            "at-bat"
+        ],
+        "related": [
+            "placental",
+            "placental mammal",
+            "fruit bat",
+            "megabat",
+            "carnivorous bat",
+            "microbat",
+            "turn",
+            "play"
+        ]
+    }
 }

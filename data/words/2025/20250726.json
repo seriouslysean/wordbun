@@ -2,6 +2,7 @@
     "word": "ramp",
     "date": "20250726",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "ramp",
@@ -137,5 +138,21 @@
                 "We'll spend months in the planning process focused on where the curb cuts for the driveway will be."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈramp",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/r/ramp0001.mp3",
+        "etymology": "borrowed from French rampe, going back to Middle French, \"inclined plane on which the steps of a staircase are built,\" noun derivative of ramper \"to crawl, creep, move slowly along a surface,\" going back to Old French ",
+        "synonyms": [
+            "incline",
+            "wild leek",
+            "Allium tricoccum"
+        ],
+        "related": [
+            "inclined plane",
+            "slope",
+            "ski jump",
+            "alliaceous plant"
+        ]
+    }
 }

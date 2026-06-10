@@ -2,6 +2,7 @@
     "word": "paw",
     "date": "20251219",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "paw",
@@ -85,5 +86,30 @@
                 "The … government became the cat's-paw for foreign powers."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpȯ",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/paw00001.mp3",
+        "etymology": "Middle English, from Anglo-French powe, poe",
+        "synonyms": [
+            "hand",
+            "manus",
+            "mitt"
+        ],
+        "related": [
+            "animal foot",
+            "foot",
+            "forepaw",
+            "extremity",
+            "pass",
+            "fist",
+            "clenched fist",
+            "hooks",
+            "meat hooks",
+            "right",
+            "right hand",
+            "left",
+            "left hand"
+        ]
+    }
 }

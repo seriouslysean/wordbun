@@ -2,6 +2,7 @@
     "word": "blue",
     "date": "20251228",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "blue",
@@ -281,5 +282,19 @@
                 "The beef was a perfect medium-rare, and the sauce was robust, ideal for the meat with just the right touch of bleu cheese."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈblü",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/blue0001.mp3",
+        "etymology": "Middle English, from Anglo-French blef, blew, of Germanic origin; akin to Old High German blāo blue; akin to Latin flavus yellow",
+        "synonyms": [
+            "bluish",
+            "blueish",
+            "chromatic",
+            "northern"
+        ],
+        "related": [
+            "blueness"
+        ]
+    }
 }

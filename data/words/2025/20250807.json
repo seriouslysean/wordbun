@@ -2,6 +2,7 @@
     "word": "people",
     "date": "20250807",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "people",
@@ -104,14 +105,6 @@
             "sourceUrl": "https://www.merriam-webster.com/dictionary/people"
         },
         {
-            "id": "clergyperson",
-            "partOfSpeech": "noun",
-            "text": "a member of the clergy",
-            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
-            "sourceDictionary": "collegiate",
-            "sourceUrl": "https://www.merriam-webster.com/dictionary/people"
-        },
-        {
             "id": "unperson",
             "partOfSpeech": "noun",
             "text": "an individual who usually for political or ideological reasons is removed completely from recognition or consideration",
@@ -140,5 +133,35 @@
                 "Being a people pleaser isn't all bad. It shows that you are a caring person who values social connections and enjoys making others happy."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpē-pəl",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/people01.mp3",
+        "etymology": "Middle English peple, poeple, people, borrowed from Anglo-French pople, poeple, people (continental Old French pople, pueple), going back to Latin populus \"a human community, people, nation, the people (transcending the individuals composing it), the general public,\" going back to Italic *poplo- (whence also Umbrian poplom), of uncertain origin",
+        "synonyms": [
+            "citizenry"
+        ],
+        "related": [
+            "group",
+            "grouping",
+            "peoples",
+            "age group",
+            "age bracket",
+            "ancients",
+            "baffled",
+            "blind",
+            "blood",
+            "brave",
+            "timid",
+            "cautious",
+            "business people",
+            "businesspeople",
+            "community",
+            "damned",
+            "dead",
+            "living",
+            "deaf",
+            "defeated"
+        ]
+    }
 }

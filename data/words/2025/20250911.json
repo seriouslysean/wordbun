@@ -2,6 +2,7 @@
     "word": "pus",
     "date": "20250911",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "pus",
@@ -11,5 +12,30 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/pus"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpəs",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/pus00001.mp3",
+        "etymology": "Latin pur-, pus ",
+        "synonyms": [
+            "Pansa",
+            "purulence",
+            "suppuration",
+            "ichor",
+            "sanies",
+            "festering"
+        ],
+        "related": [
+            "Hindu calendar month",
+            "liquid body substance",
+            "bodily fluid",
+            "ichorous",
+            "sanious",
+            "suppurate",
+            "mature",
+            "fester",
+            "maturate",
+            "gleet"
+        ]
+    }
 }

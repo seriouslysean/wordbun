@@ -2,6 +2,7 @@
     "word": "pillow",
     "date": "20250724",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "pillow",
@@ -91,5 +92,17 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/pillow"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpi-(ˌ)lō",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/pillow01.mp3",
+        "etymology": "Middle English pilwe, from Old English pyle (akin to Old High German pfuliwi), from Latin pulvinus",
+        "related": [
+            "cushion",
+            "rest",
+            "bed pillow",
+            "bolster",
+            "long pillow"
+        ]
+    }
 }

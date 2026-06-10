@@ -2,6 +2,7 @@
     "word": "poop",
     "date": "20250910",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "poop",
@@ -110,5 +111,10 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/poop"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpüp",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/poop0001.mp3",
+        "etymology": "earlier, to break wind, from Middle English poupen to make a gulping sound, of imitative origin"
+    }
 }

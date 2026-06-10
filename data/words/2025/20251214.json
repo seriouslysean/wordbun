@@ -2,6 +2,7 @@
     "word": "clubhouse",
     "date": "20251214",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "clubhouse",
@@ -27,5 +28,16 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/clubhouse"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈkləb-ˌhau̇s",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/clubho01.mp3",
+        "synonyms": [
+            "club"
+        ],
+        "related": [
+            "building",
+            "edifice"
+        ]
+    }
 }

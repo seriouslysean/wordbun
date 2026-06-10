@@ -2,6 +2,7 @@
     "word": "camera",
     "date": "20250825",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "camera",
@@ -109,5 +110,33 @@
                 "a review of documents held in camera"
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈkam-rə",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/camera01.mp3",
+        "etymology": "Late Latin, room ",
+        "synonyms": [
+            "photographic camera",
+            "television camera",
+            "tv camera"
+        ],
+        "related": [
+            "photographic equipment",
+            "box camera",
+            "box Kodak",
+            "candid camera",
+            "digital camera",
+            "flash camera",
+            "motion-picture camera",
+            "movie camera",
+            "point-and-shoot camera",
+            "Polaroid camera",
+            "Polaroid Land camera",
+            "portrait camera",
+            "reflex camera",
+            "television equipment",
+            "video equipment",
+            "camcorder"
+        ]
+    }
 }

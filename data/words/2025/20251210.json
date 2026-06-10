@@ -2,6 +2,7 @@
     "word": "kraken",
     "date": "20251210",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "kraken",
@@ -14,5 +15,10 @@
                 "Mythical krakens are now thought of as giant squid or octopuses, capable of bringing down a ship with their tentacled arms. But many of the earliest kraken reports were of creatures so enormous that they grew vegetation on their backs like islands."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈkra-kən",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/k/kraken01.mp3",
+        "etymology": "Norwegian dialect"
+    }
 }

@@ -2,6 +2,7 @@
     "word": "cook",
     "date": "20250831",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "cook",
@@ -32,6 +33,9 @@
                 "He cooked dinner for his guests.",
                 "The point is that every country's numbers are the result of a specific set of testing and accounting regimes. Everyone is cooking the data, one way or another.",
                 "Agents discovered a recipe for cooking meth at his lab …",
+                "Their defense got cooked.",
+                "… I would like to play against him [Michael Jordan]. … I would've cooked him, too.",
+                "As for [Marlon] Humphrey, the social media reaction was so severe that he conceded, “I'm lowkey getting cooked right now.”",
                 "We're too busy to cook tonight.",
                 "I enjoy cooking for friends.",
                 "The rice is cooking now.",
@@ -53,6 +57,9 @@
                 "He cooked dinner for his guests.",
                 "The point is that every country's numbers are the result of a specific set of testing and accounting regimes. Everyone is cooking the data, one way or another.",
                 "Agents discovered a recipe for cooking meth at his lab …",
+                "Their defense got cooked.",
+                "… I would like to play against him [Michael Jordan]. … I would've cooked him, too.",
+                "As for [Marlon] Humphrey, the social media reaction was so severe that he conceded, “I'm lowkey getting cooked right now.”",
                 "We're too busy to cook tonight.",
                 "I enjoy cooking for friends.",
                 "The rice is cooking now.",
@@ -74,6 +81,9 @@
                 "He cooked dinner for his guests.",
                 "The point is that every country's numbers are the result of a specific set of testing and accounting regimes. Everyone is cooking the data, one way or another.",
                 "Agents discovered a recipe for cooking meth at his lab …",
+                "Their defense got cooked.",
+                "… I would like to play against him [Michael Jordan]. … I would've cooked him, too.",
+                "As for [Marlon] Humphrey, the social media reaction was so severe that he conceded, “I'm lowkey getting cooked right now.”",
                 "We're too busy to cook tonight.",
                 "I enjoy cooking for friends.",
                 "The rice is cooking now.",
@@ -145,5 +155,27 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/cook"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈku̇k",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/cook0001.mp3",
+        "etymology": "Middle English, from Old English cōc, from Latin coquus, from coquere to cook; akin to Old English āfigen fried, Greek pessein to cook",
+        "synonyms": [
+            "James Cook",
+            "Captain Cook",
+            "Captain James Cook"
+        ],
+        "related": [
+            "skilled worker",
+            "trained worker",
+            "fix",
+            "chef",
+            "cookie",
+            "cooky",
+            "fry cook",
+            "preserver",
+            "roaster",
+            "seasoner"
+        ]
+    }
 }

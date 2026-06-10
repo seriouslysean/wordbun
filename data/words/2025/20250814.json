@@ -2,6 +2,7 @@
     "word": "blanket",
     "date": "20250814",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "blanket",
@@ -183,5 +184,27 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/blanket"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈblaŋ-kət",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/blanke01.mp3",
+        "etymology": "Middle English blanket, blaunket \"woolen cloth (usually undyed), bed covering,\" borrowed from Anglo-French blanchet, blaunchet, blanket \"whitish, cosmetic powder made from white lead, white woolen material, bed covering\" (also continental Old & Middle French blanchet, blanquet \"white, white woolen fabric, sleeveless woman's garment\"), from blanc \"white\" + -et, diminutive suffix (going back to Latin -ittus) ",
+        "synonyms": [
+            "cover",
+            "mantle"
+        ],
+        "related": [
+            "bedclothes",
+            "bed clothing",
+            "coverlet",
+            "afghan",
+            "electric blanket",
+            "mackinaw",
+            "Mackinaw blanket",
+            "manta",
+            "security blanket",
+            "covering",
+            "natural covering"
+        ]
+    }
 }

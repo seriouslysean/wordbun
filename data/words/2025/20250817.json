@@ -2,6 +2,7 @@
     "word": "sky",
     "date": "20250817",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "sky",
@@ -223,5 +224,16 @@
                 "But innovators, when they blue-sky an idea, don't dwell on words like \"equity\" and \"business plan,\" he [Patrick Dowd] says. Instead it's about \"vision and passion\" and daring to fail."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈskī",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/s/sky00001.mp3",
+        "etymology": "Middle English, cloud, sky, from Old Norse skȳ cloud; akin to Old English scēo cloud",
+        "related": [
+            "atmosphere",
+            "blue sky",
+            "blue",
+            "mackerel sky"
+        ]
+    }
 }

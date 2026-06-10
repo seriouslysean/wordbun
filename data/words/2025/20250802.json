@@ -2,6 +2,7 @@
     "word": "vacuum",
     "date": "20250802",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "vacuum",
@@ -150,5 +151,20 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/vacuum"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈva-(ˌ)kyüm",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/v/vacuum02.mp3",
+        "etymology": "borrowed from Medieval Latin (translation of Greek kenón), from neuter of Latin vacuus \"empty, unoccupied,\" from vacāre \"to be empty or unoccupied, have space, be free\" + -uus, deverbal adjective suffix ",
+        "synonyms": [
+            "vacuity",
+            "void",
+            "vacancy",
+            "emptiness"
+        ],
+        "related": [
+            "space",
+            "vacant"
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "word": "trick or treat",
     "date": "20251031",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "trick or treat",
@@ -14,5 +15,11 @@
                 "… a whimsical 1951 Saturday Evening Post cover on which costumed children are surprised by a disguised adult who opens the door for trick-or-treat."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "related": [
+            "request",
+            "asking"
+        ]
+    }
 }

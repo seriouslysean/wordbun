@@ -2,6 +2,7 @@
     "word": "marker",
     "date": "20251115",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "marker",
@@ -57,5 +58,35 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/marker"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈmär-kər",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/m/marker01.mp3",
+        "synonyms": [
+            "marking",
+            "mark"
+        ],
+        "related": [
+            "artifact",
+            "artefact",
+            "bookmark",
+            "bookmarker",
+            "yard marker",
+            "symbol",
+            "distinguish",
+            "tag",
+            "label",
+            "earmark",
+            "brand",
+            "trademark",
+            "authentication",
+            "hallmark",
+            "postmark",
+            "watermark",
+            "broad arrow",
+            "milestone",
+            "milepost",
+            "peg"
+        ]
+    }
 }

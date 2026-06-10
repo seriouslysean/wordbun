@@ -2,6 +2,7 @@
     "word": "skeleton",
     "date": "20250717",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "skeleton",
@@ -51,5 +52,20 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/skeleton"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈske-lə-tən",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/s/skelet03.mp3",
+        "etymology": "New Latin, from Greek, neuter of skeletos dried up; akin to Greek skellein to dry up, sklēros hard and perhaps to Old English sceald shallow",
+        "synonyms": [
+            "skeleton in the closet",
+            "skeleton in the cupboard"
+        ],
+        "related": [
+            "minimum",
+            "lower limit",
+            "scandal",
+            "outrage"
+        ]
+    }
 }

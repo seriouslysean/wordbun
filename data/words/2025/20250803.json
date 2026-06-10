@@ -2,6 +2,7 @@
     "word": "painting",
     "date": "20250803",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "painting",
@@ -106,5 +107,34 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/painting"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpān-tiŋ",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/painti01.mp3",
+        "synonyms": [
+            "picture"
+        ],
+        "related": [
+            "graphic art",
+            "pictorial",
+            "pictural",
+            "depict",
+            "portray",
+            "paint",
+            "abstraction",
+            "cityscape",
+            "daub",
+            "distemper",
+            "finger-painting",
+            "icon",
+            "ikon",
+            "landscape",
+            "miniature",
+            "illumination",
+            "monochrome",
+            "mural",
+            "wall painting",
+            "nude"
+        ]
+    }
 }

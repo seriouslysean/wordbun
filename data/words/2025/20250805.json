@@ -2,6 +2,7 @@
     "word": "leaf",
     "date": "20250805",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "leaf",
@@ -134,5 +135,37 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/leaf"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈlēf",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/l/leaf0001.mp3",
+        "etymology": "Middle English leef, from Old English lēaf; akin to Old High German loub leaf",
+        "synonyms": [
+            "leafage",
+            "foliage",
+            "folio"
+        ],
+        "related": [
+            "plant organ",
+            "foliate",
+            "leafy",
+            "leaflet",
+            "cataphyll",
+            "floral leaf",
+            "dandelion green",
+            "pitcher",
+            "sporophyll",
+            "sporophyl",
+            "blade",
+            "leaf blade",
+            "amplexicaul leaf",
+            "greenery",
+            "verdure",
+            "frond",
+            "pad",
+            "scale",
+            "scale leaf",
+            "betel leaf"
+        ]
+    }
 }

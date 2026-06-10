@@ -2,6 +2,7 @@
     "word": "boot",
     "date": "20250723",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "boot",
@@ -198,5 +199,31 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/boot"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈbüt",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/boot0001.mp3",
+        "etymology": "Middle English bot, bote \"advantage, good, relief, deliverance, redemption, amends, cure,\" going back to Old English bōt \"a making good, repair, relief, deliverance, remedy, improvement, atonement, penance, compensation,\" going back to Germanic *botō \"improvement\"  ",
+        "synonyms": [
+            "luggage compartment",
+            "automobile trunk",
+            "trunk"
+        ],
+        "related": [
+            "footwear",
+            "footgear",
+            "buskin",
+            "combat boot",
+            "cowboy boot",
+            "Hessian boot",
+            "hessian",
+            "hip boot",
+            "thigh boot",
+            "riding boot",
+            "rubber boot",
+            "gum boot",
+            "ski boot",
+            "compartment"
+        ]
+    }
 }

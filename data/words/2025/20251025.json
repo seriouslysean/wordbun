@@ -2,6 +2,7 @@
     "word": "remote control",
     "date": "20251025",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "remote control",
@@ -35,5 +36,13 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/remote%20control"
         }
-    ]
+    ],
+    "enrichment": {
+        "synonyms": [
+            "remote"
+        ],
+        "related": [
+            "device"
+        ]
+    }
 }

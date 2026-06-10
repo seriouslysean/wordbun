@@ -2,6 +2,7 @@
     "word": "hair",
     "date": "20250713",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "hair",
@@ -54,6 +55,30 @@
             "id": "hair cell",
             "partOfSpeech": "noun",
             "text": "a cell with hairlike processes; especially: one of the sensory cells in the auditory epithelium of the organ of Corti",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
+        },
+        {
+            "id": "hair dryer",
+            "partOfSpeech": "noun",
+            "text": "a device for drying hair: such as",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
+        },
+        {
+            "id": "hair dryer",
+            "partOfSpeech": "noun",
+            "text": "a handheld device that blows usually heated air and is used for drying and often styling hair: blow dryer",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
+        },
+        {
+            "id": "hair dryer",
+            "partOfSpeech": "noun",
+            "text": "a large domed appliance used usually in hair salons that is positioned over a seated person's head to dry or set the hair (as during coloring or perming)",
             "attributionText": "from Merriam-Webster's Collegiate Dictionary",
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
@@ -120,14 +145,38 @@
             "attributionText": "from Merriam-Webster's Collegiate Dictionary",
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
-        },
-        {
-            "id": "hair spray",
-            "partOfSpeech": "noun",
-            "text": "a liquid sprayed on the hair to keep it in place after styling",
-            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
-            "sourceDictionary": "collegiate",
-            "sourceUrl": "https://www.merriam-webster.com/dictionary/hair"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈher",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/h/hair0001.mp3",
+        "etymology": "Middle English, from Old English hǣr; akin to Old High German hār hair",
+        "synonyms": [
+            "hair's-breadth",
+            "hairsbreadth",
+            "whisker"
+        ],
+        "related": [
+            "body covering",
+            "hairy",
+            "haired",
+            "coat",
+            "pelage",
+            "guard hair",
+            "mane",
+            "forelock",
+            "foretop",
+            "beard",
+            "body hair",
+            "down",
+            "pile",
+            "head of hair",
+            "cowlick",
+            "hairdo",
+            "hairstyle",
+            "lock",
+            "curl",
+            "facial hair"
+        ]
+    }
 }

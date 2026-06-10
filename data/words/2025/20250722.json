@@ -2,6 +2,7 @@
     "word": "lotion",
     "date": "20250722",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "lotion",
@@ -11,5 +12,35 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/lotion"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈlō-shən",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/l/lotion01.mp3",
+        "etymology": "Middle English loscion, from Latin lotion-, lotio act of washing, from lavere to wash ",
+        "synonyms": [
+            "application"
+        ],
+        "related": [
+            "toiletry",
+            "toilet articles",
+            "after-shave",
+            "after-shave lotion",
+            "body lotion",
+            "hand lotion",
+            "toner",
+            "remedy",
+            "curative",
+            "put on",
+            "apply",
+            "blackwash",
+            "black lotion",
+            "calamine lotion",
+            "eye-lotion",
+            "eyewash",
+            "liniment",
+            "embrocation",
+            "menthol",
+            "rubbing alcohol"
+        ]
+    }
 }

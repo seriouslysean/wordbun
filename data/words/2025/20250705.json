@@ -2,6 +2,7 @@
     "word": "sun",
     "date": "20250705",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "sun",
@@ -126,5 +127,21 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/sun"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈsən",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/s/sun00001.mp3",
+        "etymology": "Middle English sunne, from Old English; akin to Old High German sunna sun, Latin sol ",
+        "synonyms": [
+            "sunlight",
+            "sunshine"
+        ],
+        "related": [
+            "light",
+            "visible light",
+            "insolate",
+            "sunbathe",
+            "sunburst"
+        ]
+    }
 }

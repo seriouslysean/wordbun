@@ -2,6 +2,7 @@
     "word": "playhouse",
     "date": "20250821",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "playhouse",
@@ -19,5 +20,17 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/playhouse"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈplā-ˌhau̇s",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/playho01.mp3",
+        "synonyms": [
+            "wendy house"
+        ],
+        "related": [
+            "plaything",
+            "toy",
+            "tree house"
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "word": "blueberry",
     "date": "20251021",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "blueberry",
@@ -35,5 +36,34 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/blueberry"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈblü-ˌber-ē",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/bluebe03.mp3",
+        "synonyms": [
+            "blueberry bush"
+        ],
+        "related": [
+            "shrub",
+            "bush",
+            "huckleberry",
+            "farkleberry",
+            "sparkleberry",
+            "low-bush blueberry",
+            "low blueberry",
+            "rabbiteye blueberry",
+            "rabbit-eye blueberry",
+            "dwarf bilberry",
+            "dwarf blueberry",
+            "high-bush blueberry",
+            "tall bilberry",
+            "evergreen blueberry",
+            "Vaccinium myrsinites",
+            "evergreen huckleberry",
+            "Vaccinium ovatum",
+            "bilberry",
+            "thin-leaved bilberry",
+            "whortleberry"
+        ]
+    }
 }

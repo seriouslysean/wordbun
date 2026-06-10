@@ -2,6 +2,7 @@
     "word": "house",
     "date": "20250804",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "house",
@@ -192,5 +193,36 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/house"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈhau̇s",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/h/house001.mp3",
+        "etymology": "Middle English hous, from Old English hūs; akin to Old High German hūs house",
+        "synonyms": [
+            "firm",
+            "business firm"
+        ],
+        "related": [
+            "dwelling",
+            "home",
+            "building",
+            "edifice",
+            "put up",
+            "beach house",
+            "boarding house",
+            "boardinghouse",
+            "bungalow",
+            "cottage",
+            "cabin",
+            "chalet",
+            "chapterhouse",
+            "fraternity house",
+            "country house",
+            "detached house",
+            "single dwelling",
+            "dollhouse",
+            "doll's house",
+            "duplex house"
+        ]
+    }
 }

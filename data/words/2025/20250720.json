@@ -2,6 +2,7 @@
     "word": "kitty",
     "date": "20250720",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "kitty",
@@ -38,6 +39,14 @@
             ]
         },
         {
+            "id": "kitty litter",
+            "partOfSpeech": "noun",
+            "text": "an absorbent usually coarse substance used in litter boxes: cat litter",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/kitty"
+        },
+        {
             "id": "catercorner",
             "text": "in a diagonal or oblique position",
             "attributionText": "from Merriam-Webster's Collegiate Dictionary",
@@ -64,5 +73,18 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/kitty"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈki-tē",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/k/kitty001.mp3",
+        "synonyms": [
+            "pool",
+            "pot",
+            "jackpot"
+        ],
+        "related": [
+            "stake",
+            "stakes"
+        ]
+    }
 }

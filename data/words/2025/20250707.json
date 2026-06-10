@@ -2,6 +2,7 @@
     "word": "cup",
     "date": "20250707",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "cup",
@@ -131,6 +132,18 @@
             "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
         },
         {
+            "id": "menstrual cup",
+            "partOfSpeech": "noun",
+            "text": "a small flexible usually silicone bell-shaped cup that is inserted into the vaginal canal to collect the uterine flow during menstruation, is held in place by suction, and is typically reusable",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup",
+            "examples": [
+                "A menstrual cup can be worn up to 12 hours. Typically, tampons or pads should be changed every four to six hours.",
+                "While menstrual cups aren't for everyone, they're reusable and can cut future costs for other products, as well as being discreet and more sustainable."
+            ]
+        },
+        {
             "id": "optic cup",
             "partOfSpeech": "noun",
             "text": "the optic vesicle after invaginating to form a 2-layered cup from which the retina and pigmented layer of the eye will develop —called also eyecup",
@@ -153,22 +166,33 @@
             "attributionText": "from Merriam-Webster's Collegiate Dictionary",
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
-        },
-        {
-            "id": "stirrup cup",
-            "partOfSpeech": "noun",
-            "text": "a small serving of drink (as wine) taken by a rider about to depart; also: the vessel in which it is served",
-            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
-            "sourceDictionary": "collegiate",
-            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
-        },
-        {
-            "id": "stirrup cup",
-            "partOfSpeech": "noun",
-            "text": "a farewell cup",
-            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
-            "sourceDictionary": "collegiate",
-            "sourceUrl": "https://www.merriam-webster.com/dictionary/cup"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈkəp",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/cup00001.mp3",
+        "etymology": "Middle English cuppe, from Old English, from Late Latin cuppa cup, alteration of Latin cupa tub ",
+        "synonyms": [
+            "cupful"
+        ],
+        "related": [
+            "crockery",
+            "dishware",
+            "container",
+            "beaker",
+            "chalice",
+            "goblet",
+            "coffee cup",
+            "Dixie cup",
+            "paper cup",
+            "grace cup",
+            "kylix",
+            "cylix",
+            "mustache cup",
+            "moustache cup",
+            "scyphus",
+            "teacup",
+            "containerful"
+        ]
+    }
 }

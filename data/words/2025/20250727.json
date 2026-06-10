@@ -2,6 +2,7 @@
     "word": "mat",
     "date": "20250727",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "mat",
@@ -200,5 +201,20 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/mat"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈmat",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/m/mat00001.mp3",
+        "etymology": "Middle English, from Old English meatte, from Late Latin matta, of Semitic origin; akin to Hebrew miṭṭāh bed",
+        "synonyms": [
+            "matting"
+        ],
+        "related": [
+            "floor cover",
+            "floor covering",
+            "doormat",
+            "welcome mat",
+            "mounting"
+        ]
+    }
 }

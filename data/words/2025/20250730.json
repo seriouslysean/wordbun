@@ -2,6 +2,7 @@
     "word": "reindeer",
     "date": "20250730",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "reindeer",
@@ -34,5 +35,23 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/reindeer"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈrān-ˌdir",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/r/reinde01.mp3",
+        "etymology": "Middle English reindere, from Old Norse hreinn reindeer + Middle English deer animal, deer",
+        "synonyms": [
+            "caribou",
+            "Greenland caribou",
+            "Rangifer tarandus"
+        ],
+        "related": [
+            "deer",
+            "cervid",
+            "woodland caribou",
+            "Rangifer caribou",
+            "barren ground caribou",
+            "Rangifer arcticus"
+        ]
+    }
 }

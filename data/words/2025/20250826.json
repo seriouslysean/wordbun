@@ -2,6 +2,7 @@
     "word": "outside",
     "date": "20250826",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "outside",
@@ -228,5 +229,22 @@
                 "… at exactly the moment we were walking past a lineup at the check-out, in all innocence, she [a young child] used her loud outside voice and asked: \"What colour are your panties, Grandma?\""
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˌau̇t-ˈsīd",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/o/outsid01.mp3",
+        "synonyms": [
+            "exterior"
+        ],
+        "antonyms": [
+            "inside"
+        ],
+        "related": [
+            "region",
+            "part",
+            "outdoors",
+            "out-of-doors",
+            "surface"
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "word": "backpack",
     "date": "20250816",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "backpack",
@@ -70,5 +71,24 @@
                 "We had to backpack everything to last the week."
             ]
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈbak-ˌpak",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/backpa01.mp3",
+        "synonyms": [
+            "back pack",
+            "knapsack",
+            "packsack",
+            "rucksack",
+            "haversack"
+        ],
+        "related": [
+            "bag",
+            "backpacker",
+            "packer",
+            "pack",
+            "kitbag",
+            "kit bag"
+        ]
+    }
 }

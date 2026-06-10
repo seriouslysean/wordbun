@@ -2,6 +2,7 @@
     "word": "foam",
     "date": "20260106",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "foam",
@@ -143,5 +144,30 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/foam"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈfōm",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/f/foam0001.mp3",
+        "etymology": "Middle English fome, from Old English fām; akin to Old High German feim foam, Latin spuma foam, pumex pumice",
+        "synonyms": [
+            "froth"
+        ],
+        "related": [
+            "bubble",
+            "spume",
+            "bubbling",
+            "bubbly",
+            "shaving foam",
+            "head",
+            "lather",
+            "soapsuds",
+            "suds",
+            "white water",
+            "whitewater",
+            "material",
+            "stuff",
+            "Styrofoam",
+            "foam rubber"
+        ]
+    }
 }

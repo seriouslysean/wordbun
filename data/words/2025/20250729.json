@@ -2,6 +2,7 @@
     "word": "ladybug",
     "date": "20250729",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "ladybug",
@@ -11,5 +12,26 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/ladybug"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈlā-dē-ˌbəg",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/l/ladybu01.mp3",
+        "etymology": "Our Lady, the Virgin Mary",
+        "synonyms": [
+            "ladybeetle",
+            "lady beetle",
+            "ladybird",
+            "ladybird beetle"
+        ],
+        "related": [
+            "beetle",
+            "two-spotted ladybug",
+            "Adalia bipunctata",
+            "Mexican bean beetle",
+            "bean beetle",
+            "Hippodamia convergens",
+            "vedalia",
+            "Rodolia cardinalis"
+        ]
+    }
 }

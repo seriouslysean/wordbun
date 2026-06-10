@@ -2,6 +2,7 @@
     "word": "underground",
     "date": "20250811",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "underground",
@@ -99,5 +100,9 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/underground"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˌən-dər-ˈgrau̇nd",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/u/underg07.mp3"
+    }
 }

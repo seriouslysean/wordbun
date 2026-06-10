@@ -2,6 +2,7 @@
     "word": "playground",
     "date": "20250719",
     "adapter": "merriam-webster",
+    "preserveCase": false,
     "data": [
         {
             "id": "playground",
@@ -33,5 +34,23 @@
             "sourceDictionary": "collegiate",
             "sourceUrl": "https://www.merriam-webster.com/dictionary/playground"
         }
-    ]
+    ],
+    "enrichment": {
+        "pronunciation": "ˈplā-ˌgrau̇nd",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/playgr01.mp3",
+        "synonyms": [
+            "resort area",
+            "vacation spot"
+        ],
+        "related": [
+            "area",
+            "country",
+            "watering place",
+            "watering hole",
+            "borscht circuit",
+            "borsht circuit",
+            "yard",
+            "grounds"
+        ]
+    }
 }

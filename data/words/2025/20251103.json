@@ -2,6 +2,7 @@
     "word": "candy corn",
     "date": "20251103",
     "adapter": "wordnik",
+    "preserveCase": false,
     "data": [
         {
             "id": "C5067000-1",
@@ -34,5 +35,11 @@
             "synonyms": [],
             "antonyms": []
         }
-    ]
+    ],
+    "enrichment": {
+        "related": [
+            "candy",
+            "confect"
+        ]
+    }
 }
