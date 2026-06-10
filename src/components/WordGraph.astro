@@ -36,7 +36,20 @@ const { graph } = Astro.props;
 )}
 
 <script>
-  import { layoutGraph, resolveCollisions } from '#utils/force-layout';
+  import { layoutGraph, placeLabels, resolveCollisions, type LabelSide } from '#utils/force-layout';
+
+  // Labels hug their dot (just clear of it) so the word reads as attached to the
+  // dot, not as a separate node. Shared so the layout and CSS transform agree.
+  const DOT_RADIUS = 6;
+  const LABEL_GAP = 0;
+  const OFFSET = DOT_RADIUS + LABEL_GAP;
+
+  const LABEL_TRANSFORMS: Record<LabelSide, string> = {
+    above: `translate(-50%, calc(-100% - ${OFFSET}px))`,
+    below: `translate(-50%, ${OFFSET}px)`,
+    left: `translate(calc(-100% - ${OFFSET}px), -50%)`,
+    right: `translate(${OFFSET}px, -50%)`,
+  };
 
   const root = document.querySelector<HTMLElement>('[data-word-graph]');
   const canvas = root?.querySelector<HTMLElement>('.word-graph__canvas');
@@ -57,23 +70,29 @@ const { graph } = Astro.props;
       if (!width || !height) {
         return;
       }
-      // Measure each label once; the collision box is centred on the dot and
-      // tall enough to cover the label that floats above it.
-      const boxes = labelEls.map(el => {
+      // Measure each label once.
+      const labelBoxes = labelEls.map(el => {
         const rect = el?.getBoundingClientRect();
-        const labelWidth = rect ? rect.width : 40;
-        const labelHeight = rect ? rect.height : 14;
-        return { width: labelWidth + 14, height: (labelHeight + 14) * 2 };
+        return { width: rect ? rect.width : 40, height: rect ? rect.height : 14 };
       });
+      // Spread dots so a label footprint fits beside each with breathing room,
+      // then pick the best free side per label.
+      const spacingBoxes = labelBoxes.map(box => ({ width: box.width + 28, height: box.height + 32 }));
 
       const points = layoutGraph(nodeEls.length, edges, width, height, { padding: 16 });
-      resolveCollisions(points, boxes, width, height);
+      resolveCollisions(points, spacingBoxes, width, height);
+      const sides = placeLabels(points, labelBoxes, width, height, DOT_RADIUS, LABEL_GAP);
 
       nodeEls.forEach((el, index) => {
         const point = points[index];
+        const side = sides[index] ?? 'above';
         if (point) {
           el.style.left = `${point.x}px`;
           el.style.top = `${point.y}px`;
+        }
+        const label = labelEls[index];
+        if (label) {
+          label.style.transform = LABEL_TRANSFORMS[side];
         }
       });
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { layoutGraph, resolveCollisions } from '#utils/force-layout';
+import { layoutGraph, placeLabels, resolveCollisions } from '#utils/force-layout';
 
 describe('force-layout', () => {
   describe('layoutGraph', () => {
@@ -58,6 +58,24 @@ describe('force-layout', () => {
         expect(point.x).toBeLessThanOrEqual(400);
         expect(point.y).toBeLessThanOrEqual(300);
       }
+    });
+  });
+
+  describe('placeLabels', () => {
+    it('returns a valid side for every node', () => {
+      const points = [{ x: 100, y: 100 }, { x: 130, y: 100 }, { x: 300, y: 300 }];
+      const boxes = points.map(() => ({ width: 40, height: 14 }));
+      const sides = placeLabels(points, boxes, 1000, 500);
+      expect(sides).toHaveLength(3);
+      for (const side of sides) {
+        expect(['above', 'below', 'left', 'right']).toContain(side);
+      }
+    });
+
+    it('does not place a label off the top of the frame', () => {
+      // A node hugging the top edge cannot put its label above (it would clip).
+      const sides = placeLabels([{ x: 200, y: 5 }], [{ width: 40, height: 20 }], 1000, 500);
+      expect(sides[0]).not.toBe('above');
     });
   });
 });

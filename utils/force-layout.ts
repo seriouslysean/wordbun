@@ -162,6 +162,117 @@ export const layoutGraph = (
   }));
 };
 
+export type LabelSide = 'above' | 'below' | 'left' | 'right';
+
+const SIDES: LabelSide[] = ['above', 'below', 'left', 'right'];
+
+interface Rect {
+  l: number;
+  t: number;
+  r: number;
+  b: number;
+}
+
+/** The rect a label occupies when placed on a given side of its dot. */
+const labelRect = (point: Point, box: Box, side: LabelSide, dotR: number, gap: number): Rect => {
+  const halfW = box.width / 2;
+  const halfH = box.height / 2;
+  let cx = point.x;
+  let cy = point.y;
+  if (side === 'above') {
+    cy = point.y - dotR - gap - halfH;
+  } else if (side === 'below') {
+    cy = point.y + dotR + gap + halfH;
+  } else if (side === 'left') {
+    cx = point.x - dotR - gap - halfW;
+  } else {
+    cx = point.x + dotR + gap + halfW;
+  }
+  return { l: cx - halfW, t: cy - halfH, r: cx + halfW, b: cy + halfH };
+};
+
+const overlapArea = (a: Rect, b: Rect): number => {
+  const w = Math.min(a.r, b.r) - Math.max(a.l, b.l);
+  const h = Math.min(a.b, b.b) - Math.max(a.t, b.t);
+  return w > 0 && h > 0 ? w * h : 0;
+};
+
+/**
+ * Four-position labelling: each label is parked above, below, left or right of
+ * its dot — whichever side overlaps the fewest other labels and dots (and stays
+ * in frame). This is the standard map-labelling technique; choosing the free
+ * side per node clears crowding that "always above" can't, since wide labels in
+ * a tight cluster stop fighting for the same space. Greedy coordinate descent
+ * over a few passes settles it. Returns the chosen side per node.
+ */
+export const placeLabels = (
+  points: Point[],
+  boxes: Box[],
+  width: number,
+  height: number,
+  dotR = 6,
+  gap = 6,
+): LabelSide[] => {
+  const assigned: LabelSide[] = points.map(() => 'above');
+  const dotRects: Rect[] = points.map(p => ({ l: p.x - dotR, t: p.y - dotR, r: p.x + dotR, b: p.y + dotR }));
+
+  for (let pass = 0; pass < 6; pass++) {
+    let changed = false;
+    for (let i = 0; i < points.length; i++) {
+      const point = points[i];
+      const box = boxes[i];
+      if (!point || !box) {
+        continue;
+      }
+      let bestSide: LabelSide = assigned[i] ?? 'above';
+      let bestCost = Infinity;
+      for (const side of SIDES) {
+        const rect = labelRect(point, box, side, dotR, gap);
+        let cost = 0;
+        // Heavy penalty for leaving the frame.
+        if (rect.l < 0) {
+          cost += -rect.l * 1000;
+        }
+        if (rect.t < 0) {
+          cost += -rect.t * 1000;
+        }
+        if (rect.r > width) {
+          cost += (rect.r - width) * 1000;
+        }
+        if (rect.b > height) {
+          cost += (rect.b - height) * 1000;
+        }
+        for (let j = 0; j < points.length; j++) {
+          if (j === i) {
+            continue;
+          }
+          const other = points[j];
+          const otherBox = boxes[j];
+          if (!other || !otherBox) {
+            continue;
+          }
+          cost += overlapArea(rect, labelRect(other, otherBox, assigned[j] ?? 'above', dotR, gap));
+        }
+        for (const dot of dotRects) {
+          cost += overlapArea(rect, dot);
+        }
+        if (cost < bestCost) {
+          bestCost = cost;
+          bestSide = side;
+        }
+      }
+      if (bestSide !== assigned[i]) {
+        assigned[i] = bestSide;
+        changed = true;
+      }
+    }
+    if (!changed) {
+      break;
+    }
+  }
+  return assigned;
+};
+
 /**
  * Nudges points apart until their label boxes (centred on each point) no longer
  * overlap — the d3-forceCollide idea, by hand: each pass shoves every
