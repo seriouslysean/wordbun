@@ -7,12 +7,19 @@ interface Props {
 }
 
 const { etymology } = Astro.props;
+
+// Source etymology notes omit terminal punctuation; add a period so the origin
+// reads as a finished line.
+const etymologyText = etymology?.trim();
+const formattedEtymology = etymologyText && !/[.!?]$/.test(etymologyText)
+  ? `${etymologyText}.`
+  : etymologyText;
 ---
 
-{etymology && (
+{formattedEtymology && (
   <section class="word-etymology">
     <SectionHeading text={t('word.etymology_heading')} align="center" underline={false} />
-    <p class="word-etymology__text">{etymology}</p>
+    <p class="word-etymology__text">{formattedEtymology}</p>
   </section>
 )}
 

@@ -163,22 +163,32 @@ if (section && track) {
     font-weight: 500;
   }
 
-  /* Per-sense example sentences, set apart from the italic definition by an
-     upright muted treatment and a quote-style left rule (no heading). */
+  /* Per-sense example sentences, each led by a quotation mark so it reads as one
+     quoted usage in the wild (no heading). */
   .word-senses__examples {
     list-style: none;
     margin: var(--spacing-base) 0 0;
-    padding: 0 0 0 var(--spacing-small);
-    border-left: 2px solid var(--color-border);
+    padding: 0 0 0 var(--spacing-base);
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-small);
   }
 
   .word-senses__example {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-small);
     color: var(--color-text-light);
     line-height: 1.5;
     font-size: var(--font-size-small);
+  }
+
+  .word-senses__example::before {
+    content: '\201C';
+    flex-shrink: 0;
+    color: var(--color-text-light);
+    font-size: 1.25rem;
+    line-height: 1;
   }
 
   /* Inset prev/next arrows, padded clear of the slide text. */
@@ -215,13 +225,14 @@ if (section && track) {
     cursor: default;
   }
 
+  /* Sit just outside the slide so the arrows clear the description + examples. */
   .word-senses__arrow--prev {
-    left: var(--spacing-small);
+    left: calc(-1 * var(--spacing-small));
     border-radius: var(--border-radius) 0 0 var(--border-radius);
   }
 
   .word-senses__arrow--next {
-    right: var(--spacing-small);
+    right: calc(-1 * var(--spacing-small));
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
   }
 

@@ -27,8 +27,10 @@ const enrichment = word.enrichment ?? null;
 
 <article class="word">
   <div class="word__hero">
-    <time class="word__date" datetime={formatISODate(word.date)} title={formatDate(word.date)}>{formatDate(word.date) || ' '}</time>
-    <Heading level={1} text={word.word} id="word-title" preserveCase={word.preserveCase} />
+    <div class="word__title">
+      <time class="word__date" datetime={formatISODate(word.date)} title={formatDate(word.date)}>{formatDate(word.date) || ' '}</time>
+      <Heading level={1} text={word.word} id="word-title" preserveCase={word.preserveCase} />
+    </div>
     {word.date && <WordMeta word={word.word} enrichment={enrichment} />}
     <WordSenses senses={senses} meta={meta} />
   </div>
@@ -54,19 +56,29 @@ const enrichment = word.enrichment ?? null;
 
     /* Hero: word + meta + senses fill ~the first viewport, vertically centered.
        min-height (never height) lets a long sense list grow and push the details
-       below the fold rather than clipping the top of the hero. */
+       below the fold rather than clipping the top of the hero. The gap spaces the
+       title group, meta, and senses on one even rhythm. */
     .word__hero {
         min-height: calc(100svh - var(--header-height));
         display: flex;
         flex-direction: column;
         justify-content: center;
+        gap: var(--spacing-large);
     }
 
+    /* Date is a tight eyebrow grouped with the word; the hero gap handles the
+       spacing below the title. Zero the shared component margins so the gap is
+       the single source of vertical rhythm. */
     .word__date {
         display: block;
         font-size: var(--font-size-xs, 0.75rem);
         color: var(--color-text-light);
         margin-bottom: var(--spacing-small);
+    }
+
+    .word__hero :global(.heading),
+    .word__hero :global(.word-meta) {
+        margin-bottom: 0;
     }
 
 </style>
