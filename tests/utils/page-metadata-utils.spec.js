@@ -202,6 +202,9 @@ describe('page-metadata-utils', () => {
   describe('getPageMetadata wrapper', () => {
     it('handles BASE_PATH prefixes', async () => {
       mockEnv.BASE_PATH = '/vocab';
+      // Reset modules so the wrapper re-reads BASE_PATH instead of a value
+      // cached by an earlier test file (the suite runs files in parallel).
+      vi.resetModules();
       const { getPageMetadata: getPageMetadataWrapper } = await import(
         '#astro-utils/page-metadata'
       );
