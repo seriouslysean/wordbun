@@ -80,6 +80,12 @@ the build process itself; the others are real gaps.
   same port, Playwright reuses that server and tests fail with mismatched
   content. Stop the other server, or override via `playwright.config.ts`
   `webServer.url` for parallel work.
+- Same reuse bites within this repo: `reuseExistingServer` is on locally, so
+  a running `astro dev` makes only the sitemap test fail (the sitemap is a
+  build-time integration; dev returns 404), and a leftover `astro preview`
+  serves a stale `dist/` and fails most specs at once. Neither is a code
+  regression. `lsof -ti :4321 | xargs kill` before rerunning; CI always
+  builds and previews fresh.
 
 ## Performance
 

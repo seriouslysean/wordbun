@@ -80,7 +80,7 @@ E2E tests validate the built site as a user would experience it:
 - No overlap with unit tests. Unit tests validate generation logic; E2E validates the rendered output
 - E2E always runs in demo mode (no `BASE_PATH`, `SOURCE_DIR=demo`). The CI workflow skips `setup-env` intentionally — production env vars like `BASE_PATH` would break test selectors
 
-**If tests fail:** Run a specific spec to iterate faster: `npx playwright test tests/e2e/navigation.spec.ts`. Use `--headed` for a visible browser. Check that `dist/` exists and was built with demo defaults (no `BASE_PATH`).
+**If tests fail:** Run a specific spec to iterate faster: `npx playwright test tests/e2e/navigation.spec.ts`. Use `--headed` for a visible browser. Check that `dist/` exists and was built with demo defaults (no `BASE_PATH`), and that nothing stale holds `:4321` (`lsof -ti :4321`) -- Playwright reuses any existing local server, including a leftover `astro preview` or `astro dev`.
 
 ## Summary
 

@@ -15,6 +15,7 @@ Astro static site generator for word-of-the-day websites. Zero application JavaS
 - Comments above the line they describe, never inline.
 - No emojis anywhere in the codebase.
 - Structured logging: `logger.error('message', { key: value })`. No log prefixes.
+- CSS: one width breakpoint (`min-width: 768px`), fluid (`clamp()`, `auto-fill`/`minmax()`) otherwise. Shared link styles are scoped components, not global classes; client-created DOM needs `:global()` under a scoped parent.
 
 ## TypeScript
 

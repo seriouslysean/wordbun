@@ -272,6 +272,8 @@ All user-facing strings go through `locales/en.json`. The `t(key)` function from
 
 All tools are pure Node.js (no Astro deps) and use `util.parseArgs()` for argument parsing.
 
+`npm run tool:local <tool>` runs a tool through `tsx -r dotenv/config`, so `.env` is loaded. The bare `tool:*` scripts (`tool:generate-images`, `tool:regenerate-all-words`, ...) do not load `.env`: image tools render without the site title and the Merriam-Webster adapter throws without its key.
+
 ### `add-word.ts`
 
 Adds a word with dictionary validation, duplicate detection, and automatic image generation.
@@ -298,7 +300,7 @@ npm run tool:local tools/generate-images.ts --force              # Regenerate ex
 
 ### `regenerate-all-words.ts`
 
-Batch refresh of word data from the dictionary API. Supports dry-run mode and rate limiting.
+Batch refresh of word data from the dictionary API. Supports dry-run mode and rate limiting. `--force` re-sources every word through the configured adapter chain (the `adapter` field follows); pronunciation audio and etymology come only from Merriam-Webster, so run it via `tool:local` with `MERRIAM_WEBSTER_API_KEY` in `.env` to backfill them.
 
 ## URL System
 
@@ -381,6 +383,7 @@ Definitions live in `constants/stats.ts`. Computation functions in `utils/word-s
 - **Conversion**: Sharp PNG rasterization (1200x630px, 90% quality, 128-color palette)
 - **Typography**: OpenSans Regular + ExtraBold, gradient text with theme colors
 - **Output**: `public/images/social/{SOURCE_DIR}/2024/20240105-giggle.png` (word) and `public/images/social/pages/{page}.png` (static). `SOURCE_DIR` segment is omitted when unset.
+- **Skip guard**: `.image-settings-hash` (md5 of site id, title, and primary colors) gates regeneration of existing files; `--force` bypasses it. `npm run build` copies `public/` verbatim and never regenerates images.
 
 ## Testing
 
