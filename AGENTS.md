@@ -162,6 +162,14 @@ Each test owns its setup and leaves no trace. Vitest provides purpose-built APIs
 
 Test data lives close to use: global fixtures in `tests/setup.js`, per-file data at describe-block scope, shared helpers (used in 3+ files) in `tests/helpers/` via `#tests/*`.
 
+### CSS: one breakpoint, scoped styles
+
+**One width breakpoint.** `min-width: 768px` divides mobile from desktop; no other width values. Reach for it only when layout genuinely differs (stacked to grid, column to row). Otherwise adapt fluidly: `clamp()` for spacing and sizes, `auto-fill`/`minmax()` for grids, `min()`/`max()`/`vw` for widths. `prefers-color-scheme` and `prefers-reduced-motion` are feature queries, not breakpoints.
+
+**Shared link styles are scoped components, not global classes.** `global.css` sets `a:hover` (specificity 0,1,1), which beats a global utility class (0,1,0) and recolors link text on hover. A scoped component class carries Astro's `data-astro-cid-*` attribute (0,2,0) and wins. `WordChips.astro` is the pattern.
+
+**Client-created DOM needs `:global()`.** Astro scopes styles by stamping the `data-astro-cid-*` attribute on template elements; elements built in a `<script>` carry no attribute, so scoped rules silently miss them. Anchor `:global()` selectors under a scoped parent to keep them contained (`.site-search__results :global(.site-search__result)` in `HeaderSearch.astro`).
+
 ## Import Aliases
 
 Node.js subpath imports (`#` prefix) in `package.json` — the single source of truth for TypeScript, Vite, and Vitest. Always use aliases, never relative paths.
