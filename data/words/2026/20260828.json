@@ -1,0 +1,44 @@
+{
+    "word": "picturesque",
+    "date": "20260828",
+    "adapter": "merriam-webster",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "picturesque",
+            "partOfSpeech": "adjective",
+            "text": "resembling a picture: suggesting a painted scene",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picturesque"
+        },
+        {
+            "id": "picturesque",
+            "partOfSpeech": "adjective",
+            "text": "charming or quaint in appearance",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picturesque"
+        },
+        {
+            "id": "picturesque",
+            "partOfSpeech": "adjective",
+            "text": "evoking mental images: vivid",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/picturesque"
+        }
+    ],
+    "enrichment": {
+        "pronunciation": "ˌpik-chə-ˈresk",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/pictur04.mp3",
+        "etymology": "French & Italian; French pittoresque, from Italian pittoresco, from pittore painter, from Latin pictor, from pingere",
+        "synonyms": [
+            "beautiful",
+            "colorful"
+        ],
+        "related": [
+            "picturesqueness"
+        ]
+    }
+}
