@@ -1,0 +1,134 @@
+{
+    "word": "crunch",
+    "date": "20260907",
+    "adapter": "merriam-webster",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "crunch",
+            "partOfSpeech": "verb",
+            "text": "to chew or press with a crushing noise",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crunch",
+            "examples": [
+                "crunch numbers"
+            ]
+        },
+        {
+            "id": "crunch",
+            "partOfSpeech": "verb",
+            "text": "to make one's way with a crushing noise",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crunch",
+            "examples": [
+                "crunch numbers"
+            ]
+        },
+        {
+            "id": "crunch",
+            "partOfSpeech": "verb",
+            "text": "to chew, press, or grind with a crunching sound",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crunch",
+            "examples": [
+                "crunch numbers"
+            ]
+        },
+        {
+            "id": "crunch",
+            "partOfSpeech": "noun",
+            "text": "an act of crunching",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crunch",
+            "examples": [
+                "ate the cracker in one crunch",
+                "The only sound was the crunch of leaves underfoot.",
+                "There was a rather loud crunch as I bit into the battered dumplings.",
+                "… make sure you have protein, a carbohydrate and a vegetable. You have to have crunch, flavour, salty and sweet in one.",
+                "Texture is king in this salad, … with added crunch from toasted walnuts.",
+                "an energy crunch",
+                "a time crunch",
+                "… the odd loss at Bankwest, combined with winning virtually nothing on the road, is going to come back to haunt them when the season reaches the crunch."
+            ]
+        },
+        {
+            "id": "crunch",
+            "partOfSpeech": "noun",
+            "text": "a sound made by crunching",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crunch",
+            "examples": [
+                "ate the cracker in one crunch",
+                "The only sound was the crunch of leaves underfoot.",
+                "There was a rather loud crunch as I bit into the battered dumplings.",
+                "… make sure you have protein, a carbohydrate and a vegetable. You have to have crunch, flavour, salty and sweet in one.",
+                "Texture is king in this salad, … with added crunch from toasted walnuts.",
+                "an energy crunch",
+                "a time crunch",
+                "… the odd loss at Bankwest, combined with winning virtually nothing on the road, is going to come back to haunt them when the season reaches the crunch."
+            ]
+        },
+        {
+            "id": "crunch",
+            "partOfSpeech": "noun",
+            "text": "the quality of being crunchy: the tendency to make a crunching sound when chewed or pressed",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crunch",
+            "examples": [
+                "ate the cracker in one crunch",
+                "The only sound was the crunch of leaves underfoot.",
+                "There was a rather loud crunch as I bit into the battered dumplings.",
+                "… make sure you have protein, a carbohydrate and a vegetable. You have to have crunch, flavour, salty and sweet in one.",
+                "Texture is king in this salad, … with added crunch from toasted walnuts.",
+                "an energy crunch",
+                "a time crunch",
+                "… the odd loss at Bankwest, combined with winning virtually nothing on the road, is going to come back to haunt them when the season reaches the crunch."
+            ]
+        },
+        {
+            "id": "crunch time",
+            "partOfSpeech": "noun",
+            "text": "a critical moment or period (as near the end of a game) when decisive action is needed",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crunch"
+        },
+        {
+            "id": "big crunch",
+            "partOfSpeech": "noun",
+            "text": "a hypothetical cosmological event in which all matter in the universe collapses to a singularity and which is posited to be a possible fate of the universe if the density of matter in it is sufficiently high",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crunch"
+        }
+    ],
+    "enrichment": {
+        "pronunciation": "ˈkrənch",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/crunch01.mp3",
+        "etymology": "alteration of craunch",
+        "synonyms": [
+            "scranch",
+            "scraunch",
+            "crackle",
+            "cranch",
+            "craunch",
+            "grind"
+        ],
+        "related": [
+            "make noise",
+            "resound",
+            "crump",
+            "thud",
+            "press",
+            "mill",
+            "tyrannize",
+            "tyrannise"
+        ]
+    }
+}
