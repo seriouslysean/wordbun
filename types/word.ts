@@ -127,12 +127,19 @@ export interface WordAdjacentResult {
 /**
  * Generic grouping of words keyed by some attribute (year, length, POS, letter).
  * Single shape replaces three near-identical aliases that diverged in name only.
+ * Partial because a key with no words has no bucket, matching Object.groupBy.
  */
-export type WordGrouping<K extends string | number> = Record<K, WordData[]>;
+export type WordGrouping<K extends string | number> = Partial<Record<K, WordData[]>>;
 
-export type WordGroupByYearResult = WordGrouping<string>;
-export type WordGroupByLengthResult = WordGrouping<number>;
-export type WordGroupByPartOfSpeechResult = WordGrouping<string>;
+/**
+ * A grouping whose every key holds a bucket. The Astro wrappers return this:
+ * they rebuild the object from its entries, so no key is ever bucketless.
+ */
+export type DenseWordGrouping<K extends string | number> = Record<K, WordData[]>;
+
+export type WordGroupByYearResult = DenseWordGrouping<string>;
+export type WordGroupByLengthResult = DenseWordGrouping<number>;
+export type WordGroupByPartOfSpeechResult = DenseWordGrouping<string>;
 
 export interface WordMilestoneItem extends WordData {
   label: string;

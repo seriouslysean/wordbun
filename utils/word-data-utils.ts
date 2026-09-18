@@ -184,19 +184,19 @@ export const getWordsByPartOfSpeech = (partOfSpeech: string, words: WordData[]):
  * Avoids the O(n^2) build-time cost of calling getWordsByLength once per word.
  */
 export const groupWordsByLength = (words: WordData[]): WordGrouping<number> =>
-  Object.groupBy(words, word => word.word.length) as WordGrouping<number>;
+  Object.groupBy(words, word => word.word.length);
 
 /**
  * Group all words by first letter (lowercase) in a single pass.
  */
 export const groupWordsByLetter = (words: WordData[]): WordGrouping<string> =>
-  Object.groupBy(words, word => word.word.charAt(0).toLowerCase()) as WordGrouping<string>;
+  Object.groupBy(words, word => word.word.charAt(0).toLowerCase());
 
 /**
  * Group all words by year (YYYY from word.date) in a single pass.
  */
 export const groupWordsByYear = (words: WordData[]): WordGrouping<string> =>
-  Object.groupBy(words, word => word.date.slice(0, 4)) as WordGrouping<string>;
+  Object.groupBy(words, word => word.date.slice(0, 4));
 
 /**
  * Group words by every normalized part of speech they carry. A word appears in

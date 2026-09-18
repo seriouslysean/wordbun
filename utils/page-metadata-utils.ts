@@ -624,8 +624,11 @@ export function getPageMetadata(path: string, words: WordData[] = []): PageMetad
           ? metadata.secondaryText(count)
           : metadata.secondaryText,
       };
-    default:
-      return metadata;
+    default: {
+      // Exhaustiveness check: a new PageMeta variant fails to compile here
+      const unhandled: never = metadata;
+      throw new Error(`Unhandled page metadata: ${JSON.stringify(unhandled)}`);
+    }
   }
 }
 
