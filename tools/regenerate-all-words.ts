@@ -10,7 +10,6 @@ import type { WordEnrichment } from '#types';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { flattenErrors } from '#utils/text-utils';
 import { isRecord } from '#utils/type-guards';
-import { isValidDictionaryData } from '#utils/word-data-utils';
 import { isWordEnrichment } from '#utils/word-validation';
 
 interface StoredEntry {
@@ -85,13 +84,6 @@ export async function regenerateWordFile(word: string, date: string, originalPat
     }
 
     const { response, adapterName } = await fetchWithFallback(word);
-    const data = response.definitions;
-
-    if (!isValidDictionaryData(data)) {
-      logger.error('Invalid word data received from adapter', { word, adapter: adapterName });
-      return false;
-    }
-
     const relations = await tryFetchRelations(word, primaryPartOfSpeech(response.definitions));
     const { preserveCase, enrichment: storedEnrichment } = readStoredEntry(originalPath);
     const wordData = buildWordData({

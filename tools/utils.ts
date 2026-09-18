@@ -13,7 +13,7 @@ import { formatDate, isValidDate } from '#utils/date-utils';
 import { getSocialCardPath, SOCIAL_DIR } from '#utils/image-path-utils';
 import { getErrorMessage, logger } from '#utils/logger';
 import { isRecord, isString } from '#utils/type-guards';
-import { findValidDefinition, isValidDictionaryData, mergeEnrichment, normalizeToBasePOS } from '#utils/word-data-utils';
+import { findValidDefinition, mergeEnrichment, normalizeToBasePOS } from '#utils/word-data-utils';
 import { parseWordData } from '#utils/word-validation';
 
 // ---------------------------------------------------------------------------
@@ -480,12 +480,6 @@ export async function createWordEntry(word: string, options: CreateWordEntryOpti
   // Fetch word data using finalWord (lowercased by default) so common words match
   // dictionary entries. When preserveCase is true, original capitalization is retained.
   const { response, adapterName } = await fetchWithFallback(finalWord);
-  const data = response.definitions;
-
-  if (!isValidDictionaryData(data)) {
-    throw new Error(`No valid definitions found for word: ${finalWord}`);
-  }
-
   const relations = await tryFetchRelations(finalWord, primaryPartOfSpeech(response.definitions));
   const wordData = buildWordData({ word: finalWord, date, adapterName, response, relations, preserveCase });
 
@@ -493,5 +487,5 @@ export async function createWordEntry(word: string, options: CreateWordEntryOpti
 
   logger.info('Word entry created', { word: finalWord, date });
 
-  return { filePath, data };
+  return { filePath, data: response.definitions };
 }
