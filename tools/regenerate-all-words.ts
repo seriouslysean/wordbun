@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { setTimeout as delay } from 'node:timers/promises';
 
 import { fetchWithFallback } from '#adapters';
 import { isEntryPoint } from '#tools/entry';
@@ -86,7 +87,7 @@ async function regenerateWordFile(word: string, date: string, originalPath: stri
         attempt: retryCount + 1,
         maxRetries,
       });
-      await new Promise(resolve => setTimeout(resolve, backoffDelay));
+      await delay(backoffDelay);
       return regenerateWordFile(word, date, originalPath, retryCount + 1);
     }
 
@@ -143,7 +144,7 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<void> {
         if (i > 0 && i % options.batchSize === 0) {
           const currentBatch = i / options.batchSize;
           logger.info('Completed batch, pausing', { batch: currentBatch, delaySec: options.batchTimeout / 1000 });
-          await new Promise(resolve => setTimeout(resolve, options.batchTimeout));
+          await delay(options.batchTimeout);
         }
 
         logger.info('Regenerating word', { index: i + 1, total: wordsToRegenerate.length, word: item.word });
@@ -153,7 +154,7 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<void> {
 
         // Use standard delay between requests within a batch
         if (i < wordsToRegenerate.length - 1 && (i + 1) % options.batchSize !== 0) {
-          await new Promise(resolve => setTimeout(resolve, options.timeout));
+          await delay(options.timeout);
         }
       } catch (error) {
         logger.error('Failed to process word', { word: item.word, error: getErrorMessage(error) });

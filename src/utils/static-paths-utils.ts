@@ -17,12 +17,12 @@ import {
   getWordStats,
 } from '#astro-utils/word-stats-utils';
 
-const ordinal = (n: number): string => {
-  const suffixes = ['th', 'st', 'nd', 'rd'];
-  const remainder = n % 100;
-  const suffix = suffixes[(remainder - 20) % 10] ?? suffixes[remainder] ?? 'th';
-  return n + suffix;
-};
+const ORDINAL_RULES = new Intl.PluralRules('en', { type: 'ordinal' });
+
+// English ordinals resolve to one, two, few or other; other is every 'th'
+const ORDINAL_SUFFIXES: Partial<Record<Intl.LDMLPluralRule, string>> = { one: 'st', two: 'nd', few: 'rd' };
+
+const ordinal = (n: number): string => `${n}${ORDINAL_SUFFIXES[ORDINAL_RULES.select(n)] ?? 'th'}`;
 
 import type { WordData, WordMilestoneItem } from '#types';
 
