@@ -176,8 +176,8 @@ Node.js subpath imports (`#` prefix) in `package.json` — the single source of 
 
 Node resolves these without guessing extensions, so the rule is: aliases for TypeScript directories (`#utils`, `#astro-utils`, `#types`, `#constants`, `#config`, `#adapters`, `#tools`) are written without an extension and the `imports` target supplies `.ts`; every other alias carries the file's extension in the specifier (`#components/WordChips.astro`, `#locales/en.json`, `#tests/helpers/spawn.js`). JSON imports take `with { type: 'json' }`. There is no `paths` block in `tsconfig.json` — do not add one.
 
-| Alias | Path | Context |
-|-------|------|---------|
+| Alias | Directory | Context |
+|-------|-----------|---------|
 | `#utils/*` | `utils/*` | Pure Node.js, safe everywhere |
 | `#astro-utils/*` | `src/utils/*` | Astro only, never from `utils/` or `tools/` |
 | `#components/*` | `src/components/*` | |

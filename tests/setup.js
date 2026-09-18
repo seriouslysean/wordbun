@@ -1,5 +1,5 @@
 import { afterEach, vi } from 'vitest';
-import mockTranslations from '#tests/locales/en-us.fixtures.json';
+import mockTranslations from '#tests/locales/en-us.fixtures.json' with { type: 'json' };
 
 // Mock astro:env/client with mutable defaults for all tests
 // Individual tests can override via mockEnv.FIELD = 'value'
