@@ -98,6 +98,22 @@ const snapshot = dir => Object.fromEntries(
     .toSorted(([a], [b]) => a.localeCompare(b)),
 );
 
+const git = (dir, ...args) => execFileSync('git', args, {
+  cwd: path.join(ctx.dir, dir),
+  encoding: 'utf-8',
+  stdio: 'pipe',
+  env: {
+    PATH: process.env.PATH,
+    HOME: ctx.dir,
+    GIT_CONFIG_GLOBAL: '/dev/null',
+    GIT_CONFIG_NOSYSTEM: '1',
+    GIT_AUTHOR_NAME: 'Fixture',
+    GIT_AUTHOR_EMAIL: 'fixture@example.com',
+    GIT_COMMITTER_NAME: 'Fixture',
+    GIT_COMMITTER_EMAIL: 'fixture@example.com',
+  },
+}).trim();
+
 const ENGINE_REPOSITORY = workflow('site-deploy.yml').env.ENGINE_REPOSITORY;
 
 beforeEach(() => {
@@ -303,22 +319,6 @@ case "$2" in
 esac
 `;
 
-    const git = (dir, ...args) => execFileSync('git', args, {
-      cwd: path.join(ctx.dir, dir),
-      encoding: 'utf-8',
-      stdio: 'pipe',
-      env: {
-        PATH: process.env.PATH,
-        HOME: ctx.dir,
-        GIT_CONFIG_GLOBAL: '/dev/null',
-        GIT_CONFIG_NOSYSTEM: '1',
-        GIT_AUTHOR_NAME: 'Fixture',
-        GIT_AUTHOR_EMAIL: 'fixture@example.com',
-        GIT_COMMITTER_NAME: 'Fixture',
-        GIT_COMMITTER_EMAIL: 'fixture@example.com',
-      },
-    }).trim();
-
     const stepEnv = () => ({
       PATH: `${path.join(ctx.dir, 'bin')}:${process.env.PATH}`,
       NPM_LOG: path.join(ctx.dir, 'npm.log'),
@@ -455,6 +455,123 @@ esac
       expect(result.committed.code).not.toBe(0);
       expect(result.committed.output).toMatch(/rejected|non-fast-forward|fetch first/);
       expect(git('origin.git', 'rev-parse', 'main')).toBe(git('other', 'rev-parse', 'HEAD'));
+    });
+  });
+
+  // The content contract end to end on one synthetic site, with the tools
+  // replaced by a fake that writes what they write: a word file, and a card
+  // named YYYYMMDD-<lower-case word>.png for every word plus a page card and
+  // the marker. The site has a word with a space and an ampersand, its own
+  // favicon, and a stale card for a word it no longer has.
+  describe('a synthetic site through overlay and copy-back', () => {
+    const SOCIAL = 'public/images/social';
+    const ROCK = `${SOCIAL}/2026/20260101-rock & roll.png`;
+    const STALE = `${SOCIAL}/2025/20251231-gone.png`;
+
+    const FAKE_TOOLS = `#!/usr/bin/env bash
+case "$2" in
+  tool:add-word)
+    jq -n --arg word "\${@: -2:1}" '{word: $word}' > data/words/2026/20260918.json
+    ;;
+  tool:generate-images)
+    for file in data/words/*/*.json; do
+      date=$(basename "$file" .json)
+      word=$(jq -r .word "$file")
+      lower=$(printf '%s' "$word" | tr '[:upper:]' '[:lower:]')
+      mkdir -p "${SOCIAL}/\${date:0:4}"
+      printf 'card for %s\\n' "$word" > "${SOCIAL}/\${date:0:4}/$date-$lower.png"
+    done
+    mkdir -p ${SOCIAL}/pages
+    echo 'page card' > ${SOCIAL}/pages/index.png
+    echo 'new marker' > ${SOCIAL}/.image-settings-hash
+    ;;
+esac
+`;
+
+    const SITE = {
+      'data/words/2026/20260101.json': '{"word":"Rock & Roll"}\n',
+      'data/words/2026/20260102.json': '{"word":"serendipity"}\n',
+      [ROCK]: 'old card\n',
+      [`${SOCIAL}/2026/20260102-serendipity.png`]: 'card for serendipity\n',
+      [STALE]: 'stale card\n',
+      [`${SOCIAL}/.image-settings-hash`]: 'old marker\n',
+      'public/favicon.svg': 'site favicon\n',
+    };
+
+    const ENGINE_CODE = {
+      'package.json': '{}\n',
+      'src/pages/index.astro': 'engine page\n',
+    };
+
+    const env = () => ({
+      PATH: `${path.join(ctx.dir, 'bin')}:${process.env.PATH}`,
+      GITHUB_REPOSITORY: 'someone/wordbee',
+      GITHUB_REPOSITORY_OWNER: 'someone',
+      GITHUB_REF: 'refs/heads/main',
+      SOURCE_DIR: '',
+    });
+
+    beforeEach(() => {
+      write('bin/npm', FAKE_TOOLS);
+      fs.chmodSync(path.join(ctx.dir, 'bin/npm'), 0o755);
+
+      Object.entries(ENGINE_CODE).forEach(([file, content]) => write(`engine/${file}`, content));
+      write('engine/data/demo/words/2025/20250101.json', '{"word":"demo"}\n');
+      write('engine/public/favicon.svg', 'engine favicon\n');
+      write('engine/public/demo/images/social/2025/20250101-demo.png', 'demo card\n');
+
+      git('.', 'init', '--quiet', '--bare', '--initial-branch=main', 'origin.git');
+      git('.', 'init', '--quiet', '--initial-branch=main', 'site');
+      Object.entries(SITE).forEach(([file, content]) => write(`site/${file}`, content));
+      git('site', 'add', '-A');
+      git('site', 'commit', '--quiet', '-m', 'site');
+      git('site', 'remote', 'add', 'origin', '../origin.git');
+      git('site', 'push', '--quiet', 'origin', 'main');
+    });
+
+    it('builds from exactly the site content, favicon and stale card included', async () => {
+      const result = await runStep('site-deploy.yml', 'Overlay site content', { env: env() });
+
+      expect(result.code).toBe(0);
+      expect(snapshot('engine')).toEqual({ ...ENGINE_CODE, ...SITE });
+    });
+
+    it('commits only the new word, the cards that changed and the marker', async () => {
+      const overlay = await runStep('site-add-word.yml', 'Overlay site content', { env: env() });
+      expect(overlay.code).toBe(0);
+      const added = await runStep('site-add-word.yml', 'Add word', {
+        env: env(),
+        context: { 'inputs.word': 'Ice Cream', 'inputs.date': '', 'inputs.overwrite': 'false', 'inputs.preserve_case': 'false' },
+      });
+      expect(added.code).toBe(0);
+      expect((await runStep('site-add-word.yml', 'Configure Git', { env: env() })).code).toBe(0);
+
+      const committed = await runStep('site-add-word.yml', 'Commit and push changes', {
+        env: env(),
+        context: { 'steps.add_word.outputs.word': parseOutputs(added.outputs).word },
+      });
+
+      expect(committed.code).toBe(0);
+      expect(git('site', 'show', '--name-status', '--format=', 'HEAD').split('\n')).toEqual([
+        'A\tdata/words/2026/20260918.json',
+        `M\t${SOCIAL}/.image-settings-hash`,
+        `M\t${ROCK}`,
+        `A\t${SOCIAL}/2026/20260918-ice cream.png`,
+        `A\t${SOCIAL}/pages/index.png`,
+      ]);
+      expect(git('origin.git', 'rev-parse', 'main')).toBe(git('site', 'rev-parse', 'HEAD'));
+      expect(git('site', 'status', '--porcelain', '--untracked-files=all')).toBe('');
+
+      const written = {
+        'data/words/2026/20260918.json': '{\n  "word": "Ice Cream"\n}\n',
+        [ROCK]: 'card for Rock & Roll\n',
+        [`${SOCIAL}/2026/20260918-ice cream.png`]: 'card for Ice Cream\n',
+        [`${SOCIAL}/pages/index.png`]: 'page card\n',
+        [`${SOCIAL}/.image-settings-hash`]: 'new marker\n',
+      };
+      expect(snapshot('engine')).toEqual({ ...ENGINE_CODE, ...SITE, ...written });
+      const siteTree = Object.entries(snapshot('site')).filter(([file]) => !file.startsWith('.git/'));
+      expect(Object.fromEntries(siteTree)).toEqual({ ...SITE, ...written });
     });
   });
 });
