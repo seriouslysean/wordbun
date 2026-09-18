@@ -41,7 +41,7 @@ beforeEach(() => {
   vi.resetModules();
   vi.stubGlobal('fetch', ctx.fetch);
   vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
-  vi.stubEnv('DICTIONARY_FALLBACK', '');
+  vi.stubEnv('DICTIONARY_FALLBACK', 'none');
   vi.stubEnv('MERRIAM_WEBSTER_API_KEY', 'test-key');
   vi.doMock('#config/paths', () => ({
     paths: { words: ctx.wordsDir, images: ctx.wordsDir, fonts: ctx.wordsDir, pages: ctx.wordsDir },

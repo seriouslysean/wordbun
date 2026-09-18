@@ -41,11 +41,13 @@ export interface FetchResult {
 /**
  * Parses DICTIONARY_FALLBACK into an ordered list of adapter names.
  * Supports comma-separated values (e.g. "wordnik,wiktionary").
- * Defaults to "wiktionary" when unset. Set to "none" or "" to disable.
+ * Defaults to "wiktionary" when unset or blank: CI exports an unset
+ * repository variable as "", which must not silently drop the fallback.
+ * "none", in any case, disables it.
  */
 function parseFallbackChain(): string[] {
-  const raw = process.env.DICTIONARY_FALLBACK ?? 'wiktionary';
-  if (!raw || raw === 'none') {
+  const raw = process.env.DICTIONARY_FALLBACK?.trim() || 'wiktionary';
+  if (raw.toLowerCase() === 'none') {
     return [];
   }
   return raw.split(',').map(s => s.trim()).filter(Boolean);
@@ -90,8 +92,9 @@ export async function fetchWithFallback(word: string, options?: FetchOptions): P
 
     const failures: AdapterFailure[] = [{ adapter: primary.name, error: primaryError }];
     for (const fallbackName of fallbacks) {
+      const failed = failures.at(-1);
       logger.warn('Adapter failed, trying fallback', {
-        previous: failures.at(-1)?.adapter, fallback: fallbackName, word,
+        adapter: failed?.adapter, error: getErrorMessage(failed?.error), fallback: fallbackName, word,
       });
       try {
         const fallback = getAdapterByName(fallbackName);

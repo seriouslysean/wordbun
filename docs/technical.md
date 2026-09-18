@@ -124,7 +124,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 |----------|---------|---------|
 | `SOURCE_DIR` | `''` | Data source subdirectory (unset = root paths) |
 | `DICTIONARY_ADAPTER` | `wordnik` | Primary dictionary API (`merriam-webster`, `wordnik`, `wiktionary`) |
-| `DICTIONARY_FALLBACK` | `wiktionary` | Fallback chain, comma-separated (e.g. `wordnik,wiktionary`) |
+| `DICTIONARY_FALLBACK` | `wiktionary` | Fallback chain, comma-separated (e.g. `wordnik,wiktionary`); empty means the default, `none` (any case) disables it |
 | `MERRIAM_WEBSTER_API_KEY` | — | Merriam-Webster API key |
 | `MERRIAM_WEBSTER_API_URL` | `https://dictionaryapi.com/api/v3/references` | MW API endpoint |
 | `MERRIAM_WEBSTER_DICTIONARY` | `collegiate` | MW dictionary edition |

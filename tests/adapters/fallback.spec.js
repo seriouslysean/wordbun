@@ -100,7 +100,7 @@ describe('fetchWithFallback', () => {
     expect(result.response).toEqual(fallbackResponse);
     expect(mockLogger.warn).toHaveBeenCalledWith(
       'Adapter failed, trying fallback',
-      expect.objectContaining({ previous: 'merriam-webster', fallback: 'wiktionary' }),
+      expect.objectContaining({ adapter: 'merriam-webster', fallback: 'wiktionary' }),
     );
   });
 
@@ -232,11 +232,11 @@ describe('fetchWithFallback', () => {
     expect(mockLogger.warn).toHaveBeenCalledTimes(2);
     expect(mockLogger.warn).toHaveBeenNthCalledWith(1,
       'Adapter failed, trying fallback',
-      expect.objectContaining({ previous: 'merriam-webster', fallback: 'wordnik' }),
+      expect.objectContaining({ adapter: 'merriam-webster', fallback: 'wordnik' }),
     );
     expect(mockLogger.warn).toHaveBeenNthCalledWith(2,
       'Adapter failed, trying fallback',
-      expect.objectContaining({ previous: 'wordnik', fallback: 'wiktionary' }),
+      expect.objectContaining({ adapter: 'wordnik', fallback: 'wiktionary' }),
     );
   });
 
@@ -348,14 +348,19 @@ describe('fetchWithFallback', () => {
     );
   });
 
-  it('throws primary error when fallback is empty string', async () => {
+  it.each([
+    ['empty, as CI exports an unset repository variable', ''],
+    ['blank', '  '],
+  ])('defaults to the wiktionary fallback when DICTIONARY_FALLBACK is %s', async (_, value) => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'wordnik');
-    vi.stubEnv('DICTIONARY_FALLBACK', '');
+    vi.stubEnv('DICTIONARY_FALLBACK', value);
+    mockFailingAdapter('#adapters/wordnik', 'wordnikAdapter', 'wordnik', new Error(RATE_LIMITED));
 
-    vi.doMock('#adapters/wordnik', () => ({
-      wordnikAdapter: {
-        name: 'wordnik',
-        fetchWordData: vi.fn().mockRejectedValue(new Error('Word not found')),
+    const fallbackResponse = { word: 'test', definitions: [{ text: 'a test', partOfSpeech: 'noun' }], meta: { source: 'Wiktionary', attribution: '', url: '' } };
+    vi.doMock('#adapters/wiktionary', () => ({
+      wiktionaryAdapter: {
+        name: 'wiktionary',
+        fetchWordData: vi.fn().mockResolvedValue(fallbackResponse),
         transformToWordData: vi.fn(),
         transformWordData: vi.fn(),
         isValidResponse: vi.fn(),
@@ -363,8 +368,37 @@ describe('fetchWithFallback', () => {
     }));
 
     const { fetchWithFallback } = await import('#adapters');
+    const result = await fetchWithFallback('test');
 
-    await expect(fetchWithFallback('test')).rejects.toThrow('Word not found');
+    expect(result.adapterName).toBe('wiktionary');
+  });
+
+  it.each(['NONE', ' None '])('treats DICTIONARY_FALLBACK=%j as no fallback', async (value) => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'wordnik');
+    vi.stubEnv('DICTIONARY_FALLBACK', value);
+    mockFailingAdapter('#adapters/wordnik', 'wordnikAdapter', 'wordnik', new Error(RATE_LIMITED));
+
+    const { fetchWithFallback } = await import('#adapters');
+
+    const error = await catchError(fetchWithFallback('test'));
+    expect(error).not.toBeInstanceOf(AggregateError);
+    expect(error.message).toBe(RATE_LIMITED);
+  });
+
+  it('logs which adapter failed and why before trying the next', async () => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'wordnik');
+    vi.stubEnv('DICTIONARY_FALLBACK', 'merriam-webster,wiktionary');
+    mockFailingAdapter('#adapters/wordnik', 'wordnikAdapter', 'wordnik', new Error(RATE_LIMITED));
+    mockFailingAdapter('#adapters/merriam-webster', 'merriamWebsterAdapter', 'merriam-webster', new Error(NOT_FOUND));
+    mockFailingAdapter('#adapters/wiktionary', 'wiktionaryAdapter', 'wiktionary', new Error(NOT_FOUND));
+
+    const { fetchWithFallback } = await import('#adapters');
+    await catchError(fetchWithFallback('test'));
+
+    expect(mockLogger.warn.mock.calls).toEqual([
+      ['Adapter failed, trying fallback', { adapter: 'wordnik', error: RATE_LIMITED, fallback: 'merriam-webster', word: 'test' }],
+      ['Adapter failed, trying fallback', { adapter: 'merriam-webster', error: NOT_FOUND, fallback: 'wiktionary', word: 'test' }],
+    ]);
   });
 
   it('falls through when the primary answers with text but no part of speech', async () => {
@@ -401,7 +435,7 @@ describe('fetchWithFallback', () => {
     expect(result.adapterName).toBe('wiktionary');
     expect(mockLogger.warn).toHaveBeenCalledWith(
       'Adapter failed, trying fallback',
-      expect.objectContaining({ previous: 'merriam-webster', fallback: 'wiktionary' }),
+      expect.objectContaining({ adapter: 'merriam-webster', fallback: 'wiktionary' }),
     );
   });
 
