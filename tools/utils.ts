@@ -9,9 +9,11 @@ import { getWordRelations } from '#adapters/wordnet';
 import type { WordRelations } from '#adapters/wordnet';
 import { paths } from '#config/paths';
 import type { CreateWordEntryResult, DictionaryResponse, WordData, WordEnrichment } from '#types';
+import { resolveHexColor } from '#utils/color-utils';
 import { formatDate, isValidDate } from '#utils/date-utils';
 import { getSocialCardPath, SOCIAL_DIR } from '#utils/image-path-utils';
 import { getErrorMessage, logger } from '#utils/logger';
+import { collapseWhitespace } from '#utils/text-utils';
 import { isRecord, isString } from '#utils/type-guards';
 import { findValidDefinition, mergeEnrichment, normalizeToBasePOS } from '#utils/word-data-utils';
 import { parseWordData } from '#utils/word-validation';
@@ -20,12 +22,14 @@ import { parseWordData } from '#utils/word-validation';
 // Image generation constants
 // ---------------------------------------------------------------------------
 
-const imageColors = {
-  primary: process.env.COLOR_PRIMARY || '#9a3412',
-  primaryLight: process.env.COLOR_PRIMARY_LIGHT || '#c2410c',
-  primaryDark: process.env.COLOR_PRIMARY_DARK || '#7c2d12',
+// Read when a card is drawn, not at import: add-word and regenerate-all-words
+// import this module but never draw, so a bad color must not stop them.
+const getImageColors = () => ({
+  primary: resolveHexColor('COLOR_PRIMARY', process.env.COLOR_PRIMARY, '#9a3412'),
+  primaryLight: resolveHexColor('COLOR_PRIMARY_LIGHT', process.env.COLOR_PRIMARY_LIGHT, '#c2410c'),
+  primaryDark: resolveHexColor('COLOR_PRIMARY_DARK', process.env.COLOR_PRIMARY_DARK, '#7c2d12'),
   textLighter: '#8a8f98',
-};
+});
 
 const CANVAS_WIDTH = 1200;
 const CANVAS_HEIGHT = 630;
@@ -242,10 +246,14 @@ function getTextPath(text: string, fontSize: number, options: GetTextPathOptions
 
 /**
  * Creates an SVG social image. When date is provided, it renders below the site title.
+ * Throws before drawing anything when a color setting is malformed.
  */
 export function createSvg(text: string, date?: string): string {
-  const mainWord = getTextPath(text, FONT_SIZE, { isExtraBold: true, maxWidth: MAX_WIDTH });
-  const titleText = getTextPath(process.env.SITE_TITLE || '', TITLE_SIZE);
+  const imageColors = getImageColors();
+  // Each text is drawn on one line, where a line break would draw as a
+  // missing-glyph box.
+  const mainWord = getTextPath(collapseWhitespace(text), FONT_SIZE, { isExtraBold: true, maxWidth: MAX_WIDTH });
+  const titleText = getTextPath(collapseWhitespace(process.env.SITE_TITLE || ''), TITLE_SIZE);
   const dateText = date ? getTextPath(formatDate(date), DATE_SIZE) : null;
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -333,11 +341,15 @@ const readMarker = (): unknown => {
  * next run renders everything once and records per-card inputs.
  */
 export const readImageCache = (): ImageCache => {
+  // Fingerprinted first, marker or not: the probes draw through the real
+  // template, so a malformed setting fails the run here, once, before any
+  // directory or image is written.
+  const settings = computeSettingsHash();
   const marker = readMarker();
   if (!isRecord(marker) || !isString(marker.settings) || !isStringRecord(marker.cards)) {
     return { stale: true, cards: {} };
   }
-  return { stale: marker.settings !== computeSettingsHash(), cards: marker.cards };
+  return { stale: marker.settings !== settings, cards: marker.cards };
 };
 
 /**

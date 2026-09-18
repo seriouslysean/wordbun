@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  collapseWhitespace,
   countSyllables,
   flattenErrors,
   getConsonantCount,
@@ -240,5 +241,25 @@ describe('flattenErrors', () => {
     const [a, b, c] = [new Error('a'), new Error('b'), new Error('c')];
     const nested = new AggregateError([a, new AggregateError([b, c], 'inner')], 'outer');
     expect(flattenErrors(nested)).toEqual([a, b, c]);
+  });
+});
+
+describe('collapseWhitespace', () => {
+  it('joins lines with a single space', () => {
+    expect(collapseWhitespace('Line one\nLine two')).toBe('Line one Line two');
+    expect(collapseWhitespace('Line one\r\n\r\nLine two')).toBe('Line one Line two');
+  });
+
+  it('collapses runs of spaces and tabs', () => {
+    expect(collapseWhitespace('ice  \t cream')).toBe('ice cream');
+  });
+
+  it('trims both ends', () => {
+    expect(collapseWhitespace('\n  word \t')).toBe('word');
+    expect(collapseWhitespace(' \n ')).toBe('');
+  });
+
+  it('leaves single-line text alone', () => {
+    expect(collapseWhitespace("rock & roll's")).toBe("rock & roll's");
   });
 });

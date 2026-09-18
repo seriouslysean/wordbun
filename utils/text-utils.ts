@@ -36,6 +36,15 @@ export const slugify = (str: string): string => {
     .replaceAll(/^-|-$/g, '');
 };
 
+/**
+ * Collapse every run of whitespace, line breaks included, into one space and
+ * trim both ends, for text drawn on a single line.
+ * @param text - Text that may span lines
+ * @returns The same words on one line
+ */
+export const collapseWhitespace = (text: string): string =>
+  text.replaceAll(/\s+/g, ' ').trim();
+
 // Re-export pattern recognition functions from consolidated module
 export {
   isStartEndSame,
