@@ -249,9 +249,18 @@ describe('wordnik adapter', () => {
 
     it('throws a Wordnik shape error when a definition field has the wrong type', async () => {
       const { wordnikAdapter } = await import('#adapters/wordnik');
-      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [...VALID_DEFINITIONS, { text: 'ok', exampleUses: [{ position: 1 }] }]));
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [...VALID_DEFINITIONS, { text: 'ok', exampleUses: [{ text: 5 }] }]));
 
       await expect(wordnikAdapter.fetchWordData('test')).rejects.toThrow('Wordnik returned an unexpected response shape');
+    });
+
+    it('skips examples that have no text instead of refusing the response', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      const definition = { ...VALID_DEFINITIONS[0], exampleUses: [{ position: 1 }, { text: 'A usable example.' }] };
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [definition]));
+
+      const result = await wordnikAdapter.fetchWordData('test');
+      expect(result.definitions[0].examples).toEqual(['A usable example.']);
     });
   });
 

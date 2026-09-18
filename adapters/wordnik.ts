@@ -47,8 +47,10 @@ export const CONFIG: WordnikConfig = {
 };
 
 
+// Wordnik's ExampleUsage model declares `text` optional, so an example without
+// it is well-formed; fetchWordData skips it rather than refusing the response.
 const isExampleUses = (value: unknown): value is NonNullable<WordnikDefinition['exampleUses']> =>
-  Array.isArray(value) && value.every(example => isRecord(example) && isString(example.text));
+  Array.isArray(value) && value.every(example => isRecord(example) && isOptional(example.text, isString));
 
 const isRelatedWords = (value: unknown): value is NonNullable<WordnikDefinition['relatedWords']> =>
   Array.isArray(value) && value.every(related => isRecord(related) && isOptional(related.words, isStringArray));
@@ -132,7 +134,7 @@ export const wordnikAdapter: DictionaryAdapter = {
       attributionText: def.attributionText,
       sourceDictionary: def.sourceDictionary,
       sourceUrl: def.wordnikUrl || def.attributionUrl || '',
-      examples: def.exampleUses?.map(e => e.text),
+      examples: def.exampleUses?.flatMap(example => (example.text ? [example.text] : [])),
       synonyms: def.relatedWords?.flatMap(related => related.words ?? []),
       antonyms: [], // Wordnik API doesn't include antonyms in definition responses
     }));

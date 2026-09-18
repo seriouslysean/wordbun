@@ -33,7 +33,7 @@ export interface WordnikDefinition {
     cite?: string;
   }>;
   exampleUses?: Array<{
-    text: string;
+    text?: string;
     position?: number;
   }>;
   labels?: Array<{
