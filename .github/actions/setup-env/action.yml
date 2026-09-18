@@ -76,6 +76,23 @@ runs:
           printf '%s<<%s\n%s\n%s\n' "$1" "$delimiter" "$2" "$delimiter" >> "$GITHUB_ENV"
         }
 
+        # GitHub masks the secrets a job is given, but a called workflow is
+        # given only the site-secrets envelope, and a value taken out of it
+        # is not masked: an adapter's key in a logged request URL would show.
+        # The runner matches the log a line at a time and a command is one
+        # line, so each line of a value is masked on its own, a carriage
+        # return ending a line as it does for the runner. The runner reads %25
+        # in command data as %, so % is escaped. A blank mask only draws a
+        # warning from the runner, so blank lines are skipped.
+        mask() {
+          local line
+          while IFS= read -r line; do
+            if [[ "$line" == *[![:space:]]* ]]; then
+              printf '::add-mask::%s\n' "${line//%/%25}"
+            fi
+          done <<< "${1//$'\r'/$'\n'}"
+        }
+
         put_env CI true
         put_env SENTRY_ENVIRONMENT production
         value=$(echo "$VARS_JSON" | jq -r '.SITE_TZ // "America/New_York"')
@@ -93,6 +110,7 @@ runs:
         while IFS= read -r secret; do
           if [[ -n "$secret" ]]; then
             value=$(echo "$SECRETS_JSON" | jq -r ".$secret // \"\"")
+            mask "$value"
             put_env "$secret" "$value"
           fi
         done <<< "$SECRET_NAMES"
