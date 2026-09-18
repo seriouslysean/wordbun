@@ -165,7 +165,9 @@ afterEach(() => {
   fs.rmSync(ctx.root, { recursive: true, force: true });
 });
 
-describe('sync-upstream.sh', { timeout: 30000 }, () => {
+// Each case builds real repositories and runs the script end to end, taking
+// 5-20 seconds alone; a busy runner has doubled that
+describe('sync-upstream.sh', { timeout: 90000 }, () => {
   describe('refuses before fetching or branching', () => {
     it.each([
       ['a modified tracked file', () => write(ctx.site, 'README.md', 'edited\n')],
