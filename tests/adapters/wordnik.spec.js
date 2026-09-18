@@ -1,8 +1,13 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import {
  beforeEach,describe, expect, it, vi,
 } from 'vitest';
 
 globalThis.fetch = vi.fn();
+
+const FIXTURES_DIR = path.join(import.meta.dirname, 'fixtures', 'wordnik');
+const loadFixture = name => JSON.parse(fs.readFileSync(path.join(FIXTURES_DIR, `${name}.json`), 'utf-8'));
 
 const STATUS_TEXT = { 404: 'Not Found', 429: 'Too Many Requests' };
 const mockResponse = (status, data = []) => ({
@@ -168,6 +173,53 @@ describe('wordnik adapter', () => {
   describe('translation to the canonical definition', () => {
     beforeEach(() => {
       vi.stubEnv('WORDNIK_API_KEY', 'test-key');
+    });
+
+    it('translates the constructed break response', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, loadFixture('break')));
+      const ahd = 'from The American Heritage® Dictionary of the English Language, 5th Edition.';
+      const sourceUrl = 'https://www.wordnik.com/words/break';
+
+      const result = await wordnikAdapter.fetchWordData('break');
+      expect(result).toStrictEqual({
+        word: 'break',
+        definitions: [
+          {
+            label: 'verb-transitive',
+            text: 'To cause to separate into pieces suddenly or violently.',
+            attributionText: ahd,
+            sourceDictionary: 'ahd-5',
+            sourceUrl,
+            examples: ['The plate broke when it hit the floor.'],
+            synonyms: ['shatter', 'smash'],
+          },
+          {
+            partOfSpeech: 'noun',
+            text: 'An interruption in continuity. A pause from work or activity.',
+            attributionText: ahd,
+            sourceDictionary: 'ahd-5',
+            sourceUrl,
+            synonyms: ['pause'],
+          },
+          {
+            label: 'idiom',
+            text: 'break even: To finish with neither a gain nor a loss.',
+            attributionText: ahd,
+            sourceDictionary: 'ahd-5',
+            sourceUrl,
+          },
+          {
+            partOfSpeech: 'noun',
+            text: 'A short <xref>rest</xref> period.',
+            attributionText: 'from Wiktionary, Creative Commons Attribution/Share-Alike License.',
+            sourceDictionary: 'wiktionary',
+            sourceUrl,
+          },
+        ],
+        meta: { source: 'Wordnik', attribution: ahd, url: sourceUrl },
+        headword: { pronunciation: 'brāk' },
+      });
     });
 
     it('joins text fragments into one string', async () => {

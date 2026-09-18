@@ -14,6 +14,14 @@ const ADAPTER_REGISTRY: Record<string, DictionaryAdapter> = {
 };
 
 /**
+ * Every registered adapter's name, read from the registry itself, so a list
+ * of adapters kept anywhere else cannot drift from it.
+ */
+export function getAdapterNames(): readonly string[] {
+  return Object.keys(ADAPTER_REGISTRY);
+}
+
+/**
  * Returns a dictionary adapter by its canonical name.
  * Used at build time to dispatch on `wordData.adapter` field.
  */
