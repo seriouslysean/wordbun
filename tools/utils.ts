@@ -52,8 +52,13 @@ const PNG_OPTIONS = {
 const SOCIAL_BASE_DIR = path.join(paths.images, SOCIAL_DIR);
 const SETTINGS_HASH_FILENAME = '.image-settings-hash';
 
-// Fixed inputs rendered through the real template to fingerprint it.
+// Fixed inputs rendered through the real template to fingerprint it. A short
+// word is drawn at full size, so the long probe (45 letters, the length of
+// the longest dictionary word, over three times the card's width) is what
+// makes MAX_WIDTH and the scaling that fits a long word to the card part of
+// the fingerprint.
 const PROBE_TEXT = 'probe';
+const LONG_PROBE_TEXT = PROBE_TEXT.repeat(9);
 const PROBE_DATE = '20240101';
 
 interface LoadedFont {
@@ -288,8 +293,15 @@ ${dateText ? `
 
 type RendererVersions = Readonly<Record<string, string | undefined>>;
 
+interface ImageSettings {
+  probes: string[];
+  png: typeof PNG_OPTIONS;
+  fonts: string[];
+  renderer: [string, string | undefined][];
+}
+
 /**
- * Fingerprints what determines the bytes of an image: the inputs and the
+ * Collects what determines the bytes of an image: the inputs and the
  * renderer. The probe SVGs come from the real template, so they carry the
  * colors, site title, dimensions and layout; the font fingerprints cover
  * glyphs the probe text does not use. The renderer versions are sharp, libvips
@@ -299,15 +311,21 @@ type RendererVersions = Readonly<Record<string, string | undefined>>;
  * are reported in nor the locale: an Estonian collation puts zlib before
  * tiff, which would regenerate every image on that machine.
  */
-export const computeSettingsHash = (rendererVersions: RendererVersions = sharp.versions): string => {
+export const getImageSettings = (rendererVersions: RendererVersions = sharp.versions): ImageSettings => {
   const fonts = getFonts();
-  return fingerprint(JSON.stringify({
-    probes: [createSvg(PROBE_TEXT, PROBE_DATE), createSvg(PROBE_TEXT)],
+  return {
+    probes: [createSvg(PROBE_TEXT, PROBE_DATE), createSvg(PROBE_TEXT), createSvg(LONG_PROBE_TEXT)],
     png: PNG_OPTIONS,
     fonts: [fonts.regular.fingerprint, fonts.bold.fingerprint],
     renderer: Object.entries(rendererVersions).toSorted(([a], [b]) => Number(a > b) - Number(a < b)),
-  })).slice(0, 12);
+  };
 };
+
+/**
+ * Fingerprints the image settings: the marker's `settings`.
+ */
+export const computeSettingsHash = (rendererVersions: RendererVersions = sharp.versions): string =>
+  fingerprint(JSON.stringify(getImageSettings(rendererVersions))).slice(0, 12);
 
 const MARKER_PATH = path.join(SOCIAL_BASE_DIR, SETTINGS_HASH_FILENAME);
 

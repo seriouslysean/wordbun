@@ -2,14 +2,15 @@
  * The settings fingerprint (the marker's `settings`) covers the renderer as
  * well as the inputs: a sharp or libvips upgrade changes palette-quantized
  * pixels without touching any SVG, PNG option or font, so it has to
- * invalidate the cache on its own.
+ * invalidate the cache on its own. Its probes must also exercise the scaling
+ * that fits a long word to the card, which a short word never reaches.
  */
 
 import sharp from 'sharp';
 import { describe, expect, it } from 'vitest';
 
 import { spawnTool } from '#tests/helpers/spawn.js';
-import { computeSettingsHash } from '#tools/utils';
+import { computeSettingsHash, getImageSettings } from '#tools/utils';
 
 const RENDERER = { sharp: '0.35.4', vips: '8.18.6', imagequant: '2.4.1' };
 
@@ -49,6 +50,12 @@ describe('computeSettingsHash', () => {
     expect(estonian[0]).not.toBe(english[0]);
     expect(estonian[1]).toBe(english[1]);
   }, 20000);
+
+  it('probes a word too wide for the card, so the scaling that fits it is fingerprinted', () => {
+    const { probes } = getImageSettings(RENDERER);
+
+    expect(probes.some(svg => /fill="url\(#wordGradient\)" transform="scale\(0\.\d+\)"/.test(svg))).toBe(true);
+  });
 
   it('defaults to the installed renderer', () => {
     expect(computeSettingsHash()).toBe(computeSettingsHash(sharp.versions));
