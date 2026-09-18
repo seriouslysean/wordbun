@@ -30,9 +30,17 @@ const httpResponse = (status, body = []) => ({
 const ctx = {
   wordsDir: '',
   wordnik: null,
+  merriamWebster: null,
   wiktionary: null,
   logger: null,
   delay: null,
+};
+
+const responseFor = (url) => {
+  if (url.startsWith('https://wordnik.test')) {
+    return ctx.wordnik;
+  }
+  return url.startsWith('https://mw.test') ? ctx.merriamWebster : ctx.wiktionary;
 };
 
 const addWord = async () => {
@@ -40,9 +48,9 @@ const addWord = async () => {
   await tool.addWord(WORD);
 };
 
-const regenerateWordFile = async () => {
+const regenerateWordFile = async (word = WORD) => {
   const tool = await import('#tools/regenerate-all-words');
-  return tool.regenerateWordFile(WORD, '20240101', path.join(ctx.wordsDir, '2024', '20240101.json'));
+  return tool.regenerateWordFile(word, '20240101', path.join(ctx.wordsDir, '2024', '20240101.json'));
 };
 
 beforeEach(() => {
@@ -55,9 +63,7 @@ beforeEach(() => {
   ctx.delay = vi.fn().mockResolvedValue(undefined);
 
   vi.resetModules();
-  vi.stubGlobal('fetch', vi.fn(url => Promise.resolve(
-    String(url).startsWith('https://wordnik.test') ? ctx.wordnik : ctx.wiktionary,
-  )));
+  vi.stubGlobal('fetch', vi.fn(url => Promise.resolve(responseFor(String(url)))));
   vi.stubEnv('DICTIONARY_ADAPTER', 'wordnik');
   vi.stubEnv('DICTIONARY_FALLBACK', 'wiktionary');
   vi.stubEnv('WORDNIK_API_KEY', 'test-key');
@@ -115,6 +121,20 @@ describe('add-word failure reporting', () => {
     });
   });
 
+  it.each([
+    ['suggestions', ['zydeco', 'zyzzyva']],
+    ['no entry from the configured dictionary', [{ meta: { id: WORD, src: 'learners' }, shortdef: ['a place'] }]],
+  ])('reports "not found" when Merriam-Webster answered with %s and the fallback said not found', async (_, body) => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
+    vi.stubEnv('MERRIAM_WEBSTER_API_KEY', 'test-key');
+    vi.stubEnv('MERRIAM_WEBSTER_API_URL', 'https://mw.test/api/v3/references');
+    ctx.merriamWebster = httpResponse(200, body);
+
+    await addWord();
+
+    expect(ctx.logger.error).toHaveBeenCalledExactlyOnceWith('Word not found in dictionary', expect.objectContaining({ word: WORD }));
+  });
+
   it('keeps the single-adapter message unchanged when no fallback is configured', async () => {
     vi.stubEnv('DICTIONARY_FALLBACK', 'none');
 
@@ -139,6 +159,13 @@ describe('regenerate-all-words rate-limit backoff', () => {
 
   it('does not back off when every adapter said not found', async () => {
     const success = await regenerateWordFile();
+
+    expect(success).toBe(false);
+    expect(ctx.delay).not.toHaveBeenCalled();
+  });
+
+  it('does not mistake a word containing "429" for a rate limit', async () => {
+    const success = await regenerateWordFile('zz429');
 
     expect(success).toBe(false);
     expect(ctx.delay).not.toHaveBeenCalled();

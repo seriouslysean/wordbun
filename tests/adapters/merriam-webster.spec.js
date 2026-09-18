@@ -321,7 +321,10 @@ describe('merriam-webster adapter', () => {
       const fixture = loadFixture('not-found');
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, fixture));
 
+      const { WordNotFoundError } = await import('#utils/adapter-utils');
+
       const error = await merriamWebsterAdapter.fetchWordData('xyzzy').catch(e => e);
+      expect(error).toBeInstanceOf(WordNotFoundError);
       expect(error.message).toContain('not found');
       expect(error.message).toContain('Did you mean');
       expect(error.message).toContain('fuzzy');
@@ -339,9 +342,12 @@ describe('merriam-webster adapter', () => {
 
     it('reports not found when no element is a matching entry', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      const { WordNotFoundError } = await import('#utils/adapter-utils');
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [null, 'mixed']));
 
-      await expect(merriamWebsterAdapter.fetchWordData('test')).rejects.toThrow('not found in Collegiate Dictionary');
+      const error = await merriamWebsterAdapter.fetchWordData('test').catch(e => e);
+      expect(error).toBeInstanceOf(WordNotFoundError);
+      expect(error.message).toBe('Word "test" not found in Collegiate Dictionary.');
     });
 
     it('yields no definitions for an entry without shortdef', async () => {

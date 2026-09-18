@@ -20,6 +20,7 @@ import {
   throwWordNotFound,
   transformToWordData,
   transformWordData,
+  WordNotFoundError,
 } from '#utils/adapter-utils';
 import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
 
@@ -273,7 +274,7 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
     // String array = suggestions, not entries
     if (isStringArray(data)) {
       const suggestions = data.slice(0, 5).join(', ');
-      throw new Error(`Word "${word}" not found. Did you mean: ${suggestions}`);
+      throw new WordNotFoundError(`Word "${word}" not found. Did you mean: ${suggestions}`);
     }
 
     // Filter to configured dictionary source only. Entries from other sources
@@ -281,7 +282,7 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
     const dictionary = CONFIG.DICTIONARY;
     const entries = data.filter(entry => isRecord(entry) && isRecord(entry.meta) && entry.meta.src === dictionary);
     if (entries.length === 0) {
-      throw new Error(`Word "${word}" not found in ${getDictionaryLabel()}.`);
+      throw new WordNotFoundError(`Word "${word}" not found in ${getDictionaryLabel()}.`);
     }
     if (!isEntryArray(entries)) {
       throwUnexpectedShape('Merriam-Webster', word);

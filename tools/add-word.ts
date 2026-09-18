@@ -7,8 +7,8 @@ import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
 import { createWordEntry, findExistingWord } from '#tools/utils';
 import type { WordData } from '#types';
 import { getTodayYYYYMMDD, isValidDate } from '#utils/date-utils';
+import { isWordNotFound } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
-import { flattenErrors } from '#utils/text-utils';
 import { parseWordData } from '#utils/word-validation';
 
 /**
@@ -110,8 +110,7 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
     const errorMessage = getErrorMessage(error);
     // "Not found" only when every adapter said so; a rate limit or shape error
     // from one of them is a different problem and is reported as such
-    const isNotFound = flattenErrors(error).every(failure => getErrorMessage(failure).includes('not found in dictionary'));
-    if (isNotFound) {
+    if (isWordNotFound(error)) {
       logger.error('Word not found in dictionary', { word, errorMessage });
     } else {
       logger.error('Failed to add word', { word, errorMessage });

@@ -1,7 +1,39 @@
 import type { DictionaryDefinition, DictionaryResponse, WordData, WordProcessedData } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
-import { getErrorMessage } from '#utils/text-utils';
+import { flattenErrors, getErrorMessage } from '#utils/text-utils';
 import { findValidDefinition } from '#utils/word-data-utils';
+
+/**
+ * The dictionary has no entry for the word: a misspelling, or a word it does
+ * not carry. Expected input, not a fault. Callers classify by type, never by
+ * message, so a suggestion list or a word that happens to contain "429"
+ * cannot change the verdict.
+ */
+export class WordNotFoundError extends Error {
+  name = 'WordNotFoundError';
+}
+
+/**
+ * The dictionary refused the request because too many were sent (HTTP 429).
+ * Worth backing off and retrying.
+ */
+export class RateLimitError extends Error {
+  name = 'RateLimitError';
+}
+
+/**
+ * True when every adapter that was asked said the word does not exist, so a
+ * rate limit or an outage anywhere in the fallback chain is not reported as
+ * a misspelling.
+ */
+export const isWordNotFound = (error: unknown): boolean =>
+  flattenErrors(error).every(failure => failure instanceof WordNotFoundError);
+
+/**
+ * True when any adapter in the fallback chain was rate limited.
+ */
+export const isRateLimited = (error: unknown): boolean =>
+  flattenErrors(error).some(failure => failure instanceof RateLimitError);
 
 /**
  * Deadline for a single dictionary API request. Without one, a connection
@@ -33,14 +65,13 @@ export async function adapterFetch(url: string, adapterName: string): Promise<Re
  */
 export function throwOnHttpError(response: Response, word: string): void {
   if (response.status === 429) {
-    throw new Error('Rate limit exceeded. Please try again later.');
+    throw new RateLimitError('Rate limit exceeded. Please try again later.');
+  }
+  if (response.status === 404) {
+    throwWordNotFound(word);
   }
   if (!response.ok) {
-    throw new Error(
-      response.status === 404
-        ? `Word "${word}" not found in dictionary. Please check the spelling.`
-        : `Failed to fetch word data: ${response.statusText}`,
-    );
+    throw new Error(`Failed to fetch word data: ${response.statusText}`);
   }
 }
 
@@ -77,7 +108,7 @@ export async function parseJsonResponse(response: Response, apiName: string): Pr
  * Throws "word not found" with a consistent message.
  */
 export function throwWordNotFound(word: string): never {
-  throw new Error(`Word "${word}" not found in dictionary. Please check the spelling.`);
+  throw new WordNotFoundError(`Word "${word}" not found in dictionary. Please check the spelling.`);
 }
 
 /**

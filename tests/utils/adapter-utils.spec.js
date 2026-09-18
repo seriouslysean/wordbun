@@ -5,7 +5,10 @@ const originalFetch = globalThis.fetch;
 import {
   ADAPTER_FETCH_TIMEOUT_MS,
   adapterFetch,
+  isRateLimited,
+  isWordNotFound,
   normalizePOS,
+  RateLimitError,
   parseJsonResponse,
   throwOnHttpError,
   throwUnexpectedShape,
@@ -13,6 +16,7 @@ import {
   buildDictionaryResponse,
   transformToWordData,
   transformWordData,
+  WordNotFoundError,
 } from '#utils/adapter-utils';
 
 const TEST_POS_MAP = {
@@ -198,11 +202,13 @@ describe('adapter-utils', () => {
 
     it('throws rate limit error for 429', () => {
       const response = { ok: false, status: 429 };
+      expect(() => throwOnHttpError(response, 'test')).toThrow(RateLimitError);
       expect(() => throwOnHttpError(response, 'test')).toThrow('Rate limit exceeded');
     });
 
     it('throws word not found for 404', () => {
       const response = { ok: false, status: 404 };
+      expect(() => throwOnHttpError(response, 'serendipity')).toThrow(WordNotFoundError);
       expect(() => throwOnHttpError(response, 'serendipity')).toThrow(
         'Word "serendipity" not found in dictionary',
       );
@@ -210,9 +216,16 @@ describe('adapter-utils', () => {
 
     it('throws generic error with statusText for other failures', () => {
       const response = { ok: false, status: 500, statusText: 'Internal Server Error' };
-      expect(() => throwOnHttpError(response, 'test')).toThrow(
-        'Failed to fetch word data: Internal Server Error',
-      );
+      const error = (() => {
+        try {
+          throwOnHttpError(response, 'test');
+        } catch (thrown) {
+          return thrown;
+        }
+      })();
+      expect(error.message).toBe('Failed to fetch word data: Internal Server Error');
+      expect(error).not.toBeInstanceOf(WordNotFoundError);
+      expect(error).not.toBeInstanceOf(RateLimitError);
     });
   });
 
@@ -256,9 +269,43 @@ describe('adapter-utils', () => {
 
   describe('throwWordNotFound', () => {
     it('throws with consistent message format', () => {
+      expect(() => throwWordNotFound('serendipity')).toThrow(WordNotFoundError);
       expect(() => throwWordNotFound('serendipity')).toThrow(
         'Word "serendipity" not found in dictionary. Please check the spelling.',
       );
+    });
+  });
+
+  describe('isWordNotFound', () => {
+    const notFound = new WordNotFoundError('Word "zz" not found. Did you mean: za, ze');
+
+    it('is true when the only adapter said not found', () => {
+      expect(isWordNotFound(notFound)).toBe(true);
+    });
+
+    it('is true when every adapter in the chain said not found', () => {
+      expect(isWordNotFound(new AggregateError([notFound, new WordNotFoundError('gone')]))).toBe(true);
+    });
+
+    it('is false when any adapter failed for another reason', () => {
+      expect(isWordNotFound(new AggregateError([new RateLimitError('slow down'), notFound]))).toBe(false);
+      expect(isWordNotFound(new AggregateError([notFound, new Error('network request failed')]))).toBe(false);
+    });
+
+    it('goes by type, not by message', () => {
+      expect(isWordNotFound(new Error('Word "zz" not found in dictionary. Please check the spelling.'))).toBe(false);
+    });
+  });
+
+  describe('isRateLimited', () => {
+    it('is true when any adapter in the chain was rate limited', () => {
+      expect(isRateLimited(new RateLimitError('slow down'))).toBe(true);
+      expect(isRateLimited(new AggregateError([new RateLimitError('slow down'), new WordNotFoundError('gone')]))).toBe(true);
+    });
+
+    it('goes by type, not by message', () => {
+      expect(isRateLimited(new WordNotFoundError('Word "zz429" not found in dictionary.'))).toBe(false);
+      expect(isRateLimited(new Error('Rate limit exceeded'))).toBe(false);
     });
   });
 

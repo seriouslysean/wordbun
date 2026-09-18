@@ -7,8 +7,8 @@ import { isEntryPoint } from '#tools/entry';
 import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
 import { buildWordData, getWordFiles, primaryPartOfSpeech, tryFetchRelations } from '#tools/utils';
 import type { WordEnrichment } from '#types';
+import { isRateLimited } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
-import { flattenErrors } from '#utils/text-utils';
 import { isRecord } from '#utils/type-guards';
 import { isWordEnrichment } from '#utils/word-validation';
 
@@ -103,15 +103,7 @@ export async function regenerateWordFile(word: string, date: string, originalPat
     const errorMessage = getErrorMessage(error);
 
     // A rate limit from any adapter in the chain is worth backing off for
-    const isRateLimit = flattenErrors(error).some((failure) => {
-      const message = getErrorMessage(failure);
-      return message.includes('Rate limit') ||
-        message.includes('rate limit') ||
-        message.includes('429') ||
-        (failure instanceof Object && 'status' in failure && failure.status === 429);
-    });
-
-    if (isRateLimit && retryCount < maxRetries) {
+    if (isRateLimited(error) && retryCount < maxRetries) {
       // Exponential backoff: 2^retryCount * 30 seconds
       const backoffDelay = Math.pow(2, retryCount) * RATE_LIMIT_BACKOFF_MS;
       logger.info('Rate limited, retrying with backoff', {
