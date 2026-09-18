@@ -12,19 +12,12 @@ import {
 } from '#astro-utils/word-data-utils';
 
 export async function getStaticPaths() {
-  const paths: Array<{ params: { year: string; month: string }; props: { words: typeof allWords } }> = [];
-
-  availableYears.forEach(year => {
-    const monthGroups = groupWordsByMonth(year, allWords);
-    Object.entries(monthGroups).forEach(([monthSlug, words]) => {
-      paths.push({
-        params: { year, month: monthSlug },
-        props: { words },
-      });
-    });
-  });
-
-  return paths;
+  return availableYears.flatMap(year =>
+    Object.entries(groupWordsByMonth(year, allWords)).map(([monthSlug, words]) => ({
+      params: { year, month: monthSlug },
+      props: { words },
+    })),
+  );
 }
 
 const { words } = Astro.props;

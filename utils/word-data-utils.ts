@@ -136,20 +136,12 @@ export const normalizeToBasePOS = (raw: string): string => {
  * (e.g. "abbreviation", "phrase") are excluded from browse pages.
  */
 export const getAvailablePartsOfSpeech = (words: WordData[]): string[] => {
-  const partsOfSpeech = new Set<string>();
-
-  words.forEach(word => {
-    if (word.data && Array.isArray(word.data)) {
-      word.data.forEach(definition => {
-        if (definition.partOfSpeech) {
-          const normalized = normalizePartOfSpeech(definition.partOfSpeech);
-          if (isBasePartOfSpeech(normalized)) {
-            partsOfSpeech.add(normalized);
-          }
-        }
-      });
-    }
-  });
+  const partsOfSpeech = new Set<string>(
+    words
+      .flatMap(word => (Array.isArray(word.data) ? word.data : []))
+      .flatMap(definition => (definition.partOfSpeech ? [normalizePartOfSpeech(definition.partOfSpeech)] : []))
+      .filter(isBasePartOfSpeech),
+  );
 
   return Array.from(partsOfSpeech).toSorted();
 };

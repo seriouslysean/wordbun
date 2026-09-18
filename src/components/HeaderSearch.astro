@@ -61,9 +61,7 @@ function closePanel(): void {
     panel.hidden = true;
   }
   toggle?.setAttribute('aria-expanded', 'false');
-  if (results) {
-    results.replaceChildren();
-  }
+  results?.replaceChildren();
 }
 
 function openPanel(): void {
@@ -111,8 +109,8 @@ async function onInput(): Promise<void> {
     date.className = 'site-search__result-date';
     date.textContent = entry.date;
     link.append(word, date);
-    item.appendChild(link);
-    results.appendChild(item);
+    item.append(link);
+    results.append(item);
   }
 }
 

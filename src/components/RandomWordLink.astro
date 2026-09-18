@@ -40,8 +40,6 @@ async function getRandomWord() {
 
 const button = document.getElementById('random-word-button');
 
-if (button) {
-  button.addEventListener('click', getRandomWord);
-}
+button?.addEventListener('click', getRandomWord);
 </script>
 

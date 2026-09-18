@@ -395,6 +395,16 @@ function getStaticTitles(): Record<string, string> {
     return cachedStaticTitles;
   }
 
+  const suffixSlugMap: Record<string, string> = {
+    ed: STATS_SLUGS.WORDS_ENDING_ED,
+    ing: STATS_SLUGS.WORDS_ENDING_ING,
+    ly: STATS_SLUGS.WORDS_ENDING_LY,
+    ness: STATS_SLUGS.WORDS_ENDING_NESS,
+    ful: STATS_SLUGS.WORDS_ENDING_FUL,
+    less: STATS_SLUGS.WORDS_ENDING_LESS,
+  };
+
+  // Spread order is override order: a later group wins a shared route
   cachedStaticTitles = {
     [BASE_PATHS.HOME]: t('home.heading'),
     [BASE_PATHS.WORD]: t('words.heading'),
@@ -409,32 +419,18 @@ function getStaticTitles(): Record<string, string> {
     [ROUTES.STAT(STATS_SLUGS.LETTER_PATTERNS)]: t('stats.letter_patterns_index_heading'),
     [ROUTES.STAT(STATS_SLUGS.WORD_ENDINGS)]: t('stats.word_endings_index_heading'),
     [BASE_PATHS.NOT_FOUND]: t('error.heading'),
-  };
 
-  // Build stats titles from definition objects
-  for (const [slug, def] of Object.entries(LETTER_PATTERN_DEFINITIONS)) {
-    cachedStaticTitles[ROUTES.STAT(slug)] = def.title;
-  }
-  for (const [slug, def] of Object.entries(PATTERN_DEFINITIONS)) {
-    cachedStaticTitles[ROUTES.STAT(slug)] = def.title;
-  }
-  const suffixSlugMap: Record<string, string> = {
-    ed: STATS_SLUGS.WORDS_ENDING_ED,
-    ing: STATS_SLUGS.WORDS_ENDING_ING,
-    ly: STATS_SLUGS.WORDS_ENDING_LY,
-    ness: STATS_SLUGS.WORDS_ENDING_NESS,
-    ful: STATS_SLUGS.WORDS_ENDING_FUL,
-    less: STATS_SLUGS.WORDS_ENDING_LESS,
+    // Build stats titles from definition objects
+    ...Object.fromEntries(Object.entries(LETTER_PATTERN_DEFINITIONS).map(([slug, def]): [string, string] => [ROUTES.STAT(slug), def.title])),
+    ...Object.fromEntries(Object.entries(PATTERN_DEFINITIONS).map(([slug, def]): [string, string] => [ROUTES.STAT(slug), def.title])),
+    ...Object.fromEntries(
+      Object.entries(SUFFIX_DEFINITIONS).flatMap(([suffix, def]): Array<[string, string]> => {
+        const slug = suffixSlugMap[suffix];
+        return slug ? [[ROUTES.STAT(slug), def.title]] : [];
+      }),
+    ),
+    ...Object.fromEntries(Object.entries(DYNAMIC_STATS_DEFINITIONS).map(([slug, def]): [string, string] => [ROUTES.STAT(slug), def.title])),
   };
-  for (const [suffix, def] of Object.entries(SUFFIX_DEFINITIONS)) {
-    const slug = suffixSlugMap[suffix];
-    if (slug) {
-      cachedStaticTitles[ROUTES.STAT(slug)] = def.title;
-    }
-  }
-  for (const [slug, def] of Object.entries(DYNAMIC_STATS_DEFINITIONS)) {
-    cachedStaticTitles[ROUTES.STAT(slug)] = def.title;
-  }
 
   return cachedStaticTitles;
 }
