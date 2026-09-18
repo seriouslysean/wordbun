@@ -32,6 +32,7 @@
     "previous_words": "Previous Words"
   },
   "words": {
+    "abbreviation_words_description": "Shortened forms of longer words and phrases.",
     "by_length_description": "Words grouped by character count.",
     "by_length_heading": "Words by Length",
     "by_letter_description": "Words grouped by first letter.",

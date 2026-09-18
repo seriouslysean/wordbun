@@ -310,6 +310,11 @@ describe('page-metadata-utils', () => {
       });
     });
 
+    it('describes the abbreviation page as a lexical label, not a sentence role', () => {
+      const metadata = getPageMetadata('/browse/part-of-speech/abbreviation', mockWords);
+      expect(metadata.description).toBe('Mock words.abbreviation_words_description');
+    });
+
     it('returns metadata for a part-of-speech page', () => {
       const metadata = getPageMetadata('/browse/part-of-speech/noun', mockWords);
       expect(metadata.title).toBe('Noun');

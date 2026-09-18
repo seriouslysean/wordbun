@@ -1,3 +1,4 @@
+import { BASE_PARTS_OF_SPEECH } from '#constants/parts-of-speech';
 import { URL_PATTERNS, BASE_PATHS, BROWSE_PATHS, ROUTES, STATS_SLUGS } from '#constants/urls';
 
 import type { WordData } from '#types';
@@ -575,7 +576,10 @@ export function getPageMetadata(path: string, words: WordData[] = []): PageMetad
     const displayName = t(`parts_of_speech.${partOfSpeech}`);
     return {
       title: displayName,
-      description: t('words.part_of_speech_words_description', { partOfSpeech }),
+      // An abbreviation is a lexical label, not a role a word plays in a sentence
+      description: partOfSpeech === BASE_PARTS_OF_SPEECH.ABBREVIATION
+        ? t('words.abbreviation_words_description')
+        : t('words.part_of_speech_words_description', { partOfSpeech }),
       category: 'pages' as const,
       secondaryText: tp('common.words', wordsOfPartOfSpeech.length),
     };
