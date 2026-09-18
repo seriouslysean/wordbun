@@ -12,10 +12,12 @@ import {
   normalizePOS,
   parseJsonResponse,
   throwOnHttpError,
+  throwUnexpectedShape,
   throwWordNotFound,
   transformToWordData,
   transformWordData,
 } from '#utils/adapter-utils';
+import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
 
 /**
  * Maps Wordnik POS strings to elementary POS types.
@@ -45,6 +47,29 @@ export const CONFIG: WordnikConfig = {
 };
 
 
+const isExampleUses = (value: unknown): value is NonNullable<WordnikDefinition['exampleUses']> =>
+  Array.isArray(value) && value.every(example => isRecord(example) && isString(example.text));
+
+/**
+ * Checks every field fetchWordData reads from a definition. All are optional in
+ * Wordnik's responses, so a field is either absent or must have the read type.
+ */
+const isWordnikDefinition = (value: unknown): value is WordnikDefinition =>
+  isRecord(value)
+  && isOptional(value.id, isString)
+  && isOptional(value.partOfSpeech, isString)
+  && isOptional(value.text, (text): text is string | string[] => isString(text) || isStringArray(text))
+  && isOptional(value.attributionText, isString)
+  && isOptional(value.sourceDictionary, isString)
+  && isOptional(value.wordnikUrl, isString)
+  && isOptional(value.attributionUrl, isString)
+  && isOptional(value.exampleUses, isExampleUses)
+  && isOptional(value.relatedWords, isStringArray)
+  && isOptional(value.textProns, isStringArray);
+
+export const isWordnikDefinitions = (value: unknown): value is WordnikDefinition[] =>
+  Array.isArray(value) && value.every(isWordnikDefinition);
+
 /**
  * Fetches definitions from Wordnik for a single word.
  * Throws on rate-limit (429), server errors, 404, or empty results.
@@ -53,7 +78,10 @@ async function fetchDefinitions(word: string, buildUrl: (w: string) => string): 
   const response = await adapterFetch(buildUrl(word), 'Wordnik');
   throwOnHttpError(response, word);
 
-  const data = await parseJsonResponse(response, 'Wordnik') as WordnikDefinition[];
+  const data = await parseJsonResponse(response, 'Wordnik');
+  if (!isWordnikDefinitions(data)) {
+    throwUnexpectedShape('Wordnik', word);
+  }
   if (data.length === 0) {
     throwWordNotFound(word);
   }
@@ -89,9 +117,6 @@ export const wordnikAdapter: DictionaryAdapter = {
       `${baseUrl}/word.json/${encodeURIComponent(queryWord)}/definitions?limit=${limit}&includeRelated=false&useCanonical=false&includeTags=false&api_key=${apiKey}`;
 
     const data = await fetchDefinitions(word, buildUrl);
-    if (!this.isValidResponse(data)) {
-      throw new Error('No word data found');
-    }
     const definitions = data.map((def) => ({
       id: def.id,
       partOfSpeech: def.partOfSpeech ? normalizePOS(def.partOfSpeech, POS_MAP) : undefined,
@@ -128,7 +153,7 @@ export const wordnikAdapter: DictionaryAdapter = {
    * @returns True if response contains valid data, false otherwise
    */
   isValidResponse(response: unknown): boolean {
-    return Array.isArray(response) ? response.length > 0 : !!response;
+    return isWordnikDefinitions(response) && response.length > 0;
   },
 };
 

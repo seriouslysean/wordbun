@@ -81,6 +81,14 @@ export function throwWordNotFound(word: string): never {
 }
 
 /**
+ * Throws when a 2xx response parsed as JSON but is not the shape the adapter
+ * reads. Names the adapter so a fallback log says which API changed.
+ */
+export function throwUnexpectedShape(apiName: string, word: string): never {
+  throw new Error(`${apiName} returned an unexpected response shape for "${word}"`);
+}
+
+/**
  * Normalizes a raw POS string using the provided adapter-specific map.
  * Returns a base POS, a mapped POS, or undefined for unmappable values.
  */

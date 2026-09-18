@@ -3,6 +3,7 @@ import { wiktionaryAdapter } from '#adapters/wiktionary';
 import { wordnikAdapter } from '#adapters/wordnik';
 import type { DictionaryAdapter, DictionaryResponse, FetchOptions } from '#types';
 import { logger } from '#utils/logger';
+import { isValidDictionaryData } from '#utils/word-validation';
 
 const ADAPTER_REGISTRY: Record<string, DictionaryAdapter> = {
   'wordnik': wordnikAdapter,
@@ -50,13 +51,27 @@ function parseFallbackChain(): string[] {
 }
 
 /**
+ * Fetches from one adapter and refuses a response without usable definitions.
+ * Throwing keeps "answered with nothing usable" on the same path as any other
+ * adapter failure, so the chain moves on instead of returning an empty result.
+ */
+async function fetchUsable(adapter: DictionaryAdapter, word: string, options?: FetchOptions): Promise<DictionaryResponse> {
+  const response = await adapter.fetchWordData(word, options);
+  if (!isValidDictionaryData(response.definitions)) {
+    throw new Error(`${adapter.name} returned no usable definitions for "${word}"`);
+  }
+  return response;
+}
+
+/**
  * Fetches word data using the primary adapter, then tries each fallback
  * in DICTIONARY_FALLBACK order (comma-separated) until one succeeds.
+ * An adapter succeeds only when its response has usable definitions.
  */
 export async function fetchWithFallback(word: string, options?: FetchOptions): Promise<FetchResult> {
   const primary = getAdapter();
   try {
-    const response = await primary.fetchWordData(word, options);
+    const response = await fetchUsable(primary, word, options);
     return { response, adapterName: primary.name };
   } catch (primaryError) {
     const fallbacks = parseFallbackChain();
@@ -72,7 +87,7 @@ export async function fetchWithFallback(word: string, options?: FetchOptions): P
       });
       try {
         const fallback = getAdapterByName(fallbackName);
-        const response = await fallback.fetchWordData(word, options);
+        const response = await fetchUsable(fallback, word, options);
         return { response, adapterName: fallback.name };
       } catch (fallbackError) {
         lastError = fallbackError;

@@ -24,6 +24,24 @@ describe('wiktionary adapter', () => {
     vi.clearAllMocks();
   });
 
+  describe('fetchWordData malformed responses', () => {
+    it('throws a Wiktionary shape error when a meaning has no definitions', async () => {
+      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ word: 'test', meanings: [{ partOfSpeech: 'noun' }] }]));
+
+      await expect(wiktionaryAdapter.fetchWordData('test')).rejects.toThrow(
+        'Wiktionary returned an unexpected response shape for "test"',
+      );
+    });
+
+    it('reports not found when the first entry has no meanings', async () => {
+      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ word: 'test', meanings: [] }]));
+
+      await expect(wiktionaryAdapter.fetchWordData('test')).rejects.toThrow('not found in dictionary');
+    });
+  });
+
   describe('fetchWordData', () => {
     it('returns definitions for a word with one meaning', async () => {
       const { wiktionaryAdapter } = await import('#adapters/wiktionary');
@@ -161,7 +179,36 @@ describe('wiktionary adapter', () => {
     });
   });
 
+  describe('isFreeDictionaryEntry', () => {
+    it.each(['serendipity', 'pneumonoultramicroscopicsilicovolcanoconiosis'])('accepts every entry of the recorded %s response', async (name) => {
+      const { isFreeDictionaryEntry } = await import('#adapters/wiktionary');
+      expect(loadFixture(name).every(isFreeDictionaryEntry)).toBe(true);
+    });
+
+    it('rejects malformed entries', async () => {
+      const { isFreeDictionaryEntry } = await import('#adapters/wiktionary');
+      const definitions = [{ definition: 'a test' }];
+      expect(isFreeDictionaryEntry(null)).toBe(false);
+      expect(isFreeDictionaryEntry({ meanings: [] })).toBe(false);
+      expect(isFreeDictionaryEntry({ meanings: [null] })).toBe(false);
+      expect(isFreeDictionaryEntry({ meanings: [{ definitions }] })).toBe(false);
+      expect(isFreeDictionaryEntry({ meanings: [{ partOfSpeech: 'noun' }] })).toBe(false);
+      expect(isFreeDictionaryEntry({ meanings: [{ partOfSpeech: 'noun', definitions: [{}] }] })).toBe(false);
+      expect(isFreeDictionaryEntry({ meanings: [{ partOfSpeech: 'noun', definitions: [{ definition: 'x', example: 1 }] }] })).toBe(false);
+      expect(isFreeDictionaryEntry({ meanings: [{ partOfSpeech: 'noun', definitions: [{ definition: 'x', synonyms: 'y' }] }] })).toBe(false);
+      expect(isFreeDictionaryEntry({ meanings: [{ partOfSpeech: 'noun', definitions: [{ definition: 'x', antonyms: [1] }] }] })).toBe(false);
+      expect(isFreeDictionaryEntry({ meanings: [{ partOfSpeech: 'noun', definitions }], sourceUrls: 'url' })).toBe(false);
+    });
+  });
+
   describe('isValidResponse', () => {
+    it('returns false when a later meaning of the first entry is malformed', async () => {
+      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
+      const [entry] = loadFixture('serendipity');
+      const malformed = [{ ...entry, meanings: [...entry.meanings, { partOfSpeech: 'noun' }] }];
+      expect(wiktionaryAdapter.isValidResponse(malformed)).toBe(false);
+    });
+
     it('returns true for valid entry arrays', async () => {
       const { wiktionaryAdapter } = await import('#adapters/wiktionary');
       const fixture = loadFixture('serendipity');

@@ -9,7 +9,8 @@ export interface WordnikDefinition {
   partOfSpeech?: string;
   attributionText?: string;
   sourceDictionary?: string;
-  text?: string;
+  // Usually a string; Wordnik occasionally returns an array of fragments
+  text?: string | string[];
   sequence?: string | number;
   score?: number;
   word?: string;

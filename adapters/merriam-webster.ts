@@ -2,7 +2,10 @@ import type {
   DictionaryAdapter,
   DictionaryResponse,
   MWConfig,
+  MWDefiningText,
+  MWDefinition,
   MWEntry,
+  MWHeadwordInfo,
   MWSenseData,
   MWSenseItem,
   MWVisTuple,
@@ -13,10 +16,12 @@ import {
   normalizePOS,
   parseJsonResponse,
   throwOnHttpError,
+  throwUnexpectedShape,
   throwWordNotFound,
   transformToWordData,
   transformWordData,
 } from '#utils/adapter-utils';
+import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
 
 /**
  * Maps MW functional-label strings to elementary POS types.
@@ -86,7 +91,7 @@ export function extractExamples(entry: MWEntry): string[] {
     }
     for (const tuple of dt) {
       if (tuple[0] === 'vis') {
-        for (const vis of tuple[1] as MWVisTuple[]) {
+        for (const vis of tuple[1]) {
           const cleaned = stripMarkup(vis.t).trim();
           if (cleaned) {
             examples.push(cleaned);
@@ -108,15 +113,15 @@ export function extractExamples(entry: MWEntry): string[] {
       for (const senseItem of senseGroup) {
         const [type, data] = senseItem;
         if (type === 'sense' || type === 'sen') {
-          collectFromSense(data as MWSenseData);
+          collectFromSense(data);
         } else if (type === 'bs') {
-          collectFromSense((data as { sense: MWSenseData }).sense);
+          collectFromSense(data.sense);
         } else if (type === 'pseq') {
           // Paragraph sense sequence: array of inner sense items
-          for (const innerItem of data as MWSenseItem[]) {
+          for (const innerItem of data) {
             const [innerType, innerData] = innerItem;
             if (innerType === 'sense' || innerType === 'sen') {
-              collectFromSense(innerData as MWSenseData);
+              collectFromSense(innerData);
             }
           }
         }
@@ -127,11 +132,80 @@ export function extractExamples(entry: MWEntry): string[] {
   return examples;
 }
 
+const isVisTuple = (value: unknown): value is MWVisTuple => isRecord(value) && isString(value.t);
+
+const isDefiningText = (value: unknown): value is MWDefiningText =>
+  Array.isArray(value) && isString(value[0])
+  && (value[0] !== 'vis' || (Array.isArray(value[1]) && value[1].every(isVisTuple)));
+
+const isDefiningTextArray = (value: unknown): value is MWDefiningText[] =>
+  Array.isArray(value) && value.every(isDefiningText);
+
+const isSenseData = (value: unknown): value is MWSenseData =>
+  isRecord(value)
+  && isOptional(value.dt, isDefiningTextArray)
+  && isOptional(value.sdsense, (sd): sd is NonNullable<MWSenseData['sdsense']> =>
+    isRecord(sd) && isOptional(sd.dt, isDefiningTextArray));
+
+/**
+ * Validates the payload of the sense types extractExamples reads. An
+ * undocumented type is never read, so it passes rather than sinking the entry.
+ */
+const isSenseItem = (value: unknown): value is MWSenseItem => {
+  if (!Array.isArray(value)) {
+    return false;
+  }
+  const [type, data]: unknown[] = value;
+  switch (type) {
+    case 'sense':
+    case 'sen':
+      return isSenseData(data);
+    case 'bs':
+      return isRecord(data) && isSenseData(data.sense);
+    case 'pseq':
+      return Array.isArray(data) && data.every(isSenseItem);
+    default:
+      return isString(type);
+  }
+};
+
+const isDefinition = (value: unknown): value is MWDefinition =>
+  isRecord(value) && Array.isArray(value.sseq)
+  && value.sseq.every(group => Array.isArray(group) && group.every(isSenseItem));
+
+const isPronunciation = (value: unknown): value is NonNullable<MWHeadwordInfo['prs']>[number] =>
+  isRecord(value)
+  && isOptional(value.mw, isString)
+  && isOptional(value.sound, (sound): sound is { audio?: string } =>
+    isRecord(sound) && isOptional(sound.audio, isString));
+
+const isHeadwordInfo = (value: unknown): value is MWHeadwordInfo =>
+  isRecord(value)
+  && isOptional(value.prs, (prs): prs is NonNullable<MWHeadwordInfo['prs']> =>
+    Array.isArray(prs) && prs.every(isPronunciation));
+
+const isEtymology = (value: unknown): value is NonNullable<MWEntry['et']> =>
+  Array.isArray(value) && value.every(item =>
+    Array.isArray(item) && isString(item[0]) && (item[0] !== 'text' || isString(item[1])));
+
+/**
+ * Checks every field fetchWordData and extractExamples read from an entry, so
+ * a malformed entry is refused up front instead of failing mid-transform.
+ */
+export const isMWEntry = (value: unknown): value is MWEntry =>
+  isRecord(value)
+  && isRecord(value.meta) && isString(value.meta.id) && isString(value.meta.src)
+  && isOptional(value.hwi, isHeadwordInfo)
+  && isOptional(value.fl, isString)
+  && isOptional(value.shortdef, isStringArray)
+  && isOptional(value.et, isEtymology)
+  && isOptional(value.def, (def): def is MWDefinition[] => Array.isArray(def) && def.every(isDefinition));
+
 /**
  * Checks whether a MW API response contains valid entry objects (not string suggestions).
  */
 function isEntryArray(data: unknown): data is MWEntry[] {
-  return Array.isArray(data) && data.length > 0 && typeof data[0] !== 'string';
+  return Array.isArray(data) && data.length > 0 && data.every(isMWEntry);
 }
 
 function buildSourceUrl(word: string): string {
@@ -197,16 +271,20 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
     }
 
     // String array = suggestions, not entries
-    if (typeof data[0] === 'string') {
-      const suggestions = (data as string[]).slice(0, 5).join(', ');
+    if (isStringArray(data)) {
+      const suggestions = data.slice(0, 5).join(', ');
       throw new Error(`Word "${word}" not found. Did you mean: ${suggestions}`);
     }
 
-    // Filter to configured dictionary source only
+    // Filter to configured dictionary source only. Entries from other sources
+    // are never read, so only the kept ones have to be well-formed.
     const dictionary = CONFIG.DICTIONARY;
-    const entries = (data as MWEntry[]).filter(entry => entry.meta?.src === dictionary);
+    const entries = data.filter(entry => isRecord(entry) && isRecord(entry.meta) && entry.meta.src === dictionary);
     if (entries.length === 0) {
       throw new Error(`Word "${word}" not found in ${getDictionaryLabel()}.`);
+    }
+    if (!isEntryArray(entries)) {
+      throwUnexpectedShape('Merriam-Webster', word);
     }
 
     const sourceUrl = buildSourceUrl(word);
@@ -217,7 +295,7 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
       const partOfSpeech = entry.fl ? normalizePOS(entry.fl, POS_MAP) : undefined;
       const entryExamples = extractExamples(entry);
 
-      return entry.shortdef.map(text => ({
+      return (entry.shortdef ?? []).map(text => ({
         id,
         partOfSpeech,
         // Normalize colon spacing
@@ -231,7 +309,8 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
 
     // Capture per-headword data from the first matching entry (zero extra calls).
     const firstEntry = entries[0];
-    const etymologyText = firstEntry?.et?.[0]?.[1];
+    const firstEtymology = firstEntry?.et?.[0];
+    const etymologyText = firstEtymology?.[0] === 'text' ? firstEtymology[1] : undefined;
     const headword = {
       pronunciation: firstEntry?.hwi?.prs?.[0]?.mw,
       audio: buildMwAudioUrl(firstEntry?.hwi?.prs?.[0]?.sound?.audio),

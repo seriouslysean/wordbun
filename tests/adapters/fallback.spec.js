@@ -302,4 +302,60 @@ describe('fetchWithFallback', () => {
 
     await expect(fetchWithFallback('test')).rejects.toThrow('Word not found');
   });
+
+  it('falls through when the primary answers without usable definitions', async () => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
+    vi.stubEnv('DICTIONARY_FALLBACK', 'wiktionary');
+
+    const emptyResponse = { word: 'test', definitions: [], meta: { source: 'Merriam-Webster', attribution: '', url: '' } };
+    const fallbackResponse = { word: 'test', definitions: [{ text: 'a test', partOfSpeech: 'noun' }], meta: { source: 'Wiktionary', attribution: '', url: '' } };
+
+    vi.doMock('#adapters/merriam-webster', () => ({
+      merriamWebsterAdapter: {
+        name: 'merriam-webster',
+        fetchWordData: vi.fn().mockResolvedValue(emptyResponse),
+        transformToWordData: vi.fn(),
+        transformWordData: vi.fn(),
+        isValidResponse: vi.fn(),
+      },
+    }));
+
+    vi.doMock('#adapters/wiktionary', () => ({
+      wiktionaryAdapter: {
+        name: 'wiktionary',
+        fetchWordData: vi.fn().mockResolvedValue(fallbackResponse),
+        transformToWordData: vi.fn(),
+        transformWordData: vi.fn(),
+        isValidResponse: vi.fn(),
+      },
+    }));
+
+    const { fetchWithFallback } = await import('#adapters');
+    const result = await fetchWithFallback('test');
+
+    expect(result.adapterName).toBe('wiktionary');
+    expect(mockLogger.warn).toHaveBeenCalledWith(
+      'Adapter failed, trying fallback',
+      expect.objectContaining({ previous: 'merriam-webster', fallback: 'wiktionary' }),
+    );
+  });
+
+  it('throws a named error when the last adapter has no usable definitions', async () => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'wordnik');
+    vi.stubEnv('DICTIONARY_FALLBACK', 'none');
+
+    vi.doMock('#adapters/wordnik', () => ({
+      wordnikAdapter: {
+        name: 'wordnik',
+        fetchWordData: vi.fn().mockResolvedValue({ word: 'test', definitions: [{ text: '  ' }], meta: { source: 'Wordnik', attribution: '', url: '' } }),
+        transformToWordData: vi.fn(),
+        transformWordData: vi.fn(),
+        isValidResponse: vi.fn(),
+      },
+    }));
+
+    const { fetchWithFallback } = await import('#adapters');
+
+    await expect(fetchWithFallback('test')).rejects.toThrow('wordnik returned no usable definitions for "test"');
+  });
 });

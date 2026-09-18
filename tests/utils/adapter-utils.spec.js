@@ -8,6 +8,7 @@ import {
   normalizePOS,
   parseJsonResponse,
   throwOnHttpError,
+  throwUnexpectedShape,
   throwWordNotFound,
   transformToWordData,
   transformWordData,
@@ -244,6 +245,14 @@ describe('adapter-utils', () => {
     it('throws with consistent message format', () => {
       expect(() => throwWordNotFound('serendipity')).toThrow(
         'Word "serendipity" not found in dictionary. Please check the spelling.',
+      );
+    });
+  });
+
+  describe('throwUnexpectedShape', () => {
+    it('names the adapter and the word', () => {
+      expect(() => throwUnexpectedShape('Wordnik', 'serendipity')).toThrow(
+        'Wordnik returned an unexpected response shape for "serendipity"',
       );
     });
   });

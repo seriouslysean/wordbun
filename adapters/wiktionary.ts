@@ -1,7 +1,9 @@
 import type {
   DictionaryAdapter,
   DictionaryResponse,
+  FreeDictionaryDefinition,
   FreeDictionaryEntry,
+  FreeDictionaryMeaning,
 } from '#types';
 import {
   adapterFetch,
@@ -9,10 +11,12 @@ import {
   normalizePOS,
   parseJsonResponse,
   throwOnHttpError,
+  throwUnexpectedShape,
   throwWordNotFound,
   transformToWordData,
   transformWordData,
 } from '#utils/adapter-utils';
+import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
 
 const BASE_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en';
 
@@ -24,6 +28,34 @@ const POS_MAP: Record<string, string> = {
   'exclamation': 'interjection',
 };
 
+const isDefinition = (value: unknown): value is FreeDictionaryDefinition =>
+  isRecord(value)
+  && isString(value.definition)
+  && isOptional(value.example, isString)
+  && isOptional(value.synonyms, isStringArray)
+  && isOptional(value.antonyms, isStringArray);
+
+const isMeaning = (value: unknown): value is FreeDictionaryMeaning =>
+  isRecord(value)
+  && isString(value.partOfSpeech)
+  && Array.isArray(value.definitions) && value.definitions.every(isDefinition);
+
+/**
+ * Checks every field fetchWordData reads from an entry, down to each
+ * definition, so a malformed meaning is refused before the transform runs.
+ */
+export const isFreeDictionaryEntry = (value: unknown): value is FreeDictionaryEntry =>
+  isRecord(value)
+  && Array.isArray(value.meanings) && value.meanings.length > 0 && value.meanings.every(isMeaning)
+  && isOptional(value.sourceUrls, isStringArray);
+
+/**
+ * True when the first entry carries any meanings at all. Separates "the API
+ * has nothing for this word" from "the API answered in a shape we cannot read".
+ */
+const hasMeanings = (value: unknown): value is { meanings: unknown[] } =>
+  isRecord(value) && Array.isArray(value.meanings) && value.meanings.length > 0;
+
 export const wiktionaryAdapter: DictionaryAdapter = {
   name: 'wiktionary',
 
@@ -34,14 +66,13 @@ export const wiktionaryAdapter: DictionaryAdapter = {
 
     const data = await parseJsonResponse(response, 'Wiktionary');
 
-    if (!this.isValidResponse(data)) {
+    // Only the first entry is read
+    const entry: unknown = Array.isArray(data) ? data[0] : undefined;
+    if (!hasMeanings(entry)) {
       throwWordNotFound(word);
     }
-
-    const entries = data as FreeDictionaryEntry[];
-    const entry = entries[0];
-    if (!entry) {
-      throwWordNotFound(word);
+    if (!isFreeDictionaryEntry(entry)) {
+      throwUnexpectedShape('Wiktionary', word);
     }
     const sourceUrl = entry.sourceUrls?.[0] ?? '';
     const attribution = 'from Wiktionary';
@@ -72,11 +103,6 @@ export const wiktionaryAdapter: DictionaryAdapter = {
   },
 
   isValidResponse(response: unknown): boolean {
-    if (!Array.isArray(response) || response.length === 0) {
-      return false;
-    }
-    const first = response[0];
-    return typeof first === 'object' && first !== null && 'meanings' in first
-      && Array.isArray(first.meanings) && first.meanings.length > 0;
+    return Array.isArray(response) && isFreeDictionaryEntry(response[0]);
   },
 };

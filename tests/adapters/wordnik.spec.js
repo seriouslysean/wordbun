@@ -212,4 +212,64 @@ describe('wordnik adapter', () => {
       expect(globalThis.fetch).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('malformed responses', () => {
+    beforeEach(() => {
+      vi.stubEnv('WORDNIK_API_KEY', 'test-key');
+    });
+
+    it('throws a Wordnik shape error for a non-array body', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, { message: 'unexpected' }));
+
+      await expect(wordnikAdapter.fetchWordData('test')).rejects.toThrow(
+        'Wordnik returned an unexpected response shape for "test"',
+      );
+    });
+
+    it('throws a Wordnik shape error when a definition field has the wrong type', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [...VALID_DEFINITIONS, { text: 'ok', exampleUses: [{ position: 1 }] }]));
+
+      await expect(wordnikAdapter.fetchWordData('test')).rejects.toThrow('Wordnik returned an unexpected response shape');
+    });
+  });
+
+  describe('isWordnikDefinitions', () => {
+    it('accepts definitions with string or array text and empty objects', async () => {
+      const { isWordnikDefinitions } = await import('#adapters/wordnik');
+      expect(isWordnikDefinitions(VALID_DEFINITIONS)).toBe(true);
+      expect(isWordnikDefinitions([{ text: ['a', 'b'], exampleUses: [{ text: 'x' }], relatedWords: [], textProns: ['pron'] }])).toBe(true);
+      expect(isWordnikDefinitions([{}])).toBe(true);
+      expect(isWordnikDefinitions([])).toBe(true);
+    });
+
+    it('rejects non-arrays and malformed definitions', async () => {
+      const { isWordnikDefinitions } = await import('#adapters/wordnik');
+      expect(isWordnikDefinitions({ message: 'error' })).toBe(false);
+      expect(isWordnikDefinitions(null)).toBe(false);
+      expect(isWordnikDefinitions([null])).toBe(false);
+      expect(isWordnikDefinitions([{ id: 1 }])).toBe(false);
+      expect(isWordnikDefinitions([{ partOfSpeech: 1 }])).toBe(false);
+      expect(isWordnikDefinitions([{ text: 1 }])).toBe(false);
+      expect(isWordnikDefinitions([{ text: ['a', 1] }])).toBe(false);
+      expect(isWordnikDefinitions([{ attributionText: 1 }])).toBe(false);
+      expect(isWordnikDefinitions([{ sourceDictionary: 1 }])).toBe(false);
+      expect(isWordnikDefinitions([{ wordnikUrl: 1 }])).toBe(false);
+      expect(isWordnikDefinitions([{ attributionUrl: 1 }])).toBe(false);
+      expect(isWordnikDefinitions([{ exampleUses: 'x' }])).toBe(false);
+      expect(isWordnikDefinitions([{ exampleUses: ['x'] }])).toBe(false);
+      expect(isWordnikDefinitions([{ relatedWords: [{ words: [] }] }])).toBe(false);
+      expect(isWordnikDefinitions([{ textProns: [{ raw: 'x' }] }])).toBe(false);
+    });
+  });
+
+  describe('isValidResponse', () => {
+    it('requires a non-empty array of definitions', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      expect(wordnikAdapter.isValidResponse(VALID_DEFINITIONS)).toBe(true);
+      expect(wordnikAdapter.isValidResponse([])).toBe(false);
+      expect(wordnikAdapter.isValidResponse({ message: 'truthy non-array' })).toBe(false);
+    });
+  });
 });

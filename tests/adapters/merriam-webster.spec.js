@@ -311,6 +311,40 @@ describe('merriam-webster adapter', () => {
       expect(error.message).toContain('fuzzy');
     });
 
+    it('throws a Merriam-Webster shape error for a malformed matching entry', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      const malformed = [{ meta: { id: 'test', src: 'collegiate' }, shortdef: 'not an array' }];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, malformed));
+
+      await expect(merriamWebsterAdapter.fetchWordData('test')).rejects.toThrow(
+        'Merriam-Webster returned an unexpected response shape for "test"',
+      );
+    });
+
+    it('reports not found when no element is a matching entry', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [null, 'mixed']));
+
+      await expect(merriamWebsterAdapter.fetchWordData('test')).rejects.toThrow('not found in Collegiate Dictionary');
+    });
+
+    it('yields no definitions for an entry without shortdef', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ meta: { id: 'test', src: 'collegiate' } }]));
+
+      const result = await merriamWebsterAdapter.fetchWordData('test');
+      expect(result.definitions).toEqual([]);
+    });
+
+    it('ignores an etymology whose first element is not text', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      const entry = { meta: { id: 'test', src: 'collegiate' }, shortdef: ['a test'], et: [['et_snote', [['t', 'note']]]] };
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [entry]));
+
+      const result = await merriamWebsterAdapter.fetchWordData('test');
+      expect(result.headword).toBeUndefined();
+    });
+
     it('throws on 404', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
       globalThis.fetch.mockResolvedValueOnce(mockResponse(404));
@@ -420,11 +454,95 @@ describe('merriam-webster adapter', () => {
     });
   });
 
+  describe('isMWEntry', () => {
+    const recordedFixtures = ['hot-dog', 'learned', 'ludicrous', 'richter-scale', 'serendipity', 'speed', 'test'];
+
+    it.each(recordedFixtures)('accepts every entry of the recorded %s response', async (name) => {
+      const { isMWEntry } = await import('#adapters/merriam-webster');
+      expect(loadFixture(name).every(isMWEntry)).toBe(true);
+    });
+
+    it('accepts an entry without the optional fields', async () => {
+      const { isMWEntry } = await import('#adapters/merriam-webster');
+      expect(isMWEntry({ meta: { id: 'test', src: 'collegiate' } })).toBe(true);
+    });
+
+    it('accepts every sense item type', async () => {
+      const { isMWEntry } = await import('#adapters/merriam-webster');
+      const sense = { dt: [['text', '{bc}a thing'], ['vis', [{ t: 'an example' }]]], sdsense: { sd: 'also', dt: [['text', 'x']] } };
+      const entry = {
+        meta: { id: 'test', src: 'collegiate' },
+        def: [{ sseq: [[['sense', sense], ['sen', { sn: '2' }], ['bs', { sense }], ['pseq', [['sense', sense]]]]] }],
+      };
+      expect(isMWEntry(entry)).toBe(true);
+    });
+
+    it('accepts sense types and dt tags the adapter never reads', async () => {
+      const { isMWEntry } = await import('#adapters/merriam-webster');
+      const entry = {
+        meta: { id: 'test', src: 'collegiate' },
+        def: [{ sseq: [[['undocumented', 1], ['sense', { dt: [['undocumented', 1]] }]]] }],
+      };
+      expect(isMWEntry(entry)).toBe(true);
+    });
+
+    it('rejects non-objects and entries without meta', async () => {
+      const { isMWEntry } = await import('#adapters/merriam-webster');
+      expect(isMWEntry(null)).toBe(false);
+      expect(isMWEntry('suggestion')).toBe(false);
+      expect(isMWEntry({})).toBe(false);
+      expect(isMWEntry({ meta: { id: 'test' } })).toBe(false);
+      expect(isMWEntry({ meta: { id: 1, src: 'collegiate' } })).toBe(false);
+    });
+
+    it('rejects malformed consumed fields', async () => {
+      const { isMWEntry } = await import('#adapters/merriam-webster');
+      const meta = { id: 'test', src: 'collegiate' };
+      expect(isMWEntry({ meta, shortdef: 'not an array' })).toBe(false);
+      expect(isMWEntry({ meta, shortdef: ['ok', 2] })).toBe(false);
+      expect(isMWEntry({ meta, fl: 3 })).toBe(false);
+      expect(isMWEntry({ meta, hwi: 'hw' })).toBe(false);
+      expect(isMWEntry({ meta, hwi: { prs: 'mw' } })).toBe(false);
+      expect(isMWEntry({ meta, hwi: { prs: [{ mw: 1 }] } })).toBe(false);
+      expect(isMWEntry({ meta, hwi: { prs: [{ sound: { audio: 1 } }] } })).toBe(false);
+      expect(isMWEntry({ meta, hwi: { prs: [{ sound: 'audio' }] } })).toBe(false);
+      expect(isMWEntry({ meta, et: 'text' })).toBe(false);
+      expect(isMWEntry({ meta, et: [['text', ['not', 'a', 'string']]] })).toBe(false);
+      expect(isMWEntry({ meta, et: ['text'] })).toBe(false);
+    });
+
+    it('rejects a malformed definition tree', async () => {
+      const { isMWEntry } = await import('#adapters/merriam-webster');
+      const meta = { id: 'test', src: 'collegiate' };
+      const withSseq = sseq => ({ meta, def: [{ sseq }] });
+      expect(isMWEntry({ meta, def: {} })).toBe(false);
+      expect(isMWEntry({ meta, def: [{}] })).toBe(false);
+      expect(isMWEntry(withSseq(['sense']))).toBe(false);
+      expect(isMWEntry(withSseq([['sense']]))).toBe(false);
+      expect(isMWEntry(withSseq([[['sense', null]]]))).toBe(false);
+      expect(isMWEntry(withSseq([[[1, {}]]]))).toBe(false);
+      expect(isMWEntry(withSseq([[['bs', {}]]]))).toBe(false);
+      expect(isMWEntry(withSseq([[['pseq', {}]]]))).toBe(false);
+      expect(isMWEntry(withSseq([[['sense', { dt: 'text' }]]]))).toBe(false);
+      expect(isMWEntry(withSseq([[['sense', { dt: ['text'] }]]]))).toBe(false);
+      expect(isMWEntry(withSseq([[['sense', { dt: [['vis', 'not an array']] }]]]))).toBe(false);
+      expect(isMWEntry(withSseq([[['sense', { dt: [['vis', [{ t: 1 }]]] }]]]))).toBe(false);
+      expect(isMWEntry(withSseq([[['sense', { sdsense: 'also' }]]]))).toBe(false);
+      expect(isMWEntry(withSseq([[['sense', { sdsense: { dt: 'text' } }]]]))).toBe(false);
+    });
+  });
+
   describe('isValidResponse', () => {
     it('returns true for valid entry arrays', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
       const fixture = loadFixture('serendipity');
       expect(merriamWebsterAdapter.isValidResponse(fixture)).toBe(true);
+    });
+
+    it('returns false when an element is not an entry', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      expect(merriamWebsterAdapter.isValidResponse([null])).toBe(false);
+      expect(merriamWebsterAdapter.isValidResponse([...loadFixture('serendipity'), null])).toBe(false);
     });
 
     it('returns false for string suggestion arrays', async () => {
