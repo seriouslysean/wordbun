@@ -7,6 +7,7 @@ import {
   adapterFetch,
   buildDefinition,
   classifyPartOfSpeech,
+  isCanonicalResponse,
   isRateLimited,
   isWordNotFound,
   normalizePOS,
@@ -24,6 +25,34 @@ import {
 const TEST_POS_MAP = {
   'transitive verb': 'verb',
   'proper noun': 'noun',
+};
+
+// Every field of the contract, each holding a valid value. Each malformed
+// response below changes exactly one thing about it.
+const CANONICAL = {
+  word: 'test',
+  definitions: [{
+    id: 'test',
+    partOfSpeech: 'noun',
+    text: 'A procedure for critical evaluation',
+    attributionText: 'from Test',
+    sourceDictionary: 'test',
+    sourceUrl: 'https://example.com/test',
+    examples: ['a test of skill'],
+    synonyms: ['trial'],
+    antonyms: ['certainty'],
+  }],
+  meta: { source: 'Test', attribution: 'from Test', url: 'https://example.com/test' },
+  headword: { pronunciation: 'test', audio: 'https://example.com/test.mp3', etymology: 'Latin testum' },
+};
+const [CANONICAL_DEFINITION] = CANONICAL.definitions;
+const withResponse = changes => ({ ...CANONICAL, ...changes });
+const withDefinition = changes => ({ ...CANONICAL, definitions: [{ ...CANONICAL_DEFINITION, ...changes }] });
+const withMeta = changes => ({ ...CANONICAL, meta: { ...CANONICAL.meta, ...changes } });
+const withHeadword = changes => ({ ...CANONICAL, headword: { ...CANONICAL.headword, ...changes } });
+const withoutDefinitionField = (field) => {
+  const { [field]: _removed, ...rest } = CANONICAL_DEFINITION;
+  return { ...CANONICAL, definitions: [rest] };
 };
 
 describe('adapter-utils', () => {
@@ -204,6 +233,70 @@ describe('adapter-utils', () => {
       const response = buildDictionaryResponse('test', [], 'Test', 'from Test', 'https://example.com', { pronunciation: '' });
 
       expect(response).not.toHaveProperty('headword');
+    });
+  });
+
+  describe('isCanonicalResponse', () => {
+    it('accepts a response carrying every field of the contract', () => {
+      expect(isCanonicalResponse(CANONICAL, 'test')).toBe(true);
+    });
+
+    it('accepts the minimal response: the word, one definition with text, and a source', () => {
+      expect(isCanonicalResponse({ word: 'test', definitions: [{ text: 'A trial' }], meta: { source: 'Test' } }, 'test')).toBe(true);
+    });
+
+    it('accepts a label in place of a part of speech', () => {
+      expect(isCanonicalResponse(withDefinition({ partOfSpeech: undefined, label: 'biographical name' }), 'test')).toBe(true);
+    });
+
+    it('accepts markup inside text, which the contract does not judge yet', () => {
+      expect(isCanonicalResponse(withDefinition({ text: 'A <xref>trial</xref>' }), 'test')).toBe(true);
+    });
+
+    it('treats a field whose value is undefined as absent, as JSON does', () => {
+      expect(isCanonicalResponse(withDefinition({ examples: undefined, wordnikUrl: undefined }), 'test')).toBe(true);
+    });
+
+    it.each([
+      // Envelope
+      ['a response that is not an object', []],
+      ['a key outside the envelope', withResponse({ rawData: {} })],
+      ['a word other than the one requested', withResponse({ word: 'Test' })],
+      ['definitions that are not a list', withResponse({ definitions: CANONICAL_DEFINITION })],
+      ['an empty definitions list', withResponse({ definitions: [] })],
+      ['a missing meta', withResponse({ meta: undefined })],
+      ['a key outside the meta', withMeta({ sourceUrl: 'https://example.com/test' })],
+      ['a blank meta source', withMeta({ source: ' ' })],
+      ['a blank meta attribution', withMeta({ attribution: '' })],
+      ['a meta URL that is not absolute http(s)', withMeta({ url: '/test' })],
+      ['an empty headword', withResponse({ headword: {} })],
+      ['a key outside the headword', withHeadword({ phonetic: 'test' })],
+      ['a blank headword pronunciation', withHeadword({ pronunciation: '' })],
+      ['a blank headword etymology', withHeadword({ etymology: ' ' })],
+      ['a headword audio URL that is not absolute http(s)', withHeadword({ audio: 'test.mp3' })],
+      // Definitions
+      ['a definition that is not an object', withResponse({ definitions: ['A trial'] })],
+      ['a key outside the definition', withDefinition({ wordnikUrl: 'https://example.com/test' })],
+      ['a definition without text', withoutDefinitionField('text')],
+      ['blank text', withDefinition({ text: '  ' })],
+      ['text given as fragments', withDefinition({ text: ['A procedure', 'for critical evaluation'] })],
+      ['a part of speech outside the vocabulary', withDefinition({ partOfSpeech: 'transitive verb' })],
+      ['a label beside a part of speech', withDefinition({ label: 'noun' })],
+      ['a blank label', withDefinition({ partOfSpeech: undefined, label: '' })],
+      ['a blank id', withDefinition({ id: '' })],
+      ['a blank attribution', withDefinition({ attributionText: ' ' })],
+      ['a blank source dictionary', withDefinition({ sourceDictionary: '' })],
+      ['an empty examples list', withDefinition({ examples: [] })],
+      ['an empty synonyms list', withDefinition({ synonyms: [] })],
+      ['an empty antonyms list', withDefinition({ antonyms: [] })],
+      ['a blank entry in a list', withDefinition({ synonyms: ['trial', ''] })],
+      ['a list entry that is not a string', withDefinition({ examples: [1] })],
+      ['a relative source URL', withDefinition({ sourceUrl: 'www.example.com/test' })],
+      ['a source URL that is not http(s)', withDefinition({ sourceUrl: 'javascript:alert(1)' })],
+      ['a blank source URL', withDefinition({ sourceUrl: '' })],
+      ['one bad definition among good ones', withResponse({ definitions: [CANONICAL_DEFINITION, { text: '' }] })],
+    ])('rejects %s', (_rule, response) => {
+      expect(isCanonicalResponse(response, 'test')).toBe(false);
     });
   });
 

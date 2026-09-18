@@ -3,7 +3,7 @@ import type {
 } from '#types';
 import { type BasePartOfSpeech, isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { flattenErrors, getErrorMessage } from '#utils/text-utils';
-import { isNonblankString } from '#utils/type-guards';
+import { isNonblankString, isOptional, isRecord, isString } from '#utils/type-guards';
 import { findValidDefinition } from '#utils/word-data-utils';
 
 /**
@@ -225,6 +225,83 @@ export function buildDictionaryResponse(
     ...(Object.keys(captured).length > 0 ? { headword: captured } : {}),
   };
 }
+
+const RESPONSE_KEYS: ReadonlySet<string> = new Set(['word', 'definitions', 'meta', 'headword']);
+const META_KEYS: ReadonlySet<string> = new Set(['source', 'attribution', 'url']);
+const HEADWORD_KEYS: ReadonlySet<string> = new Set(['pronunciation', 'audio', 'etymology']);
+const DEFINITION_KEYS: ReadonlySet<string> = new Set([
+  'id', 'partOfSpeech', 'label', 'text', 'attributionText', 'sourceDictionary', 'sourceUrl',
+  'examples', 'synonyms', 'antonyms',
+]);
+
+/**
+ * True when the object carries no key outside the contract. A key whose value
+ * is undefined counts as absent, as it does once written to JSON.
+ */
+const hasOnlyKeys = (value: Record<string, unknown>, keys: ReadonlySet<string>): boolean =>
+  Object.entries(value).every(([key, field]) => field === undefined || keys.has(key));
+
+const isHttpUrl = (value: unknown): value is string => {
+  if (!isString(value) || !URL.canParse(value)) {
+    return false;
+  }
+  const { protocol } = new URL(value);
+  return protocol === 'https:' || protocol === 'http:';
+};
+
+const isNonblankStringList = (value: unknown): value is string[] =>
+  Array.isArray(value) && value.length > 0 && value.every(isNonblankString);
+
+const isVocabularyPartOfSpeech = (value: unknown): value is BasePartOfSpeech =>
+  isString(value) && isBasePartOfSpeech(value);
+
+const isCanonicalDefinition = (value: unknown): value is DictionaryDefinition =>
+  isRecord(value)
+  && hasOnlyKeys(value, DEFINITION_KEYS)
+  && isNonblankString(value.text)
+  && isOptional(value.partOfSpeech, isVocabularyPartOfSpeech)
+  && isOptional(value.label, isNonblankString)
+  && (value.partOfSpeech === undefined || value.label === undefined)
+  && isOptional(value.id, isNonblankString)
+  && isOptional(value.attributionText, isNonblankString)
+  && isOptional(value.sourceDictionary, isNonblankString)
+  && isOptional(value.sourceUrl, isHttpUrl)
+  && isOptional(value.examples, isNonblankStringList)
+  && isOptional(value.synonyms, isNonblankStringList)
+  && isOptional(value.antonyms, isNonblankStringList);
+
+const isCanonicalMeta = (value: unknown): value is DictionaryResponse['meta'] =>
+  isRecord(value)
+  && hasOnlyKeys(value, META_KEYS)
+  && isNonblankString(value.source)
+  && isOptional(value.attribution, isNonblankString)
+  && isOptional(value.url, isHttpUrl);
+
+const isCanonicalHeadword = (value: unknown): value is NonNullable<DictionaryResponse['headword']> =>
+  isRecord(value)
+  && hasOnlyKeys(value, HEADWORD_KEYS)
+  && Object.values(value).some(field => field !== undefined)
+  && isOptional(value.pronunciation, isNonblankString)
+  && isOptional(value.audio, isHttpUrl)
+  && isOptional(value.etymology, isNonblankString);
+
+/**
+ * The canonical contract, checked at runtime: what an adapter returns must
+ * be a DictionaryResponse for exactly the word requested, with at least one
+ * definition, and every string, list and URL in it holding a real value.
+ * fetchWithFallback applies it once to every adapter's answer, before asking
+ * whether any definition is displayable, and refuses the whole response on
+ * any violation: dropping only the offending definition would hide a partner
+ * API that changed. Markup inside text is not judged here.
+ */
+export const isCanonicalResponse = (value: unknown, word: string): value is DictionaryResponse =>
+  isRecord(value)
+  && hasOnlyKeys(value, RESPONSE_KEYS)
+  && value.word === word
+  && Array.isArray(value.definitions) && value.definitions.length > 0
+  && value.definitions.every(isCanonicalDefinition)
+  && isCanonicalMeta(value.meta)
+  && isOptional(value.headword, isCanonicalHeadword);
 
 /**
  * Shared transformToWordData for all adapters.

@@ -75,7 +75,8 @@ export interface RateLimit {
 /**
  * The fields of a canonical definition other than its classification. Every
  * string is nonblank, every array nonempty and `sourceUrl` an absolute http(s)
- * URL; an adapter omits a field it has no value for.
+ * URL; an adapter omits a field it has no value for. The type cannot say so,
+ * so isCanonicalResponse in utils/adapter-utils.ts checks it at fetch time.
  */
 interface DictionaryDefinitionFields {
   text: string;

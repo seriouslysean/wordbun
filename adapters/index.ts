@@ -2,6 +2,7 @@ import { merriamWebsterAdapter } from '#adapters/merriam-webster';
 import { wiktionaryAdapter } from '#adapters/wiktionary';
 import { wordnikAdapter } from '#adapters/wordnik';
 import type { DictionaryAdapter, DictionaryResponse, FetchOptions } from '#types';
+import { isCanonicalResponse, throwUnexpectedShape } from '#utils/adapter-utils';
 import { logger } from '#utils/logger';
 import { getErrorMessage } from '#utils/text-utils';
 import { isValidDictionaryData } from '#utils/word-data-utils';
@@ -54,12 +55,16 @@ function parseFallbackChain(): string[] {
 }
 
 /**
- * Fetches from one adapter and refuses a response without usable definitions.
- * Throwing keeps "answered with nothing usable" on the same path as any other
- * adapter failure, so the chain moves on instead of returning an empty result.
+ * Fetches from one adapter and refuses a response that breaks the canonical
+ * contract or has no usable definitions. Throwing keeps both on the same path
+ * as any other adapter failure, so the chain moves on instead of returning a
+ * malformed or empty result, and the fault stays in the final error.
  */
 async function fetchUsable(adapter: DictionaryAdapter, word: string, options?: FetchOptions): Promise<DictionaryResponse> {
   const response = await adapter.fetchWordData(word, options);
+  if (!isCanonicalResponse(response, word)) {
+    throwUnexpectedShape(adapter.name, word);
+  }
   if (!isValidDictionaryData(response.definitions)) {
     throw new Error(`${adapter.name} returned no usable definitions for "${word}"`);
   }

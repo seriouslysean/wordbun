@@ -7,7 +7,7 @@ import type { DictionaryDefinition, FetchOptions, WordData, WordProcessedData } 
 /**
  * What an adapter answers for a lookup. Like its definitions, every string is
  * nonblank and every URL absolute http(s); a field the partner did not supply
- * is omitted rather than left empty.
+ * is omitted rather than left empty. isCanonicalResponse checks it.
  */
 export interface DictionaryResponse {
   word: string;
