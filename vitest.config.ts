@@ -6,7 +6,6 @@ export default defineConfig({
     environment: 'node',
     include: ['tests/**/*.spec.js'],
     setupFiles: ['tests/setup.js'],
-    isolate: false,
     env: {
       BASE_PATH: '/',
       SOURCE_DIR: 'demo',
