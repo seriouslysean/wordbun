@@ -65,9 +65,9 @@ export const getSocialImagePath = (card: SocialCard, sourceDir?: string): string
  * decode with `decodeURI`, which leaves escapes of reserved characters such
  * as `%26` alone and would look for a file named `pb%26j.png`. Everything
  * else is percent-encoded, including `?` and `#`, which `encodeURI` skips
- * and which would otherwise end the path. A literal `%` also passes through
- * unescaped, so a word containing one would produce an ambiguous escape; no
- * stored word contains one.
+ * and which would otherwise end the path. Both are reserved characters, so
+ * `astro preview` leaves `%3F` and `%23` undecoded and a word containing
+ * either would 404 there; no stored word contains either.
  * @param publicPath - Forward-slash path relative to the public root
  * @returns Root-relative URL path such as `/images/social/2024/20240615-ice%20cream.png`
  */

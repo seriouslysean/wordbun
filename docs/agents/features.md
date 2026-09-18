@@ -349,8 +349,8 @@ migration. The type-safe env API is already partially adopted —
 3. Verify `:global(.footer__wordnik)` grayscale/opacity styles still
    target the new wrapper.
 4. Run typecheck, build, inspect `dist/` for hashed image output.
-6. Run unit + E2E suites.
-7. Audit speculation rules `eagerness` against a long browse page; tune
+5. Run unit + E2E suites.
+6. Audit speculation rules `eagerness` against a long browse page; tune
    if prefetch volume is excessive.
 
 **Out-of-scope:** Astro DB, SSR adapters, server islands, Astro ClientRouter
