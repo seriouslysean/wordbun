@@ -154,6 +154,8 @@ const toStatsPageProps = (config: StatsConfig): StatsPageProps => {
     ? config.definition.pageDescription(config.arg)
     : config.definition.pageDescription;
 
+  // Narrowing-only: both branches read the same, but each sees one StatsConfig
+  // variant, so `type` and `words` stay correlated without an assertion
   return config.type === TEMPLATE.MILESTONE
     ? { type: config.type, words: config.data, description }
     : { type: config.type, words: config.data, description };
