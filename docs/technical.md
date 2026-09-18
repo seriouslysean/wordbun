@@ -56,7 +56,7 @@ config/
   paths.ts                       # Path configuration (SOURCE_DIR-based)
 
 constants/
-  parts-of-speech.ts             # Part of speech normalization mappings
+  parts-of-speech.ts             # Part-of-speech vocabulary (grammatical categories plus abbreviation)
   stats.ts                       # Statistics definitions and slugs
   text-patterns.ts               # Regex patterns, milestones, word endings
   urls.ts                        # URL constants, route builders
