@@ -42,6 +42,16 @@ describe('shared date-utils', () => {
       expect(isValidDate('2024-03-19')).toBe(false);
       expect(isValidDate('')).toBe(false);
     });
+
+    it('rejects eight-character strings that are only partly numeric', () => {
+      expect(isValidDate('2025011x')).toBe(false);
+      expect(isValidDate('202501 1')).toBe(false);
+      expect(isValidDate('2025-1-1')).toBe(false);
+      expect(isValidDate('+2025101')).toBe(false);
+      expect(isValidDate('2025.101')).toBe(false);
+      expect(YYYYMMDDToDate('2025011x')).toBeNull();
+      expect(formatDate('2025011x')).toBe('2025011x');
+    });
   });
 
   describe('formatDate', () => {

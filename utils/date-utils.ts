@@ -13,15 +13,13 @@ export const MONTH_NAMES = [
  * dateToYYYYMMDD and the display formatters.
  */
 const parseYYYYMMDD = (dateStr: string): Date | null => {
-  if (!dateStr || dateStr.length !== 8) {
+  // Digits only: parseInt would read '1x' as 1 and accept '2025011x' as Jan 1
+  if (!/^\d{8}$/.test(dateStr)) {
     return null;
   }
-  const year = parseInt(dateStr.slice(0, 4), 10);
-  const month = parseInt(dateStr.slice(4, 6), 10) - 1;
-  const day = parseInt(dateStr.slice(6, 8), 10);
-  if (isNaN(year) || isNaN(month) || isNaN(day)) {
-    return null;
-  }
+  const year = Number(dateStr.slice(0, 4));
+  const month = Number(dateStr.slice(4, 6)) - 1;
+  const day = Number(dateStr.slice(6, 8));
   const date = new Date(year, month, day);
   if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
     return null;
