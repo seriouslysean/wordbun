@@ -213,7 +213,7 @@ export const getCurrentWord = (words: WordData[] = allWords): WordData | null =>
 
   const found = words.find(word => word.date <= today);
 
-  return found ?? words[words.length - 1] ?? null;
+  return found ?? words.at(-1) ?? null;
 };
 
 /**
@@ -340,7 +340,7 @@ export const groupWordsByMonth = (year: string, words: WordData[] = allWords): {
  * @returns {string} SHA-256 hash in hexadecimal format
  */
 export const generateWordDataHash = (words: string[]): string => {
-  const sorted = [...words].toSorted();
+  const sorted = words.toSorted();
   const input = `${sorted.length}:${sorted.join(',')}`;
   return crypto.createHash('sha256').update(input).digest('hex');
 };

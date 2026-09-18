@@ -57,7 +57,7 @@ import {
 import { t } from '#utils/i18n-utils';
 
 const totalWords = allWords.length;
-const firstWord = totalWords > 0 ? allWords[allWords.length - 1] : null;
+const firstWord = totalWords > 0 ? allWords.at(-1) : null;
 const latestWord = totalWords > 0 ? allWords[0] : null;
 const lengthCount = availableLengths.length;
 
@@ -72,7 +72,7 @@ const { allVowels, allConsonants, palindromes } = getPatternStats(allWords);
 const leastSyllablesCount = leastSyllables ? countSyllables(leastSyllables.word) : 0;
 const mostSyllablesCount = mostSyllables ? countSyllables(mostSyllables.word) : 0;
 const firstLetterStat = letterStats[0];
-const lastLetterStat = letterStats[letterStats.length - 1];
+const lastLetterStat = letterStats.at(-1);
 const mostCommonLetter = firstLetterStat?.[0] ?? '';
 const mostCommonLetterCount = firstLetterStat?.[1] ?? 0;
 const leastCommonLetter = lastLetterStat?.[0] ?? '';

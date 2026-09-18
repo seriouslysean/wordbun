@@ -57,12 +57,12 @@ export function stripMarkup(text: string): string {
 
   return text
     // {bc} -> ": "
-    .replace(/\{bc\}/g, ': ')
+    .replaceAll('{bc}', ': ')
     // Formatting tags: keep inner content
     .replace(/\{(?:it|wi|sc|b)\}(.*?)\{\/(?:it|wi|sc|b)\}/g, '$1')
     // Smart quotes
-    .replace(/\{ldquo\}/g, '\u201c')
-    .replace(/\{rdquo\}/g, '\u201d')
+    .replaceAll('{ldquo}', '\u201c')
+    .replaceAll('{rdquo}', '\u201d')
     // Cross-references and links: extract the word (first pipe segment)
     .replace(/\{(?:sx|a_link|d_link|dxt)\|([^|}]*)[^}]*\}/g, '$1')
     // Any remaining tags

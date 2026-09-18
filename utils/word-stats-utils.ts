@@ -110,7 +110,7 @@ export const getLetterStats = (words: WordData[]) => {
     .toSorted(([, a], [, b]) => b - a);
 
   const [mostCommonEntry] = sortedLetters;
-  const leastCommonEntry = sortedLetters[sortedLetters.length - 1];
+  const leastCommonEntry = sortedLetters.at(-1);
 
   return {
     mostCommon: mostCommonEntry?.[0] || '',
@@ -162,7 +162,7 @@ export function getCurrentStreakWords(words: WordData[]): WordData[] {
     return [];
   }
 
-  const sortedWords = [...words].toSorted((a, b) => b.date.localeCompare(a.date));
+  const sortedWords = words.toSorted((a, b) => b.date.localeCompare(a.date));
   const today = new Date();
   const todayString = dateToYYYYMMDD(today);
   const yesterdayDate = new Date(today);
@@ -196,7 +196,7 @@ export function getLongestStreakWords(words: WordData[]): WordData[] {
     return words;
   }
 
-  const sortedWords = [...words].toSorted((a, b) => b.date.localeCompare(a.date));
+  const sortedWords = words.toSorted((a, b) => b.date.localeCompare(a.date));
   const firstWord = sortedWords[0];
   if (!firstWord) {
     return [];
@@ -360,7 +360,7 @@ export const getCurrentStreakStats = (words: WordData[]): WordStreakStatsResult 
     };
   }
 
-  const sortedWords = [...words].toSorted((a, b) => b.date.localeCompare(a.date));
+  const sortedWords = words.toSorted((a, b) => b.date.localeCompare(a.date));
   const today = new Date();
   const todayString = dateToYYYYMMDD(today);
   const yesterdayDate = new Date(today);
@@ -445,7 +445,7 @@ export const getAntiStreakStats = (words: WordData[]): WordAntiStreakStatsResult
     return emptyResult;
   }
 
-  const sortedWords = [...words].toSorted((a, b) => a.date.localeCompare(b.date));
+  const sortedWords = words.toSorted((a, b) => a.date.localeCompare(b.date));
 
   let longestGap = 0;
   let gapStartWord: WordData | null = null;

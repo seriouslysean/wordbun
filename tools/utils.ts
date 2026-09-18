@@ -284,7 +284,7 @@ export async function generateGenericShareImage(
   slug: string,
   options: { force?: boolean } = {},
 ): Promise<boolean> {
-  const outputPath = path.join(SOCIAL_BASE_DIR, 'pages', `${slugify(slug.replace(/\//g, ' '))}.png`);
+  const outputPath = path.join(SOCIAL_BASE_DIR, 'pages', `${slugify(slug.replaceAll('/', ' '))}.png`);
   return renderSvgToPng(createSvg(title.toLowerCase()), outputPath, !!options.force);
 }
 

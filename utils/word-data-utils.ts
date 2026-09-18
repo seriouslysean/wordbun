@@ -48,7 +48,7 @@ export const getAvailableMonths = (year: string, words: WordData[]): string[] =>
   const months = new Set(
     words
       .filter(word => word.date.startsWith(year))
-      .map(word => word.date.substring(4, 6))
+      .map(word => word.date.slice(4, 6))
   );
   return Array.from(months).toSorted();
 };
@@ -57,7 +57,7 @@ export const getAvailableMonths = (year: string, words: WordData[]): string[] =>
  * Get all available years from word data
  */
 export const getAvailableYears = (words: WordData[]): string[] => {
-  const years = [...new Set(words.map(word => word.date.substring(0, 4)))];
+  const years = [...new Set(words.map(word => word.date.slice(0, 4)))];
   return years.toSorted((a, b) => b.localeCompare(a));
 };
 
@@ -204,7 +204,7 @@ export const groupWordsByLetter = (words: WordData[]): WordGrouping<string> =>
  * Group all words by year (YYYY from word.date) in a single pass.
  */
 export const groupWordsByYear = (words: WordData[]): WordGrouping<string> =>
-  Object.groupBy(words, word => word.date.substring(0, 4)) as WordGrouping<string>;
+  Object.groupBy(words, word => word.date.slice(0, 4)) as WordGrouping<string>;
 
 /**
  * Group words by every normalized part of speech they carry. A word appears in

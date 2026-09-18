@@ -28,7 +28,7 @@ function getCodeHash() {
     }
   });
 
-  return hash.digest('hex').substring(0, 8);
+  return hash.digest('hex').slice(0, 8);
 }
 
 // Load .env locally when present, skip in CI (GitHub Actions etc).

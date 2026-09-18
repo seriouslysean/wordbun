@@ -36,7 +36,7 @@ return custom;
   if (word && definition) {
     // Truncate definition to ~150 chars for meta description (2025 best practice)
     const shortDef = definition.length > 100
-      ? definition.substring(0, 100).trim() + '...'
+      ? definition.slice(0, 100).trim() + '...'
       : definition;
     return `${word}: ${shortDef} | ${seoConfig.siteName}`;
   }

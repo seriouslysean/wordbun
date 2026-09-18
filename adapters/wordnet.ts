@@ -47,7 +47,7 @@ const wordpos = new WordPOS();
 // WordNet joins multiword lemmas with underscores and appends syntactic-position
 // markers to some adjectives (e.g. "afraid(p)", "laughing(a)"); strip both.
 const clean = (lemma: string): string =>
-  lemma.replace(/_/g, ' ').replace(/\([a-z]+\)$/, '').trim();
+  lemma.replaceAll('_', ' ').replace(/\([a-z]+\)$/, '').trim();
 
 // Resolves a pointer's target synset to its first `limit` lemmas. Swallows
 // lookup errors so one bad pointer never blocks the whole word.

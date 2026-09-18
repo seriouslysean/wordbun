@@ -13,7 +13,7 @@ const wordListWords = template === 'word-list' ? (words as WordData[]) : undefin
 ---
 
 {template === 'milestone' ? (
-  <StatsMilestonePage words={[...milestoneWords!].reverse()} descriptionText={description} />
+  <StatsMilestonePage words={milestoneWords!.toReversed()} descriptionText={description} />
 ) : (
   <StatsWordListPage words={wordListWords!} descriptionText={description} />
 )}

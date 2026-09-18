@@ -149,11 +149,11 @@ export function generateLlmsTxt(words: WordData[]): string | null {
   const recentWords = words.slice(-MAX_PAST_WORDS_DISPLAY);
 
   const curatorInfo = HUMANS_WORD_CURATOR ? ` Curated by ${HUMANS_WORD_CURATOR}.` : '';
-  const lastWord = words.length > 0 ? words[words.length - 1] : undefined;
+  const lastWord = words.at(-1);
   const lastUpdated = lastWord ? formatDate(lastWord.date) : null;
 
   const recentWordSection = recentWords.length > 0
-    ? [...recentWords].toReversed()
+    ? recentWords.toReversed()
         .map(word => `- [${word.word}](${baseUrl}${getWordUrl(word.word)}): ${formatDate(word.date)}`)
         .join('\n')
     : '';
@@ -252,7 +252,7 @@ export function generateLlmsTxt(words: WordData[]): string | null {
  */
 export function getStaticFileContent(pathname: string, words: WordData[], siteUrl?: string): string | null {
   // Remove leading slash if present
-  const filename = pathname.startsWith('/') ? pathname.substring(1) : pathname;
+  const filename = pathname.startsWith('/') ? pathname.slice(1) : pathname;
 
   // Only return content for the files we support
   if (!STATIC_FILES.includes(filename)) {

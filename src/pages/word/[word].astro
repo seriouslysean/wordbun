@@ -30,7 +30,7 @@ export async function getStaticPaths() {
 
     const wordLength = wordData.word.length;
     const firstLetter = wordData.word.charAt(0).toLowerCase();
-    const year = wordData.date.substring(0, 4);
+    const year = wordData.date.slice(0, 4);
     const { partOfSpeech } = extractWordDefinition(wordData);
 
     const lengthPool = byLength[wordLength] ?? [];
