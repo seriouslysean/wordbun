@@ -29,14 +29,14 @@ const parseYYYYMMDD = (dateStr: string): Date | null => {
 
 /**
  * Validate if a date string is in YYYYMMDD format
- * @param {string} dateStr - Date string to validate
- * @returns {boolean} True when the string represents a valid date
+ * @param dateStr - Date string to validate
+ * @returns True when the string represents a valid date
  */
 export const isValidDate = (dateStr: string): boolean => parseYYYYMMDD(dateStr) !== null;
 
 /**
  * Get today's date in YYYYMMDD format
- * @returns {string} Current date as YYYYMMDD
+ * @returns Current date as YYYYMMDD
  */
 export const getTodayYYYYMMDD = (): string => {
   const today = new Date();
@@ -48,8 +48,8 @@ export const getTodayYYYYMMDD = (): string => {
 
 /**
  * Format a YYYYMMDD string into a human-friendly date
- * @param {string} dateStr - Date string to format
- * @returns {string} Formatted date or original string if invalid
+ * @param dateStr - Date string to format
+ * @returns Formatted date or original string if invalid
  */
 export const formatDate = (dateStr: string): string => {
   if (!dateStr) {
@@ -64,8 +64,8 @@ export const formatDate = (dateStr: string): string => {
 
 /**
  * Convert YYYYMMDD string to ISO date format (YYYY-MM-DD) for HTML datetime attributes
- * @param {string} dateStr - Date string in YYYYMMDD format
- * @returns {string} ISO date string or original if invalid
+ * @param dateStr - Date string in YYYYMMDD format
+ * @returns ISO date string or original if invalid
  */
 export const formatISODate = (dateStr: string): string => {
   if (!dateStr) {
@@ -83,8 +83,8 @@ export const formatISODate = (dateStr: string): string => {
 
 /**
  * Convert a Date object to a YYYYMMDD string
- * @param {Date} date - Date to convert
- * @returns {string} Converted date string
+ * @param date - Date to convert
+ * @returns Converted date string
  */
 export const dateToYYYYMMDD = (date: Date): string => {
   const y = date.getFullYear();
@@ -95,8 +95,8 @@ export const dateToYYYYMMDD = (date: Date): string => {
 
 /**
  * Convert a YYYYMMDD string to a Date object
- * @param {string} dateStr - Date string to convert
- * @returns {Date | null} Date object or null if invalid
+ * @param dateStr - Date string to convert
+ * @returns Date object or null if invalid
  */
 export const YYYYMMDDToDate = (dateStr: string): Date | null => parseYYYYMMDD(dateStr);
 
@@ -134,9 +134,9 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24;
  * local-midnight timestamps is wrong across a daylight-saving change (the
  * spring-forward day is 23 hours long), so the validated year/month/day are
  * mapped onto UTC, where every day is exactly 24 hours.
- * @param {string} olderDate - Start date in YYYYMMDD format
- * @param {string} newerDate - End date in YYYYMMDD format
- * @returns {number | null} Whole days between the dates (negative when reversed), or null if either is invalid
+ * @param olderDate - Start date in YYYYMMDD format
+ * @param newerDate - End date in YYYYMMDD format
+ * @returns Whole days between the dates (negative when reversed), or null if either is invalid
  */
 export const getCalendarDaysBetween = (olderDate: string, newerDate: string): number | null => {
   const dOlder = parseYYYYMMDD(olderDate);

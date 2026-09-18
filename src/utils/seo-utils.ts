@@ -24,8 +24,8 @@ export const seoConfig: SeoConfig = {
 
 /**
  * Generate page-specific meta description
- * @param {SeoMetaDescriptionOptions} [options={}] - Description options
- * @returns {string} Generated meta description
+ * @param [options={}] - Description options
+ * @returns Generated meta description
  */
 export function getMetaDescription(options: SeoMetaDescriptionOptions = {}): string {
   const { word, definition, custom } = options;
@@ -46,8 +46,8 @@ return custom;
 
 /**
  * Generate basic SEO metadata for a page
- * @param {SeoMetadataOptions} param0 - Metadata options
- * @returns {SeoMetadata} SEO metadata object
+ * @param param0 - Metadata options
+ * @returns SEO metadata object
  */
 export function generateSeoMetadata({ title, description, pathname, keywords = [] }: SeoMetadataOptions): SeoMetadata {
   const pageTitle = title ? `${title} - ${seoConfig.siteName}` : seoConfig.defaultTitle;

@@ -95,8 +95,8 @@ export const getFullUrl = (path = '/'): string => {
 
 /**
  * Create a consistent, SEO-friendly internal link path for a word
- * @param {string} word - Word to build path for
- * @returns {string} Relative word path (without BASE_PATH)
+ * @param word - Word to build path for
+ * @returns Relative word path (without BASE_PATH)
  */
 export const getWordUrl = (word: string): string => {
   return word ? ROUTES.WORD(word) : '';
@@ -122,13 +122,13 @@ export const stripBasePath = (pathname: string): string => {
 
 /**
  * Get the words section homepage URL
- * @returns {string} Words section URL
+ * @returns Words section URL
  */
 export const getWordsUrl = (): string => BASE_PATHS.WORD;
 
 /**
  * Get the stats section homepage URL
- * @returns {string} Stats section URL
+ * @returns Stats section URL
  */
 export const getStatsUrl = (): string => BASE_PATHS.STATS;
 
@@ -138,38 +138,38 @@ export const getStatsUrl = (): string => BASE_PATHS.STATS;
 
 /**
  * Get the words by length overview URL
- * @returns {string} Words by length URL
+ * @returns Words by length URL
  */
 export const getWordsLengthUrl = (): string => BROWSE_PATHS.LENGTH;
 
 /**
  * Get the words by letter overview URL
- * @returns {string} Words by letter URL
+ * @returns Words by letter URL
  */
 export const getWordsLetterUrl = (): string => BROWSE_PATHS.LETTER;
 
 /**
  * Get the words by part of speech overview URL
- * @returns {string} Words by part of speech URL
+ * @returns Words by part of speech URL
  */
 export const getWordsPartOfSpeechUrl = (): string => BROWSE_PATHS.PART_OF_SPEECH;
 
 /**
  * Get the words by year overview URL
- * @returns {string} Words by year URL
+ * @returns Words by year URL
  */
 export const getWordsYearIndexUrl = (): string => `${BROWSE_PATHS.BROWSE}/year`;
 
 /**
  * Get the browse words URL
- * @returns {string} Browse words URL
+ * @returns Browse words URL
  */
 export const getBrowseWordsUrl = (): string => BASE_PATHS.BROWSE;
 
 /**
  * Get a year URL or browse root if no year specified
- * @param {string} [year] - Optional year to navigate to
- * @returns {string} Year URL or browse root
+ * @param [year] - Optional year to navigate to
+ * @returns Year URL or browse root
  */
 export const getWordsYearUrl = (year?: string): string =>
   year ? ROUTES.YEAR(year) : BASE_PATHS.BROWSE;
@@ -183,9 +183,9 @@ export { getLengthUrl, getLetterUrl, getPartOfSpeechUrl } from '#utils/url-utils
 
 /**
  * Get URL for words from a specific month/year
- * @param {string} year - Year 
- * @param {string} month - Month slug (normalized to lowercase)
- * @returns {string} Month-filtered words URL
+ * @param year - Year 
+ * @param month - Month slug (normalized to lowercase)
+ * @returns Month-filtered words URL
  */
 export const getMonthUrl = (year: string, month: string): string => 
   ROUTES.MONTH(year, month);
@@ -196,8 +196,8 @@ export const getMonthUrl = (year: string, month: string): string =>
 
 /**
  * Get URL for a specific stats page
- * @param {string} stat - Stats page slug
- * @returns {string} Stats page URL
+ * @param stat - Stats page slug
+ * @returns Stats page URL
  */
 export const getStatUrl = (stat: string): string => 
   ROUTES.STAT(stat);
@@ -208,35 +208,35 @@ export const getStatUrl = (stat: string): string =>
 
 /**
  * Get URL for same start/end letter stats page
- * @returns {string} Same start/end stats URL
+ * @returns Same start/end stats URL
  */
 export const getSameStartEndUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.SAME_START_END);
 
 /**
  * Get URL for double letters stats page
- * @returns {string} Double letters stats URL
+ * @returns Double letters stats URL
  */
 export const getDoubleLettersUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.DOUBLE_LETTERS);
 
 /**
  * Get URL for triple letters stats page
- * @returns {string} Triple letters stats URL
+ * @returns Triple letters stats URL
  */
 export const getTripleLettersUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.TRIPLE_LETTERS);
 
 /**
  * Get URL for alphabetical order stats page
- * @returns {string} Alphabetical order stats URL
+ * @returns Alphabetical order stats URL
  */
 export const getAlphabeticalOrderUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.ALPHABETICAL_ORDER);
 
 /**
  * Get URL for palindromes stats page
- * @returns {string} Palindromes stats URL
+ * @returns Palindromes stats URL
  */
 export const getPalindromesUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.PALINDROMES);
@@ -247,42 +247,42 @@ export const getPalindromesUrl = (): string =>
 
 /**
  * Get URL for words ending in "ing" stats page
- * @returns {string} Words ending in "ing" stats URL
+ * @returns Words ending in "ing" stats URL
  */
 export const getWordsEndingIngUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.WORDS_ENDING_ING);
 
 /**
  * Get URL for words ending in "ed" stats page
- * @returns {string} Words ending in "ed" stats URL
+ * @returns Words ending in "ed" stats URL
  */
 export const getWordsEndingEdUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.WORDS_ENDING_ED);
 
 /**
  * Get URL for words ending in "ly" stats page
- * @returns {string} Words ending in "ly" stats URL
+ * @returns Words ending in "ly" stats URL
  */
 export const getWordsEndingLyUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.WORDS_ENDING_LY);
 
 /**
  * Get URL for words ending in "ness" stats page
- * @returns {string} Words ending in "ness" stats URL
+ * @returns Words ending in "ness" stats URL
  */
 export const getWordsEndingNessUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.WORDS_ENDING_NESS);
 
 /**
  * Get URL for words ending in "ful" stats page
- * @returns {string} Words ending in "ful" stats URL
+ * @returns Words ending in "ful" stats URL
  */
 export const getWordsEndingFulUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.WORDS_ENDING_FUL);
 
 /**
  * Get URL for words ending in "less" stats page
- * @returns {string} Words ending in "less" stats URL
+ * @returns Words ending in "less" stats URL
  */
 export const getWordsEndingLessUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.WORDS_ENDING_LESS);
@@ -293,28 +293,28 @@ export const getWordsEndingLessUrl = (): string =>
 
 /**
  * Get URL for word facts stats section
- * @returns {string} Word facts stats URL
+ * @returns Word facts stats URL
  */
 export const getWordFactsUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.WORD_FACTS);
 
 /**
  * Get URL for streaks stats section
- * @returns {string} Streaks stats URL
+ * @returns Streaks stats URL
  */
 export const getStreaksUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.STREAKS);
 
 /**
  * Get URL for letter patterns stats section
- * @returns {string} Letter patterns stats URL
+ * @returns Letter patterns stats URL
  */
 export const getLetterPatternsUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.LETTER_PATTERNS);
 
 /**
  * Get URL for word endings stats section
- * @returns {string} Word endings stats URL
+ * @returns Word endings stats URL
  */
 export const getWordEndingsUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.WORD_ENDINGS);
@@ -325,49 +325,49 @@ export const getWordEndingsUrl = (): string =>
 
 /**
  * Get URL for milestone words stats page
- * @returns {string} Milestone words stats URL
+ * @returns Milestone words stats URL
  */
 export const getMilestoneWordsUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.MILESTONE_WORDS);
 
 /**
  * Get URL for current streak stats page
- * @returns {string} Current streak stats URL
+ * @returns Current streak stats URL
  */
 export const getCurrentStreakUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.CURRENT_STREAK);
 
 /**
  * Get URL for longest streak stats page
- * @returns {string} Longest streak stats URL
+ * @returns Longest streak stats URL
  */
 export const getLongestStreakUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.LONGEST_STREAK);
 
 /**
  * Get URL for most common letter stats page
- * @returns {string} Most common letter stats URL
+ * @returns Most common letter stats URL
  */
 export const getMostCommonLetterUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.MOST_COMMON_LETTER);
 
 /**
  * Get URL for least common letter stats page
- * @returns {string} Least common letter stats URL
+ * @returns Least common letter stats URL
  */
 export const getLeastCommonLetterUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.LEAST_COMMON_LETTER);
 
 /**
  * Get URL for all consonants stats page
- * @returns {string} All consonants stats URL
+ * @returns All consonants stats URL
  */
 export const getAllConsonantsUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.ALL_CONSONANTS);
 
 /**
  * Get URL for all vowels stats page
- * @returns {string} All vowels stats URL
+ * @returns All vowels stats URL
  */
 export const getAllVowelsUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.ALL_VOWELS);

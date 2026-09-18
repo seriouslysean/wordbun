@@ -105,7 +105,7 @@ export function generateHumansTxt(): string {
 /**
  * Generates health.txt content
  *
- * @param {WordData[]} [words=allWords] - Array of word data to use for stats
+ * @param [words=allWords] - Array of word data to use for stats
  * @returns The content for health.txt
  */
 export function generateHealthTxt(words: WordData[]): string {
@@ -133,7 +133,7 @@ export function generateHealthTxt(words: WordData[]): string {
 /**
  * Generates llms.txt content with recent words and key site links
  *
- * @param {WordData[]} [words=allWords] - Array of word data to use for stats
+ * @param [words=allWords] - Array of word data to use for stats
  * @returns The content for llms.txt or null if required data is missing
  */
 export function generateLlmsTxt(words: WordData[]): string | null {

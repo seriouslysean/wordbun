@@ -33,7 +33,7 @@ const getImagesPath = (): string => {
 
 /**
  * Create resolved paths used across the application
- * @returns {PathConfig} Object containing absolute paths for words, pages, images and fonts
+ * @returns Object containing absolute paths for words, pages, images and fonts
  */
 export const createPaths = (): PathConfig => ({
   words: getWordsPath(),
