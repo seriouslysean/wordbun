@@ -55,7 +55,7 @@
     "lightningcss": "^1.33.0",
     "opentype.js": "^2.0.0",
     "oxlint": "^1.83.0",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.4",
     "subtlex-word-frequencies": "2.0.0",
     "typescript": "^6.0.3",
     "vitest": "^5.0.1",
