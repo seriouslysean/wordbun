@@ -2,7 +2,8 @@ name: Site Deploy
 
 # Builds a site and deploys it to GitHub Pages: a site repository's Deploy
 # workflow calls this at a pinned release, and this repository's own Deploy
-# calls it for the demo site.
+# calls it with ./ for the demo site, as does a fork's until it moves to a
+# thin site.
 #
 #   jobs:
 #     deploy:
@@ -20,7 +21,7 @@ on:
   workflow_call:
     inputs:
       workflow-ref:
-        description: "The caller's uses value, anchored so the pin is written once. Empty only for this repository's own call."
+        description: "The caller's uses value, anchored so the pin is written once. Empty for a ./ call, which runs from the caller's own commit."
         type: string
         required: false
         default: ''
@@ -40,8 +41,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # A called workflow cannot see its own ref, so a site passes the uses
-      # value it pinned. A ./ call runs the called workflow from the caller's
-      # commit, which is github.workflow_sha.
+      # value it pinned. An empty workflow-ref is a ./ call, which runs the
+      # called workflow from the caller's own commit: this repository for the
+      # demo site, or a fork of it that has not moved to a thin site. The
+      # engine is then the calling repository at github.workflow_sha.
       - name: Resolve engine ref
         id: engine
         env:
@@ -49,12 +52,10 @@ jobs:
           WORKFLOW_SHA: ${{ github.workflow_sha }}
         run: |
           if [[ -z "$WORKFLOW_REF" ]]; then
-            if [[ "$GITHUB_REPOSITORY" != "$ENGINE_REPOSITORY" ]]; then
-              echo "::error::Pass workflow-ref, the same $ENGINE_REPOSITORY/.github/workflows/site-deploy.yml@<release> as uses."
-              exit 1
-            fi
+            REPOSITORY="$GITHUB_REPOSITORY"
             REF="$WORKFLOW_SHA"
           elif [[ "$WORKFLOW_REF" == "$ENGINE_REPOSITORY/.github/workflows/site-deploy.yml@"* ]]; then
+            REPOSITORY="$ENGINE_REPOSITORY"
             REF="${WORKFLOW_REF#*@}"
           else
             echo "::error::workflow-ref must be $ENGINE_REPOSITORY/.github/workflows/site-deploy.yml@<release>, the same as uses."
@@ -67,6 +68,7 @@ jobs:
             echo "::error::Pin the engine to a release tag such as v1.2.3 or a full commit SHA."
             exit 1
           fi
+          echo "repository=$REPOSITORY" >> "$GITHUB_OUTPUT"
           echo "ref=$REF" >> "$GITHUB_OUTPUT"
 
       # For workflow_run, github.sha is the last commit on the default branch,
@@ -80,7 +82,7 @@ jobs:
       - name: Checkout engine
         uses: actions/checkout@v7
         with:
-          repository: ${{ env.ENGINE_REPOSITORY }}
+          repository: ${{ steps.engine.outputs.repository }}
           ref: ${{ steps.engine.outputs.ref }}
           path: engine
           persist-credentials: false
@@ -105,8 +107,9 @@ jobs:
 
       # The site's data/ and public/ replace the engine's, so a site builds
       # none of the demo content; the engine's favicon stays when the site
-      # has none. Everything runs from engine/, whose own .git gives the
-      # build its release fingerprint.
+      # has none. A fork's two checkouts are the same commit, so for a fork
+      # the copy changes nothing. Everything runs from engine/, whose own
+      # .git gives the build its release fingerprint.
       - name: Overlay site content
         run: |
           # This repository builds the demo site and every other repository

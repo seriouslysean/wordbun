@@ -122,11 +122,11 @@ describe('site workflows', { timeout: 20000 }, () => {
     it.each([
       ['a release tag', 'v3.23.0'],
       ['a full commit SHA', SHA],
-    ])('takes %s from the pinned uses value', async (_, ref) => {
+    ])('checks out this repository at %s from the pinned uses value', async (_, ref) => {
       const result = await resolveRef(pinned(ref));
 
       expect(result.code).toBe(0);
-      expect(result.outputs).toBe(`ref=${ref}\n`);
+      expect(result.outputs).toBe(`repository=${ENGINE_REPOSITORY}\nref=${ref}\n`);
     });
 
     it.each([
@@ -149,19 +149,16 @@ describe('site workflows', { timeout: 20000 }, () => {
       expect(fs.existsSync(path.join(ctx.dir, 'PWNED'))).toBe(false);
     });
 
-    it('checks out the calling commit when this repository calls its own copy', async () => {
-      const result = await resolveRef('', ENGINE_REPOSITORY);
+    // A ./ call passes no workflow-ref and runs from the caller's commit,
+    // which for a fork is a commit only the fork has
+    it.each([
+      ['this repository', ENGINE_REPOSITORY],
+      ['a fork that has not moved to a thin site', 'seriouslysean/wordbug'],
+    ])('checks out the calling commit when %s calls its own copy', async (_, repository) => {
+      const result = await resolveRef('', repository);
 
       expect(result.code).toBe(0);
-      expect(result.outputs).toBe(`ref=${SHA}\n`);
-    });
-
-    it('refuses an empty workflow-ref from a site repository', async () => {
-      const result = await resolveRef('');
-
-      expect(result.code).toBe(1);
-      expect(result.output).toContain('Pass workflow-ref');
-      expect(result.outputs).toBe('');
+      expect(result.outputs).toBe(`repository=${repository}\nref=${SHA}\n`);
     });
   });
 
@@ -226,9 +223,27 @@ describe('site workflows', { timeout: 20000 }, () => {
       expect(snapshot('engine')).toEqual(before);
     });
 
+    // A fork calls with ./, so site/ and engine/ are one commit, which
+    // tracks the demo content beside the fork's own
+    it('changes nothing for a fork, whose demo content stays and goes unread', async () => {
+      write('engine/data/words/2026/20260101.json', '{"word":"fork"}\n');
+      write('engine/public/images/social/2026/fork.png', 'fork card\n');
+      write('engine/public/images/social/.image-settings-hash', 'fork marker\n');
+      fs.cpSync(path.join(ctx.dir, 'engine/data'), path.join(ctx.dir, 'site/data'), { recursive: true });
+      fs.cpSync(path.join(ctx.dir, 'engine/public'), path.join(ctx.dir, 'site/public'), { recursive: true });
+      const before = snapshot('engine');
+
+      const result = await overlay('seriouslysean/wordbug', '');
+
+      expect(result.code).toBe(0);
+      expect(snapshot('engine')).toEqual(before);
+      expect(Object.keys(before)).toContain('data/demo/words/2025/20250101.json');
+    });
+
     it.each([
       ['the demo content in a site repository', 'someone/wordbun', 'demo'],
       ['another directory in a site repository', 'someone/wordbun', 'wordbun'],
+      ['the demo content in a fork', 'seriouslysean/wordbug', 'demo'],
       ['the root content in this repository', ENGINE_REPOSITORY, ''],
     ])('refuses %s', async (_, repository, sourceDir) => {
       thinSite();
