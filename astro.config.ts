@@ -124,6 +124,7 @@ export default defineConfig({
       SENTRY_DSN: envField.string({ context: 'client', access: 'public', optional: true }),
       SENTRY_ENVIRONMENT: envField.string({ context: 'client', access: 'public', default: 'development' }),
       BASE_PATH: envField.string({ context: 'client', access: 'public', default: '/' }),
+      SOURCE_DIR: envField.string({ context: 'client', access: 'public', default: defaults.SOURCE_DIR }),
     },
   },
   vite: {

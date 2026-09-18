@@ -33,6 +33,7 @@ export const mockEnv = {
   SENTRY_ENABLED: false,
   SENTRY_DSN: undefined,
   BASE_PATH: '/',
+  SOURCE_DIR: '',
 };
 
 vi.mock('astro:env/client', () => mockEnv);

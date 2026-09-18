@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('#astro-utils/page-metadata', () => ({
   getAllPageMetadata: vi.fn(() => [
@@ -12,60 +12,37 @@ import { getSocialImageUrl, getStaticPages } from '#astro-utils/image-utils';
 
 describe('image-utils', () => {
   describe('getSocialImageUrl', () => {
-    it('returns word-specific image URL when word data is provided', () => {
-      const wordData = {
-        word: 'test',
-        date: '20240115',
-      };
-
-      const url = getSocialImageUrl({ pathname: '/word/test', wordData });
-
-      expect(url).toContain('/images/social/');
-      expect(url).toContain('/2024/');
-      expect(url).toContain('20240115-test.png');
+    afterEach(() => {
+      mockEnv.SOURCE_DIR = '';
     });
 
-    it('includes source directory in path when SOURCE_DIR is set', () => {
-      vi.stubEnv('SOURCE_DIR', 'custom');
+    it('links a word page to its word card', () => {
+      const url = getSocialImageUrl({ pathname: '/word/test', wordData: { word: 'test', date: '20240115' } });
 
-      const wordData = {
-        word: 'test',
-        date: '20240115',
-      };
-
-      const url = getSocialImageUrl({ pathname: '/word/test', wordData });
-
-      expect(url).toContain('/images/social/custom/2024/20240115-test.png');
-
-      vi.unstubAllEnvs();
+      expect(url).toBe('/images/social/2024/20240115-test.png');
     });
 
-    it('returns generic page image URL when no word data is provided', () => {
-      const url = getSocialImageUrl({ pathname: '/stats' });
+    it('reads SOURCE_DIR from the env schema and puts it before images', () => {
+      mockEnv.SOURCE_DIR = 'custom';
 
-      expect(url).toContain('/images/social/pages/stats.png');
+      const url = getSocialImageUrl({ pathname: '/word/test', wordData: { word: 'test', date: '20240115' } });
+
+      expect(url).toBe('/custom/images/social/2024/20240115-test.png');
     });
 
-    it('returns index image for empty pathname', () => {
-      const url = getSocialImageUrl({ pathname: '/' });
-
-      expect(url).toContain('/images/social/pages/index.png');
+    it('links a page without word data to its page card', () => {
+      expect(getSocialImageUrl({ pathname: '/browse/2023/april' }))
+        .toBe('/images/social/pages/browse-2023-april.png');
+      expect(getSocialImageUrl({ pathname: '/stats', wordData: null }))
+        .toBe('/images/social/pages/stats.png');
     });
 
-    it('handles pathname without leading slash', () => {
-      const url = getSocialImageUrl({ pathname: 'stats' });
+    it('names the page card without BASE_PATH and links it under BASE_PATH once', () => {
+      mockEnv.BASE_PATH = '/blog';
 
-      expect(url).toContain('/images/social/pages/stats.png');
-    });
+      const url = getSocialImageUrl({ pathname: '/blog/browse/2023/april' });
 
-    it('handles null word data', () => {
-      vi.stubEnv('BASE_PATH', '/');
-
-      const url = getSocialImageUrl({ pathname: '/stats', wordData: null });
-
-      expect(url).toContain('/images/social/pages/stats.png');
-
-      vi.unstubAllEnvs();
+      expect(url).toBe('/blog/images/social/pages/browse-2023-april.png');
     });
   });
 

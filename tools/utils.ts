@@ -10,8 +10,8 @@ import type { WordRelations } from '#adapters/wordnet';
 import { paths } from '#config/paths';
 import type { CreateWordEntryResult, DictionaryResponse, WordData, WordEnrichment } from '#types';
 import { formatDate, isValidDate } from '#utils/date-utils';
+import { getSocialCardPath, SOCIAL_DIR } from '#utils/image-path-utils';
 import { getErrorMessage, logger } from '#utils/logger';
-import { slugify } from '#utils/text-utils';
 import { isRecord, isString } from '#utils/type-guards';
 import { findValidDefinition, isValidDictionaryData, mergeEnrichment, normalizeToBasePOS } from '#utils/word-data-utils';
 import { parseWordData } from '#utils/word-validation';
@@ -45,7 +45,7 @@ const PNG_OPTIONS = {
   colors: 128,
 } as const;
 
-const SOCIAL_BASE_DIR = path.join(paths.images, 'social');
+const SOCIAL_BASE_DIR = path.join(paths.images, SOCIAL_DIR);
 const SETTINGS_HASH_FILENAME = '.image-settings-hash';
 
 // Fixed inputs rendered through the real template to fingerprint it.
@@ -330,8 +330,7 @@ export async function generateShareImage(
   date: string,
   options: GenerateImageOptions = {},
 ): Promise<boolean> {
-  const year = date.slice(0, 4);
-  const outputPath = path.join(SOCIAL_BASE_DIR, year, `${date}-${word.toLowerCase()}.png`);
+  const outputPath = path.join(paths.images, getSocialCardPath({ type: 'word', word, date }));
   return renderPng(() => createSvg(word, date), outputPath, !!options.regenerate);
 }
 
@@ -344,7 +343,7 @@ export async function generateGenericShareImage(
   slug: string,
   options: GenerateImageOptions = {},
 ): Promise<boolean> {
-  const outputPath = path.join(SOCIAL_BASE_DIR, 'pages', `${slugify(slug.replaceAll('/', ' '))}.png`);
+  const outputPath = path.join(paths.images, getSocialCardPath({ type: 'page', path: slug }));
   return renderPng(() => createSvg(title.toLowerCase()), outputPath, !!options.regenerate);
 }
 

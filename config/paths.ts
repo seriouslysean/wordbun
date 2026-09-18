@@ -7,6 +7,7 @@
 import path from 'node:path';
 
 import type { PathConfig } from '#types';
+import { getImagesDir } from '#utils/image-path-utils';
 
 const ROOT = process.cwd();
 
@@ -25,10 +26,7 @@ const getImagesPath = (): string => {
     return outputOverride;
   }
 
-  const sourceDir = process.env.SOURCE_DIR;
-  return sourceDir
-    ? path.join(ROOT, 'public', sourceDir, 'images')
-    : path.join(ROOT, 'public', 'images');
+  return path.join(ROOT, 'public', getImagesDir(process.env.SOURCE_DIR));
 };
 
 /**
