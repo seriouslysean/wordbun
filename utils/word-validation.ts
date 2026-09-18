@@ -34,7 +34,7 @@ export const isWordData = (value: unknown): value is WordData =>
   && isString(value.word)
   && isString(value.date)
   && isString(value.adapter)
-  && Array.isArray(value.data) && value.data.every(isDictionaryDefinition)
+  && Array.isArray(value.data) && value.data.length > 0 && value.data.every(isDictionaryDefinition)
   && isOptional(value.enrichment, isWordEnrichment)
   && isOptional(value.preserveCase, (flag): flag is boolean => typeof flag === 'boolean');
 

@@ -22,7 +22,6 @@ describe('word-validation', () => {
         enrichment: { synonyms: ['exam'], pronunciation: 'test', audio: 'https://example.com/t.mp3', etymology: 'Latin' },
         data: [{ id: 'test', text: ['a', 'test'], examples: ['x'], synonyms: [], antonyms: [], sourceUrl: '' }],
       })).toBe(true);
-      expect(isWordData({ ...VALID_WORD, data: [] })).toBe(true);
     });
 
     it('rejects non-objects', () => {
@@ -38,6 +37,9 @@ describe('word-validation', () => {
       expect(isWordData({ ...VALID_WORD, adapter: undefined })).toBe(false);
       expect(isWordData({ ...VALID_WORD, data: undefined })).toBe(false);
       expect(isWordData({ ...VALID_WORD, data: {} })).toBe(false);
+      // The content schema requires at least one definition; a file without
+      // one fails the build, so the CLI must not accept it either
+      expect(isWordData({ ...VALID_WORD, data: [] })).toBe(false);
     });
 
     it('rejects malformed definitions', () => {
