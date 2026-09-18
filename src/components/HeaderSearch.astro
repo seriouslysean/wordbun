@@ -32,6 +32,7 @@ import { t } from '#utils/i18n-utils';
 </div>
 
 <script>
+import type { WordIndexEntry } from '#types';
 import { getUrl, getWordUrl } from '#astro-utils/url-utils';
 import { isWordIndex } from '#utils/word-validation';
 
@@ -41,15 +42,14 @@ const inputElement = document.getElementById('site-search-input');
 const input = inputElement instanceof HTMLInputElement ? inputElement : null;
 const results = document.getElementById('site-search-results');
 
-type SearchWord = { word: string; date: string };
-const cache: { data: SearchWord[] | null } = { data: null };
+const cache: { data: WordIndexEntry[] | null } = { data: null };
 
 // Progressive enhancement: reveal the icon only when JS can drive it.
 if (toggle) {
   toggle.hidden = false;
 }
 
-async function loadWords(): Promise<SearchWord[]> {
+async function loadWords(): Promise<WordIndexEntry[]> {
   if (cache.data) {
     return cache.data;
   }

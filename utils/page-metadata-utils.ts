@@ -47,7 +47,7 @@ export function getDefinition<T>(definitions: Record<string, T>, key: string): T
   return def;
 }
 
-type PrecomputedStats = {
+interface PrecomputedStats {
   endings: ReturnType<typeof getWordEndingStats>;
   letterPatterns: ReturnType<typeof getLetterPatternStats>;
   patternStats: ReturnType<typeof getPatternStats>;
@@ -56,7 +56,7 @@ type PrecomputedStats = {
   wordsWithMostCommon: WordData[];
   wordsWithLeastCommon: WordData[];
   milestones: ReturnType<typeof getChronologicalMilestones>;
-};
+}
 
 function getStats(words: WordData[]): PrecomputedStats {
   const { mostCommon, leastCommon } = getLetterStats(words);
@@ -72,30 +72,30 @@ function getStats(words: WordData[]): PrecomputedStats {
   };
 }
 
-type StaticPageMeta = {
+interface StaticPageMeta {
   type: 'static';
   title: string;
   description: string;
   category: string;
   secondaryText?: string | ((count: number) => string);
   partOfSpeech?: string;
-};
+}
 
-type HomepageMeta = {
+interface HomepageMeta {
   type: 'home';
   title: string;
   description: (currentWord: string) => string;
   category: string;
   secondaryText?: string | ((count: number) => string);
-};
+}
 
-type StatsPageMeta = {
+interface StatsPageMeta {
   type: 'stats';
   title: string;
   description: (count: number) => string;
   category: string;
   secondaryText?: string | ((count: number) => string);
-};
+}
 type PageMeta = StaticPageMeta | HomepageMeta | StatsPageMeta;
 
 function createPageMetadata(words: WordData[]): Record<string, PageMeta> {
@@ -379,13 +379,13 @@ function getCountForPath(path: string, words: WordData[]): number {
 /**
  * Standardized page metadata returned by getPageMetadata
  */
-export type PageMetadataResult = {
+export interface PageMetadataResult {
   title: string;
   description: string;
   category: string;
   secondaryText?: string;
   partOfSpeech?: string;
-};
+}
 
 // Lazily-initialized title map for lightweight breadcrumb lookups (no stats computation)
 let cachedStaticTitles: Record<string, string> | null = null;
