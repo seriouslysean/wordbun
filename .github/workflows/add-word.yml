@@ -99,8 +99,9 @@ jobs:
             echo "word_added=1" >> $GITHUB_OUTPUT
             echo "word=$WORD" >> $GITHUB_OUTPUT
 
-            # Generate social image for the new word
-            npm run tool:generate-images -- --word "$WORD"
+            # Complete generation: renders the new word, skips every image that
+            # is already current, and is the only run that certifies the cache
+            npm run tool:generate-images
           else
             echo "::error::Failed to add word: $WORD"
             echo "word_added=0" >> $GITHUB_OUTPUT
