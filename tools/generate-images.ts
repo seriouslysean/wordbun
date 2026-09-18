@@ -153,53 +153,40 @@ async function generatePageImage(pagePath: string, regenerate: boolean): Promise
   }
 }
 
-// Parse command line arguments
-const { values: cliValues } = parseArgs({
-  args: process.argv.slice(2),
-  options: {
-    help: { type: 'boolean', short: 'h', default: false },
-    force: { type: 'boolean', default: false },
-    words: { type: 'boolean', default: false },
-    generic: { type: 'boolean', default: false },
-    page: { type: 'string' },
-    word: { type: 'string' },
-  },
-  strict: true,
-});
-
-if (cliValues.help) {
-  showHelp(HELP_TEXT);
-  process.exit(0);
+interface GenerateImagesOptions {
+  force: boolean;
+  words: boolean;
+  generic: boolean;
+  page?: string;
+  word?: string;
 }
 
-const isForce = !!cliValues.force;
-
 // Main execution
-async function main(): Promise<void> {
+async function main(options: GenerateImagesOptions): Promise<void> {
   logger.info('Generate images tool starting...');
 
   // Settled once: every image in this run gets the same answer, so the first
   // regenerated image cannot make the rest look current.
   const stale = isImageCacheStale();
-  if (stale && !isForce) {
+  if (stale && !options.force) {
     logger.info('Image settings differ from the last complete run, regenerating existing images');
   }
-  const regenerate = isForce || stale;
+  const regenerate = options.force || stale;
 
-  if (cliValues.page) {
-    const success = await generatePageImage(cliValues.page, regenerate);
+  if (options.page) {
+    const success = await generatePageImage(options.page, regenerate);
     await exit(success ? 0 : 1);
   }
 
-  if (cliValues.word) {
-    const success = await generateSingleImage(cliValues.word, regenerate);
+  if (options.word) {
+    const success = await generateSingleImage(options.word, regenerate);
     await exit(success ? 0 : 1);
   }
 
-  const runBoth = !cliValues.words && !cliValues.generic;
+  const runBoth = !options.words && !options.generic;
   const failed = { count: 0 };
 
-  if (cliValues.words || runBoth) {
+  if (options.words || runBoth) {
     const allWords = getAllWords();
     failed.count += await bulkGenerate(
       allWords.map(w => ({ label: `${w.word} (${w.date})`, word: w.word, date: w.date })),
@@ -208,7 +195,7 @@ async function main(): Promise<void> {
     );
   }
 
-  if (cliValues.generic || runBoth) {
+  if (options.generic || runBoth) {
     const pages = getAllPageMetadata(getAllWords());
     failed.count += await bulkGenerate(
       pages.map(p => ({ label: `${p.title} (${p.path})`, title: p.title, path: p.path })),
@@ -230,8 +217,34 @@ async function main(): Promise<void> {
   await exit(0);
 }
 
+// Everything that reads argv lives behind the guard, so importing this module
+// runs no CLI code.
 if (isEntryPoint(import.meta.url)) {
-  main().catch(async (error) => {
+  const { values } = parseArgs({
+    args: process.argv.slice(2),
+    options: {
+      help: { type: 'boolean', short: 'h', default: false },
+      force: { type: 'boolean', default: false },
+      words: { type: 'boolean', default: false },
+      generic: { type: 'boolean', default: false },
+      page: { type: 'string' },
+      word: { type: 'string' },
+    },
+    strict: true,
+  });
+
+  if (values.help) {
+    showHelp(HELP_TEXT);
+    process.exit(0);
+  }
+
+  main({
+    force: !!values.force,
+    words: !!values.words,
+    generic: !!values.generic,
+    page: values.page,
+    word: values.word,
+  }).catch(async (error) => {
     logger.error('Tool execution failed', { error: getErrorMessage(error) });
     await exit(1);
   });

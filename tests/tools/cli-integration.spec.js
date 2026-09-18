@@ -62,9 +62,9 @@ describe('CLI Tools: Import & Execution', () => {
             );
           }
 
-          // Only main() sits behind isEntryPoint. generate-images.ts parses argv
-          // at module scope, so this import relies on the runner leaving
-          // process.argv.slice(2) empty. Any other throw is a real break.
+          // Argument parsing, help and main() all sit behind isEntryPoint, so an
+          // import runs no CLI code whatever the runner's argv holds. Any other
+          // throw is a real break.
           throw error;
         }
       });
@@ -74,6 +74,19 @@ describe('CLI Tools: Import & Execution', () => {
     } finally {
       // Restore original process.exit
       mockExit.mockRestore();
+    }
+  }, 15000);
+
+  it('importing generate-images never parses the host process argv', async () => {
+    const originalArgv = process.argv;
+    // A flag the tool does not define: strict parseArgs would throw on it.
+    process.argv = [...originalArgv.slice(0, 2), '--not-a-generate-images-flag'];
+    vi.resetModules();
+
+    try {
+      await expect(import(path.join(TOOLS_DIR, 'generate-images.ts'))).resolves.toBeDefined();
+    } finally {
+      process.argv = originalArgv;
     }
   }, 15000);
 

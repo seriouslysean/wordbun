@@ -23,7 +23,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "tool:add-word": "node tools/add-word.ts",
-    "tool:generate-all-images": "npm run tool:generate-images && npm run tool:generate-images --generic",
+    "tool:generate-all-images": "node tools/generate-images.ts",
     "tool:generate-images": "node tools/generate-images.ts",
     "tool:local": "node --env-file-if-exists=.env",
     "tool:migrate-preserve-case": "node tools/migrate-preserve-case.ts",
