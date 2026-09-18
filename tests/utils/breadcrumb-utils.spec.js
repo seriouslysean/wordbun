@@ -61,6 +61,24 @@ describe('generateBreadcrumbs', () => {
     ]);
   });
 
+  it('should not strip a base path that only prefixes the first segment', () => {
+    const result = generateBreadcrumbs('/apple/pie', '/app');
+    expect(result.map(crumb => crumb.href)).toEqual(['/', '/apple', '/apple/pie']);
+  });
+
+  it('should return no breadcrumbs for the base path itself', () => {
+    expect(generateBreadcrumbs('/app', '/app')).toEqual([]);
+    expect(generateBreadcrumbs('/app/', '/app/')).toEqual([]);
+  });
+
+  it('should treat regex metacharacters in the base path literally', () => {
+    const stripped = generateBreadcrumbs('/a.b/words', '/a.b');
+    expect(stripped.map(crumb => crumb.href)).toEqual(['/', '/words']);
+
+    const untouched = generateBreadcrumbs('/axb/words', '/a.b');
+    expect(untouched.map(crumb => crumb.href)).toEqual(['/', '/axb', '/axb/words']);
+  });
+
   it('should handle letter browsing pages', () => {
     const result = generateBreadcrumbs('/words/letter/a');
     expect(result).toEqual([

@@ -1,6 +1,7 @@
 import { BASE_PATH, SITE_URL } from 'astro:env/client';
 import { logger } from '#astro-utils/logger';
 import { BASE_PATHS, BROWSE_PATHS, ROUTES, STATS_SLUGS } from '#constants/urls';
+import { isPathUnderBase } from '#utils/url-utils';
 
 // =====================================================
 // URL Slug Utilities
@@ -34,7 +35,7 @@ export const getPathname = (astroPathname: string): string => {
   // Handle base path with trailing slash
   const cleanBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
   
-  if (astroPathname.startsWith(cleanBasePath)) {
+  if (isPathUnderBase(astroPathname, cleanBasePath)) {
     const withoutBase = astroPathname.slice(cleanBasePath.length);
     return withoutBase || '/';
   }
@@ -59,13 +60,14 @@ export const getUrl = (path = '/'): string => {
     return basePath; // Return base path as-is for root
   }
   
+  // Normalize base path (remove trailing slash)
+  const cleanBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
+
   // Check if path already includes base path
-  if (path.startsWith(basePath)) {
+  if (isPathUnderBase(path, cleanBasePath)) {
     return path;
   }
-  
-  // Normalize base path (remove trailing slash) and concatenate  
-  const cleanBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
+
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   return cleanBasePath + normalizedPath;
 };

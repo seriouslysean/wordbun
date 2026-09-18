@@ -19,6 +19,7 @@ import {
   getMonthUrl,
   getStatUrl,
 } from '#astro-utils/url-utils';
+import { isPathUnderBase } from '#utils/url-utils';
 
 describe('utils', () => {
   describe('slugify', () => {
@@ -77,6 +78,13 @@ describe('utils', () => {
     it('handles paths with custom base path with trailing slash', () => {
       mockEnv.BASE_PATH = '/blog/';
       expect(getUrl('/20240319')).toBe('/blog/20240319');
+    });
+
+    it('prefixes a path that merely shares its first characters with the base path', () => {
+      mockEnv.BASE_PATH = '/app';
+      expect(getUrl('/apple')).toBe('/app/apple');
+      expect(getUrl('/app')).toBe('/app');
+      expect(getUrl('/app/x')).toBe('/app/x');
     });
 
     it('handles empty or undefined base path', () => {
@@ -193,6 +201,24 @@ describe('utils', () => {
     });
   });
 
+  describe('isPathUnderBase', () => {
+    it('matches the base itself and anything below it', () => {
+      expect(isPathUnderBase('/app', '/app')).toBe(true);
+      expect(isPathUnderBase('/app/x', '/app')).toBe(true);
+      expect(isPathUnderBase('/app/', '/app')).toBe(true);
+    });
+
+    it('requires a segment boundary after the base', () => {
+      expect(isPathUnderBase('/apple', '/app')).toBe(false);
+      expect(isPathUnderBase('/other/app/x', '/app')).toBe(false);
+    });
+
+    it('treats regex metacharacters in the base literally', () => {
+      expect(isPathUnderBase('/a.b/x', '/a.b')).toBe(true);
+      expect(isPathUnderBase('/axb/x', '/a.b')).toBe(false);
+    });
+  });
+
   describe('getBasePath', () => {
     it('returns "/" when BASE_PATH is not set', () => {
       mockEnv.BASE_PATH = undefined;
@@ -252,6 +278,19 @@ describe('utils', () => {
       it('handles edge cases', () => {
         expect(getPathname('')).toBe('');
         expect(getPathname('/')).toBe('/');
+      });
+    });
+
+    describe('with BASE_PATH=/app', () => {
+      beforeEach(() => {
+        mockEnv.BASE_PATH = '/app';
+      });
+
+      it('leaves a sibling path that merely shares the prefix untouched', () => {
+        expect(getPathname('/apple')).toBe('/apple');
+        expect(getPathname('/apple/pie')).toBe('/apple/pie');
+        expect(getPathname('/app')).toBe('/');
+        expect(getPathname('/app/x')).toBe('/x');
       });
     });
 
