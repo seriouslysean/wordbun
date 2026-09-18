@@ -43,7 +43,6 @@ tools/                           # CLI tools (Node.js only, no Astro deps)
   add-word.ts                    # Add new words with validation
   generate-images.ts             # Social image generation (consolidated)
   help-utils.ts                  # Shared help system
-  migrate-preserve-case.ts       # Case preservation migration
   regenerate-all-words.ts        # Batch word data refresh
   utils.ts                       # Shared tool utilities
 
