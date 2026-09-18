@@ -57,15 +57,41 @@ jobs:
 
       # The fallback chain logs a failed adapter as a warning and moves on, so
       # a missing key would otherwise pass as a word defined by another source
-      - name: Validate dictionary API keys
+      # and a misspelt fallback would go unnoticed until the primary failed.
+      # Adapter names are the ones adapters/index.ts registers, in any case,
+      # and a DICTIONARY_FALLBACK of none (any case) or empty means no fallback.
+      - name: Validate dictionary adapters and API keys
         run: |
           shopt -s nocasematch
-          IFS=', ' read -ra ADAPTERS <<< "${DICTIONARY_ADAPTER:-wordnik},$DICTIONARY_FALLBACK"
+          VALID="wordnik, merriam-webster, wiktionary"
+
+          # tools/utils.ts refuses to add a word without it
+          if [[ -z "$DICTIONARY_ADAPTER" ]]; then
+            echo "::error::DICTIONARY_ADAPTER is not set. Add it to your repository variables as one of: $VALID."
+            exit 1
+          fi
+
+          ADAPTERS=("$DICTIONARY_ADAPTER")
+          if [[ "$DICTIONARY_FALLBACK" != none ]]; then
+            IFS=',' read -ra ENTRIES <<< "$DICTIONARY_FALLBACK"
+            for entry in "${ENTRIES[@]}"; do
+              # read trims the spaces around each entry
+              read -r entry <<< "$entry"
+              if [[ -n "$entry" ]]; then
+                ADAPTERS+=("$entry")
+              fi
+            done
+          fi
+
           for adapter in "${ADAPTERS[@]}"; do
             case "$adapter" in
               wordnik) KEY_NAME=WORDNIK_API_KEY ;;
               merriam-webster) KEY_NAME=MERRIAM_WEBSTER_API_KEY ;;
-              *) continue ;;
+              wiktionary) continue ;;
+              *)
+                echo "::error::Unknown dictionary adapter '$adapter'. Valid adapters are $VALID."
+                exit 1
+                ;;
             esac
             if [[ -z "${!KEY_NAME}" ]]; then
               echo "::error::The $adapter adapter is configured but $KEY_NAME is not set. Add it to your repository secrets."
