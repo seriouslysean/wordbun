@@ -64,7 +64,7 @@ constants/
 types/                           # Shared TypeScript definitions
   index.ts                       # Barrel export
   adapters.ts                    # DictionaryAdapter, DictionaryResponse
-  common.ts                      # LogContext, PathConfig, FetchOptions, SourceMeta
+  common.ts                      # LogContext, PathConfig, FetchOptions, SourceMeta, DictionaryDefinition
   word.ts                        # WordData, WordProcessedData, stats result types
   stats.ts                       # StatsDefinition, StatsSlug, SuffixKey
   schema.ts                      # JSON-LD schema types
@@ -82,7 +82,8 @@ tests/
   setup.js                       # Global mocks (astro:env/client, astro:content, translations)
   helpers/spawn.js               # CLI tool process spawner
   helpers/log-levels.js          # Preload that marks a spawned tool's warn and error lines
-  adapters/                      # Adapter tests (Vitest)
+  adapters/                      # Adapter tests and contract suite (Vitest)
+  adapters/fixtures/<adapter>/   # Partner response bodies, one directory per registered adapter
   architecture/                  # Import boundary enforcement (Vitest)
   config/                        # Config tests (Vitest)
   constants/                     # Constants tests (Vitest)
@@ -273,7 +274,57 @@ All user-facing strings go through `locales/en.json`. The `t(key)` function from
 
 `getDisplayableDefinitions()` in `utils/word-data-utils.ts` is the one rule for which of a word's definitions count. A definition is displayable when it has a part of speech and non-empty text. Abbreviation-labelled definitions are displayable only when the word has no displayable grammatical definition: a lookup of "sad" also returns SAD, "seasonal affective disorder", which must not become a sense of the adjective, while "pb&j" has nothing but its abbreviation, so that is what its page shows.
 
-Everything that shows, counts, groups or accepts definitions goes through it: the word page senses (`getWordSenses`), the primary definition used for meta descriptions, RSS and JSON-LD (`findValidDefinition`), the part-of-speech browse pages (`getAvailablePartsOfSpeech`, `getWordsByPartOfSpeech`, `groupWordsByPartOfSpeech`), and add-time acceptance (`isValidDictionaryData`, checked by `fetchWithFallback` on every adapter's answer, so the tools only ever receive usable definitions). A record with text but no part of speech is refused at add time because no page could display it.
+Everything that shows, counts, groups or accepts definitions goes through it: the word page senses (`getWordSenses`), the primary definition used for meta descriptions, RSS and JSON-LD (`findValidDefinition`), the part-of-speech browse pages (`getAvailablePartsOfSpeech`, `getWordsByPartOfSpeech`, `groupWordsByPartOfSpeech`), and add-time acceptance (`isValidDictionaryData`, checked by `fetchWithFallback` on every adapter's answer, so the tools only ever receive usable definitions). A record with text but no part of speech is refused at add time because no page could display it; a `label` (see Dictionary Adapters) is not a part of speech.
+
+## Dictionary Adapters
+
+An adapter (`adapters/`) translates its partner dictionary's response into one canonical contract and does nothing else. Retries, the case of the query, the fallback chain and input handling belong to the callers (`fetchWithFallback()` and the CLI tools).
+
+### Canonical Contract
+
+`fetchWordData(word)` returns a `DictionaryResponse` (`types/adapters.ts`):
+
+| Field | Rule |
+|---|---|
+| `word` | Exactly the word requested |
+| `definitions` | At least one `DictionaryDefinition` |
+| `meta` | `source` nonblank; `attribution` nonblank and `url` absolute http(s) when present |
+| `headword` | Omitted, or at least one of `pronunciation` and `etymology` (nonblank) and `audio` (absolute http(s) URL) |
+
+Each `DictionaryDefinition` (`types/common.ts`):
+
+| Field | Rule |
+|---|---|
+| `text` | Required: one nonblank string, never an array of fragments |
+| `partOfSpeech` | A value of the vocabulary in `constants/parts-of-speech.ts` |
+| `label` | The partner's raw term when it maps to no part of speech; never beside `partOfSpeech` |
+| `id`, `attributionText`, `sourceDictionary` | Nonblank when present |
+| `sourceUrl` | Absolute http(s) URL when present |
+| `examples`, `synonyms`, `antonyms` | Nonempty lists of nonblank strings when present |
+
+No other key is allowed, and a field with no value is omitted rather than stored as `""` or `[]`. A definition with neither `partOfSpeech` nor `label` is one the partner did not classify. A `label` is not a part of speech: a definition carrying only a label is not displayable and is never grouped under a part of speech. Markup inside `text` (Wordnik's `<xref>`) is still allowed.
+
+Each adapter's `POS_MAP` is written `satisfies Readonly<Record<string, BasePartOfSpeech>>`, so a mapping can only name a vocabulary value. `buildDefinition()` in `utils/adapter-utils.ts` classifies the partner's term (`classifyPartOfSpeech()`) and omits empty values; `buildDictionaryResponse()` does the same for the envelope.
+
+Stored word files keep the looser `StoredDictionaryDefinition` shape, which `WordData.data` and the content collection schema accept, so records written before the contract still load.
+
+### Enforcement
+
+`isCanonicalResponse()` in `utils/adapter-utils.ts` checks every rule above, including the ones a type cannot express. `fetchWithFallback()` applies it once to every adapter's answer, before displayability. A response that breaks it is refused whole with an unexpected-shape error: the chain moves on, and the fault stays in the final `AggregateError`.
+
+`tests/adapters/contract.spec.js` applies the same guard to fixtures. It enumerates the registry (`getAdapterNames()` in `adapters/index.ts`) and requires:
+
+- a directory `tests/adapters/fixtures/<adapter name>/` for every registered adapter, and none for anything else
+- at least one successful response in it: every `.json` file except `not-found.json`, which holds the partner's answer for a word it does not have
+- that each successful response, fed through its adapter with `fetch` stubbed and the file name as the word, passes `isCanonicalResponse()`
+
+### Adding an Adapter
+
+1. Write `adapters/<name>.ts` exporting a `DictionaryAdapter` whose `name` is its registry key. Guard the partner's raw response with type guards; throw `WordNotFoundError` for a missing word, `RateLimitError` for a 429 (`throwOnHttpError()` does both) and `throwUnexpectedShape()` for a body it cannot read.
+2. Translate with `buildDefinition()` and `buildDictionaryResponse()`, mapping part-of-speech terms through a `POS_MAP` that `satisfies Readonly<Record<string, BasePartOfSpeech>>`.
+3. Register it in `ADAPTER_REGISTRY` in `adapters/index.ts`.
+4. Add `tests/adapters/fixtures/<name>/` with at least one recorded response body, plus `not-found.json` if the partner answers a missing word with a body. A fixture built by hand rather than recorded says so in the directory, as `fixtures/wordnik/README.md` does. The contract suite fails until the directory exists and every response in it comes out canonical.
+5. Unit-test the adapter's own translation in `tests/adapters/<name>.spec.js`.
 
 ## CLI Tools
 
@@ -294,7 +345,7 @@ npm run tool:local tools/add-word.ts -- Japan --preserve-case
 npm run tool:local tools/add-word.ts -- serendipity --overwrite
 ```
 
-Failures are classified by error type, never by message text. Adapters throw `WordNotFoundError` (from `utils/adapter-utils.ts`) for a 404, an empty answer, a Merriam-Webster suggestion list or an entry only in another Merriam-Webster dictionary, and `RateLimitError` for a 429. A 200 whose body is not an array at all is an unexpected shape, not a missing word: the API changed. add-word reports "Word not found in dictionary" only when every adapter in the chain threw `WordNotFoundError` (`isWordNotFound`); a rate limit, outage or unexpected shape anywhere in the chain is reported as a failure to add. regenerate-all-words backs off when any adapter threw `RateLimitError` (`isRateLimited`).
+Failures are classified by error type, never by message text. Adapters throw `WordNotFoundError` (from `utils/adapter-utils.ts`) for a 404, an empty answer, a Merriam-Webster suggestion list or an entry only in another Merriam-Webster dictionary, and `RateLimitError` for a 429. A 200 whose body is not an array at all is an unexpected shape, not a missing word: the API changed. So is an answer that breaks the canonical contract (see Dictionary Adapters). add-word reports "Word not found in dictionary" only when every adapter in the chain threw `WordNotFoundError` (`isWordNotFound`); a rate limit, outage or unexpected shape anywhere in the chain is reported as a failure to add. regenerate-all-words backs off when any adapter threw `RateLimitError` (`isRateLimited`).
 
 ### `generate-images.ts`
 
