@@ -10,6 +10,7 @@ import {
   throwOnHttpError,
   throwUnexpectedShape,
   throwWordNotFound,
+  buildDictionaryResponse,
   transformToWordData,
   transformWordData,
 } from '#utils/adapter-utils';
@@ -96,6 +97,14 @@ describe('adapter-utils', () => {
     it('returns undefined for unmappable values', () => {
       expect(normalizePOS('biographical name', TEST_POS_MAP)).toBeUndefined();
       expect(normalizePOS('abbreviation', TEST_POS_MAP)).toBeUndefined();
+    });
+  });
+
+  describe('buildDictionaryResponse', () => {
+    it.each(['serendipity', 'Japan', 'PB&J'])('reports %s exactly as given', (word) => {
+      const response = buildDictionaryResponse(word, [], 'Test', 'from Test', 'https://example.com');
+
+      expect(response.word).toBe(word);
     });
   });
 

@@ -102,7 +102,8 @@ export function normalizePOS(raw: string, posMap: Record<string, string>): strin
 
 /**
  * Assembles the standard DictionaryResponse envelope used by all adapters.
- * Normalises word to lowercase; all other fields are caller-supplied.
+ * Every field is reported as supplied, the word included: case is the
+ * caller's decision (--preserve-case), not the adapter's.
  */
 export function buildDictionaryResponse(
   word: string,
@@ -113,7 +114,7 @@ export function buildDictionaryResponse(
   headword?: DictionaryResponse['headword'],
 ): DictionaryResponse {
   return {
-    word: word.toLowerCase(),
+    word,
     definitions,
     meta: { source, attribution, url },
     ...(headword && Object.values(headword).some(Boolean) ? { headword } : {}),

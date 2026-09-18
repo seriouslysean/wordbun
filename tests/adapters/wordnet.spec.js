@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { getWordRelations } from '#adapters/wordnet';
 
@@ -50,5 +50,21 @@ describe('wordnet relations adapter', () => {
       antonyms: [],
       related: [],
     });
+  });
+
+  it('looks up exactly the word it is given', async () => {
+    // Case normalization belongs to the caller (tryFetchRelations).
+    const lookup = vi.fn().mockResolvedValue([]);
+    vi.resetModules();
+    vi.doMock('wordpos', () => ({ default: class { lookup = lookup; } }));
+
+    try {
+      const { getWordRelations: isolated } = await import('#adapters/wordnet');
+      await isolated('Japan', 'noun');
+      expect(lookup).toHaveBeenCalledWith('Japan');
+    } finally {
+      vi.doUnmock('wordpos');
+      vi.resetModules();
+    }
   });
 });

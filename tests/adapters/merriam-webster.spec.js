@@ -414,13 +414,14 @@ describe('merriam-webster adapter', () => {
       expect(result.definitions[0].examples).toContain('a fortunate stroke of serendipity');
     });
 
-    it('lowercases the word in the response', async () => {
+    it('reports the word exactly as the caller gave it', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
       const fixture = loadFixture('serendipity');
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, fixture));
 
+      // Case is the caller's decision (--preserve-case); the adapter passes it through.
       const result = await merriamWebsterAdapter.fetchWordData('Serendipity');
-      expect(result.word).toBe('serendipity');
+      expect(result.word).toBe('Serendipity');
     });
   });
 

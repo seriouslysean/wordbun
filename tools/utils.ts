@@ -423,7 +423,9 @@ export function primaryPartOfSpeech(definitions: DictionaryResponse['definitions
  */
 export async function tryFetchRelations(word: string, partOfSpeech?: string): Promise<WordRelations | null> {
   try {
-    return await getWordRelations(word, partOfSpeech);
+    // WordNet indexes lemmas in lowercase, so the lookup key is lowercased here
+    // even for preserveCase words; the adapter looks up what it is given.
+    return await getWordRelations(word.toLowerCase(), partOfSpeech);
   } catch (error) {
     logger.warn('WordNet enrichment failed, continuing without it', { word, error: getErrorMessage(error) });
     return null;

@@ -67,13 +67,14 @@ describe('wiktionary adapter', () => {
       expect(result.definitions.every(d => d.partOfSpeech === 'noun')).toBe(true);
     });
 
-    it('lowercases the word in the response', async () => {
+    it('reports the word exactly as the caller gave it', async () => {
       const { wiktionaryAdapter } = await import('#adapters/wiktionary');
       const fixture = loadFixture('serendipity');
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, fixture));
 
+      // Case is the caller's decision (--preserve-case); the adapter passes it through.
       const result = await wiktionaryAdapter.fetchWordData('Serendipity');
-      expect(result.word).toBe('serendipity');
+      expect(result.word).toBe('Serendipity');
     });
 
     it('throws on 404', async () => {
