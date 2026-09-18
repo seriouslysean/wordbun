@@ -176,6 +176,7 @@ describe('generate-images per-card inputs', () => {
     expect(upgraded.stdout.match(ALL_GENERATED)).toHaveLength(2);
 
     const again = await runCorpus();
+    expect(again.code).toBe(0);
     expect(generatedLabels(again.stdout)).toEqual([]);
   }, 120000);
 });
