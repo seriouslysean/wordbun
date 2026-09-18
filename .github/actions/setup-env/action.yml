@@ -1,5 +1,5 @@
 name: 'Setup Environment Variables'
-description: 'Sets up all environment variables needed for build and deploy'
+description: 'Sets up all environment variables needed to build, deploy and add words'
 inputs:
   vars-json:
     description: 'Repository variables as JSON'
@@ -22,20 +22,32 @@ runs:
         BUILD_SHA: ${{ inputs.github-sha }}
         VAR_NAMES: |
           BASE_PATH
+          COLOR_DARK_BACKGROUND
+          COLOR_DARK_BACKGROUND_LIGHT
+          COLOR_DARK_BORDER
+          COLOR_DARK_PRIMARY
+          COLOR_DARK_PRIMARY_DARK
+          COLOR_DARK_PRIMARY_LIGHT
+          COLOR_DARK_TEXT
+          COLOR_DARK_TEXT_LIGHT
           COLOR_PRIMARY
           COLOR_PRIMARY_DARK
           COLOR_PRIMARY_LIGHT
           DICTIONARY_ADAPTER
+          DICTIONARY_FALLBACK
           HUMANS_DEVELOPER_CONTACT
           HUMANS_DEVELOPER_NAME
           HUMANS_DEVELOPER_SITE
           HUMANS_WORD_CURATOR
+          MERRIAM_WEBSTER_API_URL
+          MERRIAM_WEBSTER_DICTIONARY
           SITE_ATTRIBUTION_MESSAGE
           SITE_AUTHOR
           SITE_AUTHOR_URL
           SITE_DESCRIPTION
           SITE_ID
           SITE_KEYWORDS
+          SITE_LOCALE
           SITE_TITLE
           SITE_URL
           SOURCE_DIR
@@ -44,6 +56,7 @@ runs:
         SECRET_NAMES: |
           GA_ENABLED
           GA_MEASUREMENT_ID
+          MERRIAM_WEBSTER_API_KEY
           SENTRY_AUTH_TOKEN
           SENTRY_DSN
           SENTRY_ENABLED

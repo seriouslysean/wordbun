@@ -32,31 +32,7 @@ concurrency:
 jobs:
   add-word:
     runs-on: ubuntu-latest
-    env:
-      COLOR_PRIMARY: ${{ vars.COLOR_PRIMARY }}
-      COLOR_PRIMARY_DARK: ${{ vars.COLOR_PRIMARY_DARK }}
-      COLOR_PRIMARY_LIGHT: ${{ vars.COLOR_PRIMARY_LIGHT }}
-      DICTIONARY_ADAPTER: ${{ vars.DICTIONARY_ADAPTER }}
-      DICTIONARY_FALLBACK: ${{ vars.DICTIONARY_FALLBACK }}
-      MERRIAM_WEBSTER_API_KEY: ${{ secrets.MERRIAM_WEBSTER_API_KEY }}
-      MERRIAM_WEBSTER_API_URL: ${{ vars.MERRIAM_WEBSTER_API_URL }}
-      MERRIAM_WEBSTER_DICTIONARY: ${{ vars.MERRIAM_WEBSTER_DICTIONARY }}
-      SITE_AUTHOR: ${{ vars.SITE_AUTHOR }}
-      SITE_DESCRIPTION: ${{ vars.SITE_DESCRIPTION }}
-      SITE_ID: ${{ vars.SITE_ID }}
-      SITE_TITLE: ${{ vars.SITE_TITLE }}
-      SITE_URL: ${{ vars.SITE_URL }}
-      TZ: America/New_York
-      WORDNIK_API_KEY: ${{ secrets.WORDNIK_API_KEY }}
-      WORDNIK_API_URL: ${{ vars.WORDNIK_API_URL }}
     steps:
-      - name: Validate API key
-        run: |
-          if [ -z "$WORDNIK_API_KEY" ]; then
-            echo "::error::WORDNIK_API_KEY is not set. Please add it to your repository secrets."
-            exit 1
-          fi
-
       - name: Checkout
         uses: actions/checkout@v7
 
@@ -65,6 +41,33 @@ jobs:
         with:
           node-version: 26
           cache: 'npm'
+
+      # The same variables, SOURCE_DIR and timezone as the build, so the word
+      # lands in the tree the site reads and "today" is the site's today
+      - name: Setup environment variables
+        uses: ./.github/actions/setup-env
+        with:
+          vars-json: ${{ toJSON(vars) }}
+          secrets-json: ${{ toJSON(secrets) }}
+          github-sha: ${{ github.sha }}
+
+      # The fallback chain logs a failed adapter as a warning and moves on, so
+      # a missing key would otherwise pass as a word defined by another source
+      - name: Validate dictionary API keys
+        run: |
+          shopt -s nocasematch
+          IFS=', ' read -ra ADAPTERS <<< "${DICTIONARY_ADAPTER:-wordnik},$DICTIONARY_FALLBACK"
+          for adapter in "${ADAPTERS[@]}"; do
+            case "$adapter" in
+              wordnik) KEY_NAME=WORDNIK_API_KEY ;;
+              merriam-webster) KEY_NAME=MERRIAM_WEBSTER_API_KEY ;;
+              *) continue ;;
+            esac
+            if [[ -z "${!KEY_NAME}" ]]; then
+              echo "::error::The $adapter adapter is configured but $KEY_NAME is not set. Add it to your repository secrets."
+              exit 1
+            fi
+          done
 
       - name: Install dependencies
         run: npm ci
