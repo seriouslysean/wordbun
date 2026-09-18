@@ -8,7 +8,7 @@ Static site generator (Astro) for word-of-the-day websites. Powers multiple chil
 
 ## Setup & Commands
 
-Node.js 24+ required (`.nvmrc` provided). No `.env` needed — upstream sets `SOURCE_DIR=demo` via CI variables; downstream repos leave it unset to use root data paths.
+Node.js 26+ required (`.nvmrc` provided). No `.env` needed — upstream sets `SOURCE_DIR=demo` via CI variables; downstream repos leave it unset to use root data paths.
 
 ```sh
 nvm use && npm install             # Setup

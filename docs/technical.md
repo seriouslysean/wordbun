@@ -6,7 +6,7 @@ Architecture reference for the occasional-wotd project. For philosophy, principl
 
 - **[Astro](https://astro.build/)** - Static site generator; zero application JavaScript by default — no UI framework or hydration; only Astro's prefetch runtime and small progressive enhancements ship; native CSS view transitions ship no JS
 - **TypeScript** - Strict mode (`strictNullChecks`, `noUncheckedIndexedAccess`)
-- **Node.js 24+** - Runtime (`.nvmrc` provided)
+- **Node.js 26+** - Runtime (`.nvmrc` provided)
 - **[Vitest](https://vitest.dev/)** - Unit, component, and integration testing
 - **[Playwright](https://playwright.dev/)** - E2E testing against the built static site
 - **[Sharp](https://sharp.pixelplumbing.com/)** + [OpenType.js](https://opentype.js.org/) - Social image generation
@@ -587,6 +587,10 @@ Markdown syntax highlighting is disabled (`markdown.syntaxHighlight: false`): Sh
 - **WCAG AA**: Accessibility compliance required
 
 ## Architecture History
+
+### September 2026 - Node 26 and Native TypeScript
+
+- Node.js 26 requirement (upgraded from 24)
 
 ### June 2026 - CSP and Progressive Enhancement
 
