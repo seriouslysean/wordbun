@@ -475,6 +475,8 @@ CLI tools broke when Node.js-side code imported Astro-only modules (`#astro-util
 - `tests/architecture/utils-boundary.spec.js` — detects forbidden imports in all Node.js-side directories (`utils/`, `adapters/`, `constants/`, `config/`)
 - `tests/tools/cli-integration.spec.js` — catches `astro:` protocol errors in real processes
 
+The browser side has the mirror-image rule. Bundled `<script>` blocks import a few pure modules from `utils/`, and Vite ships whatever those import as values, so one re-export can put dictionary code in every page's JavaScript. `tests/architecture/client-imports.spec.js` finds the modules those scripts reach in `utils/` and `types/` and allows value imports only from an explicit allowlist; `import type` is always allowed.
+
 ## Utility Architecture
 
 ### Two-Layer Separation
