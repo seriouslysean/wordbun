@@ -18,7 +18,6 @@
     "unicorn/prefer-string-slice": "error",
     "unicorn/no-array-reverse": "error",
     "unicorn/prefer-dom-node-append": "error",
-    "typescript/consistent-type-imports": "error",
     "typescript/no-explicit-any": "error",
     "typescript/consistent-type-assertions": ["error", { "assertionStyle": "never" }],
     "typescript/consistent-type-definitions": ["error", "interface"],
