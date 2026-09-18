@@ -23,6 +23,7 @@ npm run lint:fix                   # oxlint auto-fix
 # CLI tools:
 npm run tool:local tools/add-word.ts serendipity
 npm run tool:local tools/generate-images.ts
+npm run tool:local tools/add-word.ts -- --help   # Tool flags go after a bare --; npm keeps the rest
 ```
 
 Pre-commit hooks (lefthook) run `oxlint --fix` and related tests on staged files.

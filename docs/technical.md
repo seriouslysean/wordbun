@@ -273,6 +273,8 @@ All tools are pure Node.js (no Astro deps) and use `util.parseArgs()` for argume
 
 Tools run directly on Node's built-in TypeScript support (`node tools/<tool>.ts`); there is no loader or compile step. `npm run tool:local <tool>` runs a tool through `node --env-file-if-exists=.env`, so `.env` is loaded when present and variables already in the environment win. When `.env` is absent Node prints `.env not found. Continuing without it.` to stderr and carries on. The bare `tool:*` scripts (`tool:generate-images`, `tool:regenerate-all-words`, ...) do not load `.env`: image tools render without the site title and the Merriam-Webster adapter throws without its key.
 
+npm keeps any flag written before a bare `--` for itself, so a tool's flags always follow one: `npm run tool:local tools/add-word.ts -- --help` and `npm run tool:add-word -- --help` print the tool's help, and without the separator npm prints its own. `tests/architecture/npm-scripts.spec.js` enforces this in `package.json`, tool help text, docs and workflows.
+
 ### `add-word.ts`
 
 Adds a word with dictionary validation, duplicate detection, and automatic image generation.
@@ -280,8 +282,8 @@ Adds a word with dictionary validation, duplicate detection, and automatic image
 ```sh
 npm run tool:local tools/add-word.ts serendipity
 npm run tool:local tools/add-word.ts ephemeral 20250130
-npm run tool:local tools/add-word.ts Japan --preserve-case
-npm run tool:local tools/add-word.ts serendipity --overwrite
+npm run tool:local tools/add-word.ts -- Japan --preserve-case
+npm run tool:local tools/add-word.ts -- serendipity --overwrite
 ```
 
 ### `generate-images.ts`

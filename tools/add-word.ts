@@ -124,8 +124,8 @@ const HELP_TEXT = `
 Add Word Tool
 
 Usage:
-  npm run tool:local tools/add-word.ts <word> [date] [options]
-  npm run tool:add-word <word> [date] [options]
+  npm run tool:local tools/add-word.ts -- <word> [date] [options]
+  npm run tool:add-word -- <word> [date] [options]
 
 Arguments:
   word    The word to add (required)
@@ -139,9 +139,9 @@ Options:
 Examples:
   npm run tool:add-word "serendipity"
   npm run tool:add-word "ephemeral" "20240116"
-  npm run tool:add-word "ubiquitous" --overwrite
-  npm run tool:add-word "Japan" --preserve-case
-  npm run tool:add-word "PB&J" "20250101" --preserve-case
+  npm run tool:add-word -- "ubiquitous" --overwrite
+  npm run tool:add-word -- "Japan" --preserve-case
+  npm run tool:add-word -- "PB&J" "20250101" --preserve-case
 
 Environment Variables (for GitHub workflows):
   DICTIONARY_ADAPTER         Dictionary API to use (required)
