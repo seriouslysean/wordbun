@@ -305,6 +305,27 @@ describe('site workflows', { timeout: 20000 }, () => {
       expect(result.output).toContain('::error::The site needs');
       expect(snapshot('engine')).toEqual(before);
     });
+
+    // rsync -a copies a link as a link, so the tools would write through it,
+    // and the build read through it, outside the engine checkout
+    it.each([
+      ['a link under public', 'public/images/social', '../../../outside'],
+      ['a link under data', 'data/words/2026/20260102.json', '../../../../outside/word.json'],
+      ['public itself as a link', 'public', '../outside'],
+    ])('refuses %s before copying anything', async (_, link, target) => {
+      write('outside/word.json', '{"word":"outside"}\n');
+      fs.mkdirSync(path.dirname(path.join(ctx.dir, 'site', link)), { recursive: true });
+      fs.symlinkSync(target, path.join(ctx.dir, 'site', link));
+      write('site/data/words/2026/20260101.json', '{"word":"site"}\n');
+      write('site/public/robots.txt', 'site robots\n');
+      const before = { engine: snapshot('engine'), outside: snapshot('outside') };
+
+      const result = await overlay('someone/wordbun', '');
+
+      expect(result.code).toBe(1);
+      expect(result.output).toContain(`::error::${link} is a symbolic link`);
+      expect({ engine: snapshot('engine'), outside: snapshot('outside') }).toEqual(before);
+    });
   });
 
   describe('site-add-word.yml from input to push', () => {

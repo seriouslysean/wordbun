@@ -128,6 +128,16 @@ jobs:
             exit 1
           fi
 
+          # rsync -a copies a link as a link, so the tools would write through
+          # it, and the build read through it, outside engine/
+          LINKS=$(find site/data site/public -type l)
+          if [[ -n "$LINKS" ]]; then
+            while IFS= read -r link; do
+              echo "::error::${link#site/} is a symbolic link. A site's data and public hold only files and directories."
+            done <<< "$LINKS"
+            exit 1
+          fi
+
           # --checksum compares content: two checkouts made in the same second
           # can hold a same-size file that rsync's size and time check skips
           rsync -a --checksum --delete site/data/ engine/data/
