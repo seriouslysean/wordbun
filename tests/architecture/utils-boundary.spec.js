@@ -7,8 +7,8 @@
  * 2. Delegated logic is imported from utils/, not duplicated in src/utils/
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 
 const UTILS_DIR = path.join(process.cwd(), 'utils');

@@ -4,7 +4,7 @@
  * Centralizes shared paths used across the application.
  */
 
-import path from 'path';
+import path from 'node:path';
 
 import type { PathConfig } from '#types';
 

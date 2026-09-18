@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 
 import { fetchWithFallback } from '#adapters';
 import { isEntryPoint } from '#tools/entry';

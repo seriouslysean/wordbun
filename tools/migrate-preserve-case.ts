@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import { showHelp } from '#tools/help-utils';
 import { getWordFiles } from '#tools/utils';
 import type { WordData } from '#types';

@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
-import fs from 'fs';
+import fs from 'node:fs';
 import opentype from 'opentype.js';
-import path from 'path';
+import path from 'node:path';
 import sharp from 'sharp';
 
 import { fetchWithFallback } from '#adapters';
