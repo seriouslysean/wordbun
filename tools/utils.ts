@@ -299,75 +299,126 @@ export const computeSettingsHash = (rendererVersions: RendererVersions = sharp.v
   })).slice(0, 12);
 };
 
-const readSettingsHash = (): string | null => {
+const MARKER_PATH = path.join(SOCIAL_BASE_DIR, SETTINGS_HASH_FILENAME);
+
+/**
+ * What a run knows about the images already on disk, read once before the
+ * first image so every decision in the run uses the same snapshot and the
+ * first regenerated image cannot make the rest look current.
+ */
+export interface ImageCache {
+  /**
+   * True when the settings differ from those of the last certified run, or no
+   * run has recorded them in the current format: every image is re-rendered.
+   */
+  stale: boolean;
+  /** Input hash of each card the last certified run rendered, by card path. */
+  cards: Readonly<Record<string, string>>;
+}
+
+const isStringRecord = (value: unknown): value is Record<string, string> =>
+  isRecord(value) && Object.values(value).every(isString);
+
+const readMarker = (): unknown => {
   try {
-    return fs.readFileSync(path.join(SOCIAL_BASE_DIR, SETTINGS_HASH_FILENAME), 'utf-8').trim();
+    return JSON.parse(fs.readFileSync(MARKER_PATH, 'utf-8'));
   } catch {
     return null;
   }
 };
 
 /**
- * True when existing images were rendered under different settings (or no
- * complete run has certified them). Callers read this once per run and pass
- * the answer to every image as `regenerate`, so the decision cannot change
- * while the run is in flight.
+ * Reads the marker a certified run wrote. A missing marker, or the bare
+ * settings fingerprint older runs wrote, leaves the settings unknown, so the
+ * next run renders everything once and records per-card inputs.
  */
-export const isImageCacheStale = (): boolean => readSettingsHash() !== computeSettingsHash();
-
-/**
- * Certifies every image on disk as rendered under the current settings. Only a
- * run that covered all words and all pages without a failure may call this; a
- * single image or a partial run says nothing about the rest of the corpus.
- */
-export const markImageCacheCurrent = (): void => {
-  fs.mkdirSync(SOCIAL_BASE_DIR, { recursive: true });
-  fs.writeFileSync(path.join(SOCIAL_BASE_DIR, SETTINGS_HASH_FILENAME), `${computeSettingsHash()}\n`);
+export const readImageCache = (): ImageCache => {
+  const marker = readMarker();
+  if (!isRecord(marker) || !isString(marker.settings) || !isStringRecord(marker.cards)) {
+    return { stale: true, cards: {} };
+  }
+  return { stale: marker.settings !== computeSettingsHash(), cards: marker.cards };
 };
 
-interface GenerateImageOptions {
-  regenerate?: boolean;
+/**
+ * One card as a run saw it: its path relative to the images directory (the
+ * marker's key), a hash of the inputs it was rendered from, and whether this
+ * run rendered it.
+ */
+export interface CardRender {
+  card: string;
+  inputs: string;
+  generated: boolean;
 }
 
 /**
- * Renders an image unless it already exists and the caller has not asked for
- * regeneration. The SVG is only built once the image is known to be needed.
- * Returns true if generated, false if skipped.
+ * Certifies the images on disk as rendered under the current settings from
+ * the recorded inputs. Only a run that covered all words and all pages
+ * without a failure may call this, with every card it saw; a single image or
+ * a partial run says nothing about the rest of the corpus. The map is built
+ * from this run alone, so cards that no longer exist drop out. Keys are
+ * sorted by code unit so the file does not depend on run order or locale.
  */
-async function renderPng(buildSvg: () => string, outputPath: string, regenerate: boolean): Promise<boolean> {
-  if (!regenerate && fs.existsSync(outputPath)) {
-    return false;
+export const markImageCacheCurrent = (rendered: readonly CardRender[]): void => {
+  const cards = Object.fromEntries(
+    rendered
+      .toSorted((a, b) => Number(a.card > b.card) - Number(a.card < b.card))
+      .map(({ card, inputs }): [string, string] => [card, inputs]),
+  );
+  fs.mkdirSync(SOCIAL_BASE_DIR, { recursive: true });
+  fs.writeFileSync(MARKER_PATH, `${JSON.stringify({ settings: computeSettingsHash(), cards }, null, 2)}\n`);
+};
+
+export interface GenerateImageOptions {
+  /** Render even when the recorded inputs match: forced, or the cache is stale */
+  regenerate: boolean;
+  cards: ImageCache['cards'];
+}
+
+/**
+ * Renders a card unless the last certified run recorded the same inputs for
+ * it and the file is still there. The inputs are exactly what createSvg
+ * receives, so a card whose text changes while its path does not (a page
+ * title derived from the corpus, a word whose case changed, which the file
+ * name drops) is rendered again. The SVG is only built once it is needed.
+ */
+async function renderCard(
+  card: string,
+  text: string,
+  date: string | undefined,
+  options: GenerateImageOptions,
+): Promise<CardRender> {
+  const inputs = fingerprint(JSON.stringify([text, date ?? null])).slice(0, 12);
+  const outputPath = path.join(paths.images, card);
+  if (!options.regenerate && options.cards[card] === inputs && fs.existsSync(outputPath)) {
+    return { card, inputs, generated: false };
   }
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  await sharp(Buffer.from(buildSvg())).png(PNG_OPTIONS).toFile(outputPath);
-  return true;
+  await sharp(Buffer.from(createSvg(text, date))).png(PNG_OPTIONS).toFile(outputPath);
+  return { card, inputs, generated: true };
 }
 
 /**
- * Generates a social share image for a word.
- * Skips an existing image unless `regenerate` is set.
+ * Generates a social share image for a word, as written.
  */
 export async function generateShareImage(
   word: string,
   date: string,
-  options: GenerateImageOptions = {},
-): Promise<boolean> {
-  const outputPath = path.join(paths.images, getSocialCardPath({ type: 'word', word, date }));
-  return renderPng(() => createSvg(word, date), outputPath, !!options.regenerate);
+  options: GenerateImageOptions,
+): Promise<CardRender> {
+  return renderCard(getSocialCardPath({ type: 'word', word, date }), word, date, options);
 }
 
 /**
  * Generates a generic social share image for pages without a word.
- * Skips an existing image unless `regenerate` is set.
  */
 export async function generateGenericShareImage(
   title: string,
   slug: string,
-  options: GenerateImageOptions = {},
-): Promise<boolean> {
-  const outputPath = path.join(paths.images, getSocialCardPath({ type: 'page', path: slug }));
-  return renderPng(() => createSvg(title.toLowerCase()), outputPath, !!options.regenerate);
+  options: GenerateImageOptions,
+): Promise<CardRender> {
+  return renderCard(getSocialCardPath({ type: 'page', path: slug }), title.toLowerCase(), undefined, options);
 }
 
 // ---------------------------------------------------------------------------
