@@ -79,10 +79,14 @@ the build process itself; the others are real gaps.
   (`PORT` in `playwright.config.ts`) with `reuseExistingServer: false`, so it
   always serves this repo's current `dist/` and ignores anything on Astro's
   default 4321. `--ignore-lock` keeps the preview in the foreground when
-  Astro detects a coding agent and skips the `.astro/preview.json` lock, so
-  a separately running `astro dev`/`astro preview` is untouched. If 4517 is
-  already taken, Playwright exits with "http://localhost:4517 is already
-  used" instead of testing the wrong site; `lsof -i :4517` finds the holder.
+  Astro detects a coding agent and does not claim the `.astro/preview.json`
+  lock, so a separately running `astro dev`/`astro preview` keeps running
+  (Astro still reads the lock and removes a stale one). If something else
+  holds 4517 the run fails one of two ways: "http://localhost:4517 is
+  already used" when the holder answers HTTP at `/`, or "Timed out waiting
+  60000ms from config.webServer" when it does not (the preview then binds
+  the next free port while Playwright keeps polling 4517). `lsof -i :4517`
+  finds the holder in both cases.
 
 ## Performance
 

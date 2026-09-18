@@ -22,7 +22,8 @@ export default defineConfig({
   ],
   webServer: {
     // --ignore-lock keeps the preview in the foreground when Astro detects a coding agent
-    // (it would otherwise spawn a detached server and exit) and never touches the lock file.
+    // (it would otherwise spawn a detached server and exit) and starts alongside any locked
+    // preview without claiming the lock. Astro still reads the lock and removes a stale one.
     command: `npx astro preview --ignore-lock --port ${PORT}`,
     url: BASE_URL,
     reuseExistingServer: false,
