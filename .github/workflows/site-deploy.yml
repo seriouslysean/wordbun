@@ -128,8 +128,10 @@ jobs:
             exit 1
           fi
 
-          rsync -a --delete site/data/ engine/data/
-          rsync -a --delete --filter='P /favicon.svg' site/public/ engine/public/
+          # --checksum compares content: two checkouts made in the same second
+          # can hold a same-size file that rsync's size and time check skips
+          rsync -a --checksum --delete site/data/ engine/data/
+          rsync -a --checksum --delete --filter='P /favicon.svg' site/public/ engine/public/
 
       # Complete generation, so an engine or theme change never deploys stale
       # cards. Cards that are current are skipped, and nothing is committed.

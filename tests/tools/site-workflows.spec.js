@@ -193,9 +193,13 @@ describe('site workflows', { timeout: 20000 }, () => {
       expect(snapshot('engine/src')).toEqual(code);
     });
 
+    // Same size and time as the engine's, which rsync's quick check skips
     it("uses the site's favicon when it has one", async () => {
       thinSite();
-      write('site/public/favicon.svg', 'site favicon\n');
+      write('site/public/favicon.svg', 'custom favicon\n');
+      const time = new Date('2026-09-18T12:00:00Z');
+      fs.utimesSync(path.join(ctx.dir, 'site/public/favicon.svg'), time, time);
+      fs.utimesSync(path.join(ctx.dir, 'engine/public/favicon.svg'), time, time);
 
       const result = await overlay('someone/wordbun', '');
 
