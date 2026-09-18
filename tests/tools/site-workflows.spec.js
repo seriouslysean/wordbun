@@ -116,6 +116,9 @@ const git = (dir, ...args) => execFileSync('git', args, {
 
 const ENGINE_REPOSITORY = workflow('site-deploy.yml').env.ENGINE_REPOSITORY;
 
+// A step that runs in site/ or names a path under it
+const readsSite = step => step['working-directory'] === 'site' || /(^|[\s"'])site\//m.test(step.run ?? '');
+
 beforeEach(() => {
   ctx.dir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'wotd-site-workflow-')));
 });
@@ -166,6 +169,31 @@ describe('site workflows', { timeout: 20000 }, () => {
       const [job] = Object.values(template.jobs);
 
       expect(Object.keys(workflow(file).on.workflow_call.inputs ?? {})).toEqual(Object.keys(job.with ?? {}));
+    });
+  });
+
+  // Checkouts are uses: steps, so these read the order of the steps. A
+  // checkout that keeps its credentials leaves a token that can push where
+  // any later process can read it, and npm ci runs every dependency's
+  // install script.
+  describe.each([
+    ['site-deploy.yml'],
+    ['site-add-word.yml'],
+  ])('%s step order', (file) => {
+    const steps = () => Object.values(workflow(file).jobs).flatMap(job => job.steps ?? []);
+    const indexOf = name => steps().findIndex(step => step.name === name);
+
+    it('installs dependencies before any checkout that keeps its credentials', () => {
+      const keeping = steps().slice(0, indexOf('Install dependencies'))
+        .filter(step => step.uses?.startsWith('actions/checkout@') && step.with?.['persist-credentials'] !== false);
+
+      expect(indexOf('Install dependencies')).toBeGreaterThan(0);
+      expect(keeping.map(step => step.name)).toEqual([]);
+    });
+
+    it('checks out the site before any step that reads it', () => {
+      expect(indexOf('Checkout site')).toBeGreaterThanOrEqual(0);
+      expect(steps().findIndex(readsSite)).toBeGreaterThan(indexOf('Checkout site'));
     });
   });
 

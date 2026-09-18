@@ -59,15 +59,6 @@ jobs:
   add-word:
     runs-on: ubuntu-latest
     steps:
-      # The branch tip rather than github.sha, so a run that waited behind
-      # another in the add-word group starts from the commit that run pushed.
-      # This checkout keeps the credentials the push below uses.
-      - name: Checkout site
-        uses: actions/checkout@v7
-        with:
-          ref: ${{ github.ref }}
-          path: site
-
       # job.workflow_* name the repository and commit this workflow runs
       # from, so the code is the commit the caller's uses: pins, whatever
       # else the caller passes. A ./ call runs the workflow from the caller's
@@ -88,10 +79,21 @@ jobs:
           cache: 'npm'
           cache-dependency-path: engine/package-lock.json
 
-      # Before setup-env, so no dependency's install script sees the secrets
+      # Before the site checkout and setup-env, so no dependency's install
+      # script can read the token that pushes to the site or see the secrets
       - name: Install dependencies
         working-directory: engine
         run: npm ci
+
+      # The branch tip rather than github.sha, so a run that waited behind
+      # another in the add-word group starts from the commit that run pushed.
+      # This checkout keeps the credentials the push below uses, where any
+      # later process in the job can read them, so it comes after the install.
+      - name: Checkout site
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
+          path: site
 
       # The same variables, SOURCE_DIR and timezone as the build, so the word
       # lands in the tree the site reads and "today" is the site's today

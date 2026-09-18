@@ -29,7 +29,7 @@ Then run **Add Word** from the Actions tab with a word. It should commit `Add wo
 
 ## Updating the engine
 
-Both workflows pin the same occasional-wotd release in their `uses:` line. Dependabot checks weekly and opens one pull request for a new release; merge it once both lines name the same release. Pin a release tag (`vX.Y.Z`) or a full commit SHA, never a branch or a major tag like `v3`, which moves and would change the engine this site runs without a pull request to review.
+Both workflows pin the same occasional-wotd release in their `uses:` line. Dependabot checks weekly and opens one pull request for a new release; merge it once both lines name the same release. Pin a release tag (`vX.Y.Z`) or a full commit SHA, never a branch or a major tag like `v3`, which moves and would change the engine this site runs without a pull request to review. The engine at the pin runs with this repository's secrets and a token that can write to it, so pin only occasional-wotd releases you trust.
 
 ## Local development
 
