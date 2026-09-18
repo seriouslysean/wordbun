@@ -29,8 +29,10 @@ const SET_BY_ACTION = /^\s+put_env ([A-Z][A-Z0-9_]*) /gm;
 const names = (text, pattern) => [...text.matchAll(pattern)].map(match => match[1]);
 
 // The lines of a `KEY: |` block scalar, which run until a line indented no
-// deeper than the key. Lines stay as written, so a commented-out name is not
-// mistaken for a listed one.
+// deeper than the key. Only the indent (and a CRLF carriage return) is
+// removed: a commented-out name must not pass for a listed one, and a
+// trailing space must survive, because the action would export it as part of
+// the variable's name.
 const blockLines = (text, key) => {
   const lines = text.split('\n');
   const start = lines.findIndex(line => line.trim() === `${key}: |`);
@@ -39,7 +41,7 @@ const blockLines = (text, key) => {
   }
   const indent = lines[start].search(/\S/);
   const end = lines.findIndex((line, index) => index > start && line.trim() !== '' && line.search(/\S/) <= indent);
-  return lines.slice(start + 1, end < 0 ? undefined : end).map(line => line.trim()).filter(Boolean);
+  return lines.slice(start + 1, end < 0 ? undefined : end).map(line => line.replace(/\r$/, '').trimStart()).filter(Boolean);
 };
 
 // Where docs/technical.md tells site owners to store each setting: API keys,
@@ -61,6 +63,12 @@ describe('Architecture: environment transport', () => {
 
     expect(declared.length).toBeGreaterThan(0);
     expect(declared.filter(name => !exported.has(name))).toEqual([]);
+  });
+
+  it('lists only bare variable names', () => {
+    const malformed = [...variables, ...secrets].filter(name => !/^[A-Z][A-Z0-9_]*$/.test(name));
+
+    expect(malformed).toEqual([]);
   });
 
   it('reads secrets from SECRET_NAMES and everything else from VAR_NAMES', () => {
