@@ -45,13 +45,26 @@ export function throwOnHttpError(response: Response, word: string): void {
 }
 
 /**
+ * Reads a response body as text, adding adapter context to read failures.
+ * The adapterFetch deadline also aborts a stalled body, which would otherwise
+ * surface as an anonymous TimeoutError.
+ */
+async function readResponseText(response: Response, apiName: string): Promise<string> {
+  try {
+    return await response.text();
+  } catch (error) {
+    throw new Error(`Failed to read ${apiName} response body: ${getErrorMessage(error)}`, { cause: error });
+  }
+}
+
+/**
  * Parses a fetch response as JSON with defensive error handling.
  * Surfaces the raw response text on parse failure for debugging.
  * The body is read once as text: a Response body can only be consumed once,
  * so falling back to text() after a failed json() would throw instead.
  */
 export async function parseJsonResponse(response: Response, apiName: string): Promise<unknown> {
-  const text = await response.text();
+  const text = await readResponseText(response, apiName);
   try {
     const parsed: unknown = JSON.parse(text);
     return parsed;

@@ -203,6 +203,20 @@ describe('adapter-utils', () => {
   });
 
   describe('parseJsonResponse', () => {
+    it('names the adapter when the body cannot be read', async () => {
+      const cause = new DOMException('The operation was aborted due to timeout', 'TimeoutError');
+      const body = new ReadableStream({
+        start(controller) {
+          controller.error(cause);
+        },
+      });
+      const error = await parseJsonResponse(new Response(body), 'TestAPI').catch(e => e);
+      expect(error.message).toBe(
+        'Failed to read TestAPI response body: The operation was aborted due to timeout',
+      );
+      expect(error.cause).toBe(cause);
+    });
+
     it('parses valid JSON response', async () => {
       const response = new Response(JSON.stringify({ word: 'test' }));
       const result = await parseJsonResponse(response, 'TestAPI');
