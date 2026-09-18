@@ -1,4 +1,4 @@
-import type { DictionaryDefinition, WordData, WordEnrichment, WordGrouping, WordSense } from '#types';
+import type { StoredDictionaryDefinition, WordData, WordEnrichment, WordGrouping, WordSense } from '#types';
 import { BASE_PARTS_OF_SPEECH, isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { MAX_SENSE_EXAMPLES } from '#constants/text-patterns';
 import { slugify } from '#utils/text-utils';
@@ -6,7 +6,7 @@ import { slugify } from '#utils/text-utils';
 /**
  * Normalized definition text: joins array text (Wordnik inconsistency) and trims.
  */
-const getDefinitionText = (def: DictionaryDefinition): string => {
+const getDefinitionText = (def: StoredDictionaryDefinition): string => {
   const text = Array.isArray(def.text) ? def.text.join(' ') : def.text;
   return typeof text === 'string' ? text.trim() : '';
 };
@@ -108,12 +108,12 @@ export const normalizeToBasePOS = (raw: string): string => {
 };
 
 /** A definition the site can show: it has a part of speech and text. */
-interface DisplayableDefinition extends DictionaryDefinition {
+interface DisplayableDefinition extends StoredDictionaryDefinition {
   partOfSpeech: string;
   text: string | string[];
 }
 
-const hasPartOfSpeechAndText = (def: DictionaryDefinition): def is DisplayableDefinition =>
+const hasPartOfSpeechAndText = (def: StoredDictionaryDefinition): def is DisplayableDefinition =>
   typeof def.partOfSpeech === 'string' && def.partOfSpeech.trim().length > 0 && getDefinitionText(def).length > 0;
 
 const isAbbreviation = (def: DisplayableDefinition): boolean =>
@@ -132,7 +132,7 @@ const isAbbreviation = (def: DisplayableDefinition): boolean =>
  * comes back with nothing but "peanut butter and jelly", labelled abbreviation,
  * so that is its definition and its part of speech.
  */
-export const getDisplayableDefinitions = (definitions: DictionaryDefinition[]): DisplayableDefinition[] => {
+export const getDisplayableDefinitions = (definitions: StoredDictionaryDefinition[]): DisplayableDefinition[] => {
   if (!Array.isArray(definitions)) {
     return [];
   }
@@ -151,7 +151,7 @@ export const getDisplayableDefinitions = (definitions: DictionaryDefinition[]): 
  * @param data - Array of dictionary definitions to validate
  * @returns True if the data contains at least one displayable definition
  */
-export const isValidDictionaryData = (data: DictionaryDefinition[]): boolean =>
+export const isValidDictionaryData = (data: StoredDictionaryDefinition[]): boolean =>
   getDisplayableDefinitions(data).length > 0;
 
 /**
@@ -161,7 +161,7 @@ export const isValidDictionaryData = (data: DictionaryDefinition[]): boolean =>
  * @param definitions - Array of dictionary definitions
  * @returns First displayable definition or null if none found
  */
-export function findValidDefinition(definitions: DictionaryDefinition[]): { text: string; partOfSpeech: string } | null {
+export function findValidDefinition(definitions: StoredDictionaryDefinition[]): { text: string; partOfSpeech: string } | null {
   const [definition] = getDisplayableDefinitions(definitions);
   if (!definition) {
     return null;
@@ -266,7 +266,7 @@ export const getWordSenses = (wordData: WordData): WordSense[] => {
   const wordSlug = slugify(wordData.word);
   // Shared across senses so a repeated example is claimed by the first slide.
   const seenExamples = new Set<string>();
-  const collectSenseExamples = (def: DictionaryDefinition): string[] => {
+  const collectSenseExamples = (def: StoredDictionaryDefinition): string[] => {
     if (!Array.isArray(def.examples)) {
       return [];
     }

@@ -1,6 +1,9 @@
-import type { DictionaryDefinition, DictionaryResponse, WordData, WordProcessedData } from '#types';
-import { isBasePartOfSpeech } from '#constants/parts-of-speech';
+import type {
+  DictionaryClassification, DictionaryDefinition, DictionaryResponse, WordData, WordProcessedData,
+} from '#types';
+import { type BasePartOfSpeech, isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { flattenErrors, getErrorMessage } from '#utils/text-utils';
+import { isNonblankString } from '#utils/type-guards';
 import { findValidDefinition } from '#utils/word-data-utils';
 
 /**
@@ -123,32 +126,103 @@ export function throwUnexpectedShape(apiName: string, word: string): never {
  * Normalizes a raw POS string using the provided adapter-specific map.
  * Returns a base POS, a mapped POS, or undefined for unmappable values.
  */
-export function normalizePOS(raw: string, posMap: Record<string, string>): string | undefined {
+export function normalizePOS(raw: string, posMap: Readonly<Record<string, BasePartOfSpeech>>): BasePartOfSpeech | undefined {
   const cleaned = raw.toLowerCase().trim();
   if (isBasePartOfSpeech(cleaned)) {
     return cleaned;
   }
-  return posMap[cleaned];
+  // Own keys only: a term such as "constructor" must not read Object.prototype
+  return Object.hasOwn(posMap, cleaned) ? posMap[cleaned] : undefined;
+}
+
+/**
+ * Translates a partner's raw part-of-speech term into the canonical
+ * classification: the vocabulary value it maps to, or, when it maps to none,
+ * the raw term as `label` so it is kept rather than silently dropped. No term
+ * means no classification.
+ */
+export function classifyPartOfSpeech(
+  raw: string | undefined,
+  posMap: Readonly<Record<string, BasePartOfSpeech>>,
+): DictionaryClassification {
+  if (!isNonblankString(raw)) {
+    return {};
+  }
+  const partOfSpeech = normalizePOS(raw, posMap);
+  return partOfSpeech ? { partOfSpeech } : { label: raw };
+}
+
+/**
+ * A definition as an adapter has read it from its partner: the text, the raw
+ * part-of-speech term, and whatever optional values the partner supplied,
+ * which may be missing, blank or empty.
+ */
+export interface DefinitionSource {
+  text: string;
+  partOfSpeech?: string;
+  id?: string;
+  attributionText?: string;
+  sourceDictionary?: string;
+  sourceUrl?: string;
+  examples?: string[];
+  synonyms?: string[];
+  antonyms?: string[];
+}
+
+/**
+ * Builds a canonical definition from what an adapter read. The part of speech
+ * is classified through the adapter's map, and an optional value that is
+ * missing, blank or empty is omitted, so no stored record carries `""` or `[]`.
+ * Keys follow the order stored records already use.
+ */
+export function buildDefinition(
+  source: DefinitionSource,
+  posMap: Readonly<Record<string, BasePartOfSpeech>>,
+): DictionaryDefinition {
+  const { text, partOfSpeech, id, attributionText, sourceDictionary, sourceUrl, examples, synonyms, antonyms } = source;
+  return {
+    ...(isNonblankString(id) ? { id } : {}),
+    ...classifyPartOfSpeech(partOfSpeech, posMap),
+    text,
+    ...(isNonblankString(attributionText) ? { attributionText } : {}),
+    ...(isNonblankString(sourceDictionary) ? { sourceDictionary } : {}),
+    ...(isNonblankString(sourceUrl) ? { sourceUrl } : {}),
+    ...(examples?.length ? { examples } : {}),
+    ...(synonyms?.length ? { synonyms } : {}),
+    ...(antonyms?.length ? { antonyms } : {}),
+  };
 }
 
 /**
  * Assembles the standard DictionaryResponse envelope used by all adapters.
  * Every field is reported as supplied, the word included: case is the
- * caller's decision (--preserve-case), not the adapter's.
+ * caller's decision (--preserve-case), not the adapter's. A blank attribution
+ * or URL and a blank headword field are omitted, and so is a headword with
+ * nothing left in it.
  */
 export function buildDictionaryResponse(
   word: string,
   definitions: DictionaryDefinition[],
   source: string,
-  attribution: string,
-  url: string,
+  attribution: string | undefined,
+  url: string | undefined,
   headword?: DictionaryResponse['headword'],
 ): DictionaryResponse {
+  const { pronunciation, audio, etymology } = headword ?? {};
+  const captured = {
+    ...(isNonblankString(pronunciation) ? { pronunciation } : {}),
+    ...(isNonblankString(audio) ? { audio } : {}),
+    ...(isNonblankString(etymology) ? { etymology } : {}),
+  };
   return {
     word,
     definitions,
-    meta: { source, attribution, url },
-    ...(headword && Object.values(headword).some(Boolean) ? { headword } : {}),
+    meta: {
+      source,
+      ...(isNonblankString(attribution) ? { attribution } : {}),
+      ...(isNonblankString(url) ? { url } : {}),
+    },
+    ...(Object.keys(captured).length > 0 ? { headword: captured } : {}),
   };
 }
 

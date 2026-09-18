@@ -2,15 +2,20 @@
  * Common adapter interfaces for dictionary services
  */
 
-import type { DictionaryDefinition, FetchOptions, SourceMeta, WordData, WordProcessedData } from '#types';
+import type { DictionaryDefinition, FetchOptions, WordData, WordProcessedData } from '#types';
 
+/**
+ * What an adapter answers for a lookup. Like its definitions, every string is
+ * nonblank and every URL absolute http(s); a field the partner did not supply
+ * is omitted rather than left empty.
+ */
 export interface DictionaryResponse {
   word: string;
   definitions: DictionaryDefinition[];
-  meta: SourceMeta & {
+  meta: {
     source: string;
-    attribution: string;
-    url: string;
+    attribution?: string;
+    url?: string;
   };
   // Optional per-headword capture (pronunciation/audio/etymology) folded into
   // WordEnrichment by buildWordData. Absent for adapters that don't supply it.

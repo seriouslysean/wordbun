@@ -5,6 +5,8 @@ const originalFetch = globalThis.fetch;
 import {
   ADAPTER_FETCH_TIMEOUT_MS,
   adapterFetch,
+  buildDefinition,
+  classifyPartOfSpeech,
   isRateLimited,
   isWordNotFound,
   normalizePOS,
@@ -106,6 +108,77 @@ describe('adapter-utils', () => {
     it('keeps abbreviation, a label in the vocabulary', () => {
       expect(normalizePOS('abbreviation', TEST_POS_MAP)).toBe('abbreviation');
     });
+
+    it('ignores keys the map inherits from Object.prototype', () => {
+      expect(normalizePOS('constructor', TEST_POS_MAP)).toBeUndefined();
+      expect(normalizePOS('toString', TEST_POS_MAP)).toBeUndefined();
+    });
+  });
+
+  describe('classifyPartOfSpeech', () => {
+    it('classifies a base or mapped term as a part of speech', () => {
+      expect(classifyPartOfSpeech('Noun', TEST_POS_MAP)).toStrictEqual({ partOfSpeech: 'noun' });
+      expect(classifyPartOfSpeech('transitive verb', TEST_POS_MAP)).toStrictEqual({ partOfSpeech: 'verb' });
+    });
+
+    it('keeps an unmappable term, as supplied, as the label', () => {
+      expect(classifyPartOfSpeech('Biographical Name', TEST_POS_MAP)).toStrictEqual({ label: 'Biographical Name' });
+    });
+
+    it.each([undefined, '', '  '])('classifies nothing for %j', (raw) => {
+      expect(classifyPartOfSpeech(raw, TEST_POS_MAP)).toStrictEqual({});
+    });
+  });
+
+  describe('buildDefinition', () => {
+    it('keeps every supplied value, in the order stored records use', () => {
+      const definition = buildDefinition({
+        antonyms: ['unfortunate'],
+        synonyms: ['luck'],
+        examples: ['a happy find'],
+        sourceUrl: 'https://example.com/serendipity',
+        sourceDictionary: 'test',
+        attributionText: 'from Test',
+        text: 'Good fortune',
+        partOfSpeech: 'noun',
+        id: 'serendipity',
+      }, TEST_POS_MAP);
+
+      expect(definition).toStrictEqual({
+        id: 'serendipity',
+        partOfSpeech: 'noun',
+        text: 'Good fortune',
+        attributionText: 'from Test',
+        sourceDictionary: 'test',
+        sourceUrl: 'https://example.com/serendipity',
+        examples: ['a happy find'],
+        synonyms: ['luck'],
+        antonyms: ['unfortunate'],
+      });
+      expect(Object.keys(definition)).toEqual([
+        'id', 'partOfSpeech', 'text', 'attributionText', 'sourceDictionary', 'sourceUrl', 'examples', 'synonyms', 'antonyms',
+      ]);
+    });
+
+    it('omits missing, blank and empty optional values', () => {
+      const definition = buildDefinition({
+        text: 'Good fortune',
+        id: '',
+        attributionText: '  ',
+        sourceDictionary: undefined,
+        sourceUrl: '',
+        examples: [],
+        synonyms: [],
+        antonyms: undefined,
+      }, TEST_POS_MAP);
+
+      expect(definition).toStrictEqual({ text: 'Good fortune' });
+    });
+
+    it('carries an unmappable part of speech as the label', () => {
+      expect(buildDefinition({ text: 'An American seismologist', partOfSpeech: 'biographical name' }, TEST_POS_MAP))
+        .toStrictEqual({ label: 'biographical name', text: 'An American seismologist' });
+    });
   });
 
   describe('buildDictionaryResponse', () => {
@@ -113,6 +186,24 @@ describe('adapter-utils', () => {
       const response = buildDictionaryResponse(word, [], 'Test', 'from Test', 'https://example.com');
 
       expect(response.word).toBe(word);
+    });
+
+    it('omits a blank attribution and URL from the meta', () => {
+      expect(buildDictionaryResponse('test', [], 'Test', '', undefined).meta).toStrictEqual({ source: 'Test' });
+    });
+
+    it('keeps only the headword fields that have a value', () => {
+      const response = buildDictionaryResponse('test', [], 'Test', 'from Test', 'https://example.com', {
+        pronunciation: 'test', audio: undefined, etymology: ' ',
+      });
+
+      expect(response.headword).toStrictEqual({ pronunciation: 'test' });
+    });
+
+    it('omits a headword with nothing in it', () => {
+      const response = buildDictionaryResponse('test', [], 'Test', 'from Test', 'https://example.com', { pronunciation: '' });
+
+      expect(response).not.toHaveProperty('headword');
     });
   });
 

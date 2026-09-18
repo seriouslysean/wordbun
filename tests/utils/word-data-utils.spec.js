@@ -735,6 +735,10 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       expect(isValidDictionaryData([{ text: 'A definition with text only' }])).toBe(false);
     });
 
+    it('refuses entries classified only by a label, which is not a part of speech', () => {
+      expect(isValidDictionaryData([{ label: 'biographical name', text: 'American seismologist' }])).toBe(false);
+    });
+
     it('refuses entries having only partOfSpeech', () => {
       expect(isValidDictionaryData([{ partOfSpeech: 'noun' }])).toBe(false);
     });

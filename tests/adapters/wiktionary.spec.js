@@ -152,6 +152,38 @@ describe('wiktionary adapter', () => {
       const result = await wiktionaryAdapter.fetchWordData('wow');
       expect(result.definitions[0].partOfSpeech).toBe('interjection');
     });
+
+    it('keeps an unmappable part of speech as the label', async () => {
+      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
+      const entry = [{
+        word: 'break a leg',
+        meanings: [{ partOfSpeech: 'phrase', definitions: [{ definition: 'Good luck' }] }],
+        sourceUrls: ['https://en.wiktionary.org/wiki/break_a_leg'],
+      }];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, entry));
+
+      const result = await wiktionaryAdapter.fetchWordData('break a leg');
+      expect(result.definitions[0]).not.toHaveProperty('partOfSpeech');
+      expect(result.definitions[0].label).toBe('phrase');
+    });
+  });
+
+  describe('omitted values', () => {
+    it('omits the source URL, and empty synonyms and antonyms, when the entry has none', async () => {
+      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
+      const entry = [{
+        word: 'wow',
+        meanings: [{ partOfSpeech: 'noun', definitions: [{ definition: 'A success', synonyms: [], antonyms: [] }] }],
+      }];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, entry));
+
+      const result = await wiktionaryAdapter.fetchWordData('wow');
+      expect(result).toStrictEqual({
+        word: 'wow',
+        definitions: [{ partOfSpeech: 'noun', text: 'A success', attributionText: 'from Wiktionary', sourceDictionary: 'wiktionary' }],
+        meta: { source: 'Wiktionary', attribution: 'from Wiktionary' },
+      });
+    });
   });
 
   describe('transformWordData', () => {

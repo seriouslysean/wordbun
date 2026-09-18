@@ -1,12 +1,13 @@
-import type { DictionaryDefinition, WordData, WordEnrichment, WordIndexEntry } from '#types';
+import type { StoredDictionaryDefinition, WordData, WordEnrichment, WordIndexEntry } from '#types';
 import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
 
 const isTextField = (value: unknown): value is string | string[] => isString(value) || isStringArray(value);
 
-const isDictionaryDefinition = (value: unknown): value is DictionaryDefinition =>
+const isStoredDictionaryDefinition = (value: unknown): value is StoredDictionaryDefinition =>
   isRecord(value)
   && isOptional(value.id, isString)
   && isOptional(value.partOfSpeech, isString)
+  && isOptional(value.label, isString)
   && isOptional(value.text, isTextField)
   && isOptional(value.attributionText, isString)
   && isOptional(value.sourceDictionary, isString)
@@ -34,7 +35,7 @@ export const isWordData = (value: unknown): value is WordData =>
   && isString(value.word)
   && isString(value.date)
   && isString(value.adapter)
-  && Array.isArray(value.data) && value.data.length > 0 && value.data.every(isDictionaryDefinition)
+  && Array.isArray(value.data) && value.data.length > 0 && value.data.every(isStoredDictionaryDefinition)
   && isOptional(value.enrichment, isWordEnrichment)
   && isOptional(value.preserveCase, (flag): flag is boolean => typeof flag === 'boolean');
 

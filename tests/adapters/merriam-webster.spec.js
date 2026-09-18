@@ -173,18 +173,17 @@ describe('merriam-webster adapter', () => {
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, loadFixture('pbj')));
 
       const result = await merriamWebsterAdapter.fetchWordData('pb&j');
-      expect(result.definitions).toEqual([{
+      expect(result.definitions).toStrictEqual([{
         id: 'PB+J',
         partOfSpeech: 'abbreviation',
         text: 'peanut butter and jelly',
         attributionText: "from Merriam-Webster's Collegiate Dictionary",
         sourceDictionary: 'collegiate',
         sourceUrl: 'https://www.merriam-webster.com/dictionary/pb%26j',
-        examples: undefined,
       }]);
     });
 
-    it('returns undefined for unmappable POS', async () => {
+    it('keeps an unmappable functional label as the label, with no part of speech', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
       const entry = [{
         meta: { id: 'richter', uuid: '1', src: 'collegiate', section: 'biog', stems: [], offensive: false },
@@ -196,7 +195,8 @@ describe('merriam-webster adapter', () => {
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, entry));
 
       const result = await merriamWebsterAdapter.fetchWordData('richter');
-      expect(result.definitions[0].partOfSpeech).toBeUndefined();
+      expect(result.definitions[0]).not.toHaveProperty('partOfSpeech');
+      expect(result.definitions[0].label).toBe('biographical name');
     });
   });
 
@@ -258,9 +258,7 @@ describe('merriam-webster adapter', () => {
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, loadFixture('learned')));
 
       const result = await merriamWebsterAdapter.fetchWordData('learned');
-      expect(result.headword?.pronunciation).toBe('ˈlər-nəd');
-      expect(result.headword?.audio).toBeUndefined();
-      expect(result.headword?.etymology).toBeUndefined();
+      expect(result.headword).toStrictEqual({ pronunciation: 'ˈlər-nəd' });
     });
 
     it('omits the headword entirely when no capture fields exist', async () => {

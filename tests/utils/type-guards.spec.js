@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
+import {
+  isNonblankString, isOptional, isRecord, isString, isStringArray,
+} from '#utils/type-guards';
 
 describe('type-guards', () => {
   describe('isRecord', () => {
@@ -23,6 +25,20 @@ describe('type-guards', () => {
       expect(isString('')).toBe(true);
       expect(isString(0)).toBe(false);
       expect(isString(null)).toBe(false);
+    });
+  });
+
+  describe('isNonblankString', () => {
+    it('accepts a string with visible characters', () => {
+      expect(isNonblankString('a')).toBe(true);
+      expect(isNonblankString(' a ')).toBe(true);
+    });
+
+    it('rejects empty and whitespace-only strings and non-strings', () => {
+      expect(isNonblankString('')).toBe(false);
+      expect(isNonblankString(' \t\n')).toBe(false);
+      expect(isNonblankString(['a'])).toBe(false);
+      expect(isNonblankString(undefined)).toBe(false);
     });
   });
 

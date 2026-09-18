@@ -155,13 +155,53 @@ describe('wordnik adapter', () => {
       expect(result.definitions[0].partOfSpeech).toBe('noun');
     });
 
-    it('returns undefined for unmappable POS', async () => {
+    it('keeps an unmappable POS, as Wordnik gave it, as the label', async () => {
       const { wordnikAdapter } = await import('#adapters/wordnik');
       const defs = [{ id: '1', text: 'An affix', partOfSpeech: 'affix', attributionText: 'test' }];
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
 
       const result = await wordnikAdapter.fetchWordData('un');
-      expect(result.definitions[0].partOfSpeech).toBeUndefined();
+      expect(result.definitions).toStrictEqual([{ id: '1', label: 'affix', text: 'An affix', attributionText: 'test' }]);
+    });
+  });
+
+  describe('translation to the canonical definition', () => {
+    beforeEach(() => {
+      vi.stubEnv('WORDNIK_API_KEY', 'test-key');
+    });
+
+    it('joins text fragments into one string', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      const defs = [{ text: ['A taxonomic order', 'of arachnids.'], partOfSpeech: 'noun' }];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
+
+      const result = await wordnikAdapter.fetchWordData('amblypygi');
+      expect(result.definitions[0].text).toBe('A taxonomic order of arachnids.');
+    });
+
+    it('skips a definition that has no text', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      const defs = [{ partOfSpeech: 'noun' }, { text: '  ', partOfSpeech: 'noun' }, { text: [], partOfSpeech: 'noun' }, { text: 'Kept', partOfSpeech: 'noun' }];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
+
+      const result = await wordnikAdapter.fetchWordData('test');
+      expect(result.definitions).toStrictEqual([{ partOfSpeech: 'noun', text: 'Kept' }]);
+    });
+
+    it('omits the empty lists and URLs Wordnik sends', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      const defs = [{
+        text: 'A test', partOfSpeech: 'noun', attributionText: '', wordnikUrl: '', attributionUrl: '',
+        exampleUses: [], relatedWords: [], textProns: [], citations: [], labels: [], notes: [],
+      }];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
+
+      const result = await wordnikAdapter.fetchWordData('test');
+      expect(result).toStrictEqual({
+        word: 'test',
+        definitions: [{ partOfSpeech: 'noun', text: 'A test' }],
+        meta: { source: 'Wordnik' },
+      });
     });
   });
 

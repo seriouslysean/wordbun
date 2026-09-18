@@ -20,7 +20,7 @@ describe('word-validation', () => {
         preserveCase: true,
         rawData: { anything: 1 },
         enrichment: { synonyms: ['exam'], pronunciation: 'test', audio: 'https://example.com/t.mp3', etymology: 'Latin' },
-        data: [{ id: 'test', text: ['a', 'test'], examples: ['x'], synonyms: [], antonyms: [], sourceUrl: '' }],
+        data: [{ id: 'test', text: ['a', 'test'], examples: ['x'], synonyms: [], antonyms: [], sourceUrl: '' }, { text: 'x', label: 'affix' }],
       })).toBe(true);
     });
 
@@ -48,6 +48,7 @@ describe('word-validation', () => {
       expect(isWordData(withDefinition('a test'))).toBe(false);
       expect(isWordData(withDefinition({ id: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ partOfSpeech: 1 }))).toBe(false);
+      expect(isWordData(withDefinition({ label: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ text: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ text: ['a', 1] }))).toBe(false);
       expect(isWordData(withDefinition({ attributionText: 1 }))).toBe(false);

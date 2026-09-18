@@ -6,10 +6,11 @@ import type {
   WordnikConfig,
   WordnikDefinition,
 } from '#types';
+import type { BasePartOfSpeech } from '#constants/parts-of-speech';
 import {
   adapterFetch,
+  buildDefinition,
   buildDictionaryResponse,
-  normalizePOS,
   parseJsonResponse,
   throwOnHttpError,
   throwUnexpectedShape,
@@ -21,9 +22,10 @@ import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guard
 
 /**
  * Maps Wordnik POS strings to elementary POS types.
- * Values not in this map AND not already a base POS -> undefined (no POS stored).
+ * A value not in this map and not already a base POS is kept as the
+ * definition's `label` instead of a part of speech.
  */
-const POS_MAP: Record<string, string> = {
+const POS_MAP = {
   'auxiliary-verb': 'verb',
   'intransitive verb': 'verb',
   'transitive verb': 'verb',
@@ -32,7 +34,7 @@ const POS_MAP: Record<string, string> = {
   'noun-plural': 'noun',
   'proper noun': 'noun',
   'noun plural': 'noun',
-};
+} satisfies Readonly<Record<string, BasePartOfSpeech>>;
 
 /**
  * Configuration constants for Wordnik API integration
@@ -127,25 +129,34 @@ export const wordnikAdapter: DictionaryAdapter = {
       `${baseUrl}/word.json/${encodeURIComponent(queryWord)}/definitions?limit=${limit}&includeRelated=false&useCanonical=false&includeTags=false&api_key=${apiKey}`;
 
     const data = await fetchDefinitions(word, buildUrl);
-    const definitions = data.map((def) => ({
-      id: def.id,
-      partOfSpeech: def.partOfSpeech ? normalizePOS(def.partOfSpeech, POS_MAP) : undefined,
-      text: def.text,
-      attributionText: def.attributionText,
-      sourceDictionary: def.sourceDictionary,
-      sourceUrl: def.wordnikUrl || def.attributionUrl || '',
-      examples: def.exampleUses?.flatMap(example => (example.text ? [example.text] : [])),
-      synonyms: def.relatedWords?.flatMap(related => related.words ?? []),
-      // Wordnik API doesn't include antonyms in definition responses
-      antonyms: [],
-    }));
+    const definitions = data.flatMap((def) => {
+      // Wordnik occasionally splits text into fragments; the contract has one string
+      const text = Array.isArray(def.text) ? def.text.join(' ') : def.text;
+      // Wordnik's Definition model declares text optional, so a definition
+      // without any is well-formed but has nothing to show: it is skipped
+      // rather than refusing the response
+      if (!text?.trim()) {
+        return [];
+      }
+      // Wordnik's definitions carry no antonyms, so none are set
+      return [buildDefinition({
+        id: def.id,
+        partOfSpeech: def.partOfSpeech,
+        text,
+        attributionText: def.attributionText,
+        sourceDictionary: def.sourceDictionary,
+        sourceUrl: def.wordnikUrl || def.attributionUrl,
+        examples: def.exampleUses?.flatMap(example => (example.text ? [example.text] : [])),
+        synonyms: def.relatedWords?.flatMap(related => related.words ?? []),
+      }, POS_MAP)];
+    });
     const headword = { pronunciation: data[0]?.textProns?.[0]?.raw };
     return buildDictionaryResponse(
       word,
       definitions,
       'Wordnik',
-      data[0]?.attributionText || '',
-      data[0]?.wordnikUrl || '',
+      data[0]?.attributionText,
+      data[0]?.wordnikUrl,
       headword,
     );
   },

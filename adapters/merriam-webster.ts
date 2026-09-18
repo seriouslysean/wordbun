@@ -10,10 +10,11 @@ import type {
   MWSenseItem,
   MWVisTuple,
 } from '#types';
+import type { BasePartOfSpeech } from '#constants/parts-of-speech';
 import {
   adapterFetch,
+  buildDefinition,
   buildDictionaryResponse,
-  normalizePOS,
   parseJsonResponse,
   throwOnHttpError,
   throwUnexpectedShape,
@@ -26,9 +27,10 @@ import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guard
 
 /**
  * Maps MW functional-label strings to elementary POS types.
- * Values not in this map AND not already a base POS -> undefined (no POS stored).
+ * A value not in this map and not already a base POS (e.g. "biographical
+ * name") is kept as the definition's `label` instead of a part of speech.
  */
-const POS_MAP: Record<string, string> = {
+const POS_MAP = {
   'auxiliary verb': 'verb',
   'intransitive verb': 'verb',
   'transitive verb': 'verb',
@@ -44,7 +46,7 @@ const POS_MAP: Record<string, string> = {
   'adjective suffix': 'adjective',
   'definite article': 'article',
   'indefinite article': 'article',
-};
+} satisfies Readonly<Record<string, BasePartOfSpeech>>;
 
 export const CONFIG: MWConfig = {
   BASE_URL: process.env.MERRIAM_WEBSTER_API_URL || 'https://dictionaryapi.com/api/v3/references',
@@ -298,19 +300,18 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
     const definitions = entries.flatMap(entry => {
       // Strip homograph suffix from meta.id (e.g., "speed:1" -> "speed")
       const id = entry.meta.id.replace(/:\d+$/, '');
-      const partOfSpeech = entry.fl ? normalizePOS(entry.fl, POS_MAP) : undefined;
-      const entryExamples = extractExamples(entry);
+      const examples = extractExamples(entry);
 
-      return (entry.shortdef ?? []).map(text => ({
+      return (entry.shortdef ?? []).map(text => buildDefinition({
         id,
-        partOfSpeech,
+        partOfSpeech: entry.fl,
         // Normalize colon spacing
         text: text.replaceAll(/ +: +/g, ': '),
         attributionText: attribution,
         sourceDictionary: dictionary,
         sourceUrl,
-        examples: entryExamples.length > 0 ? entryExamples : undefined,
-      }));
+        examples,
+      }, POS_MAP));
     });
 
     // Capture per-headword data from the first matching entry (zero extra calls).

@@ -57,9 +57,9 @@ When you need shared logic, put the pure function in `utils/` and create a thin 
 
 ### Adapters are pass-throughs
 
-External API adapters (`adapters/`) look up exactly what they're given and report exactly what they get back. Case normalization, retries, fallback strategies, and input sanitization belong with the **caller**, not the adapter. When the caller decides `--preserve-case`, the adapter respects it without second-guessing.
+External API adapters (`adapters/`) own vocabulary, not behaviour. An adapter translates its partner's terms into the canonical contract (`DictionaryResponse` in `types/adapters.ts`, `DictionaryDefinition` in `types/common.ts`): a part of speech from the vocabulary, or the partner's unmappable term kept as `label`; text as one string; an optional field omitted rather than left empty. Retries, the case of the query, fallback, and input handling belong with the **caller**. An adapter looks up exactly the word it is given and reports it back unchanged: when the caller decides `--preserve-case`, the adapter respects it without second-guessing.
 
-Three adapters: `merriam-webster.ts`, `wordnik.ts`, `wiktionary.ts`. Shared infrastructure in `utils/adapter-utils.ts` (HTTP error handling, JSON parsing, POS normalization, response transforms). The adapter registry in `adapters/index.ts` dispatches by name; `fetchWithFallback()` handles the fallback chain.
+Three adapters: `merriam-webster.ts`, `wordnik.ts`, `wiktionary.ts`. Shared infrastructure in `utils/adapter-utils.ts` (HTTP error handling, JSON parsing, POS classification, definition and response builders, response transforms). The adapter registry in `adapters/index.ts` dispatches by name; `fetchWithFallback()` handles the fallback chain.
 
 ## The Boundary
 
