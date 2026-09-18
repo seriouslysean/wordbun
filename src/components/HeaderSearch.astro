@@ -33,14 +33,16 @@ import { t } from '#utils/i18n-utils';
 
 <script>
 import { getUrl, getWordUrl } from '#astro-utils/url-utils';
+import { isWordIndex } from '#utils/word-validation';
 
 const toggle = document.getElementById('site-search-toggle');
 const panel = document.getElementById('site-search-panel');
-const input = document.getElementById('site-search-input') as HTMLInputElement | null;
+const inputElement = document.getElementById('site-search-input');
+const input = inputElement instanceof HTMLInputElement ? inputElement : null;
 const results = document.getElementById('site-search-results');
 
 type SearchWord = { word: string; date: string };
-const cache = { data: null as SearchWord[] | null };
+const cache: { data: SearchWord[] | null } = { data: null };
 
 // Progressive enhancement: reveal the icon only when JS can drive it.
 if (toggle) {
@@ -52,8 +54,10 @@ async function loadWords(): Promise<SearchWord[]> {
     return cache.data;
   }
   const response = await fetch(getUrl('/words.json'));
-  cache.data = response.ok ? await response.json() : [];
-  return cache.data ?? [];
+  // A body that is not a word index is treated like a failed fetch: no words
+  const data: unknown = response.ok ? await response.json() : [];
+  cache.data = isWordIndex(data) ? data : [];
+  return cache.data;
 }
 
 function closePanel(): void {
@@ -130,8 +134,8 @@ document.addEventListener('click', event => {
   if (panel?.hidden) {
     return;
   }
-  const target = event.target as Element | null;
-  if (!target?.closest('.site-search')) {
+  const { target } = event;
+  if (!(target instanceof Element) || !target.closest('.site-search')) {
     closePanel();
   }
 });

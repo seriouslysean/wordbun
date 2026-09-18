@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 
-import { isValidDictionaryData, isWordData, parseWordData } from '#utils/word-validation';
+import { isValidDictionaryData, isWordData, isWordIndex, parseWordData } from '#utils/word-validation';
 
 const DEMO_WORD_FILE = path.join(import.meta.dirname, '..', '..', 'data', 'demo', 'words', '2025', '20250101.json');
 const VALID_WORD = { word: 'test', date: '20250101', adapter: 'wordnik', data: [{ text: 'a test', partOfSpeech: 'noun' }] };
@@ -208,6 +208,23 @@ describe('word-validation', () => {
 
     it('throws on invalid JSON', () => {
       expect(() => parseWordData('{not json', 'words/2025/20250101.json')).toThrow(SyntaxError);
+    });
+  });
+
+  describe('isWordIndex', () => {
+    it('accepts an array of word and date rows, including an empty one', () => {
+      expect(isWordIndex([{ word: 'test', date: 'Jan 1, 2025' }])).toBe(true);
+      expect(isWordIndex([])).toBe(true);
+    });
+
+    it('rejects non-arrays and malformed rows', () => {
+      expect(isWordIndex({ words: [] })).toBe(false);
+      expect(isWordIndex(null)).toBe(false);
+      expect(isWordIndex([null])).toBe(false);
+      expect(isWordIndex(['test'])).toBe(false);
+      expect(isWordIndex([{ word: 'test' }])).toBe(false);
+      expect(isWordIndex([{ word: 1, date: 'Jan 1, 2025' }])).toBe(false);
+      expect(isWordIndex([{ word: 'test', date: 20250101 }])).toBe(false);
     });
   });
 });

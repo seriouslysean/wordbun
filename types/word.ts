@@ -52,6 +52,15 @@ export interface WordData {
 }
 
 /**
+ * One row of the /words.json index the client scripts fetch: the headword and
+ * its display-formatted featured date.
+ */
+export interface WordIndexEntry {
+  word: string;
+  date: string;
+}
+
+/**
  * Result of a build-time word-frequency lookup (SUBTLEX). Computed per build
  * from the word string, never stored. `zipf`/`count` are null when out of
  * dataset; OOV words fall into the rarest band.
