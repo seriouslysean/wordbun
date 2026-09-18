@@ -24,6 +24,7 @@ npm run lint:fix                   # oxlint auto-fix
 npm run tool:local tools/add-word.ts serendipity
 npm run tool:local tools/generate-images.ts
 npm run tool:local tools/add-word.ts -- --help   # Tool flags go after a bare --; npm keeps the rest
+npm run tool:create-site -- ../new-site --engine-ref vX.Y.Z --seed-file 20260918.json   # New site repository
 ```
 
 Pre-commit hooks (lefthook) run `oxlint --fix` and related tests on staged files.
@@ -240,7 +241,7 @@ These aren't enforced by tools, but the codebase follows them consistently:
 6. Push with tag: `git push && git push origin vX.Y.0`
 7. Create release: `gh release create vX.Y.0 --generate-notes --notes-start-tag vPREV`
 
-After releasing, sync downstream repos with `npm run tool:sync`: it merges upstream on a `sync/upstream-*` branch, commits only after every quality gate passes, and never pushes (merge-based, no force push). Site repositories that call the reusable Site Deploy and Site Add Word workflows instead move both `uses:` pins to the new tag (`docs/technical.md`, Site Repositories).
+After releasing, sync downstream repos with `npm run tool:sync`: it merges upstream on a `sync/upstream-*` branch, commits only after every quality gate passes, and never pushes (merge-based, no force push). A synced fork's Deploy and Add Word call the reusable workflows with `./` at its own commit, so forks keep working until the owner migrates them. Site repositories that call the reusable Site Deploy and Site Add Word workflows instead move both `uses:` pins to the new tag; `npm run tool:create-site` scaffolds a new one (`docs/technical.md`, Site Repositories).
 
 ## Contributing via Git
 

@@ -104,6 +104,8 @@ tests/
 .github/
   actions/setup-env/             # Composite action: repository variables and secrets into the job
   workflows/                     # CI: lint, typecheck, test, build, e2e; add-word; deploy
+    site-deploy.yml              # Reusable build and deploy that Deploy and each site repository call
+    site-add-word.yml            # Reusable Add Word that Add Word and each site repository call
   copilot-instructions.md        # GitHub Copilot guidelines
   instructions/                  # Scoped Copilot instructions (review focus)
   pull_request_template.md       # PR body template
@@ -550,8 +552,8 @@ The workflow files are the reference for their steps; this is what each one is f
 |----------|------|------|
 | Add Word | `.github/workflows/add-word.yml` | Manual dispatch with a word, an optional date, and overwrite and preserve-case switches |
 | Deploy to GitHub Pages | `.github/workflows/deploy.yml` | Push to main, manual dispatch, and after an Add Word run on main that succeeded |
-| Site Deploy | `.github/workflows/site-deploy.yml` | Called by Deploy here and by each site repository's Deploy |
-| Site Add Word | `.github/workflows/site-add-word.yml` | Called by Add Word here and by each site repository's Add Word |
+| Site Deploy | `.github/workflows/site-deploy.yml` | Called by Deploy here, in a fork, and in each site repository |
+| Site Add Word | `.github/workflows/site-add-word.yml` | Called by Add Word here, in a fork, and in each site repository |
 
 **Add Word** calls **Site Add Word**, the workflow every site repository's Add Word calls, with the same four inputs, and keeps `contents: write` and the `add-word` concurrency group, so two runs never write at once.
 
@@ -559,7 +561,7 @@ The workflow files are the reference for their steps; this is what each one is f
 
 **Deploy** calls **Site Deploy**, the workflow every site repository calls, so the demo site builds exactly as a site does. Deploy keeps the triggers, the permissions, the `pages` concurrency group and the gate that skips failed or cancelled Add Word runs. A push made with `GITHUB_TOKEN` starts no `push` run, so Add Word's completion is what triggers the deploy of a new word. For `workflow_run`, `GITHUB_SHA` is the last commit on the default branch, so the site checkout builds the commit Add Word just pushed.
 
-**Site Deploy** checks out the calling repository into `site/` and this repository into `engine/` at the engine ref, runs `npm ci` and then `setup-env` in `engine/`, and mirrors `site/data/` and `site/public/` over the engine's with `rsync --delete`, keeping the engine's `favicon.svg` when the site has none. Every copy compares content (`--checksum`), since two checkouts made in the same second can hold a same-size file that rsync's size and time check would skip. It then runs the complete `npm run tool:generate-images`, so an engine or theme change never deploys stale cards (current cards are skipped and nothing is committed), builds in `engine/`, whose own `.git` gives the build its release fingerprint, and uploads `engine/dist`. A separate deploy job holds `pages: write`, `id-token: write` and the `github-pages` environment, which a job that calls a reusable workflow cannot declare. Before copying anything it stops when `SOURCE_DIR` is not `demo` in this repository or not empty in any other, rather than publish the other site's content, and when the site has no words directory or `public/`, which mirroring would otherwise empty.
+**Site Deploy** checks out the calling repository into `site/` and the engine into `engine/` (Engine ref, below), runs `npm ci` and then `setup-env` in `engine/`, and mirrors `site/data/` and `site/public/` over the engine's with `rsync --delete`, keeping the engine's `favicon.svg` when the site has none. Every copy compares content (`--checksum`), since two checkouts made in the same second can hold a same-size file that rsync's size and time check would skip. It then runs the complete `npm run tool:generate-images`, so an engine or theme change never deploys stale cards (current cards are skipped and nothing is committed), builds in `engine/`, whose own `.git` gives the build its release fingerprint, and uploads `engine/dist`. A separate deploy job holds `pages: write`, `id-token: write` and the `github-pages` environment, which a job that calls a reusable workflow cannot declare. Before copying anything it stops when `SOURCE_DIR` is not `demo` in this repository or not empty in any other, rather than publish the other site's content, and when the site has no words directory or `public/`, which mirroring would otherwise empty.
 
 **Engine ref.** A called workflow cannot see the ref it was called at, so a site passes its own `uses:` value again as `workflow-ref`, written once through a YAML anchor. Site Deploy and Site Add Word each accept only their own file in this repository at a release tag (`vX.Y.Z`) or a full commit SHA: a branch or a major tag like `v3` moves, and would check out code other than the workflow that is running. An empty `workflow-ref` is a `./` call, which runs the called workflow from the caller's own commit, so the engine checkout is the calling repository at `github.workflow_sha`. This repository calls that way for the demo site. So does a fork of it that syncs with `npm run tool:sync`: its Deploy and Add Word are this repository's, so after a sync they call the reusable workflows with `./`, check out the fork's own commit as the engine, and keep building and adding words as before, unchanged, until the fork is migrated to a thin site. For a fork `site/` and `engine/` are the same commit, so the overlay copies and deletes nothing: the fork's `data/demo` and `public/demo`, which it tracks from this repository, stay where they are, `SOURCE_DIR` empty builds its own `data/words`, and `public/demo` is published with the rest of `public/` as it is today. A thin site must pass `workflow-ref`: without it the engine checkout is the site itself, which has no `package-lock.json`, and the run fails before `setup-env`.
 
@@ -590,15 +592,18 @@ SITE_URL="https://username.github.io" BASE_PATH="/repo"
 
 ### Site Repositories
 
-A site repository holds its content and the workflows that call this one; the code comes from this repository at the release the site pins.
+A site repository holds only its content and two workflows that call Site Deploy and Site Add Word in this repository at one pinned release; the code, its dependencies and the fonts come from the engine checkout. `npm run tool:create-site` (CLI Tools) writes a new one.
 
-```text
-data/words/YYYY/YYYYMMDD.json
-public/images/social/            # Cards and .image-settings-hash
-public/favicon.svg               # Optional; the engine's otherwise
-.github/workflows/deploy.yml
-.github/workflows/add-word.yml
-```
+| What | Where | Rule |
+|------|-------|------|
+| Words | `data/words/YYYY/YYYYMMDD.json` | Mirrored over the engine's `data/` with `rsync --delete`, so no demo word is built |
+| Public files | `public/**` | Mirrored over the engine's `public/`; the engine's `favicon.svg` stays when the site has none |
+| Cards and marker | `public/images/social/` (`YYYY/*.png`, `pages/*.png`, `.image-settings-hash`) | Generated in `engine/`. Add Word copies back and commits only these and the word JSON, never deleting; Deploy regenerates them and commits nothing |
+| Callers | `.github/workflows/deploy.yml`, `.github/workflows/add-word.yml` | Both pin the same release in `uses:` and pass it again as `workflow-ref` |
+| Engine updates | `.github/dependabot.yml` | `github-actions` updates, grouped so both pins move in one pull request |
+| Settings | Repository variables and secrets | `vars` is the site's; the secrets go as `site-secrets`; `SOURCE_DIR` unset or empty |
+| Local settings | `.env.example`, ignored `.env` | For local development only; the workflows never read them |
+| Not in a site | `src/`, `tools/`, `package.json`, the lockfile, `node_modules/`, `dist/` | The engine's, at the pin |
 
 `.github/workflows/deploy.yml`, with `vX.Y.Z` the release to run:
 
@@ -681,14 +686,57 @@ jobs:
       site-secrets: ${{ toJSON(secrets) }}
 ```
 
-The secrets go by name because `secrets: inherit` is only for callers in the same organization or enterprise, and site repositories live under a personal account. What the site repository needs in its settings:
+The secrets go by name because `secrets: inherit` is only for callers in the same organization or enterprise, and site repositories live under a personal account. What the site repository needs in its settings, which the README `create-site` writes lists too:
 
-- Repository variables and secrets as listed under Environment Configuration, with `SOURCE_DIR` unset or empty. This repository keeps `SOURCE_DIR=demo`.
+- Repository variables: `SITE_URL`, `SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_ID` and `DICTIONARY_ADAPTER`, plus `BASE_PATH`, `SITE_TZ` or any other setting under Environment Configuration that differs from its default. `SOURCE_DIR` unset or empty; this repository keeps `SOURCE_DIR=demo`.
+- Repository secrets: the API key of each configured dictionary, and any `GA_*` and `SENTRY_*` values.
 - Pages built from GitHub Actions, with the `github-pages` environment allowing deployments from `main`.
 - Actions allowed to use reusable workflows from `seriouslysean/occasional-wotd`. A public repository can only call reusable workflows in public repositories, so this repository stays public.
 - Branch protection and rulesets on `main` that let Add Word's push with the workflow's `GITHUB_TOKEN` through, since it commits straight to the branch it was dispatched on.
 
-To move a site to a new release, change both pins together; never move a published release tag. The first runs in a site repository are the acceptance test for the cross-repository setup: an Add Word run that commits the word and its cards to `main`, followed by the Deploy it triggers publishing the site at its URL, before the fork's own workflows are retired.
+To move a site to a new release, change both pins together; never move a published release tag. The first runs in a site repository are the acceptance test for the cross-repository setup: an Add Word run that commits the word and its cards to `main`, followed by the Deploy it triggers publishing the site at its URL.
+
+**Local development.** Clone this repository into a sibling directory used for nothing else, check out the release the site pins, and run `npm ci` there once. Then, from the site repository:
+
+```sh
+(
+  site_dir="$PWD"
+  cd ../site-engine
+  rsync -a --checksum --delete "$site_dir/data/" data/
+  rsync -a --checksum --delete --filter='P /favicon.svg' "$site_dir/public/" public/
+  SOURCE_DIR= node --env-file-if-exists="$site_dir/.env" node_modules/astro/bin/astro.mjs dev
+)
+```
+
+It copies the content over the engine checkout as the workflows do and runs Astro's dev server there with the site's `.env`. `SOURCE_DIR=` wins over any value in `.env`, because Node never lets an env file override a variable already set. Rerun it after changing content. The copy deletes the checkout's demo content, which is why the checkout must not be one you work in.
+
+**Forks.** wordbug and wordbun are forks of this repository, not site repositories, and keep working unchanged until they are migrated: `npm run tool:sync` brings in this repository's Deploy and Add Word, which call the reusable workflows with `./` at the fork's own commit (Engine ref, under GitHub Actions).
+
+**Migrating a fork.** The owner migrates one fork at a time, wordbun first:
+
+1. Release this repository with the reusable workflows and check that the demo's Deploy and Add Word succeed through them.
+2. Prove the setup in a disposable public repository made with `npm run tool:create-site`: variables and secrets reach the build, Pages deploys, Add Word pushes with the site's `GITHUB_TOKEN`, the Deploy it triggers publishes the word, and Dependabot's first engine update moves both anchored pins.
+3. Bring the fork up to the release with `npm run tool:sync` and merge that to `main`, so it already builds through the reusable workflows. Then freeze it: no Add Word runs until the move is done. Record its `HEAD`, word and card counts, Pages settings (source and custom domain), rulesets, variable names and values, and secret names.
+4. Tag the current head `pre-thin-site` and make the migration an ordinary commit on a branch of the same repository. No new repository, orphan branch, history rewrite or force push, so history, settings, secrets and the domain stay where they are.
+5. In that commit keep `data/words/`, everything under `public/` except `public/demo/`, and any file the fork added itself. Replace `.github/workflows/deploy.yml` and `add-word.yml` with the callers above pinned to the release, add `.github/dependabot.yml`, `README.md` and `.gitignore` from `tools/templates/site/`, and delete the rest, including `data/demo/`, `public/demo/`, `.github/actions/` and the other workflows. Compare each deleted file with this repository's first, and keep any that is not the engine's.
+6. Check parity (below), with no unexplained difference.
+7. Merge to `main`. The Deploy that runs must publish the same site at the same URL and custom domain.
+8. Run Add Word once with a real word: its commit holds only the word file, cards and marker, and the Deploy after it publishes the word.
+9. Stop running `npm run tool:sync` in the migrated repository, then repeat for the next fork.
+
+Parity compares two builds from the same engine commit, content and settings: `pre-thin-site` built in place with `npm run build`, and the migration branch built through the local development command above with `build` for `dev`.
+
+| Check | Passes when |
+|-------|-------------|
+| Content | `git diff --stat pre-thin-site HEAD -- data/words public/images public/favicon.svg` is empty: words, cards and marker move byte for byte |
+| Routes | The sorted file lists of the two `dist/` directories match, apart from the fork's `demo/` files, and neither has a demo word page |
+| Feeds | `rss.xml` items, `words.json` and the sitemap URL sets match |
+| SEO | Canonical and `og:image` URLs match, and every `og:image` path, URL-decoded, is a file in `dist/` (card names are lower case and can hold spaces and `&`) |
+| Cards | Cards and `.image-settings-hash` regenerated with the same engine commit and settings match byte for byte |
+| Branding | Favicon, theme colors, title, `robots.txt`, `manifest.json`, `humans.txt` and any custom public file match |
+| Allowed | Build and sitemap timestamps differ; the release fingerprint must match, since it hashes the engine's `src/` |
+
+**Rollback.** `git revert` the migration commit on `main` and push it, which runs Deploy. The revert restores the engine files and the fork's workflows and keeps any word Add Word committed since, because both layouts keep words and cards at the same root paths. `pre-thin-site` marks the old head for reference; do not reset to it, which would drop those words.
 
 ### Downstream Sync
 
