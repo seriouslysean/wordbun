@@ -6,6 +6,7 @@ import { isEntryPoint } from '#tools/entry';
 import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
 import { buildWordData, getWordFiles, primaryPartOfSpeech, tryFetchRelations } from '#tools/utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
+import { isRecord } from '#utils/type-guards';
 import { isValidDictionaryData } from '#utils/word-validation';
 
 /**
@@ -13,7 +14,8 @@ import { isValidDictionaryData } from '#utils/word-validation';
  */
 function readPreserveCase(filePath: string): boolean {
   try {
-    return JSON.parse(fs.readFileSync(filePath, 'utf-8')).preserveCase === true;
+    const data: unknown = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    return isRecord(data) && data.preserveCase === true;
   } catch {
     return false;
   }

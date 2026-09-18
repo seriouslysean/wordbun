@@ -8,6 +8,7 @@ import { createWordEntry, findExistingWord } from '#tools/utils';
 import type { WordData } from '#types';
 import { getTodayYYYYMMDD, isValidDate } from '#utils/date-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
+import { parseWordData } from '#utils/word-validation';
 
 /**
  * Checks if a file exists for the given date and returns the existing word if found
@@ -19,9 +20,7 @@ const checkExistingWord = (date: string): WordData | null => {
   const filePath = path.join(paths.words, year, `${date}.json`);
   if (fs.existsSync(filePath)) {
     try {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-      const wordData: WordData = data;
-      return wordData;
+      return parseWordData(fs.readFileSync(filePath, 'utf-8'), filePath);
     } catch (error) {
       logger.error('Failed to read existing word file', { filePath, error: getErrorMessage(error) });
     }

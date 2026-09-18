@@ -12,8 +12,9 @@ import type { CreateWordEntryResult, DictionaryResponse, WordData, WordEnrichmen
 import { formatDate, isValidDate } from '#utils/date-utils';
 import { getErrorMessage, logger } from '#utils/logger';
 import { slugify } from '#utils/text-utils';
+import { isRecord, isString } from '#utils/type-guards';
 import { normalizeToBasePOS } from '#utils/word-data-utils';
-import { isValidDictionaryData } from '#utils/word-validation';
+import { isValidDictionaryData, parseWordData } from '#utils/word-validation';
 
 // ---------------------------------------------------------------------------
 // Image generation constants
@@ -116,7 +117,12 @@ export const getWordFiles = (): WordFileInfo[] => {
       return jsonFiles.flatMap(file => {
         try {
           const filePath = path.join(yearDir, file);
-          const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+          // Only the headword is read here, so a file regenerate-all-words can
+          // still repair (any other field missing) stays listed.
+          const data: unknown = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+          if (!isRecord(data) || !isString(data.word)) {
+            throw new Error('Word file has no "word" string');
+          }
           return [{ word: data.word, date: file.replace('.json', ''), path: filePath }];
         } catch (error) {
           logger.error('Failed to read word file', { file, error: getErrorMessage(error) });
@@ -142,8 +148,8 @@ export function findExistingWord(word: string): WordData | null {
 
   for (const file of files) {
     try {
-      const data: WordData = JSON.parse(fs.readFileSync(file.path, 'utf-8'));
-      if (data.word?.toLowerCase() === lowerWord) {
+      const data = parseWordData(fs.readFileSync(file.path, 'utf-8'), file.path);
+      if (data.word.toLowerCase() === lowerWord) {
         return data;
       }
     } catch (error) {
@@ -160,8 +166,7 @@ export function findExistingWord(word: string): WordData | null {
 export function getAllWords(): WordData[] {
   return getWordFiles().flatMap(file => {
     try {
-      const data: WordData = JSON.parse(fs.readFileSync(file.path, 'utf-8'));
-      return [data];
+      return [parseWordData(fs.readFileSync(file.path, 'utf-8'), file.path)];
     } catch (error) {
       logger.warn('Failed to parse word file', { path: file.path, error: getErrorMessage(error) });
       return [];

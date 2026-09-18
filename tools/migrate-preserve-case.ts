@@ -3,6 +3,7 @@ import { showHelp } from '#tools/help-utils';
 import { getWordFiles } from '#tools/utils';
 import type { WordData } from '#types';
 import { exit, getErrorMessage, logger } from '#utils/logger';
+import { parseWordData } from '#utils/word-validation';
 
 /**
  * Determines whether a word should preserve its original casing.
@@ -29,8 +30,7 @@ function shouldPreserveCase(word: string | undefined): boolean {
  */
 function migrateWordFile(filePath: string): boolean {
   try {
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const wordData: WordData = JSON.parse(content);
+    const wordData = parseWordData(fs.readFileSync(filePath, 'utf-8'), filePath);
 
     const preserveCaseValue = shouldPreserveCase(wordData.word);
 

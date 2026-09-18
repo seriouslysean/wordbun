@@ -1,4 +1,5 @@
-import type { DictionaryDefinition } from '#types';
+import type { DictionaryDefinition, WordData, WordEnrichment } from '#types';
+import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
 
 /**
  * Validates dictionary data to ensure it contains meaningful content.
@@ -15,4 +16,54 @@ export function isValidDictionaryData(data: DictionaryDefinition[]): boolean {
     (typeof entry.text === 'string' && entry.text.trim().length > 0) ||
     (typeof entry.partOfSpeech === 'string' && entry.partOfSpeech.trim().length > 0),
   );
+}
+
+const isTextField = (value: unknown): value is string | string[] => isString(value) || isStringArray(value);
+
+const isDictionaryDefinition = (value: unknown): value is DictionaryDefinition =>
+  isRecord(value)
+  && isOptional(value.id, isString)
+  && isOptional(value.partOfSpeech, isString)
+  && isOptional(value.text, isTextField)
+  && isOptional(value.attributionText, isString)
+  && isOptional(value.sourceDictionary, isString)
+  && isOptional(value.sourceUrl, isString)
+  && isOptional(value.examples, isStringArray)
+  && isOptional(value.synonyms, isStringArray)
+  && isOptional(value.antonyms, isStringArray);
+
+const isWordEnrichment = (value: unknown): value is WordEnrichment =>
+  isRecord(value)
+  && isOptional(value.synonyms, isStringArray)
+  && isOptional(value.antonyms, isStringArray)
+  && isOptional(value.related, isStringArray)
+  && isOptional(value.pronunciation, isString)
+  && isOptional(value.audio, isString)
+  && isOptional(value.etymology, isString);
+
+/**
+ * Type guard for a stored word file. Mirrors the fields of the content
+ * collection schema in plain predicates, because CLI tools run as plain
+ * Node.js and cannot import astro/zod.
+ */
+export const isWordData = (value: unknown): value is WordData =>
+  isRecord(value)
+  && isString(value.word)
+  && isString(value.date)
+  && isString(value.adapter)
+  && Array.isArray(value.data) && value.data.every(isDictionaryDefinition)
+  && isOptional(value.enrichment, isWordEnrichment)
+  && isOptional(value.preserveCase, (flag): flag is boolean => typeof flag === 'boolean');
+
+/**
+ * Parses the contents of a stored word file. Throws on invalid JSON or on a
+ * shape that is not WordData, naming the file so a log-and-skip caller says
+ * which one to fix.
+ */
+export function parseWordData(json: string, filePath: string): WordData {
+  const parsed: unknown = JSON.parse(json);
+  if (!isWordData(parsed)) {
+    throw new Error(`Invalid word data in ${filePath}`);
+  }
+  return parsed;
 }
