@@ -168,6 +168,22 @@ describe('merriam-webster adapter', () => {
       expect(result.definitions[0].partOfSpeech).toBe('article');
     });
 
+    it('keeps the abbreviation functional label', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, loadFixture('pbj')));
+
+      const result = await merriamWebsterAdapter.fetchWordData('pb&j');
+      expect(result.definitions).toEqual([{
+        id: 'PB+J',
+        partOfSpeech: 'abbreviation',
+        text: 'peanut butter and jelly',
+        attributionText: "from Merriam-Webster's Collegiate Dictionary",
+        sourceDictionary: 'collegiate',
+        sourceUrl: 'https://www.merriam-webster.com/dictionary/pb%26j',
+        examples: undefined,
+      }]);
+    });
+
     it('returns undefined for unmappable POS', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
       const entry = [{

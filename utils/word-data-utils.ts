@@ -133,7 +133,7 @@ export const normalizeToBasePOS = (raw: string): string => {
 /**
  * Get all available parts of speech from word data.
  * Filters to base POS types only — variant values that survive normalization
- * (e.g. "abbreviation", "phrase") are excluded from browse pages.
+ * (e.g. "idiom", "phrase") are excluded from browse pages.
  */
 export const getAvailablePartsOfSpeech = (words: WordData[]): string[] => {
   const partsOfSpeech = new Set<string>(

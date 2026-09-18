@@ -96,7 +96,11 @@ describe('adapter-utils', () => {
 
     it('returns undefined for unmappable values', () => {
       expect(normalizePOS('biographical name', TEST_POS_MAP)).toBeUndefined();
-      expect(normalizePOS('abbreviation', TEST_POS_MAP)).toBeUndefined();
+      expect(normalizePOS('geographical name', TEST_POS_MAP)).toBeUndefined();
+    });
+
+    it('keeps abbreviation, a label in the vocabulary', () => {
+      expect(normalizePOS('abbreviation', TEST_POS_MAP)).toBe('abbreviation');
     });
   });
 

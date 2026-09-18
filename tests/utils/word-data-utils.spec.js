@@ -513,7 +513,7 @@ describe('word-data-utils', () => {
     });
 
     it('passes through unmappable variants unchanged', () => {
-      expect(normalizePartOfSpeech('abbreviation')).toBe('abbreviation');
+      expect(normalizePartOfSpeech('idiom')).toBe('idiom');
       expect(normalizePartOfSpeech('phrase')).toBe('phrase');
     });
 
