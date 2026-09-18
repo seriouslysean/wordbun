@@ -29,6 +29,7 @@ import {
 } from '#utils/word-data-utils';
 import { getErrorMessage } from '#utils/text-utils';
 import {
+  getLetterStats,
   getWordStats,
   getLetterPatternStats,
   getWordEndingStats,
@@ -139,6 +140,11 @@ export const getAvailableMonthsForYear = (year: string): string[] => getAvailabl
  * Pre-computed word statistics from the loaded collection
  */
 export const wordStats = getWordStats(allWords);
+
+/**
+ * Pre-computed letter commonness (words containing each letter) from the loaded collection
+ */
+export const letterStats = getLetterStats(allWords);
 
 /**
  * Pre-computed letter pattern statistics from the loaded collection

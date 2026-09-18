@@ -94,7 +94,20 @@ export interface WordStatsResult {
   shortest: WordData | null;
   longestPalindrome: WordData | null;
   shortestPalindrome: WordData | null;
+  // Words containing each letter (once per word), not total occurrences
   letterFrequency: Record<string, number>;
+}
+
+// Letter commonness by words containing the letter. See getLetterStats.
+export interface LetterStats {
+  // [letter, words containing it], most common first
+  ranked: Array<[string, number]>;
+  mostCommon: string;
+  leastCommon: string;
+  mostCommonCount: number;
+  leastCommonCount: number;
+  wordsWithMostCommon: WordData[];
+  wordsWithLeastCommon: WordData[];
 }
 
 export interface WordPatternStatsResult {

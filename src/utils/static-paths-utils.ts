@@ -10,11 +10,10 @@ import {
   getChronologicalMilestones,
   getCurrentStreakStats,
   getLetterPatternStats,
-  getLetterStatsFromFrequency,
+  getLetterStats,
   getLongestStreakWords,
   getPatternStats,
   getWordEndingStats,
-  getWordStats,
 } from '#astro-utils/word-stats-utils';
 
 const ORDINAL_RULES = new Intl.PluralRules('en', { type: 'ordinal' });
@@ -63,9 +62,7 @@ const createStatsConfig = (words: WordData[]): StatsConfig[] => {
   const letterPatterns = getLetterPatternStats(words);
   const patternStats = getPatternStats(words);
   const endings = getWordEndingStats(words);
-  const letterStats = getLetterStatsFromFrequency(getWordStats(words).letterFrequency);
-  const mostCommon = letterStats[0];
-  const leastCommon = letterStats.at(-1);
+  const letterStats = getLetterStats(words);
   const streakStats = getCurrentStreakStats(words);
 
   return [
@@ -91,17 +88,17 @@ const createStatsConfig = (words: WordData[]): StatsConfig[] => {
     // Letter frequency stats
     {
       slug: STATS_SLUGS.MOST_COMMON_LETTER,
-      data: mostCommon ? words.filter(w => w.word.includes(mostCommon[0])) : [],
+      data: letterStats.wordsWithMostCommon,
       definition: getDefinition(DYNAMIC_STATS_DEFINITIONS, STATS_SLUGS.MOST_COMMON_LETTER),
       type: TEMPLATE.WORD_LIST,
-      arg: mostCommon?.[0],
+      arg: letterStats.mostCommon || undefined,
     },
     {
       slug: STATS_SLUGS.LEAST_COMMON_LETTER,
-      data: leastCommon ? words.filter(w => w.word.includes(leastCommon[0])) : [],
+      data: letterStats.wordsWithLeastCommon,
       definition: getDefinition(DYNAMIC_STATS_DEFINITIONS, STATS_SLUGS.LEAST_COMMON_LETTER),
       type: TEMPLATE.WORD_LIST,
-      arg: leastCommon?.[0],
+      arg: letterStats.leastCommon || undefined,
     },
 
     // Milestone stats

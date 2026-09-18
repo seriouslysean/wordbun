@@ -371,7 +371,7 @@ All statistics computed at build time from `allWords`:
 
 - **Letter patterns**: Palindromes, double/triple letters, alphabetical sequences, same start/end
 - **Word endings**: Common suffixes (-ed, -ing, -ly, -ness, -ful, -less)
-- **Letter analysis**: Most/least common letters, vowel/consonant ratios
+- **Letter analysis**: Most/least common letters (ranked by the number of words containing the letter, case-insensitive, not by total occurrences; `getLetterStats` is the single definition for the stat, its page, and its metadata), vowel/consonant ratios
 - **Streaks**: Current and longest consecutive word streaks
 - **Milestones**: 1st, 25th, 50th, 100th words, etc.
 

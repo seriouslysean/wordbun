@@ -36,21 +36,62 @@ const emptyWords = [];
 
 describe('word-stats-utils', () => {
   describe('getLetterStats', () => {
-    it('returns most and least common letters with frequency', () => {
-      const stats = getLetterStats(sampleWords);
-      
-      expect(stats.mostCommon).toBeDefined();
-      expect(stats.leastCommon).toBeDefined();
-      expect(stats.frequency).toBeDefined();
-      expect(typeof stats.frequency).toBe('object');
+    // 'i' and 's' occur most often (4 each, all inside one word), but 'a' is
+    // the letter found in the most words. Commonness is words containing.
+    const disagreeing = [
+      { word: 'mississippi', date: '20240101' },
+      { word: 'bat', date: '20240102' },
+      { word: 'cat', date: '20240103' },
+    ];
+
+    it('ranks letters by the number of words containing them, not by occurrences', () => {
+      const stats = getLetterStats(disagreeing);
+
+      expect(stats.mostCommon).toBe('a');
+      expect(stats.mostCommonCount).toBe(2);
+      expect(stats.wordsWithMostCommon.map(w => w.word)).toEqual(['bat', 'cat']);
+    });
+
+    it('lists exactly the words its count reports, for both ends of the ranking', () => {
+      const stats = getLetterStats(disagreeing);
+
+      expect(stats.leastCommon).toBe('c');
+      expect(stats.wordsWithLeastCommon).toHaveLength(stats.leastCommonCount);
+      expect(stats.wordsWithMostCommon).toHaveLength(stats.mostCommonCount);
+      expect(stats.ranked[0]).toEqual(['a', 2]);
+      expect(stats.ranked.at(-1)).toEqual(['c', 1]);
+    });
+
+    it('matches capitalized preserveCase words case-insensitively', () => {
+      const stats = getLetterStats([
+        { word: 'Apple', date: '20240101', preserveCase: true },
+        { word: 'banana', date: '20240102' },
+        { word: 'kiwi', date: '20240103' },
+      ]);
+
+      expect(stats.mostCommon).toBe('a');
+      expect(stats.mostCommonCount).toBe(2);
+      expect(stats.wordsWithMostCommon.map(w => w.word)).toEqual(['Apple', 'banana']);
+    });
+
+    it('ignores characters outside a-z', () => {
+      const stats = getLetterStats([{ word: 'PB&J', date: '20240101', preserveCase: true }]);
+
+      expect(stats.ranked.map(([letter]) => letter)).toEqual(['p', 'b', 'j']);
     });
 
     it('handles empty word array', () => {
       const stats = getLetterStats(emptyWords);
-      
-      expect(stats.mostCommon).toBe('');
-      expect(stats.leastCommon).toBe('');
-      expect(stats.frequency).toEqual({});
+
+      expect(stats).toEqual({
+        ranked: [],
+        mostCommon: '',
+        leastCommon: '',
+        mostCommonCount: 0,
+        leastCommonCount: 0,
+        wordsWithMostCommon: [],
+        wordsWithLeastCommon: [],
+      });
     });
   });
 
@@ -218,7 +259,28 @@ describe('word-stats-utils', () => {
 
   describe('getSyllableStats', () => {
     it('returns null extremes for an empty array', () => {
-      expect(getSyllableStats([])).toEqual({ mostSyllables: null, leastSyllables: null });
+      expect(getSyllableStats([])).toEqual({
+        mostSyllables: null,
+        leastSyllables: null,
+        mostSyllablesCount: 0,
+        leastSyllablesCount: 0,
+      });
+    });
+
+    it('reports the same pronunciation-backed counts it selected the words with', () => {
+      // The spelling heuristic gives 'karaoke' 2 and 'fire' 1; the CMU
+      // dictionary gives 4 and 2. A label from the heuristic would say the
+      // most-syllables word has fewer syllables than 'banana'.
+      const stats = getSyllableStats([
+        { word: 'karaoke', date: '20240101' },
+        { word: 'banana', date: '20240102' },
+        { word: 'fire', date: '20240103' },
+      ]);
+
+      expect(stats.mostSyllables.word).toBe('karaoke');
+      expect(stats.mostSyllablesCount).toBe(4);
+      expect(stats.leastSyllables.word).toBe('fire');
+      expect(stats.leastSyllablesCount).toBe(2);
     });
 
     it('finds the words with the most and least syllables', () => {

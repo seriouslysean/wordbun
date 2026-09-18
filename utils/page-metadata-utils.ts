@@ -59,15 +59,15 @@ interface PrecomputedStats {
 }
 
 function getStats(words: WordData[]): PrecomputedStats {
-  const { mostCommon, leastCommon } = getLetterStats(words);
+  const letterStats = getLetterStats(words);
   return {
     endings: getWordEndingStats(words),
     letterPatterns: getLetterPatternStats(words),
     patternStats: getPatternStats(words),
-    mostCommonLetter: mostCommon,
-    leastCommonLetter: leastCommon,
-    wordsWithMostCommon: words.filter(w => w.word.toLowerCase().includes(mostCommon)),
-    wordsWithLeastCommon: words.filter(w => w.word.toLowerCase().includes(leastCommon)),
+    mostCommonLetter: letterStats.mostCommon,
+    leastCommonLetter: letterStats.leastCommon,
+    wordsWithMostCommon: letterStats.wordsWithMostCommon,
+    wordsWithLeastCommon: letterStats.wordsWithLeastCommon,
     milestones: getChronologicalMilestones(words),
   };
 }

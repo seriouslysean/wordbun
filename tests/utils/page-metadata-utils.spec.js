@@ -55,6 +55,20 @@ const mockWords = [
 
 describe('page-metadata-utils', () => {
   describe('getPageMetadata', () => {
+    it('titles the most common letter page with the letter the page lists', () => {
+      // 'i' has the most occurrences; 'a' is in the most words, and the page
+      // lists words containing its letter, so the title must say "A".
+      const disagreeing = [
+        { word: 'mississippi', date: '20240101' },
+        { word: 'bat', date: '20240102' },
+        { word: 'cat', date: '20240103' },
+      ];
+
+      const metadata = getPageMetadata('/stats/most-common-letter', disagreeing);
+
+      expect(metadata.title).toBe('Words with "A" (Most Common Letter)');
+    });
+
     it('returns metadata for static pages', () => {
       const metadata = getPageMetadata('/word', mockWords);
       expect(metadata).toEqual({
