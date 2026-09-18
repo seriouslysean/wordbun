@@ -99,7 +99,8 @@ tests/
   skills -> ../.agents/skills/   # Symlink to agent skills
 
 .github/
-  workflows/                     # CI: lint, typecheck, test, build, e2e
+  actions/setup-env/             # Composite action: repository variables and secrets into the job
+  workflows/                     # CI: lint, typecheck, test, build, e2e; add-word; deploy
   copilot-instructions.md        # GitHub Copilot guidelines
   instructions/                  # Scoped Copilot instructions (review focus)
   pull_request_template.md       # PR body template
@@ -385,7 +386,7 @@ Definitions live in `constants/stats.ts`. Computation functions in `utils/word-s
 - **Typography**: Liberation Sans Regular + Bold (`tools/fonts/liberation-sans/`), gradient text with theme colors
 - **Output**: `public/images/social/{SOURCE_DIR}/2024/20240105-giggle.png` (word) and `public/images/social/pages/{page}.png` (static). `SOURCE_DIR` segment is omitted when unset.
 - **Skip guard**: `.image-settings-hash` is an md5 fingerprint of what determines an image's bytes, inputs and renderer alike: two probe SVGs rendered through the real template (colors, site title, dimensions, layout), the PNG options, both font files, and `sharp.versions` (sharp, libvips and the libraries bundled with it), so a sharp upgrade that re-quantizes the palette invalidates the cache on its own. Each run compares it once; on a mismatch every existing image in that run is regenerated, otherwise existing files are skipped. `--force` regenerates regardless. The marker is only written by a run that covered all words and all pages with no failures, whether that was the default run or `--words --generic` together, so `--word`, `--page`, and `--words` or `--generic` alone never certify the corpus. `npm run build` copies `public/` verbatim and never regenerates images.
-- **CI**: the Add Word workflow runs the complete generation (`npm run tool:generate-images`) after adding a word, not `--word`. With a current marker that renders the new word's card and skips the rest; after a settings, font or sharp change it regenerates every card once and commits them with the refreshed marker (`git add data/ public/` picks up both). A single-image run could never write the marker, so the skip guard would stay stale in CI forever.
+- **CI**: the Add Word workflow runs the complete generation (`npm run tool:generate-images`) after adding a word, not `--word`. With a current marker that renders the new word's card and skips the rest; after a settings, font or sharp change it regenerates every card once and commits them with the refreshed marker (the commit step stages every PNG under `images/social` and the marker). A single-image run could never write the marker, so the skip guard would stay stale in CI forever.
 
 ## Testing
 
@@ -530,22 +531,28 @@ The thin-wrapper delegation pattern avoids logic duplication. See AGENTS.md for 
 
 ### GitHub Actions
 
-```yaml
-- name: Add word
-  run: npm run tool:add-word ${{ github.event.inputs.word }}
-  env:
-    WORDNIK_API_KEY: ${{ secrets.WORDNIK_API_KEY }}
-    SOURCE_DIR: ${{ vars.SOURCE_DIR }}
-```
+The workflow files are the reference for their steps; this is what each one is for.
+
+| Workflow | File | Runs |
+|----------|------|------|
+| Add Word | `.github/workflows/add-word.yml` | Manual dispatch with a word, an optional date, and overwrite and preserve-case switches |
+| Deploy to GitHub Pages | `.github/workflows/deploy.yml` | Push to main, manual dispatch, and after an Add Word run on main that succeeded |
+
+**Add Word** checks that every adapter named in `DICTIONARY_ADAPTER` and `DICTIONARY_FALLBACK` has its API key (Wiktionary needs none), runs `npm run tool:add-word` and then the complete `npm run tool:generate-images`, and commits and pushes to the branch it was dispatched on. It stages only what the run writes: word JSON under the words directory, PNG cards under `images/social`, and `.image-settings-hash`, in whichever layout `SOURCE_DIR` selects. A run that changes nothing ends with a notice instead of a commit. Workflow inputs reach the shell as environment variables, never as `${{ }}` expressions inside `run:`, so a word is always data and never script.
+
+**Deploy** builds and publishes `dist/`. A push made with `GITHUB_TOKEN` starts no `push` run, so Add Word's completion is what triggers the deploy of a new word; failed or cancelled Add Word runs are skipped. For `workflow_run`, `GITHUB_SHA` is the last commit on the default branch, so the default checkout builds the commit Add Word just pushed.
+
+**Environment.** Add Word, Deploy and Build all run the `.github/actions/setup-env` composite action, which copies repository variables and secrets into the job by name. A name missing from its `VAR_NAMES` or `SECRET_NAMES` list never reaches a job, whatever the repository settings say; `tests/architecture/env-transport.spec.js` fails when a variable in the `astro.config.ts` env schema is missing from those lists. API keys, `GA_*` and `SENTRY_*` are read from secrets and everything else from variables; `SENTRY_ENVIRONMENT` is always `production`. The action also sets `TZ` from the `SITE_TZ` repository variable (default `America/New_York`), so "today" is the same date when a word is added and when the site is built.
 
 ### Build Pipeline
 
 1. Environment validation (required vars)
 2. Content Collections load word data
 3. Static page generation
-4. Social image generation
-5. Asset optimization (CSS, images)
-6. Deploy to GitHub Pages or other static host
+4. Asset optimization (CSS, images)
+5. Deploy to GitHub Pages or other static host
+
+Social cards are not part of the build: they are generated by the image tool, committed, and served from `public/`.
 
 ### Deployment Scenarios
 

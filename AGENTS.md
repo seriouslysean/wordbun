@@ -272,6 +272,6 @@ Run all quality gates before committing. Stage specific files by name — avoid 
 | `docs/agents/cli-patterns.md` | CLI tool patterns for token-efficient agent workflows |
 | `docs/agents/backlog.md` | Known gaps and technical debt |
 | `docs/agents/features.md` | Feature ideas, prioritized |
-| `README.md` / `docs/README.md` | User-facing overview and quick start |
+| `docs/README.md` | User-facing overview and quick start |
 
 Update relevant docs when making architectural changes.
