@@ -66,8 +66,13 @@ export const wiktionaryAdapter: DictionaryAdapter = {
 
     const data = await parseJsonResponse(response, 'Wiktionary');
 
+    // Entries come as an array: anything else means the API changed, which is
+    // a fault to report, not a misspelling
+    if (!Array.isArray(data)) {
+      throwUnexpectedShape('Wiktionary', word);
+    }
     // Only the first entry is read
-    const entry: unknown = Array.isArray(data) ? data[0] : undefined;
+    const entry: unknown = data[0];
     if (!hasMeanings(entry)) {
       throwWordNotFound(word);
     }

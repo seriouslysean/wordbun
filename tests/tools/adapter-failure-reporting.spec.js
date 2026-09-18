@@ -112,6 +112,31 @@ describe('add-word failure reporting', () => {
     });
   });
 
+  it('reports an API change, not "not found", when Merriam-Webster answered with an object', async () => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
+    vi.stubEnv('MERRIAM_WEBSTER_API_KEY', 'test-key');
+    vi.stubEnv('MERRIAM_WEBSTER_API_URL', 'https://mw.test/api/v3/references');
+    ctx.merriamWebster = httpResponse(200, { error: 'moved' });
+
+    await addWord();
+
+    expect(ctx.logger.error).toHaveBeenCalledExactlyOnceWith('Failed to add word', {
+      word: WORD,
+      errorMessage: `All dictionary adapters failed for "${WORD}": merriam-webster: Merriam-Webster returned an unexpected response shape for "${WORD}" | wiktionary: ${NOT_FOUND}`,
+    });
+  });
+
+  it('reports an API change, not "not found", when Wiktionary answered with an object', async () => {
+    ctx.wiktionary = httpResponse(200, { entries: [] });
+
+    await addWord();
+
+    expect(ctx.logger.error).toHaveBeenCalledExactlyOnceWith('Failed to add word', {
+      word: WORD,
+      errorMessage: `All dictionary adapters failed for "${WORD}": wordnik: ${NOT_FOUND} | wiktionary: Wiktionary returned an unexpected response shape for "${WORD}"`,
+    });
+  });
+
   it('reports "not found", as input rather than a fault, when every adapter said not found', async () => {
     await addWord();
 

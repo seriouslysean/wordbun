@@ -293,7 +293,7 @@ npm run tool:local tools/add-word.ts -- Japan --preserve-case
 npm run tool:local tools/add-word.ts -- serendipity --overwrite
 ```
 
-Failures are classified by error type, never by message text. Adapters throw `WordNotFoundError` (from `utils/adapter-utils.ts`) for a 404, an empty answer, a Merriam-Webster suggestion list or an entry only in another Merriam-Webster dictionary, and `RateLimitError` for a 429. add-word reports "Word not found in dictionary" only when every adapter in the chain threw `WordNotFoundError` (`isWordNotFound`); a rate limit, outage or unexpected shape anywhere in the chain is reported as a failure to add. regenerate-all-words backs off when any adapter threw `RateLimitError` (`isRateLimited`).
+Failures are classified by error type, never by message text. Adapters throw `WordNotFoundError` (from `utils/adapter-utils.ts`) for a 404, an empty answer, a Merriam-Webster suggestion list or an entry only in another Merriam-Webster dictionary, and `RateLimitError` for a 429. A 200 whose body is not an array at all is an unexpected shape, not a missing word: the API changed. add-word reports "Word not found in dictionary" only when every adapter in the chain threw `WordNotFoundError` (`isWordNotFound`); a rate limit, outage or unexpected shape anywhere in the chain is reported as a failure to add. regenerate-all-words backs off when any adapter threw `RateLimitError` (`isRateLimited`).
 
 ### `generate-images.ts`
 

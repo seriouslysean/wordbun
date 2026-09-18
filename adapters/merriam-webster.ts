@@ -267,7 +267,12 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
 
     const data = await parseJsonResponse(response, 'Merriam-Webster');
 
-    if (!Array.isArray(data) || data.length === 0) {
+    // Every answer, suggestions included, is an array: anything else means the
+    // API changed, which is a fault to report, not a misspelling
+    if (!Array.isArray(data)) {
+      throwUnexpectedShape('Merriam-Webster', word);
+    }
+    if (data.length === 0) {
       throwWordNotFound(word);
     }
 

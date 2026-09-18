@@ -34,9 +34,22 @@ describe('wiktionary adapter', () => {
       );
     });
 
-    it('reports not found when the first entry has no meanings', async () => {
+    it('throws a Wiktionary shape error, not "not found", when the body is not an array', async () => {
       const { wiktionaryAdapter } = await import('#adapters/wiktionary');
-      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ word: 'test', meanings: [] }]));
+      const { WordNotFoundError } = await import('#utils/adapter-utils');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, { entries: [] }));
+
+      const error = await wiktionaryAdapter.fetchWordData('test').catch(e => e);
+      expect(error).not.toBeInstanceOf(WordNotFoundError);
+      expect(error.message).toBe('Wiktionary returned an unexpected response shape for "test"');
+    });
+
+    it.each([
+      ['the first entry has no meanings', [{ word: 'test', meanings: [] }]],
+      ['the body is an empty array', []],
+    ])('reports not found when %s', async (_, body) => {
+      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, body));
 
       await expect(wiktionaryAdapter.fetchWordData('test')).rejects.toThrow('not found in dictionary');
     });

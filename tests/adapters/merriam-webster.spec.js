@@ -340,6 +340,25 @@ describe('merriam-webster adapter', () => {
       );
     });
 
+    it('throws a Merriam-Webster shape error, not "not found", when the body is not an array', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      const { WordNotFoundError } = await import('#utils/adapter-utils');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, { error: 'moved' }));
+
+      const error = await merriamWebsterAdapter.fetchWordData('test').catch(e => e);
+      expect(error).not.toBeInstanceOf(WordNotFoundError);
+      expect(error.message).toBe('Merriam-Webster returned an unexpected response shape for "test"');
+    });
+
+    it('reports not found for an empty array', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      const { WordNotFoundError } = await import('#utils/adapter-utils');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, []));
+
+      const error = await merriamWebsterAdapter.fetchWordData('test').catch(e => e);
+      expect(error).toBeInstanceOf(WordNotFoundError);
+    });
+
     it('reports not found when no element is a matching entry', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
       const { WordNotFoundError } = await import('#utils/adapter-utils');
