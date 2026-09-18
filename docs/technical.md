@@ -591,6 +591,8 @@ Markdown syntax highlighting is disabled (`markdown.syntaxHighlight: false`): Sh
 ### September 2026 - Node 26 and Native TypeScript
 
 - Node.js 26 requirement (upgraded from 24)
+- `package.json` `imports` is the only alias table: `compilerOptions.paths` removed from `tsconfig.json`; TypeScript alias targets end in `.ts` so Node's resolver (no extension guessing) loads them unaided
+- `erasableSyntaxOnly` enabled so the compiler rejects syntax Node's type stripping cannot run
 
 ### June 2026 - CSP and Progressive Enhancement
 

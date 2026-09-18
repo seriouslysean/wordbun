@@ -49,6 +49,8 @@ export const getWordsByLength = (length: number, words = allWords) => pure(lengt
 
 Always use `#` aliases from `package.json` imports field. Never use relative paths.
 
+TypeScript aliases (`#utils`, `#astro-utils`, `#types`, `#constants`, `#config`, `#adapters`, `#tools`) are written without an extension; the `imports` target adds `.ts`. All other aliases include the extension (`.astro`, `.json`, `.css`, `.js`). JSON imports take `with { type: 'json' }`. No `paths` in `tsconfig.json`.
+
 - `#utils/*` -> `utils/*` (pure Node.js, safe everywhere)
 - `#astro-utils/*` -> `src/utils/*` (Astro only)
 - `#components/*` -> `src/components/*`

@@ -24,7 +24,7 @@ import { describe, it, expect, vi } from 'vitest';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { spawnTool } from '#tests/helpers/spawn';
+import { spawnTool } from '#tests/helpers/spawn.js';
 
 const TOOLS_DIR = path.join(process.cwd(), 'tools');
 const TEST_DATA_DIR = path.join(process.cwd(), 'data', 'demo', 'words');

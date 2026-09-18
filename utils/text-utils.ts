@@ -41,7 +41,7 @@ export {
   getConsonantCount,
   startsWithVowel,
   endsWithVowel,
-} from './text-pattern-utils';
+} from '#utils/text-pattern-utils';
 
 /**
  * Count syllables in English word using modern heuristic algorithm
