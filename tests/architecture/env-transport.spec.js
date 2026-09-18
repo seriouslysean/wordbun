@@ -20,7 +20,7 @@ const DECLARED = /^\s+([A-Z][A-Z0-9_]*): envField\./gm;
 // A name alone on its line is a VAR_NAMES or SECRET_NAMES entry
 const LISTED = /^\s+([A-Z][A-Z0-9_]*)$/gm;
 // Values the action sets itself, such as SENTRY_ENVIRONMENT
-const ECHOED = /echo "([A-Z][A-Z0-9_]*)=/g;
+const ECHOED = /^\s+put_env ([A-Z][A-Z0-9_]*) /gm;
 
 const names = (text, pattern) => [...text.matchAll(pattern)].map(match => match[1]);
 
