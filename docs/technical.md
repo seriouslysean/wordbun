@@ -41,9 +41,12 @@ utils/                           # Pure Node.js utilities (13 files)
 
 tools/                           # CLI tools (Node.js only, no Astro deps)
   add-word.ts                    # Add new words with validation
+  create-site.ts                 # Scaffold a site repository for the reusable workflows
   generate-images.ts             # Social image generation (consolidated)
   help-utils.ts                  # Shared help system
   regenerate-all-words.ts        # Batch word data refresh
+  sync-upstream.sh               # Merge upstream into a fork, gated (tool:sync)
+  templates/site/                # Callers, Dependabot, README and .gitignore that create-site writes
   utils.ts                       # Shared tool utilities
 
 adapters/                        # Dictionary API adapters
@@ -299,6 +302,16 @@ npm run tool:local tools/generate-images.ts -- --generic            # Generic pa
 npm run tool:local tools/generate-images.ts -- --page /stats        # Specific page
 npm run tool:local tools/generate-images.ts -- --force              # Regenerate existing
 ```
+
+### `create-site.ts`
+
+Writes a new site repository that holds only its content and calls Site Deploy and Site Add Word at one pinned engine release (Site Repositories, under Deployment).
+
+```sh
+npm run tool:create-site -- ../wordbee --engine-ref v3.23.0 --seed-file ~/20260918.json
+```
+
+The target must not exist or must be empty. `--engine-ref` must be a release tag (`vX.Y.Z`) or a full commit SHA, the refs the reusable workflows accept; only its form is checked. `--seed-file` is the site's first word, in the format `data/words` holds, and must pass `parseWordData` (`utils/word-validation.ts`), the check the tools read word files with, and carry a real `YYYYMMDD` date. Everything is checked before anything is written. It writes the two caller workflows from `tools/templates/site/`, both pinned to the ref, `.github/dependabot.yml`, `README.md` with the repository settings to make, `.gitignore`, a copy of this repository's `.env.example` and `public/favicon.svg`, and the seed, byte for byte, at `data/words/YYYY/YYYYMMDD.json`. It runs no Git, install or network command; creating the repository and pushing are the owner's.
 
 ### `regenerate-all-words.ts`
 

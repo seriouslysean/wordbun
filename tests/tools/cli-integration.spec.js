@@ -42,6 +42,7 @@ describe('CLI Tools: Import & Execution', () => {
     // This test would have caught the regression immediately
     const toolFiles = [
       'add-word.ts',
+      'create-site.ts',
       'generate-images.ts',
       'utils.ts',
     ];
