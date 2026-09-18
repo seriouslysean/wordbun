@@ -266,13 +266,13 @@ All user-facing strings go through `locales/en.json`. The `t(key)` function from
 - No future dates
 - Word must exist in the configured dictionary
 - The dictionary's answer must contain at least one displayable definition (see below); otherwise the fallback chain moves on, and an exhausted chain fails the add
+- Strict YYYYMMDD format
 
 ### Displayable Definitions
 
 `getDisplayableDefinitions()` in `utils/word-data-utils.ts` is the one rule for which of a word's definitions count. A definition is displayable when it has a part of speech and non-empty text. Abbreviation-labelled definitions are displayable only when the word has no displayable grammatical definition: a lookup of "sad" also returns SAD, "seasonal affective disorder", which must not become a sense of the adjective, while "pb&j" has nothing but its abbreviation, so that is what its page shows.
 
 Everything that shows, counts, groups or accepts definitions goes through it: the word page senses (`getWordSenses`), the primary definition used for meta descriptions, RSS and JSON-LD (`findValidDefinition`), the part-of-speech browse pages (`getAvailablePartsOfSpeech`, `getWordsByPartOfSpeech`, `groupWordsByPartOfSpeech`), and add-time acceptance (`isValidDictionaryData`, checked by `fetchWithFallback` and the tools). A record with text but no part of speech is refused at add time because no page could display it.
-- Strict YYYYMMDD format
 
 ## CLI Tools
 
