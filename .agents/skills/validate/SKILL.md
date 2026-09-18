@@ -66,7 +66,7 @@ The build catches problems that lint and type checking miss: runtime evaluation 
 npm run test:e2e
 ```
 
-**Prerequisites:** Gate 4 (build) must pass first. E2E tests run Playwright against the built `dist/` output via `npm run preview`.
+**Prerequisites:** Gate 4 (build) must pass first. E2E tests run Playwright against the built `dist/` output. Playwright starts its own foreground `astro preview --ignore-lock` on port 4517 (`PORT` in `playwright.config.ts`) and stops it when the run ends; it never reuses an existing server.
 
 **What passing looks like:** All Playwright tests pass across navigation, SEO, and accessibility specs.
 
@@ -80,7 +80,7 @@ E2E tests validate the built site as a user would experience it:
 - No overlap with unit tests. Unit tests validate generation logic; E2E validates the rendered output
 - E2E always runs in demo mode (no `BASE_PATH`, `SOURCE_DIR=demo`). The CI workflow skips `setup-env` intentionally — production env vars like `BASE_PATH` would break test selectors
 
-**If tests fail:** Run a specific spec to iterate faster: `npx playwright test tests/e2e/navigation.spec.ts`. Use `--headed` for a visible browser. Check that `dist/` exists and was built with demo defaults (no `BASE_PATH`), and that nothing stale holds `:4321` (`lsof -ti :4321`) -- Playwright reuses any existing local server, including a leftover `astro preview` or `astro dev`.
+**If tests fail:** Run a specific spec to iterate faster: `npx playwright test tests/e2e/navigation.spec.ts`. Use `--headed` for a visible browser. Check that `dist/` exists and was built with demo defaults (no `BASE_PATH`). If Playwright exits with "http://localhost:4517 is already used", another process holds the e2e port (`lsof -i :4517`); servers on Astro's default 4321 do not affect the run.
 
 ## Summary
 

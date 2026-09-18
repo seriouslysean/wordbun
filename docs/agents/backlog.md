@@ -75,17 +75,14 @@ the build process itself; the others are real gaps.
 
 ## Local Development Notes
 
-- E2E suite uses `localhost:4321`. If another Astro project (e.g. a sibling
-  template based on this one) is running its own `dev`/`preview` on the
-  same port, Playwright reuses that server and tests fail with mismatched
-  content. Stop the other server, or override via `playwright.config.ts`
-  `webServer.url` for parallel work.
-- Same reuse bites within this repo: `reuseExistingServer` is on locally, so
-  a running `astro dev` makes only the sitemap test fail (the sitemap is a
-  build-time integration; dev returns 404), and a leftover `astro preview`
-  serves a stale `dist/` and fails most specs at once. Neither is a code
-  regression. `lsof -ti :4321 | xargs kill` before rerunning; CI always
-  builds and previews fresh.
+- E2E suite starts its own `astro preview --ignore-lock` on port 4517
+  (`PORT` in `playwright.config.ts`) with `reuseExistingServer: false`, so it
+  always serves this repo's current `dist/` and ignores anything on Astro's
+  default 4321. `--ignore-lock` keeps the preview in the foreground when
+  Astro detects a coding agent and skips the `.astro/preview.json` lock, so
+  a separately running `astro dev`/`astro preview` is untouched. If 4517 is
+  already taken, Playwright exits with "http://localhost:4517 is already
+  used" instead of testing the wrong site; `lsof -i :4517` finds the holder.
 
 ## Performance
 
