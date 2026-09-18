@@ -37,11 +37,11 @@ describe('image-utils', () => {
         .toBe('https://test.com/images/social/pages/stats.png');
     });
 
-    it('keeps the encoding of a word with a space or an ampersand', () => {
+    it('encodes the space and keeps the ampersand of a word as written', () => {
       expect(getSocialImageUrl({ pathname: '/word/ice-cream', wordData: { word: 'ice cream', date: '20240615' } }))
         .toBe('https://test.com/images/social/2024/20240615-ice%20cream.png');
       expect(getSocialImageUrl({ pathname: '/word/pbj', wordData: { word: 'pb&j', date: '20230102' } }))
-        .toBe('https://test.com/images/social/2023/20230102-pb%26j.png');
+        .toBe('https://test.com/images/social/2023/20230102-pb&j.png');
     });
 
     it('names the page card without BASE_PATH and links it under BASE_PATH once', () => {

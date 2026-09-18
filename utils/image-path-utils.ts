@@ -59,10 +59,19 @@ export const getSocialImagePath = (card: SocialCard, sourceDir?: string): string
   `${getImagesDir(sourceDir)}/${getSocialCardPath(card)}`;
 
 /**
- * Turn a public-root path into a URL path, percent-encoding each segment so
- * file names with spaces, `&`, `#` or `?` resolve to the file they name.
+ * Turn a public-root path into a URL path that names the same file on every
+ * host. Characters a path segment may carry literally (RFC 3986 pchar, which
+ * includes `&`, `'` and `+`) stay literal: `astro preview` and the dev server
+ * decode with `decodeURI`, which leaves escapes of reserved characters such
+ * as `%26` alone and would look for a file named `pb%26j.png`. Everything
+ * else is percent-encoded, including `?` and `#`, which `encodeURI` skips
+ * and which would otherwise end the path.
  * @param publicPath - Forward-slash path relative to the public root
- * @returns Root-relative URL path such as `/images/social/2023/20230102-pb%26j.png`
+ * @returns Root-relative URL path such as `/images/social/2024/20240615-ice%20cream.png`
  */
-export const toUrlPath = (publicPath: string): string =>
-  `/${publicPath.split('/').map(encodeURIComponent).join('/')}`;
+export const toUrlPath = (publicPath: string): string => {
+  const encoded = publicPath
+    .split('/')
+    .map(segment => encodeURI(segment).replaceAll('?', '%3F').replaceAll('#', '%23'));
+  return `/${encoded.join('/')}`;
+};

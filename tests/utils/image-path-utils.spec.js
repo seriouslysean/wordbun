@@ -69,13 +69,24 @@ describe('image-path-utils', () => {
       expect(toUrlPath('demo/images/social/pages/stats.png')).toBe('/demo/images/social/pages/stats.png');
     });
 
-    it('percent-encodes each segment but not the separators', () => {
+    it('percent-encodes what a path segment cannot carry, but not the separators', () => {
       expect(toUrlPath('images/social/2024/20240615-ice cream.png'))
         .toBe('/images/social/2024/20240615-ice%20cream.png');
-      expect(toUrlPath('images/social/2023/20230102-pb&j.png'))
-        .toBe('/images/social/2023/20230102-pb%26j.png');
       expect(toUrlPath('images/social/2023/20230103-what?#.png'))
         .toBe('/images/social/2023/20230103-what%3F%23.png');
+    });
+
+    it('keeps characters that are legal in a path segment literal', () => {
+      expect(toUrlPath('images/social/2023/20230102-pb&j.png'))
+        .toBe('/images/social/2023/20230102-pb&j.png');
+      expect(toUrlPath("images/social/2023/20230103-don't.png"))
+        .toBe("/images/social/2023/20230103-don't.png");
+    });
+
+    it('resolves to the file under decodeURI, which static preview servers use', () => {
+      const publicPath = 'images/social/2023/20230102-pb&j and 100%.png';
+
+      expect(decodeURI(toUrlPath(publicPath))).toBe(`/${publicPath}`);
     });
 
     it('decodes back to the file it names', () => {
