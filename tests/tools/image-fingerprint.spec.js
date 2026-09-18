@@ -1,9 +1,11 @@
 /**
- * The image fingerprint covers the renderer as well as the inputs: a sharp or
- * libvips upgrade changes palette-quantized pixels without touching any SVG,
- * PNG option or font, so it has to invalidate the cache on its own.
+ * The settings fingerprint (the marker's `settings`) covers the renderer as
+ * well as the inputs: a sharp or libvips upgrade changes palette-quantized
+ * pixels without touching any SVG, PNG option or font, so it has to
+ * invalidate the cache on its own.
  */
 
+import sharp from 'sharp';
 import { describe, expect, it } from 'vitest';
 
 import { computeSettingsHash } from '#tools/utils';
@@ -30,6 +32,6 @@ describe('computeSettingsHash', () => {
   });
 
   it('defaults to the installed renderer', () => {
-    expect(computeSettingsHash()).not.toBe(computeSettingsHash(RENDERER));
+    expect(computeSettingsHash()).toBe(computeSettingsHash(sharp.versions));
   });
 });
