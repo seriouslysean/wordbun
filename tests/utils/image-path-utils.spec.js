@@ -4,6 +4,7 @@ import {
   getImagesDir,
   getSocialCardPath,
   getSocialImagePath,
+  toUrlPath,
 } from '#utils/image-path-utils';
 
 describe('image-path-utils', () => {
@@ -60,6 +61,27 @@ describe('image-path-utils', () => {
         .toBe('demo/images/social/2024/20240105-giggle.png');
       expect(getSocialImagePath({ type: 'page', path: '/stats' }))
         .toBe('images/social/pages/stats.png');
+    });
+  });
+
+  describe('toUrlPath', () => {
+    it('roots the path and leaves plain segments alone', () => {
+      expect(toUrlPath('demo/images/social/pages/stats.png')).toBe('/demo/images/social/pages/stats.png');
+    });
+
+    it('percent-encodes each segment but not the separators', () => {
+      expect(toUrlPath('images/social/2024/20240615-ice cream.png'))
+        .toBe('/images/social/2024/20240615-ice%20cream.png');
+      expect(toUrlPath('images/social/2023/20230102-pb&j.png'))
+        .toBe('/images/social/2023/20230102-pb%26j.png');
+      expect(toUrlPath('images/social/2023/20230103-what?#.png'))
+        .toBe('/images/social/2023/20230103-what%3F%23.png');
+    });
+
+    it('decodes back to the file it names', () => {
+      const publicPath = "images/social/2023/20230104-rock & roll's 100%.png";
+
+      expect(decodeURIComponent(toUrlPath(publicPath))).toBe(`/${publicPath}`);
     });
   });
 });

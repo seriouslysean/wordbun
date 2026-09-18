@@ -57,3 +57,12 @@ export const getSocialCardPath = (card: SocialCard): string => {
  */
 export const getSocialImagePath = (card: SocialCard, sourceDir?: string): string =>
   `${getImagesDir(sourceDir)}/${getSocialCardPath(card)}`;
+
+/**
+ * Turn a public-root path into a URL path, percent-encoding each segment so
+ * file names with spaces, `&`, `#` or `?` resolve to the file they name.
+ * @param publicPath - Forward-slash path relative to the public root
+ * @returns Root-relative URL path such as `/images/social/2023/20230102-pb%26j.png`
+ */
+export const toUrlPath = (publicPath: string): string =>
+  `/${publicPath.split('/').map(encodeURIComponent).join('/')}`;

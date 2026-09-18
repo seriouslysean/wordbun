@@ -19,7 +19,7 @@ describe('image-utils', () => {
     it('links a word page to its word card', () => {
       const url = getSocialImageUrl({ pathname: '/word/test', wordData: { word: 'test', date: '20240115' } });
 
-      expect(url).toBe('/images/social/2024/20240115-test.png');
+      expect(url).toBe('https://test.com/images/social/2024/20240115-test.png');
     });
 
     it('reads SOURCE_DIR from the env schema and puts it before images', () => {
@@ -27,14 +27,21 @@ describe('image-utils', () => {
 
       const url = getSocialImageUrl({ pathname: '/word/test', wordData: { word: 'test', date: '20240115' } });
 
-      expect(url).toBe('/custom/images/social/2024/20240115-test.png');
+      expect(url).toBe('https://test.com/custom/images/social/2024/20240115-test.png');
     });
 
     it('links a page without word data to its page card', () => {
       expect(getSocialImageUrl({ pathname: '/browse/2023/april' }))
-        .toBe('/images/social/pages/browse-2023-april.png');
+        .toBe('https://test.com/images/social/pages/browse-2023-april.png');
       expect(getSocialImageUrl({ pathname: '/stats', wordData: null }))
-        .toBe('/images/social/pages/stats.png');
+        .toBe('https://test.com/images/social/pages/stats.png');
+    });
+
+    it('keeps the encoding of a word with a space or an ampersand', () => {
+      expect(getSocialImageUrl({ pathname: '/word/ice-cream', wordData: { word: 'ice cream', date: '20240615' } }))
+        .toBe('https://test.com/images/social/2024/20240615-ice%20cream.png');
+      expect(getSocialImageUrl({ pathname: '/word/pbj', wordData: { word: 'pb&j', date: '20230102' } }))
+        .toBe('https://test.com/images/social/2023/20230102-pb%26j.png');
     });
 
     it('names the page card without BASE_PATH and links it under BASE_PATH once', () => {
@@ -42,7 +49,7 @@ describe('image-utils', () => {
 
       const url = getSocialImageUrl({ pathname: '/blog/browse/2023/april' });
 
-      expect(url).toBe('/blog/images/social/pages/browse-2023-april.png');
+      expect(url).toBe('https://test.com/blog/images/social/pages/browse-2023-april.png');
     });
   });
 
