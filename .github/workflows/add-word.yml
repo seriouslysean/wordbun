@@ -129,6 +129,17 @@ jobs:
         env:
           WORD: ${{ steps.add_word.outputs.word }}
         run: |
-          git add data/ public/
+          # Only what the run writes (config/paths.ts, tools/utils.ts): word
+          # files, social cards and the cache marker. The pathspec * crosses
+          # directories, so a first complete generation stages every card.
+          WORDS_DIR="data/${SOURCE_DIR:+$SOURCE_DIR/}words"
+          SOCIAL_DIR="public/${SOURCE_DIR:+$SOURCE_DIR/}images/social"
+          git add -- "$WORDS_DIR/*.json" "$SOCIAL_DIR/*.png" "$SOCIAL_DIR/.image-settings-hash"
+
+          if git diff --cached --quiet; then
+            echo "::notice::Nothing changed, so there is nothing to commit"
+            exit 0
+          fi
+
           git commit -m "Add word: $WORD"
           git push origin "$GITHUB_REF"
