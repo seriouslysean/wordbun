@@ -42,6 +42,10 @@ jobs:
           node-version: 26
           cache: 'npm'
 
+      # Before setup-env, so no dependency's install script sees the secrets
+      - name: Install dependencies
+        run: npm ci
+
       # The same variables, SOURCE_DIR and timezone as the build, so the word
       # lands in the tree the site reads and "today" is the site's today
       - name: Setup environment variables
@@ -68,9 +72,6 @@ jobs:
               exit 1
             fi
           done
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Add word
         id: add_word

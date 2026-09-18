@@ -41,15 +41,16 @@ jobs:
           node-version: 26
           cache: 'npm'
 
+      # Before setup-env, so no dependency's install script sees the secrets
+      - name: Install dependencies
+        run: npm ci
+
       - name: Setup environment variables
         uses: ./.github/actions/setup-env
         with:
           vars-json: ${{ toJSON(vars) }}
           secrets-json: ${{ toJSON(secrets) }}
           github-sha: ${{ github.sha }}
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Build
         run: npm run build
