@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { statSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 
 import sitemap from '@astrojs/sitemap';
 import sentry from '@sentry/astro';
@@ -31,9 +31,10 @@ function getCodeHash() {
   return hash.digest('hex').substring(0, 8);
 }
 
-// Load .env locally, skip in CI (GitHub Actions etc)
-if (!process.env.CI) {
-  await import('dotenv/config');
+// Load .env locally when present, skip in CI (GitHub Actions etc).
+// Variables already set in the environment win over the file.
+if (!process.env.CI && existsSync('.env')) {
+  process.loadEnvFile();
 }
 
 // Environment variable defaults for development and PR builds
