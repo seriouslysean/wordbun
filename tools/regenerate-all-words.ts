@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import { setTimeout as delay } from 'node:timers/promises';
+import { parseArgs } from 'node:util';
 
 import { fetchWithFallback } from '#adapters';
 import { isEntryPoint } from '#tools/entry';
@@ -22,16 +23,35 @@ function readPreserveCase(filePath: string): boolean {
 }
 
 interface RegenerateOptions {
-  wordField: string;
-  dateField: string;
   dryRun: boolean;
   force: boolean;
   timeout: number;
-  rateLimitTimeout: number;
   batchSize: number;
   batchTimeout: number;
 }
 
+// Single source for option defaults: parseArgs and the help text both read it.
+export const DEFAULTS = {
+  timeout: 4000,
+  batchSize: 10,
+  batchTimeout: 60000,
+} as const;
+
+// First rate-limit retry waits this long; each further retry doubles it.
+const RATE_LIMIT_BACKOFF_MS = 30000;
+
+/**
+ * Parses a whole-number CLI option. Throws on anything else (NaN, fractions,
+ * trailing junk, values below `min`) so a typo cannot become a zero-size batch
+ * or a NaN delay.
+ */
+function parseCount(option: string, raw: string, min: number): number {
+  const value = Number(raw);
+  if (!/^\d+$/.test(raw) || value < min) {
+    throw new Error(`Invalid numeric option --${option}: expected a whole number of at least ${min}, got "${raw}"`);
+  }
+  return value;
+}
 
 /**
  * Creates a new word file with fresh data from the dictionary adapter
@@ -82,7 +102,7 @@ async function regenerateWordFile(word: string, date: string, originalPath: stri
 
     if (isRateLimit && retryCount < maxRetries) {
       // Exponential backoff: 2^retryCount * 30 seconds
-      const backoffDelay = Math.pow(2, retryCount) * 30000;
+      const backoffDelay = Math.pow(2, retryCount) * RATE_LIMIT_BACKOFF_MS;
       logger.info('Rate limited, retrying with backoff', {
         word,
         delaySec: backoffDelay / 1000,
@@ -131,10 +151,7 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
     }
 
     logger.info('Configuration', {
-      wordField: options.wordField,
-      dateField: options.dateField,
       timeoutMs: options.timeout,
-      rateLimitTimeoutMs: options.rateLimitTimeout,
       batchSize: options.batchSize,
       batchTimeoutMs: options.batchTimeout,
     });
@@ -186,32 +203,23 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
 const HELP_TEXT = `
 Regenerate All Words Tool
 
-Regenerates all word files with fresh dictionary data, supporting flexible JSON field extraction.
+Regenerates all word files with fresh dictionary data.
 
 Usage:
   npm run tool:local tools/regenerate-all-words.ts [options]
-  npm run tool:regenerate-all-words [options]
+  npm run tool:regenerate-all-words -- [options]
 
 Options:
-  --word-field <path>        JSON path to word field (default: "word")
-  --date-field <path>        JSON path to date field (default: "date")
   --dry-run                  Preview what would be regenerated without doing it
   --force                    Skip confirmation prompts
-  --timeout <ms>             Timeout between API calls (default: 1000ms)
-  --rate-limit-timeout <ms>  Timeout when rate limit hit (default: 65000ms)
-  --batch-size <num>         Words per batch (default: 4)
-  --batch-timeout <ms>       Timeout between batches (default: 10000ms)
+  --timeout <ms>             Delay between API calls (default: ${DEFAULTS.timeout})
+  --batch-size <num>         Words per batch (default: ${DEFAULTS.batchSize})
+  --batch-timeout <ms>       Pause between batches (default: ${DEFAULTS.batchTimeout})
   -h, --help                 Show this help message
 
-Field Path Examples:
-  "word"                     Direct field access
-  "metadata.term"            Nested field access
-  "data.0.word"              Array element access
-
 Examples:
-  npm run tool:regenerate-all-words --dry-run
-  npm run tool:regenerate-all-words --word-field "metadata.term" --date-field "dateCode" --force
-  npm run tool:regenerate-all-words --timeout 2000 --batch-size 3 --force
+  npm run tool:regenerate-all-words -- --dry-run
+  npm run tool:regenerate-all-words -- --timeout 2000 --batch-size 3 --force
 
 Environment Variables (for GitHub workflows):
   DICTIONARY_ADAPTER         Dictionary API to use (required)
@@ -219,35 +227,20 @@ Environment Variables (for GitHub workflows):
   SOURCE_DIR                Data source subdirectory (unset = root paths)
 
 Note:
-  All dates are normalized to YYYYMMDD format (no dashes).
+  Rate-limited lookups retry up to 3 times, waiting ${RATE_LIMIT_BACKOFF_MS / 1000}s and doubling each time.
   This tool will overwrite existing word files with fresh dictionary data.
   Use --dry-run first to preview changes.
 ${COMMON_ENV_DOCS}
 `;
-
-// Parse command line arguments
-import { parseArgs } from 'node:util';
-
-const DEFAULTS = {
-  wordField: 'word',
-  dateField: 'date',
-  timeout: 4000,
-  rateLimitTimeout: 3600000,
-  batchSize: 10,
-  batchTimeout: 60000,
-} as const;
 
 if (isEntryPoint(import.meta.url)) {
   const { values } = parseArgs({
     args: process.argv.slice(2),
     options: {
       help: { type: 'boolean', short: 'h', default: false },
-      'word-field': { type: 'string', default: DEFAULTS.wordField },
-      'date-field': { type: 'string', default: DEFAULTS.dateField },
       'dry-run': { type: 'boolean', default: false },
       force: { type: 'boolean', default: false },
       timeout: { type: 'string', default: String(DEFAULTS.timeout) },
-      'rate-limit-timeout': { type: 'string', default: String(DEFAULTS.rateLimitTimeout) },
       'batch-size': { type: 'string', default: String(DEFAULTS.batchSize) },
       'batch-timeout': { type: 'string', default: String(DEFAULTS.batchTimeout) },
     },
@@ -259,26 +252,24 @@ if (isEntryPoint(import.meta.url)) {
     process.exit(0);
   }
 
-  const options: RegenerateOptions = {
-    wordField: values['word-field'] ?? DEFAULTS.wordField,
-    dateField: values['date-field'] ?? DEFAULTS.dateField,
-    dryRun: !!values['dry-run'],
-    force: !!values.force,
-    timeout: parseInt(values.timeout ?? String(DEFAULTS.timeout), 10),
-    rateLimitTimeout: parseInt(values['rate-limit-timeout'] ?? String(DEFAULTS.rateLimitTimeout), 10),
-    batchSize: parseInt(values['batch-size'] ?? String(DEFAULTS.batchSize), 10),
-    batchTimeout: parseInt(values['batch-timeout'] ?? String(DEFAULTS.batchTimeout), 10),
+  const run = async (): Promise<void> => {
+    // Validation throws before any word is touched; the catch below reports it.
+    const failed = await regenerateAllWords({
+      dryRun: !!values['dry-run'],
+      force: !!values.force,
+      timeout: parseCount('timeout', values.timeout, 0),
+      batchSize: parseCount('batch-size', values['batch-size'], 1),
+      batchTimeout: parseCount('batch-timeout', values['batch-timeout'], 0),
+    });
+
+    if (failed > 0) {
+      logger.error('Regeneration finished with failures', { failed });
+      await exit(1);
+    }
   };
 
-  regenerateAllWords(options)
-    .then(async (failed) => {
-      if (failed > 0) {
-        logger.error('Regeneration finished with failures', { failed });
-        await exit(1);
-      }
-    })
-    .catch(async (error: unknown) => {
-      logger.error('Regeneration tool failed', { error: getErrorMessage(error) });
-      await exit(1);
-    });
+  run().catch(async (error: unknown) => {
+    logger.error('Regeneration tool failed', { error: getErrorMessage(error) });
+    await exit(1);
+  });
 }
