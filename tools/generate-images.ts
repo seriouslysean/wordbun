@@ -2,7 +2,14 @@ import { parseArgs } from 'node:util';
 
 import { isEntryPoint } from '#tools/entry';
 import { showHelp } from '#tools/help-utils';
-import { findExistingWord, generateGenericShareImage, generateShareImage, getAllWords } from '#tools/utils';
+import {
+  findExistingWord,
+  generateGenericShareImage,
+  generateShareImage,
+  getAllWords,
+  isImageCacheStale,
+  markImageCacheCurrent,
+} from '#tools/utils';
 import { getAllPageMetadata } from '#utils/page-metadata-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 
@@ -99,7 +106,7 @@ async function bulkGenerate<T extends BulkItem>(
 /**
  * Generates image for a specific word
  */
-async function generateSingleImage(word: string, force: boolean): Promise<boolean> {
+async function generateSingleImage(word: string, regenerate: boolean): Promise<boolean> {
   const wordData = findExistingWord(word);
   if (!wordData) {
     logger.error('Word not found in data files', { word });
@@ -107,7 +114,7 @@ async function generateSingleImage(word: string, force: boolean): Promise<boolea
   }
 
   try {
-    const generated = await generateShareImage(wordData.word, wordData.date, { force });
+    const generated = await generateShareImage(wordData.word, wordData.date, { regenerate });
     if (generated) {
       logger.info('Generated image for word', { word: wordData.word, date: wordData.date });
     } else {
@@ -123,7 +130,7 @@ async function generateSingleImage(word: string, force: boolean): Promise<boolea
 /**
  * Generates image for a specific page path
  */
-async function generatePageImage(pagePath: string, force: boolean): Promise<boolean> {
+async function generatePageImage(pagePath: string, regenerate: boolean): Promise<boolean> {
   const allPages = getAllPageMetadata(getAllWords());
   const page = allPages.find(p => p.path === pagePath);
 
@@ -133,7 +140,7 @@ async function generatePageImage(pagePath: string, force: boolean): Promise<bool
   }
 
   try {
-    const generated = await generateGenericShareImage(page.title, page.path, { force });
+    const generated = await generateGenericShareImage(page.title, page.path, { regenerate });
     if (generated) {
       logger.info('Generated page image', { title: page.title, path: page.path });
     } else {
@@ -171,13 +178,21 @@ const isForce = !!cliValues.force;
 async function main(): Promise<void> {
   logger.info('Generate images tool starting...');
 
+  // Settled once: every image in this run gets the same answer, so the first
+  // regenerated image cannot make the rest look current.
+  const stale = isImageCacheStale();
+  if (stale && !isForce) {
+    logger.info('Image settings differ from the last complete run, regenerating existing images');
+  }
+  const regenerate = isForce || stale;
+
   if (cliValues.page) {
-    const success = await generatePageImage(cliValues.page, isForce);
+    const success = await generatePageImage(cliValues.page, regenerate);
     await exit(success ? 0 : 1);
   }
 
   if (cliValues.word) {
-    const success = await generateSingleImage(cliValues.word, isForce);
+    const success = await generateSingleImage(cliValues.word, regenerate);
     await exit(success ? 0 : 1);
   }
 
@@ -188,7 +203,7 @@ async function main(): Promise<void> {
     const allWords = getAllWords();
     failed.count += await bulkGenerate(
       allWords.map(w => ({ label: `${w.word} (${w.date})`, word: w.word, date: w.date })),
-      (item) => generateShareImage(item.word, item.date, { force: isForce }),
+      (item) => generateShareImage(item.word, item.date, { regenerate }),
       'word',
     );
   }
@@ -197,7 +212,7 @@ async function main(): Promise<void> {
     const pages = getAllPageMetadata(getAllWords());
     failed.count += await bulkGenerate(
       pages.map(p => ({ label: `${p.title} (${p.path})`, title: p.title, path: p.path })),
-      (item) => generateGenericShareImage(item.title, item.path, { force: isForce }),
+      (item) => generateGenericShareImage(item.title, item.path, { regenerate }),
       'generic',
     );
   }
@@ -205,6 +220,11 @@ async function main(): Promise<void> {
   if (failed.count > 0) {
     logger.error('Image generation finished with failures', { failed: failed.count });
     await exit(1);
+  }
+
+  // Only a run that covered every word and every page certifies the corpus.
+  if (runBoth) {
+    markImageCacheCurrent();
   }
 
   await exit(0);

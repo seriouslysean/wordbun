@@ -45,41 +45,46 @@ const PNG_OPTIONS = {
   colors: 128,
 } as const;
 
-// Load fonts - using Liberation Sans for better web compatibility
-// opentype.js v2 removed loadSync; parse a read buffer instead
-const regularFont = opentype.parse(fs.readFileSync(path.join(paths.fonts, 'liberation-sans', 'LiberationSans-Regular.ttf')));
-const boldFont = opentype.parse(fs.readFileSync(path.join(paths.fonts, 'liberation-sans', 'LiberationSans-Bold.ttf')));
-
 const SOCIAL_BASE_DIR = path.join(paths.images, 'social');
 const SETTINGS_HASH_FILENAME = '.image-settings-hash';
 
-/**
- * Computes a hash of the global image generation settings.
- * If this hash changes, all images need regenerating.
- */
-const computeSettingsHash = (): string =>
-  createHash('md5').update(JSON.stringify({
-    siteId: process.env.SITE_ID || '',
-    siteTitle: process.env.SITE_TITLE || '',
-    colorPrimary: imageColors.primary,
-    colorPrimaryLight: imageColors.primaryLight,
-    colorPrimaryDark: imageColors.primaryDark,
-  })).digest('hex').slice(0, 12);
+// Fixed inputs rendered through the real template to fingerprint it.
+const PROBE_TEXT = 'probe';
+const PROBE_DATE = '20240101';
 
-const readSettingsHash = (): string | null => {
-  const hashPath = path.join(SOCIAL_BASE_DIR, SETTINGS_HASH_FILENAME);
-  if (!fs.existsSync(hashPath)) {
-    return null;
-  }
-  try {
-    return fs.readFileSync(hashPath, 'utf-8').trim();
-  } catch {
-    return null;
-  }
+interface LoadedFont {
+  font: ReturnType<typeof opentype.parse>;
+  fingerprint: string;
+}
+
+interface ImageFonts {
+  regular: LoadedFont;
+  bold: LoadedFont;
+}
+
+// md5 here is a non-security content fingerprint, as in the settings hash.
+const fingerprint = (content: string | Buffer): string =>
+  createHash('md5').update(content).digest('hex');
+
+// Liberation Sans for better web compatibility.
+// opentype.js v2 removed loadSync; parse a read buffer instead
+const loadFont = (fileName: string): LoadedFont => {
+  const bytes = fs.readFileSync(path.join(paths.fonts, 'liberation-sans', fileName));
+  return { font: opentype.parse(bytes), fingerprint: fingerprint(bytes) };
 };
 
-const writeSettingsHash = (hash: string): void => {
-  fs.writeFileSync(path.join(SOCIAL_BASE_DIR, SETTINGS_HASH_FILENAME), hash + '\n');
+const fontCache: { value: ImageFonts | null } = { value: null };
+
+/**
+ * Parses both fonts on the first image, so tools that import this module
+ * without rendering (add-word --help, regenerate-all-words) never pay for it.
+ */
+const getFonts = (): ImageFonts => {
+  fontCache.value ??= {
+    regular: loadFont('LiberationSans-Regular.ttf'),
+    bold: loadFont('LiberationSans-Bold.ttf'),
+  };
+  return fontCache.value;
 };
 
 // ---------------------------------------------------------------------------
@@ -193,7 +198,8 @@ interface GetTextPathOptions {
 
 function getTextPath(text: string, fontSize: number, options: GetTextPathOptions = {}): TextPathResult {
   const { isExtraBold = false, maxWidth = Infinity } = options;
-  const font = isExtraBold ? boldFont : regularFont;
+  const fonts = getFonts();
+  const font = (isExtraBold ? fonts.bold : fonts.regular).font;
   const fontPath = font.getPath(text, 0, 0, fontSize);
   const bbox = fontPath.getBoundingBox();
   const width = bbox.x2 - bbox.x1;
@@ -248,49 +254,89 @@ ${dateText ? `
 }
 
 /**
- * Renders SVG content to a PNG file with hash-based skip detection.
- * Returns true if generated, false if skipped (settings unchanged).
+ * Fingerprints everything that determines pixels. The probe SVGs come from the
+ * real template, so they carry the colors, site title, dimensions and layout;
+ * the font fingerprints cover glyphs the probe text does not use.
  */
-async function renderSvgToPng(svgContent: string, outputPath: string, force: boolean): Promise<boolean> {
-  const settingsHash = computeSettingsHash();
+const computeSettingsHash = (): string => {
+  const fonts = getFonts();
+  return fingerprint(JSON.stringify({
+    probes: [createSvg(PROBE_TEXT, PROBE_DATE), createSvg(PROBE_TEXT)],
+    png: PNG_OPTIONS,
+    fonts: [fonts.regular.fingerprint, fonts.bold.fingerprint],
+  })).slice(0, 12);
+};
 
-  if (!force && fs.existsSync(outputPath)) {
-    if (readSettingsHash() === settingsHash) {
-      return false;
-    }
+const readSettingsHash = (): string | null => {
+  try {
+    return fs.readFileSync(path.join(SOCIAL_BASE_DIR, SETTINGS_HASH_FILENAME), 'utf-8').trim();
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * True when existing images were rendered under different settings (or no
+ * complete run has certified them). Callers read this once per run and pass
+ * the answer to every image as `regenerate`, so the decision cannot change
+ * while the run is in flight.
+ */
+export const isImageCacheStale = (): boolean => readSettingsHash() !== computeSettingsHash();
+
+/**
+ * Certifies every image on disk as rendered under the current settings. Only a
+ * run that covered all words and all pages without a failure may call this; a
+ * single image or a partial run says nothing about the rest of the corpus.
+ */
+export const markImageCacheCurrent = (): void => {
+  fs.mkdirSync(SOCIAL_BASE_DIR, { recursive: true });
+  fs.writeFileSync(path.join(SOCIAL_BASE_DIR, SETTINGS_HASH_FILENAME), `${computeSettingsHash()}\n`);
+};
+
+interface GenerateImageOptions {
+  regenerate?: boolean;
+}
+
+/**
+ * Renders an image unless it already exists and the caller has not asked for
+ * regeneration. The SVG is only built once the image is known to be needed.
+ * Returns true if generated, false if skipped.
+ */
+async function renderPng(buildSvg: () => string, outputPath: string, regenerate: boolean): Promise<boolean> {
+  if (!regenerate && fs.existsSync(outputPath)) {
+    return false;
   }
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  await sharp(Buffer.from(svgContent)).png(PNG_OPTIONS).toFile(outputPath);
-  writeSettingsHash(settingsHash);
+  await sharp(Buffer.from(buildSvg())).png(PNG_OPTIONS).toFile(outputPath);
   return true;
 }
 
 /**
  * Generates a social share image for a word.
- * Skips regeneration when the image exists and settings are unchanged.
+ * Skips an existing image unless `regenerate` is set.
  */
 export async function generateShareImage(
   word: string,
   date: string,
-  options: { force?: boolean } = {},
+  options: GenerateImageOptions = {},
 ): Promise<boolean> {
   const year = date.slice(0, 4);
   const outputPath = path.join(SOCIAL_BASE_DIR, year, `${date}-${word.toLowerCase()}.png`);
-  return renderSvgToPng(createSvg(word, date), outputPath, !!options.force);
+  return renderPng(() => createSvg(word, date), outputPath, !!options.regenerate);
 }
 
 /**
  * Generates a generic social share image for pages without a word.
- * Skips regeneration when the image exists and settings are unchanged.
+ * Skips an existing image unless `regenerate` is set.
  */
 export async function generateGenericShareImage(
   title: string,
   slug: string,
-  options: { force?: boolean } = {},
+  options: GenerateImageOptions = {},
 ): Promise<boolean> {
   const outputPath = path.join(SOCIAL_BASE_DIR, 'pages', `${slugify(slug.replaceAll('/', ' '))}.png`);
-  return renderSvgToPng(createSvg(title.toLowerCase()), outputPath, !!options.force);
+  return renderPng(() => createSvg(title.toLowerCase()), outputPath, !!options.regenerate);
 }
 
 // ---------------------------------------------------------------------------

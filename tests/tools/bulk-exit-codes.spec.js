@@ -41,14 +41,12 @@ describe('generate-images bulk run', () => {
 
 describe('regenerate-all-words bulk run', () => {
   it('processes every word, then exits 1 when any failed', async () => {
-    // The tool resolves data/words from its cwd, so a temp cwd isolates it.
+    // The tool resolves data/words from its cwd, so a temp cwd isolates it. The
+    // temp tree has no tools/fonts: a non-image tool must not load image fonts.
     const yearDir = path.join(ctx.tempDir, 'data', 'words', '2024');
     fs.mkdirSync(yearDir, { recursive: true });
     fs.writeFileSync(path.join(yearDir, '20240101.json'), JSON.stringify({ word: 'alpha' }));
     fs.writeFileSync(path.join(yearDir, '20240102.json'), JSON.stringify({ word: 'beta' }));
-    // tools/utils.ts parses the image fonts from <cwd>/tools/fonts at import.
-    fs.mkdirSync(path.join(ctx.tempDir, 'tools'));
-    fs.symlinkSync(path.join(TOOLS_DIR, 'fonts'), path.join(ctx.tempDir, 'tools', 'fonts'));
 
     // No adapter configured: every word fails before any network call.
     const { stdout, stderr, code } = await spawnTool(
