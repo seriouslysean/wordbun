@@ -4,8 +4,12 @@ on:
   push:
     branches: ['main']
 
+  # Add Word pushes with GITHUB_TOKEN, which starts no push run, so its
+  # completion is the trigger. github.sha for workflow_run is the last commit
+  # on the default branch, so the default checkout builds the pushed word.
   workflow_run:
     workflows: ['Add Word']
+    branches: ['main']
     types:
       - completed
 
@@ -22,6 +26,8 @@ concurrency:
 
 jobs:
   deploy:
+    # completed includes failed and cancelled runs, which pushed nothing
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     environment:
       name: github-pages
     runs-on: ubuntu-latest
