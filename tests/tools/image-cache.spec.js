@@ -72,4 +72,15 @@ describe('generate-images cache invalidation', () => {
     expect(generic.code).toBe(0);
     expect(fs.existsSync(ctx.markerPath)).toBe(false);
   }, 120000);
+
+  it('certifies the corpus when --words and --generic together cover everything', async () => {
+    const covered = await run(['--words', '--generic'], '#111111');
+    expect(covered.code).toBe(0);
+    expect(covered.stdout.match(ALL_GENERATED)).toHaveLength(2);
+    expect(fs.existsSync(ctx.markerPath)).toBe(true);
+
+    const unchanged = await run([], '#111111');
+    expect(unchanged.code).toBe(0);
+    expect(unchanged.stdout).not.toMatch(/generated: [1-9]/);
+  }, 120000);
 });

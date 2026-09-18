@@ -255,17 +255,24 @@ ${dateText ? `
 </svg>`;
 }
 
+type RendererVersions = Readonly<Record<string, string | undefined>>;
+
 /**
- * Fingerprints everything that determines pixels. The probe SVGs come from the
- * real template, so they carry the colors, site title, dimensions and layout;
- * the font fingerprints cover glyphs the probe text does not use.
+ * Fingerprints what determines the bytes of an image: the inputs and the
+ * renderer. The probe SVGs come from the real template, so they carry the
+ * colors, site title, dimensions and layout; the font fingerprints cover
+ * glyphs the probe text does not use. The renderer versions are sharp, libvips
+ * and the libraries bundled with it (librsvg, imagequant, libpng...): a sharp
+ * upgrade re-quantizes the palette without any input changing. Entries are
+ * sorted so the fingerprint does not depend on the order they are reported in.
  */
-const computeSettingsHash = (): string => {
+export const computeSettingsHash = (rendererVersions: RendererVersions = sharp.versions): string => {
   const fonts = getFonts();
   return fingerprint(JSON.stringify({
     probes: [createSvg(PROBE_TEXT, PROBE_DATE), createSvg(PROBE_TEXT)],
     png: PNG_OPTIONS,
     fonts: [fonts.regular.fingerprint, fonts.bold.fingerprint],
+    renderer: Object.entries(rendererVersions).toSorted(([a], [b]) => a.localeCompare(b)),
   })).slice(0, 12);
 };
 

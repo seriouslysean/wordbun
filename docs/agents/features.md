@@ -8,7 +8,7 @@ Quality and architectural improvements, prioritized by impact. Status markers:
 One bucket PR surfacing data the site already had, plus offline/capture-time
 enrichment, search, and build-time visualizations. All code is site-agnostic
 (ships downstream on sync); enrichment *data* is regenerated per site via
-`npm run tool:regenerate-all-words --force` (each site's keys + corpus).
+`npm run tool:regenerate-all-words -- --force` (each site's keys + corpus).
 
 - **Word-page surfacing.** Example sentences; all definitions via a CSS
   scroll-snap slider (one sense at a time with arrows + dots, compound entries

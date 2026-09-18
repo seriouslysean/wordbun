@@ -224,7 +224,7 @@ Regenerate All Words Tool
 Regenerates all word files with fresh dictionary data.
 
 Usage:
-  npm run tool:local tools/regenerate-all-words.ts [options]
+  npm run tool:local tools/regenerate-all-words.ts -- [options]
   npm run tool:regenerate-all-words -- [options]
 
 Options:

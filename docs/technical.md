@@ -273,6 +273,8 @@ All tools are pure Node.js (no Astro deps) and use `util.parseArgs()` for argume
 
 Tools run directly on Node's built-in TypeScript support (`node tools/<tool>.ts`); there is no loader or compile step. `npm run tool:local <tool>` runs a tool through `node --env-file-if-exists=.env`, so `.env` is loaded when present and variables already in the environment win. When `.env` is absent Node prints `.env not found. Continuing without it.` to stderr and carries on. The bare `tool:*` scripts (`tool:generate-images`, `tool:regenerate-all-words`, ...) do not load `.env`: image tools render without the site title and the Merriam-Webster adapter throws without its key.
 
+npm keeps any flag written before a bare `--` for itself, so a tool's flags always follow one: `npm run tool:local tools/add-word.ts -- --help` and `npm run tool:add-word -- --help` print the tool's help, and without the separator npm prints its own. `tests/architecture/npm-scripts.spec.js` enforces this in `package.json`, tool help text, docs and workflows.
+
 ### `add-word.ts`
 
 Adds a word with dictionary validation, duplicate detection, and automatic image generation.
@@ -280,8 +282,8 @@ Adds a word with dictionary validation, duplicate detection, and automatic image
 ```sh
 npm run tool:local tools/add-word.ts serendipity
 npm run tool:local tools/add-word.ts ephemeral 20250130
-npm run tool:local tools/add-word.ts Japan --preserve-case
-npm run tool:local tools/add-word.ts serendipity --overwrite
+npm run tool:local tools/add-word.ts -- Japan --preserve-case
+npm run tool:local tools/add-word.ts -- serendipity --overwrite
 ```
 
 ### `generate-images.ts`
@@ -382,7 +384,8 @@ Definitions live in `constants/stats.ts`. Computation functions in `utils/word-s
 - **Conversion**: Sharp PNG rasterization (1200x630px, 90% quality, 128-color palette)
 - **Typography**: Liberation Sans Regular + Bold (`tools/fonts/liberation-sans/`), gradient text with theme colors
 - **Output**: `public/images/social/{SOURCE_DIR}/2024/20240105-giggle.png` (word) and `public/images/social/pages/{page}.png` (static). `SOURCE_DIR` segment is omitted when unset.
-- **Skip guard**: `.image-settings-hash` is an md5 fingerprint of what determines pixels: two probe SVGs rendered through the real template (colors, site title, dimensions, layout), the PNG options, and both font files. Each run compares it once; on a mismatch every existing image in that run is regenerated, otherwise existing files are skipped. `--force` regenerates regardless. The marker is only written by a run that covered all words and all pages with no failures, so `--word`, `--page`, `--words` and `--generic` runs never certify the corpus. `npm run build` copies `public/` verbatim and never regenerates images.
+- **Skip guard**: `.image-settings-hash` is an md5 fingerprint of what determines an image's bytes, inputs and renderer alike: two probe SVGs rendered through the real template (colors, site title, dimensions, layout), the PNG options, both font files, and `sharp.versions` (sharp, libvips and the libraries bundled with it), so a sharp upgrade that re-quantizes the palette invalidates the cache on its own. Each run compares it once; on a mismatch every existing image in that run is regenerated, otherwise existing files are skipped. `--force` regenerates regardless. The marker is only written by a run that covered all words and all pages with no failures, whether that was the default run or `--words --generic` together, so `--word`, `--page`, and `--words` or `--generic` alone never certify the corpus. `npm run build` copies `public/` verbatim and never regenerates images.
+- **CI**: the Add Word workflow runs the complete generation (`npm run tool:generate-images`) after adding a word, not `--word`. With a current marker that renders the new word's card and skips the rest; after a settings, font or sharp change it regenerates every card once and commits them with the refreshed marker (`git add data/ public/` picks up both). A single-image run could never write the marker, so the skip guard would stay stale in CI forever.
 
 ## Testing
 
