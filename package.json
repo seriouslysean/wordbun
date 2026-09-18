@@ -49,7 +49,7 @@
     "@playwright/test": "^1.63.0",
     "@sentry/astro": "^10.75.0",
     "@sentry/node": "^10.75.0",
-    "@vitest/coverage-v8": "^4.1.8",
+    "@vitest/coverage-v8": "^5.0.1",
     "cmu-pronouncing-dictionary": "3.0.0",
     "dotenv": "^17.4.2",
     "lefthook": "^2.1.14",
@@ -60,7 +60,7 @@
     "subtlex-word-frequencies": "2.0.0",
     "tsx": "^4.23.13",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.8",
+    "vitest": "^5.0.1",
     "wordpos": "^2.1.0"
   },
   "imports": {
