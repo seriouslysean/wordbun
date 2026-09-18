@@ -1,17 +1,18 @@
-import { spawn } from 'child_process';
+import { spawn } from 'node:child_process';
 
 /**
  * Spawns a CLI tool via `npx tsx` and captures output.
- * Uses the done() callback pattern required by Vitest for child process tests.
+ * Rejects if the process cannot be spawned; resolves once it closes.
  *
  * @param {string[]} args - Arguments to pass after `npx tsx`
  * @param {object} [options] - Spawn options
  * @param {Record<string, string>} [options.env] - Additional environment variables
  * @param {number} [options.timeout] - Process timeout in ms (default: 10000)
- * @param {(result: { stdout: string, stderr: string, code: number | null }) => void} callback - Called on process close
+ * @returns {Promise<{ stdout: string, stderr: string, code: number | null }>} Captured output and exit code
  */
-export const spawnTool = (args, options, callback) => {
+export const spawnTool = (args, options = {}) => {
   const { env = {}, timeout = 10000 } = options;
+  const { promise, resolve, reject } = Promise.withResolvers();
 
   const proc = spawn('npx', ['tsx', ...args], {
     env: { ...process.env, ...env },
@@ -22,11 +23,14 @@ export const spawnTool = (args, options, callback) => {
   proc.stdout.on('data', (data) => chunks.stdout.push(data.toString()));
   proc.stderr.on('data', (data) => chunks.stderr.push(data.toString()));
 
+  proc.on('error', reject);
   proc.on('close', (code) => {
-    callback({
+    resolve({
       stdout: chunks.stdout.join(''),
       stderr: chunks.stderr.join(''),
       code,
     });
   });
+
+  return promise;
 };

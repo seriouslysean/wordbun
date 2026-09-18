@@ -14,7 +14,7 @@
  *
  * Implementation notes:
  * - Import tests mock process.exit to prevent tools from terminating test runner
- * - Spawn tests use done() callback pattern (required for child_process in Vitest threads)
+ * - Spawn tests await the child process so assertion failures are observed
  */
 
 import { describe, it, expect, vi } from 'vitest';
@@ -59,12 +59,9 @@ describe('CLI Tools: Import & Execution', () => {
             );
           }
 
-          // Allow other expected errors (e.g., missing env vars at import time)
-          // but not import resolution errors
-          if (error.code === 'ERR_MODULE_NOT_FOUND') {
-            throw error;
-          }
-          // Other errors are expected (tools exit, env validation, etc.) - ignore them
+          // Tools guard their main logic behind isEntryPoint, so a plain import
+          // has no legitimate reason to throw
+          throw error;
         }
       });
 
@@ -76,24 +73,22 @@ describe('CLI Tools: Import & Execution', () => {
     }
   }, 15000); // Increased timeout - tools run their main logic on import
 
-  it('generate-images tool can load and show help', (done) => {
-    spawnTool(['tools/generate-images.ts', '--help'], { env: DEMO_ENV }, ({ stdout, stderr, code }) => {
-      expect(code).toBe(0);
-      expect(stdout).toContain('Generate Images Tool');
-      expect(stdout).toContain('Usage:');
-      expect(stderr).not.toContain('astro:');
-      done();
-    });
+  it('generate-images tool can load and show help', async () => {
+    const { stdout, stderr, code } = await spawnTool(['tools/generate-images.ts', '--help'], { env: DEMO_ENV });
+
+    expect(code).toBe(0);
+    expect(stdout).toContain('Generate Images Tool');
+    expect(stdout).toContain('Usage:');
+    expect(stderr).not.toContain('astro:');
   }, 15000);
 
-  it('add-word tool can load and show help', (done) => {
-    spawnTool(['tools/add-word.ts', '--help'], { env: DEMO_ENV }, ({ stdout, stderr, code }) => {
-      expect(code).toBe(0);
-      expect(stdout).toContain('Add Word Tool');
-      expect(stdout).toContain('Usage:');
-      expect(stderr).not.toContain('astro:');
-      done();
-    });
+  it('add-word tool can load and show help', async () => {
+    const { stdout, stderr, code } = await spawnTool(['tools/add-word.ts', '--help'], { env: DEMO_ENV });
+
+    expect(code).toBe(0);
+    expect(stdout).toContain('Add Word Tool');
+    expect(stdout).toContain('Usage:');
+    expect(stderr).not.toContain('astro:');
   }, 15000);
 
   it('utils can load getAllWords without astro dependencies', async () => {
@@ -135,10 +130,6 @@ describe('CLI Tools: Import & Execution', () => {
     for (const utilPath of sharedUtils) {
       const fullPath = path.join(process.cwd(), utilPath);
 
-      if (!fs.existsSync(fullPath)) {
-        continue;
-      }
-
       try {
         await import(fullPath);
       } catch (error) {
@@ -150,10 +141,8 @@ describe('CLI Tools: Import & Execution', () => {
           );
         }
 
-        // Allow other errors (missing types, etc.) but not astro: imports
-        if (error.code !== 'ERR_MODULE_NOT_FOUND') {
-          throw error;
-        }
+        // A missing util or unresolvable import is a real import-chain break
+        throw error;
       }
     }
   });
@@ -161,29 +150,15 @@ describe('CLI Tools: Import & Execution', () => {
 
 describe('CLI Tools: Basic Functionality', () => {
 
-  it('generate-images can process a word from demo data', (done) => {
-    // Find an actual word from demo data to test with
-    if (!fs.existsSync(TEST_DATA_DIR)) {
-      console.log('Skipping: demo data not available');
-      done();
-      return;
-    }
-
+  it('generate-images can process a word from demo data', async () => {
+    // Find an actual word from demo data to test with. The demo dataset is
+    // always present, so a missing fixture is a failure rather than a skip.
     const yearDirs = fs.readdirSync(TEST_DATA_DIR).filter(d => /^\d{4}$/.test(d));
-    if (yearDirs.length === 0) {
-      console.log('Skipping: no year directories in demo data');
-      done();
-      return;
-    }
+    expect(yearDirs.length).toBeGreaterThan(0);
 
     const firstYearDir = path.join(TEST_DATA_DIR, yearDirs[0]);
     const wordFiles = fs.readdirSync(firstYearDir).filter(f => f.endsWith('.json'));
-
-    if (wordFiles.length === 0) {
-      console.log('Skipping: no word files in demo data');
-      done();
-      return;
-    }
+    expect(wordFiles.length).toBeGreaterThan(0);
 
     const firstWordFile = path.join(firstYearDir, wordFiles[0]);
     const wordData = JSON.parse(fs.readFileSync(firstWordFile, 'utf-8'));
@@ -193,28 +168,24 @@ describe('CLI Tools: Basic Functionality', () => {
     // the tracked demo social cards under public/.
     const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), 'wotd-images-'));
 
-    spawnTool(
-      ['tools/generate-images.ts', '--word', testWord, '--force'],
-      { env: { ...DEMO_ENV, IMAGES_OUTPUT_DIR: outputDir }, timeout: 30000 },
-      ({ stdout, stderr, code }) => {
-        try {
-          expect(code).toBe(0);
-          expect(stdout).toContain('Generate images tool starting');
-          expect(stdout).toContain(`Generated image for word`);
-          expect(stderr).not.toContain('astro:');
-          expect(stderr).not.toContain('Only URLs with a scheme in: file, data, and node');
-          // The card landed in the temp dir, not the tracked public/ tree.
-          const generated = fs.readdirSync(outputDir, { recursive: true })
-            .filter(entry => String(entry).endsWith('.png'));
-          expect(generated.length).toBeGreaterThan(0);
-          done();
-        } catch (error) {
-          done(error);
-        } finally {
-          fs.rmSync(outputDir, { recursive: true, force: true });
-        }
-      },
-    );
+    try {
+      const { stdout, stderr, code } = await spawnTool(
+        ['tools/generate-images.ts', '--word', testWord, '--force'],
+        { env: { ...DEMO_ENV, IMAGES_OUTPUT_DIR: outputDir }, timeout: 30000 },
+      );
+
+      expect(code).toBe(0);
+      expect(stdout).toContain('Generate images tool starting');
+      expect(stdout).toContain(`Generated image for word`);
+      expect(stderr).not.toContain('astro:');
+      expect(stderr).not.toContain('Only URLs with a scheme in: file, data, and node');
+      // The card landed in the temp dir, not the tracked public/ tree.
+      const generated = fs.readdirSync(outputDir, { recursive: true })
+        .filter(entry => String(entry).endsWith('.png'));
+      expect(generated.length).toBeGreaterThan(0);
+    } finally {
+      fs.rmSync(outputDir, { recursive: true, force: true });
+    }
   }, 35000);
 
   it('tools can access constants without circular dependencies', async () => {
