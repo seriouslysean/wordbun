@@ -32,7 +32,7 @@ const isDictionaryDefinition = (value: unknown): value is DictionaryDefinition =
   && isOptional(value.synonyms, isStringArray)
   && isOptional(value.antonyms, isStringArray);
 
-const isWordEnrichment = (value: unknown): value is WordEnrichment =>
+export const isWordEnrichment = (value: unknown): value is WordEnrichment =>
   isRecord(value)
   && isOptional(value.synonyms, isStringArray)
   && isOptional(value.antonyms, isStringArray)

@@ -1,4 +1,4 @@
-import type { DictionaryDefinition, WordData, WordGrouping, WordSense } from '#types';
+import type { DictionaryDefinition, WordData, WordEnrichment, WordGrouping, WordSense } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { MAX_SENSE_EXAMPLES } from '#constants/text-patterns';
 import { slugify } from '#utils/text-utils';
@@ -364,3 +364,37 @@ export const corpusRelations = (
   return result;
 };
 
+// Stored key order for enrichment, shared by every writer so a refresh that
+// changes nothing produces no diff.
+const ENRICHMENT_TEXT_FIELDS = ['pronunciation', 'audio', 'etymology'] as const;
+const ENRICHMENT_LIST_FIELDS = ['synonyms', 'antonyms', 'related'] as const;
+
+/**
+ * Merges refreshed enrichment over what a word file already stores. A field
+ * the refresh supplies replaces the stored value; a field it does not supply
+ * (absent, empty string, empty list) keeps the stored value, so a fallback
+ * adapter or a failed WordNet lookup cannot erase earlier enrichment.
+ * Returns undefined when neither side has anything to store.
+ */
+export const mergeEnrichment = (
+  stored: WordEnrichment | undefined,
+  refreshed: WordEnrichment | undefined,
+): WordEnrichment | undefined => {
+  const merged: WordEnrichment = {};
+
+  for (const field of ENRICHMENT_TEXT_FIELDS) {
+    const value = refreshed?.[field] || stored?.[field];
+    if (value) {
+      merged[field] = value;
+    }
+  }
+
+  for (const field of ENRICHMENT_LIST_FIELDS) {
+    const value = refreshed?.[field]?.length ? refreshed[field] : stored?.[field];
+    if (value?.length) {
+      merged[field] = value;
+    }
+  }
+
+  return Object.keys(merged).length > 0 ? merged : undefined;
+};

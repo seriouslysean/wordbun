@@ -6,19 +6,32 @@ import { fetchWithFallback } from '#adapters';
 import { isEntryPoint } from '#tools/entry';
 import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
 import { buildWordData, getWordFiles, primaryPartOfSpeech, tryFetchRelations } from '#tools/utils';
+import type { WordEnrichment } from '#types';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { isRecord } from '#utils/type-guards';
-import { isValidDictionaryData } from '#utils/word-validation';
+import { isValidDictionaryData, isWordEnrichment } from '#utils/word-validation';
+
+interface StoredEntry {
+  preserveCase: boolean;
+  enrichment?: WordEnrichment;
+}
 
 /**
- * Reads the preserveCase flag from an existing word file so a backfill keeps it.
+ * Reads, once, what a backfill must carry over from the file it replaces: the
+ * preserveCase flag and any enrichment. An unreadable file carries nothing.
  */
-function readPreserveCase(filePath: string): boolean {
+function readStoredEntry(filePath: string): StoredEntry {
   try {
     const data: unknown = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    return isRecord(data) && data.preserveCase === true;
+    if (!isRecord(data)) {
+      return { preserveCase: false };
+    }
+    return {
+      preserveCase: data.preserveCase === true,
+      enrichment: isWordEnrichment(data.enrichment) ? data.enrichment : undefined,
+    };
   } catch {
-    return false;
+    return { preserveCase: false };
   }
 }
 
@@ -78,7 +91,7 @@ async function regenerateWordFile(word: string, date: string, originalPath: stri
     }
 
     const relations = await tryFetchRelations(word, primaryPartOfSpeech(response.definitions));
-    const preserveCase = readPreserveCase(originalPath);
+    const { preserveCase, enrichment: storedEnrichment } = readStoredEntry(originalPath);
     const wordData = buildWordData({
       // Keep original casing for preserveCase words; backfill must not lowercase them.
       word: preserveCase ? word : word.toLowerCase(),
@@ -87,6 +100,7 @@ async function regenerateWordFile(word: string, date: string, originalPath: stri
       response,
       relations,
       preserveCase,
+      storedEnrichment,
     });
 
     fs.writeFileSync(originalPath, JSON.stringify(wordData, null, 4));

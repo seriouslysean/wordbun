@@ -40,6 +40,19 @@ describe('buildWordData', () => {
     expect(wordData.enrichment?.antonyms).toBeUndefined();
   });
 
+  it('keeps stored enrichment the refreshed response does not supply', () => {
+    // A fallback adapter returns definitions only, and WordNet was unavailable.
+    const wordData = buildWordData({
+      word: 'speed',
+      date: '20250101',
+      adapterName: 'wiktionary',
+      response: baseResponse(),
+      relations: null,
+      storedEnrichment: { pronunciation: 'spēd', synonyms: ['velocity'] },
+    });
+    expect(wordData.enrichment).toEqual({ pronunciation: 'spēd', synonyms: ['velocity'] });
+  });
+
   it('passes through preserveCase', () => {
     const wordData = buildWordData({
       word: 'Japan',

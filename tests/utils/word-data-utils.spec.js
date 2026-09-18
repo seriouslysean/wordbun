@@ -36,6 +36,7 @@ import {
   getWordSenses,
   corpusRelationMatch,
   corpusRelations,
+  mergeEnrichment,
 } from '#utils/word-data-utils';
 import {
   extractWordDefinition,
@@ -754,6 +755,51 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
 
     it('dedupes when several terms resolve to the same headword', () => {
       expect(corpusRelations('happy', ['joyful', 'joyous'], corpus)).toEqual(['joy']);
+    });
+  });
+
+  describe('mergeEnrichment', () => {
+    const stored = {
+      pronunciation: 'spēd',
+      audio: 'https://example.com/speed.mp3',
+      etymology: 'Old English spēd',
+      synonyms: ['velocity'],
+      antonyms: ['slowness'],
+      related: ['motion'],
+    };
+
+    it('keeps every stored field when the refresh supplies none', () => {
+      expect(mergeEnrichment(stored, undefined)).toEqual(stored);
+      expect(mergeEnrichment(stored, {})).toEqual(stored);
+    });
+
+    it('replaces only the fields the refresh supplies', () => {
+      const merged = mergeEnrichment(stored, { etymology: 'Middle English spede', synonyms: ['pace', 'rate'] });
+
+      expect(merged).toEqual({
+        ...stored,
+        etymology: 'Middle English spede',
+        synonyms: ['pace', 'rate'],
+      });
+    });
+
+    it('treats empty strings and empty lists as not supplied', () => {
+      expect(mergeEnrichment(stored, { pronunciation: '', antonyms: [] })).toEqual(stored);
+    });
+
+    it('returns the refresh unchanged when nothing was stored', () => {
+      expect(mergeEnrichment(undefined, { pronunciation: 'spēd' })).toEqual({ pronunciation: 'spēd' });
+    });
+
+    it('returns undefined when neither side has anything, so enrichment stays absent', () => {
+      expect(mergeEnrichment(undefined, undefined)).toBeUndefined();
+      expect(mergeEnrichment({}, { synonyms: [] })).toBeUndefined();
+    });
+
+    it('writes fields in one fixed order regardless of which side supplied them', () => {
+      const merged = mergeEnrichment({ related: ['motion'], pronunciation: 'spēd' }, { synonyms: ['pace'], audio: 'a.mp3' });
+
+      expect(Object.keys(merged)).toEqual(['pronunciation', 'audio', 'synonyms', 'related']);
     });
   });
 

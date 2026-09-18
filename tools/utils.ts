@@ -13,7 +13,7 @@ import { formatDate, isValidDate } from '#utils/date-utils';
 import { getErrorMessage, logger } from '#utils/logger';
 import { slugify } from '#utils/text-utils';
 import { isRecord, isString } from '#utils/type-guards';
-import { normalizeToBasePOS } from '#utils/word-data-utils';
+import { mergeEnrichment, normalizeToBasePOS } from '#utils/word-data-utils';
 import { isValidDictionaryData, parseWordData } from '#utils/word-validation';
 
 // ---------------------------------------------------------------------------
@@ -377,7 +377,9 @@ function composeEnrichment(
 /**
  * Assembles the stored WordData from a dictionary response plus optional WordNet
  * relations. Shared by add-word and regenerate-all-words so a backfill produces
- * the same shape and never strips enrichment or preserveCase.
+ * the same shape. `storedEnrichment` is what the file being replaced already
+ * holds: fields the refresh does not supply are kept from it, so a backfill
+ * never strips enrichment; `preserveCase` is carried the same way by the caller.
  */
 export function buildWordData(params: {
   word: string;
@@ -386,9 +388,10 @@ export function buildWordData(params: {
   response: DictionaryResponse;
   relations?: WordRelations | null;
   preserveCase?: boolean;
+  storedEnrichment?: WordEnrichment;
 }): WordData {
-  const { word, date, adapterName, response, relations = null, preserveCase = false } = params;
-  const enrichment = composeEnrichment(response.headword, relations);
+  const { word, date, adapterName, response, relations = null, preserveCase = false, storedEnrichment } = params;
+  const enrichment = mergeEnrichment(storedEnrichment, composeEnrichment(response.headword, relations));
   const wordData: WordData = {
     word,
     date,
