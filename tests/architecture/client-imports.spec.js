@@ -1,13 +1,14 @@
 /**
  * Architecture test to keep browser bundles small
  *
- * Bundled <script> blocks in .astro files import a few pure modules from
- * utils/. Vite ships everything those modules import as values, so a single
- * re-export in one of them (say, of a dictionary helper) pulls the
+ * Bundled <script> blocks in .astro files import a few modules from utils/
+ * and src/utils/. Vite ships everything those modules import as values, so a
+ * single re-export in one of them (say, of a dictionary helper) pulls the
  * part-of-speech vocabulary into every page's JavaScript while every other
- * gate stays green. Each client-reachable module in utils/ and types/ may
- * import values only from the allowlist below. `import type` and
- * `export type` are erased at build time and always allowed.
+ * gate stays green. The test follows value imports through utils/, types/,
+ * constants/ and src/utils/, and each one it meets must be an edge listed
+ * below. `import type` and `export type` are erased at build time and always
+ * allowed.
  */
 
 import fs from 'node:fs';
@@ -17,9 +18,39 @@ import { describe, it, expect } from 'vitest';
 const ROOT = process.cwd();
 const SRC_DIR = path.join(ROOT, 'src');
 
-// Growing this list grows the client bundle: build and compare the shared
-// chunk in dist/_astro/ before adding to it.
-const CLIENT_VALUE_IMPORTS = new Set(['#utils/type-guards']);
+// Every value import client scripts reach today, as `module -> specifier`, so
+// a new import fails even between modules already listed. This list should
+// shrink, not grow: an added edge grows every page's JavaScript, so build and
+// compare the shared chunk in dist/_astro/ before adding one.
+const CLIENT_VALUE_EDGES = new Set([
+  'constants/stats.ts -> #utils/i18n-utils',
+  'constants/urls.ts -> #constants/stats',
+  'constants/urls.ts -> #utils/text-utils',
+  'src/utils/logger.ts -> #utils/logger-core',
+  'src/utils/logger.ts -> @sentry/astro',
+  'src/utils/logger.ts -> astro:env/client',
+  'src/utils/url-utils.ts -> #astro-utils/logger',
+  'src/utils/url-utils.ts -> #constants/urls',
+  'src/utils/url-utils.ts -> #utils/text-utils',
+  'src/utils/url-utils.ts -> #utils/url-utils',
+  'src/utils/url-utils.ts -> astro:env/client',
+  'types/index.ts -> #types/adapters',
+  'types/index.ts -> #types/common',
+  'types/index.ts -> #types/merriam-webster',
+  'types/index.ts -> #types/schema',
+  'types/index.ts -> #types/seo',
+  'types/index.ts -> #types/stats',
+  'types/index.ts -> #types/wiktionary',
+  'types/index.ts -> #types/word',
+  'types/index.ts -> #types/wordnik',
+  'utils/i18n-utils.ts -> #locales/en.json',
+  'utils/i18n-utils.ts -> #utils/type-guards',
+  'utils/logger-core.ts -> #types',
+  'utils/text-pattern-utils.ts -> #constants/text-patterns',
+  'utils/text-utils.ts -> #utils/text-pattern-utils',
+  'utils/url-utils.ts -> #constants/urls',
+  'utils/word-validation.ts -> #utils/type-guards',
+]);
 
 // is:inline scripts (JSON-LD, analytics) are emitted verbatim, not bundled
 const BUNDLED_SCRIPT = /<script(?![^>]*\bis:inline\b)[^>]*>([\s\S]*?)<\/script>/g;
@@ -36,13 +67,16 @@ const valueImports = source => [
   ...[...source.matchAll(DYNAMIC_IMPORT)].map(([, specifier]) => specifier),
 ];
 
-// Only utils/ and types/ are followed: src/ modules have their own rules
+// The TypeScript aliases from package.json `imports`; anything else (npm
+// packages, astro: modules, JSON) is an edge but is not followed
+const ALIAS_DIRS = { 'utils': 'utils', 'types': 'types', 'constants': 'constants', 'astro-utils': 'src/utils' };
+
 const resolveLocal = specifier => {
   if (specifier === '#types') {
     return 'types/index.ts';
   }
-  const match = /^#(utils|types)\/(.+)$/.exec(specifier);
-  return match ? `${match[1]}/${match[2]}.ts` : null;
+  const match = /^#(utils|types|constants|astro-utils)\/(.+)$/.exec(specifier);
+  return match ? `${ALIAS_DIRS[match[1]]}/${match[2]}.ts` : null;
 };
 
 const clientEntryModules = () => {
@@ -55,33 +89,50 @@ const clientEntryModules = () => {
   return [...new Set(specifiers.map(resolveLocal).filter(Boolean))];
 };
 
+/**
+ * Every value import reachable from the client scripts, as `module -> specifier`.
+ */
+const clientValueEdges = () => {
+  const queue = clientEntryModules();
+  const seen = new Set(queue);
+  const edges = new Set();
+
+  while (queue.length > 0) {
+    const modulePath = queue.shift();
+    const content = fs.readFileSync(path.join(ROOT, modulePath), 'utf-8');
+
+    for (const specifier of valueImports(content)) {
+      edges.add(`${modulePath} -> ${specifier}`);
+      const resolved = resolveLocal(specifier);
+      if (resolved && !seen.has(resolved)) {
+        seen.add(resolved);
+        queue.push(resolved);
+      }
+    }
+  }
+  return edges;
+};
+
 describe('Architecture: client bundle imports', () => {
-  it('finds the modules client scripts import from utils/ and types/', () => {
+  it('finds the modules client scripts import', () => {
     expect(clientEntryModules().length).toBeGreaterThan(0);
   });
 
-  it('client-reachable modules import values only from the allowlist', () => {
-    const queue = clientEntryModules();
-    const seen = new Set(queue);
+  it('client-reachable modules import values only along the listed edges', () => {
+    const unlisted = [...clientValueEdges()].filter(edge => !CLIENT_VALUE_EDGES.has(edge));
 
-    while (queue.length > 0) {
-      const modulePath = queue.shift();
-      const content = fs.readFileSync(path.join(ROOT, modulePath), 'utf-8');
+    expect(
+      unlisted,
+      'these modules are bundled into client scripts and import values along unlisted edges; '
+      + 'use `import type`, move the code out of the module, or add the edge to '
+      + 'CLIENT_VALUE_EDGES after checking the bundle size',
+    ).toEqual([]);
+  });
 
-      for (const specifier of valueImports(content)) {
-        expect(
-          CLIENT_VALUE_IMPORTS.has(specifier),
-          `${modulePath} is bundled into client scripts and imports values from ${specifier}; `
-          + 'use `import type`, move the code out of this module, or add the specifier to '
-          + 'CLIENT_VALUE_IMPORTS after checking the bundle size',
-        ).toBe(true);
+  it('lists no edge the client scripts no longer reach', () => {
+    const reached = clientValueEdges();
+    const stale = [...CLIENT_VALUE_EDGES].filter(edge => !reached.has(edge));
 
-        const resolved = resolveLocal(specifier);
-        if (resolved && !seen.has(resolved)) {
-          seen.add(resolved);
-          queue.push(resolved);
-        }
-      }
-    }
+    expect(stale, 'remove these edges from CLIENT_VALUE_EDGES so they cannot come back unnoticed').toEqual([]);
   });
 });
