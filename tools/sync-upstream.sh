@@ -147,4 +147,5 @@ git commit --quiet --no-edit
 
 echo ""
 echo "Merged upstream/main into $BRANCH after every gate passed. Nothing was pushed and main is unchanged."
-echo "To publish: git switch main && git merge --ff-only $BRANCH && git push"
+# origin by name: in a clone made with -o upstream, main tracks upstream
+echo "To publish: git switch main && git merge --ff-only $BRANCH && git push origin main"

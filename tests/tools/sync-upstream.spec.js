@@ -277,12 +277,16 @@ describe('sync-upstream.sh', { timeout: 90000 }, () => {
   });
 
   describe('merges on a sync branch', () => {
-    it('commits the merge after every gate passes, leaving main and the remote alone', async () => {
+    // main tracks upstream/main here, as in a clone made with -o upstream,
+    // so the printed publish command must name origin
+    it('commits the merge after every gate passes, leaving main and the remote alone, and prints a push to origin', async () => {
       diverge();
       release({ 'src/engine.ts': 'export const version = 2;\n' });
       write(ctx.site, '.env', 'SITE_ID=local\n');
+      git(ctx.site, 'branch', '--quiet', '--set-upstream-to=upstream/main', 'main');
       const main = git(ctx.site, 'rev-parse', 'main');
       const remote = originRefs();
+      const upstream = git(path.join(ctx.root, 'upstream.git'), 'rev-parse', 'main');
 
       const result = await sync();
 
@@ -296,6 +300,12 @@ describe('sync-upstream.sh', { timeout: 90000 }, () => {
       expect(git(ctx.site, 'rev-parse', 'main')).toBe(main);
       expect(originRefs()).toBe(remote);
       expect(fs.readFileSync(path.join(ctx.site, '.env'), 'utf-8')).toBe('SITE_ID=local\n');
+
+      const merge = git(ctx.site, 'rev-parse', 'HEAD');
+      const publish = result.output.match(/^To publish: (.+)$/m)?.[1];
+      execFileSync('bash', ['-c', publish], { cwd: ctx.site, env: ctx.env, stdio: 'pipe' });
+      expect(git(path.join(ctx.root, 'upstream.git'), 'rev-parse', 'main')).toBe(upstream);
+      expect(git(ctx.origin, 'rev-parse', 'main')).toBe(merge);
     });
 
     it('leaves the merge staged and uncommitted when a gate fails', async () => {
