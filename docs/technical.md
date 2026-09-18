@@ -81,6 +81,7 @@ locales/
 tests/
   setup.js                       # Global mocks (astro:env/client, astro:content, translations)
   helpers/spawn.js               # CLI tool process spawner
+  helpers/log-levels.js          # Preload that marks a spawned tool's warn and error lines
   adapters/                      # Adapter tests (Vitest)
   architecture/                  # Import boundary enforcement (Vitest)
   config/                        # Config tests (Vitest)
@@ -377,7 +378,7 @@ The `isLogContext` type guard from `#types` validates the context argument befor
 
 **The `exit()` helper**: Always use `await exit(code)` instead of `process.exit()` in error handlers. `process.exit()` kills in-flight async work immediately, losing pending Sentry events. `exit()` flushes first.
 
-**Error level means fault**: only `logger.error` creates a Sentry event (`captureException` for an `Error`, otherwise `captureMessage` at level `error`); `warn`, `info` and `debug` only print. So CLI tools refuse operator input at `warn`: add-word's blank word, malformed or future date, date or word already taken, and a word every adapter in the chain reported as not found all exit 1 with a warn-level message. Network failures, HTTP errors, unexpected response shapes, rate limits, unreadable word files and missing configuration log at `error`.
+**Error level means fault**: only `logger.error` creates a Sentry event (`captureException` for an `Error`, otherwise `captureMessage` at level `error`); `warn`, `info` and `debug` only print. So CLI tools refuse operator input at `warn`: add-word's blank word, malformed or future date, date or word already taken, and a word every adapter in the chain reported as not found; generate-images' `--word` that is not in the data and `--page` that is not a page; and regenerate-all-words' malformed `--timeout`, `--batch-size` or `--batch-timeout` all exit 1 with a warn-level message. Network failures, HTTP errors, unexpected response shapes, rate limits, unreadable word files and missing configuration log at `error`.
 
 ## Statistics System
 

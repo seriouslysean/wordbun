@@ -1,22 +1,26 @@
 /**
  * regenerate-all-words option handling: every documented option does
  * something, defaults in the help are the defaults in the code, and bad
- * numbers stop the run before any word is touched. Real subprocesses in a
- * temp cwd with --dry-run, so no network and nothing under data/.
+ * numbers stop the run before any word is touched, at a level the CLI logger
+ * does not forward to Sentry (only `error` is). Real subprocesses in a temp
+ * cwd with --dry-run, so no network and nothing under data/; the preloaded
+ * helper marks each warn and error line with its level.
  */
 
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { spawnTool } from '#tests/helpers/spawn.js';
 
 const TOOL = path.join(process.cwd(), 'tools', 'regenerate-all-words.ts');
+const LOG_LEVELS = pathToFileURL(path.join(process.cwd(), 'tests', 'helpers', 'log-levels.js')).href;
 
 const ctx = { tempDir: '' };
 
-const run = (args) => spawnTool([TOOL, ...args], {
+const run = (args) => spawnTool(['--import', LOG_LEVELS, TOOL, ...args], {
   env: { SOURCE_DIR: '', DICTIONARY_ADAPTER: '' },
   cwd: ctx.tempDir,
 });
@@ -40,12 +44,13 @@ describe('regenerate-all-words options', () => {
     ['--timeout=-5', 'timeout'],
     ['--timeout=12abc', 'timeout'],
     ['--batch-timeout=NaN', 'batch-timeout'],
-  ])('rejects %s with a clear error and exit 1', async (flag, option) => {
+  ])('refuses %s at warn with exit 1', async (flag, option) => {
     const { stdout, stderr, code } = await run(['--dry-run', flag]);
 
     expect(code).toBe(1);
-    expect(stderr).toContain('Invalid numeric option');
+    expect(stderr).toContain('[warn] Invalid numeric option');
     expect(stderr).toContain(option);
+    expect(stderr).not.toContain('[error]');
     expect(stdout).not.toContain('alpha');
   });
 

@@ -116,8 +116,10 @@ async function bulkGenerate<T extends BulkItem>(
  */
 async function generateSingleImage(word: string, options: GenerateImageOptions): Promise<boolean> {
   const wordData = findExistingWord(word);
+  // A word that is not in the data is the operator's typo, refused at warn as
+  // add-word refuses its input: the CLI logger forwards only errors to Sentry
   if (!wordData) {
-    logger.error('Word not found in data files', { word });
+    logger.warn('Word not found in data files', { word });
     return false;
   }
 
@@ -142,8 +144,9 @@ async function generatePageImage(pagePath: string, options: GenerateImageOptions
   const allPages = getAllPageMetadata(getAllWords().words);
   const page = allPages.find(p => p.path === pagePath);
 
+  // An unknown page path is the operator's typo too
   if (!page) {
-    logger.error('Page not found in available pages', { pagePath });
+    logger.warn('Page not found in available pages', { pagePath });
     return false;
   }
 

@@ -55,14 +55,16 @@ export const DEFAULTS = {
 const RATE_LIMIT_BACKOFF_MS = 30000;
 
 /**
- * Parses a whole-number CLI option. Throws on anything else (NaN, fractions,
- * trailing junk, values below `min`) so a typo cannot become a zero-size batch
- * or a NaN delay.
+ * Parses a whole-number CLI option. Anything else (NaN, fractions, trailing
+ * junk, values below `min`) exits 1, so a typo cannot become a zero-size batch
+ * or a NaN delay. The refusal logs at warn, as add-word refuses its input: a
+ * typo is not a fault, and the CLI logger forwards only errors to Sentry.
  */
-function parseCount(option: string, raw: string, min: number): number {
+async function parseCount(option: string, raw: string, min: number): Promise<number> {
   const value = Number(raw);
   if (!/^\d+$/.test(raw) || value < min) {
-    throw new Error(`Invalid numeric option --${option}: expected a whole number of at least ${min}, got "${raw}"`);
+    logger.warn('Invalid numeric option', { option: `--${option}`, expected: `a whole number of at least ${min}`, got: raw });
+    return exit(1);
   }
   return value;
 }
@@ -258,13 +260,13 @@ if (isEntryPoint(import.meta.url)) {
   }
 
   const run = async (): Promise<void> => {
-    // Validation throws before any word is touched; the catch below reports it.
+    // The options are validated before any word is touched.
     const failed = await regenerateAllWords({
       dryRun: !!values['dry-run'],
       force: !!values.force,
-      timeout: parseCount('timeout', values.timeout, 0),
-      batchSize: parseCount('batch-size', values['batch-size'], 1),
-      batchTimeout: parseCount('batch-timeout', values['batch-timeout'], 0),
+      timeout: await parseCount('timeout', values.timeout, 0),
+      batchSize: await parseCount('batch-size', values['batch-size'], 1),
+      batchTimeout: await parseCount('batch-timeout', values['batch-timeout'], 0),
     });
 
     if (failed > 0) {
