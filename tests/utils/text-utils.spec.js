@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   countSyllables,
+  flattenErrors,
   getConsonantCount,
   getVowelCount,
   getWordEndings,
@@ -220,5 +221,24 @@ describe('text-utils', () => {
       expect(isAllConsonants('hello')).toBe(false);
       expect(isAllConsonants('bcda')).toBe(false);
     });
+  });
+});
+describe('flattenErrors', () => {
+  it('returns a plain error or thrown value as a single-item list', () => {
+    const error = new Error('boom');
+    expect(flattenErrors(error)).toEqual([error]);
+    expect(flattenErrors('boom')).toEqual(['boom']);
+  });
+
+  it('returns the failures of an AggregateError in order', () => {
+    const first = new Error('first');
+    const second = new Error('second');
+    expect(flattenErrors(new AggregateError([first, second], 'both'))).toEqual([first, second]);
+  });
+
+  it('flattens nested AggregateErrors depth-first', () => {
+    const [a, b, c] = [new Error('a'), new Error('b'), new Error('c')];
+    const nested = new AggregateError([a, new AggregateError([b, c], 'inner')], 'outer');
+    expect(flattenErrors(nested)).toEqual([a, b, c]);
   });
 });

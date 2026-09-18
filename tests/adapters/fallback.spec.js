@@ -13,6 +13,31 @@ vi.mock('#utils/logger', () => ({
   logger: mockLogger,
 }));
 
+const RATE_LIMITED = 'Rate limit exceeded. Please try again later.';
+const NOT_FOUND = 'Word "test" not found in dictionary. Please check the spelling.';
+const UNEXPECTED_SHAPE = 'Wordnik returned an unexpected response shape for "test"';
+
+const mockFailingAdapter = (modulePath, exportName, name, error) => {
+  vi.doMock(modulePath, () => ({
+    [exportName]: {
+      name,
+      fetchWordData: vi.fn().mockRejectedValue(error),
+      transformToWordData: vi.fn(),
+      transformWordData: vi.fn(),
+      isValidResponse: vi.fn(),
+    },
+  }));
+};
+
+const catchError = async (promise) => {
+  try {
+    await promise;
+  } catch (error) {
+    return error;
+  }
+  throw new Error('expected a rejection');
+};
+
 describe('fetchWithFallback', () => {
   beforeEach(() => {
     vi.resetModules();
@@ -127,10 +152,12 @@ describe('fetchWithFallback', () => {
 
     const { fetchWithFallback } = await import('#adapters');
 
-    await expect(fetchWithFallback('test')).rejects.toThrow('Word not found');
+    const error = await catchError(fetchWithFallback('test'));
+    expect(error).not.toBeInstanceOf(AggregateError);
+    expect(error.message).toBe('Word not found');
   });
 
-  it('throws when both primary and fallback fail', async () => {
+  it('throws one error naming both failures when primary and fallback fail', async () => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
     vi.stubEnv('DICTIONARY_FALLBACK', 'wiktionary');
 
@@ -156,7 +183,9 @@ describe('fetchWithFallback', () => {
 
     const { fetchWithFallback } = await import('#adapters');
 
-    await expect(fetchWithFallback('test')).rejects.toThrow('Wiktionary: not found');
+    await expect(fetchWithFallback('test')).rejects.toThrow(
+      'All dictionary adapters failed for "test": merriam-webster: MW: not found | wiktionary: Wiktionary: not found',
+    );
   });
 
   it('tries each fallback in chain order until one succeeds', async () => {
@@ -245,7 +274,7 @@ describe('fetchWithFallback', () => {
     expect(mockLogger.warn).toHaveBeenCalledTimes(1);
   });
 
-  it('throws last error when all fallbacks in chain fail', async () => {
+  it('keeps every failure in chain order when all fallbacks fail', async () => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
     vi.stubEnv('DICTIONARY_FALLBACK', 'wordnik,wiktionary');
 
@@ -281,7 +310,42 @@ describe('fetchWithFallback', () => {
 
     const { fetchWithFallback } = await import('#adapters');
 
-    await expect(fetchWithFallback('test')).rejects.toThrow('Wiktionary: not found');
+    const error = await catchError(fetchWithFallback('test'));
+    expect(error).toBeInstanceOf(AggregateError);
+    expect(error.errors.map(e => e.message)).toEqual(['MW: not found', 'Wordnik: not found', 'Wiktionary: not found']);
+  });
+
+  it.each([
+    ['a rate limit', RATE_LIMITED],
+    ['an unexpected shape', UNEXPECTED_SHAPE],
+  ])('does not let a fallback 404 mask %s from the primary', async (_label, primaryMessage) => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'wordnik');
+    vi.stubEnv('DICTIONARY_FALLBACK', 'wiktionary');
+    const primaryError = new Error(primaryMessage);
+    const fallbackError = new Error(NOT_FOUND);
+    mockFailingAdapter('#adapters/wordnik', 'wordnikAdapter', 'wordnik', primaryError);
+    mockFailingAdapter('#adapters/wiktionary', 'wiktionaryAdapter', 'wiktionary', fallbackError);
+
+    const { fetchWithFallback } = await import('#adapters');
+
+    const error = await catchError(fetchWithFallback('test'));
+    expect(error).toBeInstanceOf(AggregateError);
+    expect(error.errors).toEqual([primaryError, fallbackError]);
+    expect(error.message).toBe(
+      `All dictionary adapters failed for "test": wordnik: ${primaryMessage} | wiktionary: ${NOT_FOUND}`,
+    );
+  });
+
+  it('reports an unknown fallback adapter alongside the primary failure', async () => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'wordnik');
+    vi.stubEnv('DICTIONARY_FALLBACK', 'nonesuch');
+    mockFailingAdapter('#adapters/wordnik', 'wordnikAdapter', 'wordnik', new Error(RATE_LIMITED));
+
+    const { fetchWithFallback } = await import('#adapters');
+
+    await expect(fetchWithFallback('test')).rejects.toThrow(
+      `All dictionary adapters failed for "test": wordnik: ${RATE_LIMITED} | nonesuch: Unknown adapter: nonesuch`,
+    );
   });
 
   it('throws primary error when fallback is empty string', async () => {

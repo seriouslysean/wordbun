@@ -14,6 +14,15 @@ export const getErrorMessage = (error: unknown): string =>
   error instanceof Error ? error.message : String(error);
 
 /**
+ * Lists the individual failures behind a thrown value, in order. An
+ * AggregateError (fetchWithFallback throws one when every adapter fails) is
+ * expanded; anything else is its own single failure. Callers classify with
+ * `.some()` / `.every()` instead of matching the combined message.
+ */
+export const flattenErrors = (error: unknown): unknown[] =>
+  error instanceof AggregateError ? error.errors.flatMap(flattenErrors) : [error];
+
+/**
  * Convert any string to a URL-safe slug
  * @param str - String to convert to slug format
  * @returns URL-safe slug (lowercase, hyphenated, alphanumeric)

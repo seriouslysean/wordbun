@@ -8,6 +8,7 @@ import { createWordEntry, findExistingWord } from '#tools/utils';
 import type { WordData } from '#types';
 import { getTodayYYYYMMDD, isValidDate } from '#utils/date-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
+import { flattenErrors } from '#utils/text-utils';
 import { parseWordData } from '#utils/word-validation';
 
 /**
@@ -55,7 +56,7 @@ interface AddWordOptions {
  * @param options.overwrite - Whether to overwrite existing word
  * @param options.preserveCase - Whether to preserve original capitalization
  */
-async function addWord(input: string, options: AddWordOptions = {}): Promise<void> {
+export async function addWord(input: string, options: AddWordOptions = {}): Promise<void> {
   const { date, overwrite = false, preserveCase = false } = options;
   const word = input?.trim();
   try {
@@ -107,7 +108,10 @@ async function addWord(input: string, options: AddWordOptions = {}): Promise<voi
 
   } catch (error) {
     const errorMessage = getErrorMessage(error);
-    if (errorMessage.includes('not found in dictionary')) {
+    // "Not found" only when every adapter said so; a rate limit or shape error
+    // from one of them is a different problem and is reported as such
+    const isNotFound = flattenErrors(error).every(failure => getErrorMessage(failure).includes('not found in dictionary'));
+    if (isNotFound) {
       logger.error('Word not found in dictionary', { word, errorMessage });
     } else {
       logger.error('Failed to add word', { word, errorMessage });

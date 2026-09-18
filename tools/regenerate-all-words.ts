@@ -8,6 +8,7 @@ import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
 import { buildWordData, getWordFiles, primaryPartOfSpeech, tryFetchRelations } from '#tools/utils';
 import type { WordEnrichment } from '#types';
 import { exit, getErrorMessage, logger } from '#utils/logger';
+import { flattenErrors } from '#utils/text-utils';
 import { isRecord } from '#utils/type-guards';
 import { isValidDictionaryData, isWordEnrichment } from '#utils/word-validation';
 
@@ -74,7 +75,7 @@ function parseCount(option: string, raw: string, min: number): number {
  * @param retryCount - Current retry attempt (for exponential backoff)
  * @returns True if successful, false otherwise
  */
-async function regenerateWordFile(word: string, date: string, originalPath: string, retryCount: number = 0): Promise<boolean> {
+export async function regenerateWordFile(word: string, date: string, originalPath: string, retryCount: number = 0): Promise<boolean> {
   const maxRetries = 3;
 
   try {
@@ -108,11 +109,14 @@ async function regenerateWordFile(word: string, date: string, originalPath: stri
   } catch (error) {
     const errorMessage = getErrorMessage(error);
 
-    // Check if this is a rate limit error
-    const isRateLimit = errorMessage.includes('Rate limit') ||
-                       errorMessage.includes('rate limit') ||
-                       errorMessage.includes('429') ||
-                       (error instanceof Object && 'status' in error && error.status === 429);
+    // A rate limit from any adapter in the chain is worth backing off for
+    const isRateLimit = flattenErrors(error).some((failure) => {
+      const message = getErrorMessage(failure);
+      return message.includes('Rate limit') ||
+        message.includes('rate limit') ||
+        message.includes('429') ||
+        (failure instanceof Object && 'status' in failure && failure.status === 429);
+    });
 
     if (isRateLimit && retryCount < maxRetries) {
       // Exponential backoff: 2^retryCount * 30 seconds

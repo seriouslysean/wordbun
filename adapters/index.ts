@@ -3,6 +3,7 @@ import { wiktionaryAdapter } from '#adapters/wiktionary';
 import { wordnikAdapter } from '#adapters/wordnik';
 import type { DictionaryAdapter, DictionaryResponse, FetchOptions } from '#types';
 import { logger } from '#utils/logger';
+import { getErrorMessage } from '#utils/text-utils';
 import { isValidDictionaryData } from '#utils/word-validation';
 
 const ADAPTER_REGISTRY: Record<string, DictionaryAdapter> = {
@@ -63,10 +64,18 @@ async function fetchUsable(adapter: DictionaryAdapter, word: string, options?: F
   return response;
 }
 
+interface AdapterFailure {
+  adapter: string;
+  error: unknown;
+}
+
 /**
  * Fetches word data using the primary adapter, then tries each fallback
  * in DICTIONARY_FALLBACK order (comma-separated) until one succeeds.
  * An adapter succeeds only when its response has usable definitions.
+ * With no fallback configured the primary's error is thrown as is. Otherwise
+ * an exhausted chain throws one AggregateError holding every adapter's error
+ * in chain order, so a fallback's "not found" cannot hide a primary rate limit.
  */
 export async function fetchWithFallback(word: string, options?: FetchOptions): Promise<FetchResult> {
   const primary = getAdapter();
@@ -79,22 +88,25 @@ export async function fetchWithFallback(word: string, options?: FetchOptions): P
       throw primaryError;
     }
 
-    let lastError: unknown = primaryError;
-    let previousName = primary.name;
+    const failures: AdapterFailure[] = [{ adapter: primary.name, error: primaryError }];
     for (const fallbackName of fallbacks) {
       logger.warn('Adapter failed, trying fallback', {
-        previous: previousName, fallback: fallbackName, word,
+        previous: failures.at(-1)?.adapter, fallback: fallbackName, word,
       });
       try {
         const fallback = getAdapterByName(fallbackName);
         const response = await fetchUsable(fallback, word, options);
         return { response, adapterName: fallback.name };
       } catch (fallbackError) {
-        lastError = fallbackError;
-        previousName = fallbackName;
+        failures.push({ adapter: fallbackName, error: fallbackError });
       }
     }
 
-    throw lastError;
+    const summary = failures.map(({ adapter, error }) => `${adapter}: ${getErrorMessage(error)}`).join(' | ');
+    throw new AggregateError(
+      failures.map(({ error }) => error),
+      `All dictionary adapters failed for "${word}": ${summary}`,
+      { cause: primaryError },
+    );
   }
 }
