@@ -135,8 +135,10 @@ export const getWordFiles = (): WordFileScan => {
   const files = years.flatMap(year => {
     try {
       const yearDir = path.join(paths.words, year);
+      // Dotfiles are not word files: macOS writes an AppleDouble file
+      // (._20250701.json) beside each file copied to a non-Apple volume.
       const jsonFiles = fs.readdirSync(yearDir)
-        .filter(file => file.endsWith('.json'));
+        .filter(file => file.endsWith('.json') && !file.startsWith('.'));
 
       return jsonFiles.flatMap(file => {
         try {
