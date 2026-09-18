@@ -55,8 +55,6 @@ const regenerateWordFile = async (word = WORD) => {
 
 beforeEach(() => {
   ctx.wordsDir = fs.mkdtempSync(path.join(os.tmpdir(), 'wotd-adapter-failures-'));
-  // An empty year directory keeps the existing-word scan from logging an error
-  fs.mkdirSync(path.join(ctx.wordsDir, '2024'));
   ctx.wordnik = httpResponse(404);
   ctx.wiktionary = httpResponse(404);
   ctx.logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() };

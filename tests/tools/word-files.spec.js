@@ -1,7 +1,8 @@
 /**
- * Word discovery (getWordFiles), which every tool reads the corpus through.
- * Runs against a temp words tree through a mocked #config/paths, with the
- * logger mocked to see what is reported.
+ * Word discovery (getWordFiles), which every tool reads the corpus through,
+ * and add-word's duplicate check built on it (findExistingWord). Runs against
+ * a temp words tree through a mocked #config/paths, with the logger mocked to
+ * see what is reported.
  */
 
 import fs from 'node:fs';
@@ -52,5 +53,30 @@ describe('getWordFiles', () => {
       failures: [],
     });
     expect(ctx.logger.error).not.toHaveBeenCalled();
+  });
+});
+
+describe('a site with no words yet', () => {
+  const noCorpus = [
+    ['no words directory', () => {}],
+    ['a words directory with no years', () => fs.mkdirSync(wordsDir())],
+  ];
+
+  it.each(noCorpus)('has no existing word for the duplicate check, with %s', async (_, setUp) => {
+    setUp();
+    const { findExistingWord } = await import('#tools/utils');
+
+    expect(findExistingWord('alpha')).toBeNull();
+    expect(ctx.logger.error).not.toHaveBeenCalled();
+  });
+
+  it.each(noCorpus)('is a failure to the bulk tools, which need data, with %s', async (_, setUp) => {
+    setUp();
+    const { getAllWords, getWordFiles } = await import('#tools/utils');
+
+    // generate-images reads getAllWords, regenerate-all-words getWordFiles
+    expect(getAllWords().failures).toEqual([wordsDir()]);
+    expect(getWordFiles().failures).toEqual([wordsDir()]);
+    expect(ctx.logger.error).toHaveBeenCalledTimes(2);
   });
 });

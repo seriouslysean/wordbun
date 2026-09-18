@@ -112,22 +112,27 @@ interface WordFileScan {
   failures: string[];
 }
 
+interface WordFileScanOptions {
+  /**
+   * Reads a missing or empty words directory as an empty corpus instead of a
+   * failure. Duplicate detection sets it: a new site's first word has nothing
+   * to collide with. Bulk tools need data and leave it off.
+   */
+  allowEmpty?: boolean;
+}
+
 /**
  * Lists the word files in the data directory, newest first. Anything that
  * cannot be read is logged and reported in `failures` instead of silently
  * left out: a bulk tool counts it, so a partial corpus cannot pass for a
  * complete one. Single-word lookups may ignore it.
  */
-export const getWordFiles = (): WordFileScan => {
-  if (!fs.existsSync(paths.words)) {
-    logger.error('Word directory does not exist', { path: paths.words });
-    return { files: [], failures: [paths.words] };
-  }
+export const getWordFiles = ({ allowEmpty = false }: WordFileScanOptions = {}): WordFileScan => {
+  const exists = fs.existsSync(paths.words);
+  const years = exists ? fs.readdirSync(paths.words).filter(dir => /^\d{4}$/.test(dir)) : [];
 
-  const years = fs.readdirSync(paths.words).filter(dir => /^\d{4}$/.test(dir));
-
-  if (years.length === 0) {
-    logger.error('No year directories found', { path: paths.words });
+  if (years.length === 0 && !allowEmpty) {
+    logger.error(exists ? 'No year directories found' : 'Word directory does not exist', { path: paths.words });
     return { files: [], failures: [paths.words] };
   }
 
@@ -168,11 +173,12 @@ export const getWordFiles = (): WordFileScan => {
 };
 
 /**
- * Checks if a word already exists by scanning word files
+ * Checks if a word already exists by scanning word files. With no words
+ * directory, or no year in it, nothing exists yet, which is not a fault.
  */
 export function findExistingWord(word: string): WordData | null {
   const lowerWord = word.toLowerCase();
-  const { files } = getWordFiles();
+  const { files } = getWordFiles({ allowEmpty: true });
 
   for (const file of files) {
     try {
