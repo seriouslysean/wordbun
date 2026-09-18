@@ -97,22 +97,32 @@ interface WordFileInfo {
   path: string;
 }
 
+interface WordFileScan {
+  files: WordFileInfo[];
+  /** Directories and files that could not be read, each already logged */
+  failures: string[];
+}
+
 /**
- * Get all word files from the data directory
+ * Lists the word files in the data directory, newest first. Anything that
+ * cannot be read is logged and reported in `failures` instead of silently
+ * left out: a bulk tool counts it, so a partial corpus cannot pass for a
+ * complete one. Single-word lookups may ignore it.
  */
-export const getWordFiles = (): WordFileInfo[] => {
+export const getWordFiles = (): WordFileScan => {
   if (!fs.existsSync(paths.words)) {
     logger.error('Word directory does not exist', { path: paths.words });
-    return [];
+    return { files: [], failures: [paths.words] };
   }
 
   const years = fs.readdirSync(paths.words).filter(dir => /^\d{4}$/.test(dir));
 
   if (years.length === 0) {
     logger.error('No year directories found', { path: paths.words });
-    return [];
+    return { files: [], failures: [paths.words] };
   }
 
+  const failures: string[] = [];
   const files = years.flatMap(year => {
     try {
       const yearDir = path.join(paths.words, year);
@@ -131,17 +141,19 @@ export const getWordFiles = (): WordFileInfo[] => {
           return [{ word: data.word, date: file.replace('.json', ''), path: filePath }];
         } catch (error) {
           logger.error('Failed to read word file', { file, error: getErrorMessage(error) });
+          failures.push(path.join(yearDir, file));
           return [];
         }
       });
     } catch (error) {
       logger.error('Failed to read year directory', { year, error: getErrorMessage(error) });
+      failures.push(path.join(paths.words, year));
       return [];
     }
   });
 
   // Sort by date (newest first) for consistency
-  return files.toSorted((a, b) => b.date.localeCompare(a.date));
+  return { files: files.toSorted((a, b) => b.date.localeCompare(a.date)), failures };
 };
 
 /**
@@ -149,7 +161,7 @@ export const getWordFiles = (): WordFileInfo[] => {
  */
 export function findExistingWord(word: string): WordData | null {
   const lowerWord = word.toLowerCase();
-  const files = getWordFiles();
+  const { files } = getWordFiles();
 
   for (const file of files) {
     try {
@@ -165,18 +177,29 @@ export function findExistingWord(word: string): WordData | null {
   return null;
 }
 
+interface WordCorpus {
+  words: WordData[];
+  /** Directories and files that could not be read or parsed, each already logged */
+  failures: string[];
+}
+
 /**
- * Gets all word data from files
+ * Reads every stored word. Files that cannot be read or are not valid word
+ * data are logged and reported in `failures`, as in getWordFiles.
  */
-export function getAllWords(): WordData[] {
-  return getWordFiles().flatMap(file => {
+export function getAllWords(): WordCorpus {
+  const { files, failures } = getWordFiles();
+  const parseFailures: string[] = [];
+  const words = files.flatMap(file => {
     try {
       return [parseWordData(fs.readFileSync(file.path, 'utf-8'), file.path)];
     } catch (error) {
-      logger.warn('Failed to parse word file', { path: file.path, error: getErrorMessage(error) });
+      logger.error('Failed to parse word file', { path: file.path, error: getErrorMessage(error) });
+      parseFailures.push(file.path);
       return [];
     }
   });
+  return { words, failures: [...failures, ...parseFailures] };
 }
 
 // ---------------------------------------------------------------------------

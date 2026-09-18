@@ -134,8 +134,10 @@ export async function regenerateWordFile(word: string, date: string, originalPat
  */
 async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
   try {
-    const wordsToRegenerate = getWordFiles();
-    logger.info('Found word files to process', { count: wordsToRegenerate.length });
+    // Unreadable files are already logged; each counts as a failure, so a
+    // run that could not see every word never reports success.
+    const { files: wordsToRegenerate, failures: unreadable } = getWordFiles();
+    logger.info('Found word files to process', { count: wordsToRegenerate.length, unreadable: unreadable.length });
 
     if (options.dryRun) {
       logger.info('DRY RUN MODE - Words that would be regenerated:');
@@ -143,7 +145,7 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
         logger.info('Word entry', { index: index + 1, word: item.word, date: item.date, path: item.path });
       });
       logger.info('Use --force to actually regenerate these words');
-      return 0;
+      return unreadable.length;
     }
 
     if (!options.force) {
@@ -187,12 +189,12 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
     }
 
     const successCount = outcomes.filter(Boolean).length;
-    const failureCount = outcomes.length - successCount;
+    const failureCount = outcomes.length - successCount + unreadable.length;
 
     logger.info('Regeneration complete', {
       success: successCount,
       failed: failureCount,
-      total: outcomes.length,
+      total: outcomes.length + unreadable.length,
     });
 
     return failureCount;

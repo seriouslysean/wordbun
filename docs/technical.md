@@ -308,9 +308,11 @@ npm run tool:local tools/generate-images.ts -- --page /stats        # Specific p
 npm run tool:local tools/generate-images.ts -- --force              # Regenerate existing
 ```
 
+A bulk run reads the corpus once. A word file that cannot be read, or is not valid word data, is logged and counted as a failure: its card and the pages it feeds would be missing, so the run exits 1 and does not certify the image cache. `--word` and `--page` log such a file and carry on.
+
 ### `regenerate-all-words.ts`
 
-Batch refresh of word data from the dictionary API. Supports dry-run mode and rate limiting. `--force` re-sources every word through the configured adapter chain (the `adapter` field follows); pronunciation audio and etymology come only from Merriam-Webster, so run it via `tool:local` with `MERRIAM_WEBSTER_API_KEY` in `.env` to backfill them.
+Batch refresh of word data from the dictionary API. Supports dry-run mode and rate limiting. A word file it cannot read (not JSON, or no `word` string) counts as a failure, in a dry run too, so the exit code says whether every stored word was covered. `--force` re-sources every word through the configured adapter chain (the `adapter` field follows); pronunciation audio and etymology come only from Merriam-Webster, so run it via `tool:local` with `MERRIAM_WEBSTER_API_KEY` in `.env` to backfill them.
 
 ## URL System
 

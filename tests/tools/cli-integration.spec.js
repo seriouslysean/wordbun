@@ -120,7 +120,7 @@ describe('CLI Tools: Import & Execution', () => {
       expect(typeof utils.getAllWords).toBe('function');
 
       // Should be able to call it (even if it returns empty array in test env)
-      const words = utils.getAllWords();
+      const { words } = utils.getAllWords();
       expect(Array.isArray(words)).toBe(true);
 
     } catch (error) {

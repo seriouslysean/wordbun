@@ -131,7 +131,7 @@ async function generateSingleImage(word: string, regenerate: boolean): Promise<b
  * Generates image for a specific page path
  */
 async function generatePageImage(pagePath: string, regenerate: boolean): Promise<boolean> {
-  const allPages = getAllPageMetadata(getAllWords());
+  const allPages = getAllPageMetadata(getAllWords().words);
   const page = allPages.find(p => p.path === pagePath);
 
   if (!page) {
@@ -187,19 +187,21 @@ async function main(options: GenerateImagesOptions): Promise<void> {
   const runBoth = !options.words && !options.generic;
   const coversWords = options.words || runBoth;
   const coversGeneric = options.generic || runBoth;
-  const failed = { count: 0 };
+  // Read once for both categories. Unreadable files are already logged; each
+  // one fails the run, since its card and the pages it feeds are missing.
+  const { words, failures: unreadable } = getAllWords();
+  const failed = { count: unreadable.length };
 
   if (coversWords) {
-    const allWords = getAllWords();
     failed.count += await bulkGenerate(
-      allWords.map(w => ({ label: `${w.word} (${w.date})`, word: w.word, date: w.date })),
+      words.map(w => ({ label: `${w.word} (${w.date})`, word: w.word, date: w.date })),
       (item) => generateShareImage(item.word, item.date, { regenerate }),
       'word',
     );
   }
 
   if (coversGeneric) {
-    const pages = getAllPageMetadata(getAllWords());
+    const pages = getAllPageMetadata(words);
     failed.count += await bulkGenerate(
       pages.map(p => ({ label: `${p.title} (${p.path})`, title: p.title, path: p.path })),
       (item) => generateGenericShareImage(item.title, item.path, { regenerate }),

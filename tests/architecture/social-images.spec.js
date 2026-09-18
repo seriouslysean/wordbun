@@ -29,11 +29,11 @@ const toTrackedFile = (url) => `public${decodeURI(url.slice(SITE_URL.length))}`;
 // and only the real dataset against the real tracked files proves the two
 // still meet. It needs no browser and no build, so it is not an E2E check.
 describe('Architecture: social images', () => {
-  const ctx = { words: [], urls: [] };
+  const ctx = { words: [], unreadable: [], urls: [] };
 
   beforeEach(() => {
     mockEnv.SOURCE_DIR = SOURCE_DIR;
-    ctx.words = getAllWords();
+    ({ words: ctx.words, failures: ctx.unreadable } = getAllWords());
     ctx.urls = [
       ...ctx.words.map(wordData => getSocialImageUrl({ pathname: `/word/${wordData.word}`, wordData })),
       ...getAllPageMetadata(ctx.words).map(page => getSocialImageUrl({ pathname: page.path })),
@@ -47,6 +47,7 @@ describe('Architecture: social images', () => {
   it('runs against the demo dataset', () => {
     expect(SOURCE_DIR).toBe('demo');
     expect(ctx.words.length).toBeGreaterThan(0);
+    expect(ctx.unreadable).toEqual([]);
   });
 
   it('every social image URL the site emits names a tracked card', () => {
