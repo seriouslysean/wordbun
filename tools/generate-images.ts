@@ -17,23 +17,23 @@ const HELP_TEXT = `
 Generate Images Tool
 
 Usage:
-  npm run tool:local tools/generate-images.ts [options]
-  npm run tool:generate-images [options]
+  npm run tool:local tools/generate-images.ts -- [options]
+  npm run tool:generate-images -- [options]
 
 Options:
   --words                   Generate images for all words only
   --generic                 Generate images for all generic pages only
   --word <word>             Generate image for specific word
-  --page <path>             Generate image for specific page path
+  --page <path>             Generate image for specific page path, with its leading slash
   --force                   Regenerate images even if they already exist
   -h, --help                Show this help message
 
 Examples:
-  npm run tool:generate-images                    # Generate all word and page images
-  npm run tool:generate-images --words            # Generate all word images
-  npm run tool:generate-images --generic          # Generate all generic page images
-  npm run tool:generate-images --word serendipity # Generate image for specific word
-  npm run tool:generate-images --page stats       # Generate image for stats page
+  npm run tool:generate-images                       # Generate all word and page images
+  npm run tool:generate-images -- --words            # Generate all word images
+  npm run tool:generate-images -- --generic          # Generate all generic page images
+  npm run tool:generate-images -- --word serendipity # Generate image for specific word
+  npm run tool:generate-images -- --page /stats      # Generate image for stats page
 
 Environment Variables (for GitHub workflows):
   SOURCE_DIR                 Data source subdirectory (unset = root paths)
