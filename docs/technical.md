@@ -292,7 +292,7 @@ Consolidated image generation (SVG templates, Sharp PNG conversion, 1200x630px O
 
 ```sh
 npm run tool:local tools/generate-images.ts                         # All images
-npm run tool:local tools/generate-images.ts -- --word serendipity   # Single word
+npm run tool:local tools/generate-images.ts -- --word japan         # Single word
 npm run tool:local tools/generate-images.ts -- --words              # All word images
 npm run tool:local tools/generate-images.ts -- --generic            # Generic page images
 npm run tool:local tools/generate-images.ts -- --page /stats        # Specific page

@@ -32,7 +32,7 @@ Examples:
   npm run tool:generate-images                       # Generate all word and page images
   npm run tool:generate-images -- --words            # Generate all word images
   npm run tool:generate-images -- --generic          # Generate all generic page images
-  npm run tool:generate-images -- --word serendipity # Generate image for specific word
+  npm run tool:generate-images -- --word japan # Generate image for specific word
   npm run tool:generate-images -- --page /stats      # Generate image for stats page
 
 Environment Variables (for GitHub workflows):
