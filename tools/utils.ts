@@ -207,7 +207,9 @@ function getTextPath(text: string, fontSize: number, options: GetTextPathOptions
   const transform = scale < 1 ? ` transform="scale(${scale})"` : '';
 
   return {
-    pathData: fontPath.toPathData(),
+    // getPath already emits SVG's y-down coordinates. toPathData flips Y by
+    // default (opentype.js 2), which would mirror that upright text.
+    pathData: fontPath.toPathData({ flipY: false }),
     width: width * scale,
     height: (bbox.y2 - bbox.y1) * scale,
     scale,
