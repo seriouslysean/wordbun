@@ -15,6 +15,9 @@
  * Implementation notes:
  * - Import tests mock process.exit to prevent tools from terminating test runner
  * - Spawn tests await the child process so assertion failures are observed
+ * - tests/setup.js mocks astro:content and astro:env/client for every spec, so
+ *   the in-process import tests cannot see an illegal import of those two
+ *   modules. The spawn tests run outside Vitest and are the guard for them.
  */
 
 import { describe, it, expect, vi } from 'vitest';
@@ -59,8 +62,9 @@ describe('CLI Tools: Import & Execution', () => {
             );
           }
 
-          // Tools guard their main logic behind isEntryPoint, so a plain import
-          // has no legitimate reason to throw
+          // Only main() sits behind isEntryPoint. generate-images.ts parses argv
+          // at module scope, so this import relies on the runner leaving
+          // process.argv.slice(2) empty. Any other throw is a real break.
           throw error;
         }
       });
@@ -71,7 +75,7 @@ describe('CLI Tools: Import & Execution', () => {
       // Restore original process.exit
       mockExit.mockRestore();
     }
-  }, 15000); // Increased timeout - tools run their main logic on import
+  }, 15000);
 
   it('generate-images tool can load and show help', async () => {
     const { stdout, stderr, code } = await spawnTool(['tools/generate-images.ts', '--help'], { env: DEMO_ENV });
