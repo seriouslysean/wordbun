@@ -183,10 +183,13 @@ async function main(options: GenerateImagesOptions): Promise<void> {
     await exit(success ? 0 : 1);
   }
 
+  // Neither flag means both; naming both means both too.
   const runBoth = !options.words && !options.generic;
+  const coversWords = options.words || runBoth;
+  const coversGeneric = options.generic || runBoth;
   const failed = { count: 0 };
 
-  if (options.words || runBoth) {
+  if (coversWords) {
     const allWords = getAllWords();
     failed.count += await bulkGenerate(
       allWords.map(w => ({ label: `${w.word} (${w.date})`, word: w.word, date: w.date })),
@@ -195,7 +198,7 @@ async function main(options: GenerateImagesOptions): Promise<void> {
     );
   }
 
-  if (options.generic || runBoth) {
+  if (coversGeneric) {
     const pages = getAllPageMetadata(getAllWords());
     failed.count += await bulkGenerate(
       pages.map(p => ({ label: `${p.title} (${p.path})`, title: p.title, path: p.path })),
@@ -209,8 +212,9 @@ async function main(options: GenerateImagesOptions): Promise<void> {
     await exit(1);
   }
 
-  // Only a run that covered every word and every page certifies the corpus.
-  if (runBoth) {
+  // Only a run that covered every word and every page certifies the corpus,
+  // however that coverage was requested.
+  if (coversWords && coversGeneric) {
     markImageCacheCurrent();
   }
 
