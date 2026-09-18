@@ -19,6 +19,7 @@ runs:
       env:
         VARS_JSON: ${{ inputs.vars-json }}
         SECRETS_JSON: ${{ inputs.secrets-json }}
+        BUILD_SHA: ${{ inputs.github-sha }}
         VAR_NAMES: |
           BASE_PATH
           COLOR_PRIMARY
@@ -53,7 +54,7 @@ runs:
         echo "CI=true" >> $GITHUB_ENV
         echo "SENTRY_ENVIRONMENT=production" >> $GITHUB_ENV
         echo "TZ=$(echo "$VARS_JSON" | jq -r '.SITE_TZ // "America/New_York"')" >> $GITHUB_ENV
-        echo "GITHUB_SHA=${{ inputs.github-sha }}" >> $GITHUB_ENV
+        echo "GITHUB_SHA=$BUILD_SHA" >> $GITHUB_ENV
         
         # Set variables (avoid subshell with while loop)
         while IFS= read -r var; do

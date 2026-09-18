@@ -71,52 +71,64 @@ jobs:
 
       - name: Add word
         id: add_word
+        env:
+          WORD: ${{ inputs.word }}
+          DATE: ${{ inputs.date }}
+          OVERWRITE: ${{ inputs.overwrite }}
+          PRESERVE_CASE: ${{ inputs.preserve_case }}
         run: |
-          # Sanitize and trim inputs
-          WORD="${{ inputs.word }}"
-          WORD=$(echo "$WORD" | xargs)
+          # Parameter expansion only: xargs would read the apostrophe in
+          # "don't" as an opening quote
+          trim() {
+            local value="$1"
+            value="${value#"${value%%[![:space:]]*}"}"
+            value="${value%"${value##*[![:space:]]}"}"
+            printf '%s' "$value"
+          }
+          WORD=$(trim "$WORD")
+          DATE=$(trim "$DATE")
 
-          DATE="${{ inputs.date }}"
-          DATE=$(echo "$DATE" | xargs)
-
-          # Validate word is not empty after trimming
-          if [ -z "$WORD" ]; then
-            echo "::error::Word cannot be empty or whitespace only"
+          # A line break would let the word write extra step outputs below
+          if [[ -z "$WORD" || "$WORD" == *$'\n'* ]]; then
+            echo "::error::Word cannot be empty, whitespace only, or span lines"
             exit 1
           fi
 
           # Build flags array to avoid quoting issues
           FLAGS=()
-          if [[ "${{ inputs.overwrite }}" == "true" ]]; then
+          if [[ "$OVERWRITE" == "true" ]]; then
             FLAGS+=(--overwrite)
           fi
-          if [[ "${{ inputs.preserve_case }}" == "true" ]]; then
+          if [[ "$PRESERVE_CASE" == "true" ]]; then
             FLAGS+=(--preserve-case)
           fi
 
-          # Run the add-word tool
-          if npm run tool:add-word -- "$WORD" "$DATE" "${FLAGS[@]}"; then
-            echo "word_added=1" >> $GITHUB_OUTPUT
-            echo "word=$WORD" >> $GITHUB_OUTPUT
+          # The first -- ends npm's options and the second ends the tool's, so
+          # a word that starts with a dash is still read as the word
+          if npm run tool:add-word -- "${FLAGS[@]}" -- "$WORD" "$DATE"; then
+            echo "word_added=1" >> "$GITHUB_OUTPUT"
+            echo "word=$WORD" >> "$GITHUB_OUTPUT"
 
             # Complete generation: renders the new word, skips every image that
             # is already current, and is the only run that certifies the cache
             npm run tool:generate-images
           else
             echo "::error::Failed to add word: $WORD"
-            echo "word_added=0" >> $GITHUB_OUTPUT
+            echo "word_added=0" >> "$GITHUB_OUTPUT"
             exit 1
           fi
 
       - name: Configure Git
         if: steps.add_word.outputs.word_added == '1'
         run: |
-          git config --local user.email "${{ github.repository_owner }}@users.noreply.github.com"
-          git config --local user.name "${{ github.repository_owner }}"
+          git config --local user.email "$GITHUB_REPOSITORY_OWNER@users.noreply.github.com"
+          git config --local user.name "$GITHUB_REPOSITORY_OWNER"
 
       - name: Commit and push changes
         if: steps.add_word.outputs.word_added == '1'
+        env:
+          WORD: ${{ steps.add_word.outputs.word }}
         run: |
           git add data/ public/
-          git commit -m "Add word: ${{ steps.add_word.outputs.word }}"
-          git push origin ${{ github.ref }}
+          git commit -m "Add word: $WORD"
+          git push origin "$GITHUB_REF"
