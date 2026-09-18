@@ -37,13 +37,16 @@ export function throwOnHttpError(response: Response, word: string): void {
 /**
  * Parses a fetch response as JSON with defensive error handling.
  * Surfaces the raw response text on parse failure for debugging.
+ * The body is read once as text: a Response body can only be consumed once,
+ * so falling back to text() after a failed json() would throw instead.
  */
 export async function parseJsonResponse(response: Response, apiName: string): Promise<unknown> {
+  const text = await response.text();
   try {
-    return await response.json();
-  } catch {
-    const text = await response.text();
-    throw new Error(`Invalid API response (not JSON) from ${apiName}. Response: ${text.slice(0, 200)}`);
+    const parsed: unknown = JSON.parse(text);
+    return parsed;
+  } catch (error) {
+    throw new Error(`Invalid API response (not JSON) from ${apiName}. Response: ${text.slice(0, 200)}`, { cause: error });
   }
 }
 

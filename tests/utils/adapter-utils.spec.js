@@ -177,27 +177,24 @@ describe('adapter-utils', () => {
 
   describe('parseJsonResponse', () => {
     it('parses valid JSON response', async () => {
-      const response = { json: () => Promise.resolve({ word: 'test' }) };
+      const response = new Response(JSON.stringify({ word: 'test' }));
       const result = await parseJsonResponse(response, 'TestAPI');
       expect(result).toEqual({ word: 'test' });
     });
 
     it('throws with response text on parse failure', async () => {
-      const response = {
-        json: () => Promise.reject(new SyntaxError('Unexpected token')),
-        text: () => Promise.resolve('<html>Invalid API Key</html>'),
-      };
-      await expect(parseJsonResponse(response, 'TestAPI')).rejects.toThrow(
-        'Invalid API response (not JSON) from TestAPI',
+      const response = new Response('<html>Invalid API Key</html>');
+      const error = await parseJsonResponse(response, 'TestAPI').catch(e => e);
+      expect(error.message).toBe(
+        'Invalid API response (not JSON) from TestAPI. Response: <html>Invalid API Key</html>',
       );
+      expect(error.cause).toBeInstanceOf(SyntaxError);
     });
 
     it('truncates long error responses', async () => {
-      const response = {
-        json: () => Promise.reject(new SyntaxError()),
-        text: () => Promise.resolve('x'.repeat(500)),
-      };
+      const response = new Response('x'.repeat(500));
       const error = await parseJsonResponse(response, 'TestAPI').catch(e => e);
+      expect(error.message).toContain('Invalid API response (not JSON) from TestAPI');
       expect(error.message.length).toBeLessThan(300);
     });
   });

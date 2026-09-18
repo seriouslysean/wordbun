@@ -10,6 +10,7 @@ const mockResponse = (status, data = []) => ({
   status,
   statusText: STATUS_TEXT[status] || 'OK',
   json: () => Promise.resolve(data),
+  text: () => Promise.resolve(JSON.stringify(data)),
 });
 
 const VALID_DEFINITIONS = [
