@@ -29,7 +29,7 @@ export async function GET(context: APIContext) {
       }
 
       // Strip HTML tags from definition for clean RSS
-      const cleanDefinition = definition.replace(/<[^>]*>/g, '');
+      const cleanDefinition = definition.replaceAll(/<[^>]*>/g, '');
 
       // Simple format: (part of speech) definition
       const description = `(${partOfSpeech}) ${cleanDefinition}`;

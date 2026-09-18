@@ -156,7 +156,7 @@ export function processCrossReferences(text: string): string {
     return text;
   }
 
-  return text.replace(/<xref[^>]*>(.*?)<\/xref>/g, (_match, word) => {
+  return text.replaceAll(/<xref[^>]*>(.*?)<\/xref>/g, (_match, word) => {
     const cleanWord = word.trim();
     const wordnikUrl = generateWordnikWordUrl(cleanWord);
     return `<a href="${wordnikUrl}" target="_blank" rel="noopener noreferrer" class="xref-link">${cleanWord}</a>`;
@@ -180,7 +180,7 @@ export function processWordnikHTML(
   const { preserveXrefs = true } = options;
   const xrefProcessed = preserveXrefs
     ? processCrossReferences(htmlString)
-    : htmlString.replace(/<xref[^>]*>(.*?)<\/xref>/g, '$1');
+    : htmlString.replaceAll(/<xref[^>]*>(.*?)<\/xref>/g, '$1');
 
   return decodeHTML(xrefProcessed);
 }

@@ -31,7 +31,7 @@ export const t = (key: string, vars?: Record<string, string | number>): string =
       }
     }
     
-    return value.replace(/\{\{(\w+)\}\}/g, (_, p1) => {
+    return value.replaceAll(/\{\{(\w+)\}\}/g, (_, p1) => {
       return String(vars[p1]);
     });
   }

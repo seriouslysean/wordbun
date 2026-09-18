@@ -21,10 +21,10 @@ export const getErrorMessage = (error: unknown): string =>
 export const slugify = (str: string): string => {
   return str
     .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
+    .replaceAll(/[^\w\s-]/g, '')
+    .replaceAll(/\s+/g, '-')
+    .replaceAll(/-+/g, '-')
+    .replaceAll(/^-|-$/g, '');
 };
 
 // Re-export pattern recognition functions from consolidated module
@@ -54,7 +54,7 @@ export const countSyllables = (word: string): number => {
     return 0;
   }
 
-  const clean = word.toLowerCase().replace(/[^a-z]/g, '');
+  const clean = word.toLowerCase().replaceAll(/[^a-z]/g, '');
   if (!clean) {
     return 0;
   }

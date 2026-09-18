@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc"],
   "categories": {
     "correctness": "error",
     "suspicious": "warn",
@@ -9,6 +10,18 @@
     "curly": "error",
     "no-nested-ternary": "error",
     "no-map-spread": "off",
+    "prefer-const": "error",
+    "no-var": "error",
+    "preserve-caught-error": "error",
+    "unicorn/prefer-node-protocol": "error",
+    "unicorn/prefer-at": "error",
+    "unicorn/prefer-string-slice": "error",
+    "unicorn/no-array-reverse": "error",
+    "unicorn/prefer-dom-node-append": "error",
+    "typescript/consistent-type-imports": "error",
+    "unicorn/prefer-string-replace-all": "warn",
+    "unicorn/prefer-array-flat-map": "warn",
+    "unicorn/prefer-object-from-entries": "warn",
     "no-underscore-dangle": ["warn", {
       "allow": ["__dirname", "__filename", "__VERSION__", "__RELEASE__", "__TIMESTAMP__", "__WORD_DATA_PATH__"]
     }]

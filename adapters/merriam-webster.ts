@@ -59,14 +59,14 @@ export function stripMarkup(text: string): string {
     // {bc} -> ": "
     .replaceAll('{bc}', ': ')
     // Formatting tags: keep inner content
-    .replace(/\{(?:it|wi|sc|b)\}(.*?)\{\/(?:it|wi|sc|b)\}/g, '$1')
+    .replaceAll(/\{(?:it|wi|sc|b)\}(.*?)\{\/(?:it|wi|sc|b)\}/g, '$1')
     // Smart quotes
     .replaceAll('{ldquo}', '\u201c')
     .replaceAll('{rdquo}', '\u201d')
     // Cross-references and links: extract the word (first pipe segment)
-    .replace(/\{(?:sx|a_link|d_link|dxt)\|([^|}]*)[^}]*\}/g, '$1')
+    .replaceAll(/\{(?:sx|a_link|d_link|dxt)\|([^|}]*)[^}]*\}/g, '$1')
     // Any remaining tags
-    .replace(/\{[^}]*\}/g, '');
+    .replaceAll(/\{[^}]*\}/g, '');
 }
 
 /**
@@ -221,7 +221,7 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
         id,
         partOfSpeech,
         // Normalize colon spacing
-        text: text.replace(/ +: +/g, ': '),
+        text: text.replaceAll(/ +: +/g, ': '),
         attributionText: attribution,
         sourceDictionary: dictionary,
         sourceUrl,
