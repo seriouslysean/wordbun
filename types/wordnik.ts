@@ -4,6 +4,18 @@
 
 import type { RateLimit } from '#types';
 
+// Wordnik's "Related" model. Only the field the adapter reads and guards is
+// declared; the API also sends relationshipType, gram and label1-4.
+export interface WordnikRelated {
+  words?: string[];
+}
+
+// Wordnik's "TextPron" model. Only the field the adapter reads and guards is
+// declared; the API also sends rawType and seq.
+export interface WordnikTextPron {
+  raw?: string;
+}
+
 export interface WordnikDefinition {
   id?: string;
   partOfSpeech?: string;
@@ -29,8 +41,8 @@ export interface WordnikDefinition {
     type?: string;
   }>;
   notes?: string[];
-  relatedWords?: string[];
-  textProns?: string[];
+  relatedWords?: WordnikRelated[];
+  textProns?: WordnikTextPron[];
 }
 
 export interface WordnikResponse extends Array<WordnikDefinition> {
