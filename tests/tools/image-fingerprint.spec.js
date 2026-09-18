@@ -8,9 +8,18 @@
 import sharp from 'sharp';
 import { describe, expect, it } from 'vitest';
 
+import { spawnTool } from '#tests/helpers/spawn.js';
 import { computeSettingsHash } from '#tools/utils';
 
 const RENDERER = { sharp: '0.35.4', vips: '8.18.6', imagequant: '2.4.1' };
+
+// Estonian collation sorts z between s and t, so it orders zlib before vips
+// where English and code-unit order put it last.
+const LOCALES = ['et_EE.UTF-8', 'en_US.UTF-8'];
+const HASH_UNDER_LOCALE = `
+const { computeSettingsHash } = await import('#tools/utils');
+console.log(new Intl.Collator().resolvedOptions().locale, computeSettingsHash(${JSON.stringify({ ...RENDERER, zlib: '1.3.1' })}));
+`;
 
 describe('computeSettingsHash', () => {
   it('is stable for the same renderer versions', () => {
@@ -30,6 +39,16 @@ describe('computeSettingsHash', () => {
   ])('changes when %s changes', (_, versions) => {
     expect(computeSettingsHash(versions)).not.toBe(computeSettingsHash(RENDERER));
   });
+
+  it('does not depend on the system locale', async () => {
+    const runs = await Promise.all(LOCALES.map(locale =>
+      spawnTool(['--input-type=module', '-e', HASH_UNDER_LOCALE], { env: { LC_ALL: locale } })));
+    const [estonian, english] = runs.map(({ stdout }) => stdout.trim().split(' '));
+
+    // Both collations were in effect, or equal hashes would prove nothing
+    expect(estonian[0]).not.toBe(english[0]);
+    expect(estonian[1]).toBe(english[1]);
+  }, 20000);
 
   it('defaults to the installed renderer', () => {
     expect(computeSettingsHash()).toBe(computeSettingsHash(sharp.versions));

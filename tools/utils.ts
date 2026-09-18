@@ -295,7 +295,9 @@ type RendererVersions = Readonly<Record<string, string | undefined>>;
  * glyphs the probe text does not use. The renderer versions are sharp, libvips
  * and the libraries bundled with it (librsvg, imagequant, libpng...): a sharp
  * upgrade re-quantizes the palette without any input changing. Entries are
- * sorted so the fingerprint does not depend on the order they are reported in.
+ * sorted by code unit so the fingerprint depends on neither the order they
+ * are reported in nor the locale: an Estonian collation puts zlib before
+ * tiff, which would regenerate every image on that machine.
  */
 export const computeSettingsHash = (rendererVersions: RendererVersions = sharp.versions): string => {
   const fonts = getFonts();
@@ -303,7 +305,7 @@ export const computeSettingsHash = (rendererVersions: RendererVersions = sharp.v
     probes: [createSvg(PROBE_TEXT, PROBE_DATE), createSvg(PROBE_TEXT)],
     png: PNG_OPTIONS,
     fonts: [fonts.regular.fingerprint, fonts.bold.fingerprint],
-    renderer: Object.entries(rendererVersions).toSorted(([a], [b]) => a.localeCompare(b)),
+    renderer: Object.entries(rendererVersions).toSorted(([a], [b]) => Number(a > b) - Number(a < b)),
   })).slice(0, 12);
 };
 
