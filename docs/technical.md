@@ -272,7 +272,7 @@ All user-facing strings go through `locales/en.json`. The `t(key)` function from
 
 All tools are pure Node.js (no Astro deps) and use `util.parseArgs()` for argument parsing.
 
-`npm run tool:local <tool>` runs a tool through `tsx -r dotenv/config`, so `.env` is loaded. The bare `tool:*` scripts (`tool:generate-images`, `tool:regenerate-all-words`, ...) do not load `.env`: image tools render without the site title and the Merriam-Webster adapter throws without its key.
+Tools run directly on Node's built-in TypeScript support (`node tools/<tool>.ts`); there is no loader or compile step. `npm run tool:local <tool>` runs a tool through `node --env-file-if-exists=.env`, so `.env` is loaded when present and variables already in the environment win. The bare `tool:*` scripts (`tool:generate-images`, `tool:regenerate-all-words`, ...) do not load `.env`: image tools render without the site title and the Merriam-Webster adapter throws without its key.
 
 ### `add-word.ts`
 
@@ -592,6 +592,7 @@ Markdown syntax highlighting is disabled (`markdown.syntaxHighlight: false`): Sh
 
 - Node.js 26 requirement (upgraded from 24)
 - `package.json` `imports` is the only alias table: `compilerOptions.paths` removed from `tsconfig.json`; TypeScript alias targets end in `.ts` so Node's resolver (no extension guessing) loads them unaided
+- CLI tools run as `node tools/<tool>.ts` (type stripping); `tsx` removed. `tool:local` loads `.env` with `--env-file-if-exists`
 - `erasableSyntaxOnly` enabled so the compiler rejects syntax Node's type stripping cannot run
 
 ### June 2026 - CSP and Progressive Enhancement
