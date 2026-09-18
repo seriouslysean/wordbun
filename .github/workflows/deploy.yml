@@ -6,7 +6,7 @@ on:
 
   # Add Word pushes with GITHUB_TOKEN, which starts no push run, so its
   # completion is the trigger. github.sha for workflow_run is the last commit
-  # on the default branch, so the default checkout builds the pushed word.
+  # on the default branch, so the site checkout builds the pushed word.
   workflow_run:
     workflows: ['Add Word']
     branches: ['main']
@@ -25,44 +25,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # The demo site deploys through the same workflow every site calls, from
+  # this commit. The github-pages environment is on its deployment job.
   deploy:
     # completed includes failed and cancelled runs, which pushed nothing
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
-    environment:
-      name: github-pages
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Set up Node
-        uses: actions/setup-node@v7
-        with:
-          node-version: 26
-          cache: 'npm'
-
-      # Before setup-env, so no dependency's install script sees the secrets
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Setup environment variables
-        uses: ./.github/actions/setup-env
-        with:
-          vars-json: ${{ toJSON(vars) }}
-          secrets-json: ${{ toJSON(secrets) }}
-          github-sha: ${{ github.sha }}
-
-      - name: Build
-        run: npm run build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v6
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: './dist'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+    uses: ./.github/workflows/site-deploy.yml
+    secrets:
+      site-secrets: ${{ toJSON(secrets) }}

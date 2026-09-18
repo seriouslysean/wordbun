@@ -8,8 +8,8 @@ inputs:
     description: 'Repository secrets as JSON'
     required: true
   # Unused: a step cannot overwrite GITHUB_SHA, so the action no longer
-  # writes it. Declared still because the build, deploy and add-word
-  # workflows pass it.
+  # writes it. Declared still because the build and add-word workflows
+  # pass it.
   github-sha:
     description: 'GitHub SHA for the build'
     required: false

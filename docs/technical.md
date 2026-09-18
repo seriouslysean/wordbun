@@ -537,12 +537,17 @@ The workflow files are the reference for their steps; this is what each one is f
 |----------|------|------|
 | Add Word | `.github/workflows/add-word.yml` | Manual dispatch with a word, an optional date, and overwrite and preserve-case switches |
 | Deploy to GitHub Pages | `.github/workflows/deploy.yml` | Push to main, manual dispatch, and after an Add Word run on main that succeeded |
+| Site Deploy | `.github/workflows/site-deploy.yml` | Called by Deploy here and by each site repository's Deploy |
 
 **Add Word** checks the dictionary settings before adding anything and stops with an error if `DICTIONARY_ADAPTER` is empty, if either variable spans more than one line or names an adapter other than `wordnik`, `merriam-webster` or `wiktionary` (any case), or if a named adapter's API key is missing (Wiktionary needs none). `DICTIONARY_FALLBACK` may be empty or `none` in any case for no fallback, or a comma-separated list. It then runs `npm run tool:add-word` followed by the complete `npm run tool:generate-images`, and commits and pushes to the branch it was dispatched on. It stages only what the run writes: word JSON under the words directory, PNG cards under `images/social`, and `.image-settings-hash`, in whichever layout `SOURCE_DIR` selects. A run that changes nothing ends with a notice instead of a commit. Workflow inputs reach the shell as environment variables, never as `${{ }}` expressions inside `run:`, so a word is always data and never script.
 
-**Deploy** builds and publishes `dist/`. A push made with `GITHUB_TOKEN` starts no `push` run, so Add Word's completion is what triggers the deploy of a new word; failed or cancelled Add Word runs are skipped. For `workflow_run`, `GITHUB_SHA` is the last commit on the default branch, so the default checkout builds the commit Add Word just pushed.
+**Deploy** calls **Site Deploy**, the workflow every site repository calls, so the demo site builds exactly as a site does. Deploy keeps the triggers, the permissions, the `pages` concurrency group and the gate that skips failed or cancelled Add Word runs. A push made with `GITHUB_TOKEN` starts no `push` run, so Add Word's completion is what triggers the deploy of a new word. For `workflow_run`, `GITHUB_SHA` is the last commit on the default branch, so the site checkout builds the commit Add Word just pushed.
 
-**Environment.** Add Word, Deploy and Build all run the `.github/actions/setup-env` composite action, which copies repository variables and secrets into the job by name. Each runs `npm ci` before it, so no dependency's install script has the secrets in its environment. A name missing from its `VAR_NAMES` or `SECRET_NAMES` list never reaches a job, whatever the repository settings say. `VAR_NAMES` is read only from repository variables and `SECRET_NAMES` only from secrets: API keys (`*_API_KEY`), `GA_*` and `SENTRY_*` are secrets and everything else is a variable, and a name stored in the other place is exported empty. `tests/architecture/env-transport.spec.js` fails when a variable in the `astro.config.ts` env schema is neither in those lists nor set by the action itself, or when a name is in the wrong list. `SENTRY_ENVIRONMENT` is in neither list: the action always sets it to `production`. The action also sets `TZ` from the `SITE_TZ` repository variable (default `America/New_York`), so "today" is the same date when a word is added and when the site is built. Every value is written to `$GITHUB_ENV` in the multiline `NAME<<delimiter` form with a random delimiter per value, so a value that spans lines stays one variable instead of failing the step or setting others.
+**Site Deploy** checks out the calling repository into `site/` and this repository into `engine/` at the engine ref, runs `npm ci` and then `setup-env` in `engine/`, and mirrors `site/data/` and `site/public/` over the engine's with `rsync --delete`, keeping the engine's `favicon.svg` when the site has none. It then runs the complete `npm run tool:generate-images`, so an engine or theme change never deploys stale cards (current cards are skipped and nothing is committed), builds in `engine/`, whose own `.git` gives the build its release fingerprint, and uploads `engine/dist`. A separate deploy job holds `pages: write`, `id-token: write` and the `github-pages` environment, which a job that calls a reusable workflow cannot declare. Before copying anything it stops when `SOURCE_DIR` is not `demo` in this repository or not empty in any other, rather than publish the other site's content, and when the site has no words directory or `public/`, which mirroring would otherwise empty.
+
+**Engine ref.** A called workflow cannot see the ref it was called at, so a site passes its own `uses:` value again as `workflow-ref`, written once through a YAML anchor. Site Deploy accepts only its own file in this repository at a release tag (`vX.Y.Z`) or a full commit SHA: a branch or a major tag like `v3` moves, and would check out code other than the workflow that is running. This repository calls with `./` and no `workflow-ref`, and a `./` call runs the called workflow from the caller's commit, so the engine checkout is `github.workflow_sha`.
+
+**Environment.** Add Word, Build and Site Deploy all run the `.github/actions/setup-env` composite action, which copies repository variables and secrets into the job by name. Each runs `npm ci` before it, so no dependency's install script has the secrets in its environment. In Site Deploy, `vars` is the calling repository's, and its secrets arrive as the one secret `site-secrets`, which the caller sets to `toJSON(secrets)` and the action reads as `secrets-json`, as it reads a single repository's. The build job has no environment, so a value stored only on the `github-pages` environment does not reach it. A name missing from its `VAR_NAMES` or `SECRET_NAMES` list never reaches a job, whatever the repository settings say. `VAR_NAMES` is read only from repository variables and `SECRET_NAMES` only from secrets: API keys (`*_API_KEY`), `GA_*` and `SENTRY_*` are secrets and everything else is a variable, and a name stored in the other place is exported empty. `tests/architecture/env-transport.spec.js` fails when a variable in the `astro.config.ts` env schema is neither in those lists nor set by the action itself, or when a name is in the wrong list. `SENTRY_ENVIRONMENT` is in neither list: the action always sets it to `production`. The action also sets `TZ` from the `SITE_TZ` repository variable (default `America/New_York`), so "today" is the same date when a word is added and when the site is built. Every value is written to `$GITHUB_ENV` in the multiline `NAME<<delimiter` form with a random delimiter per value, so a value that spans lines stays one variable instead of failing the step or setting others.
 
 ### Build Pipeline
 
@@ -566,6 +571,59 @@ SITE_URL="https://example.com" BASE_PATH="/vocab"
 # GitHub Pages (username.github.io/repo/)
 SITE_URL="https://username.github.io" BASE_PATH="/repo"
 ```
+
+### Site Repositories
+
+A site repository holds its content and the workflows that call this one; the code comes from this repository at the release the site pins.
+
+```text
+data/words/YYYY/YYYYMMDD.json
+public/images/social/            # Cards and .image-settings-hash
+public/favicon.svg               # Optional; the engine's otherwise
+.github/workflows/deploy.yml
+```
+
+`.github/workflows/deploy.yml`, with `vX.Y.Z` the release to run:
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ['main']
+  workflow_run:
+    workflows: ['Add Word']
+    branches: ['main']
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    uses: &engine seriouslysean/occasional-wotd/.github/workflows/site-deploy.yml@vX.Y.Z
+    with:
+      workflow-ref: *engine
+    secrets:
+      site-secrets: ${{ toJSON(secrets) }}
+```
+
+The secrets go by name because `secrets: inherit` is only for callers in the same organization or enterprise, and site repositories live under a personal account. What the site repository needs in its settings:
+
+- Repository variables and secrets as listed under Environment Configuration, with `SOURCE_DIR` unset or empty. This repository keeps `SOURCE_DIR=demo`.
+- Pages built from GitHub Actions, with the `github-pages` environment allowing deployments from `main`.
+- Actions allowed to use reusable workflows from `seriouslysean/occasional-wotd`. A public repository can only call reusable workflows in public repositories, so this repository stays public.
+
+To move a site to a new release, change the pin in `uses:`; never move a published release tag. The first Deploy run in a site repository is the acceptance test for the cross-repository Pages deployment: confirm the site is live at its URL before retiring the fork's own workflows.
 
 ### Downstream Sync
 
