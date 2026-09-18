@@ -4,15 +4,25 @@ import { getErrorMessage } from '#utils/text-utils';
 import { findValidDefinition } from '#utils/word-data-utils';
 
 /**
+ * Deadline for a single dictionary API request. Without one, a connection
+ * that is accepted but never answered hangs the CLI indefinitely.
+ */
+export const ADAPTER_FETCH_TIMEOUT_MS = 15000;
+
+/**
  * Wraps fetch to convert network-level failures (DNS, connection refused,
  * timeout) into descriptive errors with adapter context.
- * fetch throws TypeError on network failures — this ensures callers get
- * a meaningful message instead of a raw "fetch failed".
+ * fetch throws TypeError on network failures and a TimeoutError DOMException
+ * when the deadline passes — this ensures callers get a meaningful message
+ * instead of a raw "fetch failed" or "The operation was aborted".
  */
 export async function adapterFetch(url: string, adapterName: string): Promise<Response> {
   try {
-    return await fetch(url);
+    return await fetch(url, { signal: AbortSignal.timeout(ADAPTER_FETCH_TIMEOUT_MS) });
   } catch (error) {
+    if (error instanceof Error && error.name === 'TimeoutError') {
+      throw new Error(`${adapterName} request timed out after ${ADAPTER_FETCH_TIMEOUT_MS}ms`, { cause: error });
+    }
     throw new Error(`${adapterName} network request failed: ${getErrorMessage(error)}`, { cause: error });
   }
 }

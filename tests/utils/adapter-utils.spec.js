@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 const originalFetch = globalThis.fetch;
 
 import {
+  ADAPTER_FETCH_TIMEOUT_MS,
   adapterFetch,
   normalizePOS,
   parseJsonResponse,
@@ -21,6 +22,7 @@ describe('adapter-utils', () => {
   describe('adapterFetch', () => {
     afterEach(() => {
       globalThis.fetch = originalFetch;
+      vi.restoreAllMocks();
     });
 
     it('returns the response on success', async () => {
@@ -30,7 +32,7 @@ describe('adapter-utils', () => {
       const result = await adapterFetch('https://example.com', 'TestAPI');
 
       expect(result).toBe(mockResponse);
-      expect(globalThis.fetch).toHaveBeenCalledWith('https://example.com');
+      expect(globalThis.fetch).toHaveBeenCalledWith('https://example.com', { signal: expect.any(AbortSignal) });
     });
 
     it('wraps TypeError from DNS/network failure with adapter context', async () => {
@@ -38,6 +40,31 @@ describe('adapter-utils', () => {
 
       await expect(adapterFetch('https://bad.invalid', 'Merriam-Webster'))
         .rejects.toThrow('Merriam-Webster network request failed: fetch failed');
+    });
+
+    it('aborts a request that never responds once the deadline passes', async () => {
+      // Stands in for a hung connection: settles only when the caller's signal aborts, as real fetch does
+      globalThis.fetch = vi.fn((_url, init) => new Promise((_resolve, reject) => {
+        if (!init?.signal) {
+          reject(new Error('fetch called without an abort signal'));
+          return;
+        }
+        if (init.signal.aborted) {
+          reject(init.signal.reason);
+          return;
+        }
+        init.signal.addEventListener('abort', () => reject(init.signal.reason));
+      }));
+      // AbortSignal.timeout runs on an internal timer that fake timers cannot advance, so hand back an expired signal
+      const timeoutSpy = vi.spyOn(AbortSignal, 'timeout').mockReturnValue(
+        AbortSignal.abort(new DOMException('The operation was aborted due to timeout', 'TimeoutError')),
+      );
+
+      const error = await adapterFetch('https://slow.invalid', 'Wordnik').catch(e => e);
+
+      expect(timeoutSpy).toHaveBeenCalledWith(ADAPTER_FETCH_TIMEOUT_MS);
+      expect(error.message).toBe(`Wordnik request timed out after ${ADAPTER_FETCH_TIMEOUT_MS}ms`);
+      expect(error.cause.name).toBe('TimeoutError');
     });
 
     it('wraps non-Error throws with adapter context', async () => {
