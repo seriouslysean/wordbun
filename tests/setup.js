@@ -41,10 +41,10 @@ vi.mock('astro:env/client', () => mockEnv);
 // Expose for tests that need to override env values
 global.mockEnv = mockEnv;
 
-// vitest runs with `isolate: false`, so test files share this mockEnv object
-// and the module registry. Tests that override BASE_PATH (url-utils,
-// WordLink, the page-metadata wrapper) would otherwise leak the value into
-// whichever file runs next, causing order-dependent failures. Restore the
+// Each spec file gets its own module registry and mockEnv object (vitest
+// isolates files), but the tests within a file share them. Tests that
+// override BASE_PATH (url-utils, WordLink, the page-metadata wrapper) would
+// otherwise leak the value into the next test in the same file. Restore the
 // default after every test so each starts from a clean BASE_PATH.
 afterEach(() => {
   mockEnv.BASE_PATH = '/';

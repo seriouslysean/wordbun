@@ -57,7 +57,8 @@ export const getUrl = (path = '/'): string => {
   }
   
   if (path === '/') {
-    return basePath; // Return base path as-is for root
+    // Return base path as-is for root
+    return basePath;
   }
   
   // Normalize base path (remove trailing slash)

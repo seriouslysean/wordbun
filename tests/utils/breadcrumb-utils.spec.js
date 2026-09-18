@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
-import { generateBreadcrumbs } from '../../utils/breadcrumb-utils';
+import { generateBreadcrumbs } from '#utils/breadcrumb-utils';
 
 // Mock the page metadata utility
-vi.mock('../../utils/page-metadata-utils', () => ({
+vi.mock('#utils/page-metadata-utils', () => ({
   getPageTitle: vi.fn((path) => {
     const titleMap = {
       '/words': 'All Words',

@@ -284,7 +284,7 @@ npm keeps any flag written before a bare `--` for itself, so a tool's flags alwa
 
 ### `add-word.ts`
 
-Adds a word with dictionary validation, duplicate detection, and automatic image generation.
+Adds a word with dictionary validation and duplicate detection. It does not render the social card: the Add Word workflow runs the complete image generation afterwards (see Image Generation).
 
 ```sh
 npm run tool:local tools/add-word.ts serendipity

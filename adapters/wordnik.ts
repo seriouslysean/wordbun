@@ -136,7 +136,8 @@ export const wordnikAdapter: DictionaryAdapter = {
       sourceUrl: def.wordnikUrl || def.attributionUrl || '',
       examples: def.exampleUses?.flatMap(example => (example.text ? [example.text] : [])),
       synonyms: def.relatedWords?.flatMap(related => related.words ?? []),
-      antonyms: [], // Wordnik API doesn't include antonyms in definition responses
+      // Wordnik API doesn't include antonyms in definition responses
+      antonyms: [],
     }));
     const headword = { pronunciation: data[0]?.textProns?.[0]?.raw };
     return buildDictionaryResponse(

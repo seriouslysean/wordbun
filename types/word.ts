@@ -40,8 +40,10 @@ export interface WordSense {
 // Our main word file structure (adapter-agnostic)
 export interface WordData {
   word: string;
-  date: string; // YYYYMMDD format
-  adapter: string; // Which dictionary adapter was used
+  // YYYYMMDD format
+  date: string;
+  // Which dictionary adapter was used
+  adapter: string;
   data: DictionaryDefinition[];
   // Optional word-level enrichment (WordNet relations + adapter headword capture)
   enrichment?: WordEnrichment;
