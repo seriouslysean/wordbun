@@ -180,6 +180,26 @@ describe('wordnik adapter', () => {
       expect(globalThis.fetch).toHaveBeenCalledTimes(1);
     });
 
+    it('reads pronunciation and synonyms from object-shaped textProns and relatedWords', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      const defs = [{
+        id: '1',
+        text: 'Good fortune',
+        textProns: [{ raw: 'ser-uhn-DIP-i-tee', rawType: 'ahd-5', seq: 0 }],
+        relatedWords: [
+          { relationshipType: 'synonym', words: ['luck', 'fortune'] },
+          { relationshipType: 'variant' },
+          { relationshipType: 'synonym', words: ['chance'] },
+        ],
+      }, { id: '2', text: 'No related words' }];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
+
+      const result = await wordnikAdapter.fetchWordData('serendipity');
+      expect(result.headword).toEqual({ pronunciation: 'ser-uhn-DIP-i-tee' });
+      expect(result.definitions[0].synonyms).toEqual(['luck', 'fortune', 'chance']);
+      expect(result.definitions[1].synonyms).toBeUndefined();
+    });
+
     it('makes exactly one request per lookup', async () => {
       const { wordnikAdapter } = await import('#adapters/wordnik');
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, VALID_DEFINITIONS));
@@ -239,7 +259,8 @@ describe('wordnik adapter', () => {
     it('accepts definitions with string or array text and empty objects', async () => {
       const { isWordnikDefinitions } = await import('#adapters/wordnik');
       expect(isWordnikDefinitions(VALID_DEFINITIONS)).toBe(true);
-      expect(isWordnikDefinitions([{ text: ['a', 'b'], exampleUses: [{ text: 'x' }], relatedWords: [], textProns: ['pron'] }])).toBe(true);
+      expect(isWordnikDefinitions([{ text: ['a', 'b'], exampleUses: [{ text: 'x' }], relatedWords: [], textProns: [] }])).toBe(true);
+      expect(isWordnikDefinitions([{ relatedWords: [{ relationshipType: 'synonym', words: ['luck'] }, {}], textProns: [{ raw: 'x', rawType: 'ahd-5', seq: 0 }, {}] }])).toBe(true);
       expect(isWordnikDefinitions([{}])).toBe(true);
       expect(isWordnikDefinitions([])).toBe(true);
     });
@@ -259,8 +280,11 @@ describe('wordnik adapter', () => {
       expect(isWordnikDefinitions([{ attributionUrl: 1 }])).toBe(false);
       expect(isWordnikDefinitions([{ exampleUses: 'x' }])).toBe(false);
       expect(isWordnikDefinitions([{ exampleUses: ['x'] }])).toBe(false);
-      expect(isWordnikDefinitions([{ relatedWords: [{ words: [] }] }])).toBe(false);
-      expect(isWordnikDefinitions([{ textProns: [{ raw: 'x' }] }])).toBe(false);
+      expect(isWordnikDefinitions([{ relatedWords: ['luck'] }])).toBe(false);
+      expect(isWordnikDefinitions([{ relatedWords: [{ words: 'luck' }] }])).toBe(false);
+      expect(isWordnikDefinitions([{ relatedWords: [{ words: [1] }] }])).toBe(false);
+      expect(isWordnikDefinitions([{ textProns: ['pron'] }])).toBe(false);
+      expect(isWordnikDefinitions([{ textProns: [{ raw: 1 }] }])).toBe(false);
     });
   });
 

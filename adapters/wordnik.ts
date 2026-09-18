@@ -50,9 +50,17 @@ export const CONFIG: WordnikConfig = {
 const isExampleUses = (value: unknown): value is NonNullable<WordnikDefinition['exampleUses']> =>
   Array.isArray(value) && value.every(example => isRecord(example) && isString(example.text));
 
+const isRelatedWords = (value: unknown): value is NonNullable<WordnikDefinition['relatedWords']> =>
+  Array.isArray(value) && value.every(related => isRecord(related) && isOptional(related.words, isStringArray));
+
+const isTextProns = (value: unknown): value is NonNullable<WordnikDefinition['textProns']> =>
+  Array.isArray(value) && value.every(pron => isRecord(pron) && isOptional(pron.raw, isString));
+
 /**
- * Checks every field fetchWordData reads from a definition. All are optional in
- * Wordnik's responses, so a field is either absent or must have the read type.
+ * Checks every field fetchWordData reads from a definition, including the
+ * `words` of each relatedWords entry and the `raw` of each textProns entry.
+ * All are optional in Wordnik's responses, so a field is either absent or must
+ * have the read type.
  */
 const isWordnikDefinition = (value: unknown): value is WordnikDefinition =>
   isRecord(value)
@@ -64,8 +72,8 @@ const isWordnikDefinition = (value: unknown): value is WordnikDefinition =>
   && isOptional(value.wordnikUrl, isString)
   && isOptional(value.attributionUrl, isString)
   && isOptional(value.exampleUses, isExampleUses)
-  && isOptional(value.relatedWords, isStringArray)
-  && isOptional(value.textProns, isStringArray);
+  && isOptional(value.relatedWords, isRelatedWords)
+  && isOptional(value.textProns, isTextProns);
 
 export const isWordnikDefinitions = (value: unknown): value is WordnikDefinition[] =>
   Array.isArray(value) && value.every(isWordnikDefinition);
@@ -125,10 +133,10 @@ export const wordnikAdapter: DictionaryAdapter = {
       sourceDictionary: def.sourceDictionary,
       sourceUrl: def.wordnikUrl || def.attributionUrl || '',
       examples: def.exampleUses?.map(e => e.text),
-      synonyms: def.relatedWords,
+      synonyms: def.relatedWords?.flatMap(related => related.words ?? []),
       antonyms: [], // Wordnik API doesn't include antonyms in definition responses
     }));
-    const headword = { pronunciation: data[0]?.textProns?.[0] };
+    const headword = { pronunciation: data[0]?.textProns?.[0]?.raw };
     return buildDictionaryResponse(
       word,
       definitions,
