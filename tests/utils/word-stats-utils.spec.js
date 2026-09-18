@@ -324,6 +324,39 @@ describe('word-stats-utils', () => {
       expect(result.gapStartDate).toBe('20240103');
       expect(result.gapEndDate).toBe('20240110');
     });
+
+    describe('across a daylight-saving change', () => {
+      beforeEach(() => {
+        // Node re-reads TZ on assignment, so local midnights below follow US Eastern rules
+        vi.stubEnv('TZ', 'America/New_York');
+      });
+
+      afterEach(() => {
+        vi.unstubAllEnvs();
+      });
+
+      it('counts the skipped calendar day when the gap spans spring-forward', () => {
+        // 2025-03-09 is a 23-hour day: Mar 8 to Mar 10 is 47 hours, which floors to one day
+        const words = [
+          { word: 'before', date: '20250308' },
+          { word: 'after', date: '20250310' },
+        ];
+        const result = getAntiStreakStats(words);
+        expect(result.longestGap).toBe(1);
+        expect(result.gapStartDate).toBe('20250308');
+        expect(result.gapEndDate).toBe('20250310');
+      });
+
+      it('does not invent a gap when the span includes fall-back', () => {
+        // 2025-11-02 is a 25-hour day
+        const words = [
+          { word: 'before', date: '20251101' },
+          { word: 'during', date: '20251102' },
+          { word: 'after', date: '20251103' },
+        ];
+        expect(getAntiStreakStats(words).longestGap).toBe(0);
+      });
+    });
   });
 
   describe('streak helpers (time-sensitive)', () => {

@@ -127,15 +127,29 @@ export const monthSlugToNumber = (monthSlug: string): number | null => {
   return index >= 0 ? index + 1 : null;
 };
 
-export const areConsecutiveDays = (olderDate: string, newerDate: string): boolean => {
-  const dOlder = YYYYMMDDToDate(olderDate);
-  const dNewer = YYYYMMDDToDate(newerDate);
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+/**
+ * Count calendar days from one YYYYMMDD date to another. Subtracting
+ * local-midnight timestamps is wrong across a daylight-saving change (the
+ * spring-forward day is 23 hours long), so the validated year/month/day are
+ * mapped onto UTC, where every day is exactly 24 hours.
+ * @param {string} olderDate - Start date in YYYYMMDD format
+ * @param {string} newerDate - End date in YYYYMMDD format
+ * @returns {number | null} Whole days between the dates (negative when reversed), or null if either is invalid
+ */
+export const getCalendarDaysBetween = (olderDate: string, newerDate: string): number | null => {
+  const dOlder = parseYYYYMMDD(olderDate);
+  const dNewer = parseYYYYMMDD(newerDate);
 
   if (!dOlder || !dNewer) {
-    return false;
+    return null;
   }
 
-  const diffTime = dNewer.getTime() - dOlder.getTime();
-  const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays === 1;
+  const olderUTC = Date.UTC(dOlder.getFullYear(), dOlder.getMonth(), dOlder.getDate());
+  const newerUTC = Date.UTC(dNewer.getFullYear(), dNewer.getMonth(), dNewer.getDate());
+  return (newerUTC - olderUTC) / MS_PER_DAY;
 };
+
+export const areConsecutiveDays = (olderDate: string, newerDate: string): boolean =>
+  getCalendarDaysBetween(olderDate, newerDate) === 1;

@@ -6,7 +6,7 @@ import type {
   WordAntiStreakStatsResult,
   WordStreakStatsResult,
 } from '#types';
-import { areConsecutiveDays, dateToYYYYMMDD, YYYYMMDDToDate } from '#utils/date-utils';
+import { areConsecutiveDays, dateToYYYYMMDD, getCalendarDaysBetween } from '#utils/date-utils';
 import { TEXT_PATTERNS, MILESTONES } from '#constants/text-patterns';
 import {
   isStartEndSame,
@@ -461,16 +461,13 @@ export const getAntiStreakStats = (words: WordData[]): WordAntiStreakStatsResult
       continue;
     }
 
-    const previousDate = YYYYMMDDToDate(prevWord.date);
-    const currentDate = YYYYMMDDToDate(currWord.date);
+    const diffDays = getCalendarDaysBetween(prevWord.date, currWord.date);
 
-    if (!previousDate || !currentDate) {
+    if (diffDays === null) {
       continue;
     }
 
-    const diffTime = currentDate.getTime() - previousDate.getTime();
-    const rawDiffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const gapDays = rawDiffDays - 1;
+    const gapDays = diffDays - 1;
 
     if (gapDays > 0 && gapDays > longestGap) {
       longestGap = gapDays;

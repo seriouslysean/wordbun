@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
- dateToYYYYMMDD, formatDate, formatISODate, getMonthNameFromDate, getMonthSlugFromDate, getTodayYYYYMMDD, isValidDate, MONTH_NAMES, monthSlugToNumber, YYYYMMDDToDate,
+ dateToYYYYMMDD, formatDate, formatISODate, getCalendarDaysBetween, getMonthNameFromDate, getMonthSlugFromDate, getTodayYYYYMMDD, isValidDate, MONTH_NAMES, monthSlugToNumber, YYYYMMDDToDate,
 } from '#utils/date-utils';
 
 describe('shared date-utils', () => {
@@ -204,6 +204,35 @@ describe('shared date-utils', () => {
       expect(monthSlugToNumber('invalid')).toBe(null);
       expect(monthSlugToNumber('month13')).toBe(null);
       expect(monthSlugToNumber('')).toBe(null);
+    });
+  });
+
+  describe('getCalendarDaysBetween', () => {
+    afterEach(() => {
+      vi.unstubAllEnvs();
+    });
+
+    it('counts calendar days between two dates', () => {
+      expect(getCalendarDaysBetween('20240101', '20240101')).toBe(0);
+      expect(getCalendarDaysBetween('20240101', '20240102')).toBe(1);
+      expect(getCalendarDaysBetween('20240228', '20240301')).toBe(2);
+      expect(getCalendarDaysBetween('20241231', '20250101')).toBe(1);
+    });
+
+    it('returns a negative count when the dates are reversed', () => {
+      expect(getCalendarDaysBetween('20240110', '20240101')).toBe(-9);
+    });
+
+    it('returns null when either date is invalid', () => {
+      expect(getCalendarDaysBetween('invalid', '20240102')).toBeNull();
+      expect(getCalendarDaysBetween('20240101', '20240230')).toBeNull();
+    });
+
+    it('is unaffected by daylight-saving changes in the local zone', () => {
+      vi.stubEnv('TZ', 'America/New_York');
+      expect(getCalendarDaysBetween('20250308', '20250310')).toBe(2);
+      expect(getCalendarDaysBetween('20250308', '20250309')).toBe(1);
+      expect(getCalendarDaysBetween('20251101', '20251103')).toBe(2);
     });
   });
 
