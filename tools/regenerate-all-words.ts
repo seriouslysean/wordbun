@@ -104,10 +104,12 @@ async function regenerateWordFile(word: string, date: string, originalPath: stri
 }
 
 /**
- * Regenerates all word files using fresh dictionary data
+ * Regenerates all word files using fresh dictionary data. Every word is
+ * attempted; the returned failure count decides the exit code.
  * @param options - Configuration options
+ * @returns Number of words that could not be regenerated
  */
-async function regenerateAllWords(options: RegenerateOptions): Promise<void> {
+async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
   try {
     const wordsToRegenerate = getWordFiles();
     logger.info('Found word files to process', { count: wordsToRegenerate.length });
@@ -118,7 +120,7 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<void> {
         logger.info('Word entry', { index: index + 1, word: item.word, date: item.date, path: item.path });
       });
       logger.info('Use --force to actually regenerate these words');
-      return;
+      return 0;
     }
 
     if (!options.force) {
@@ -173,9 +175,10 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<void> {
       total: outcomes.length,
     });
 
+    return failureCount;
   } catch (error) {
     logger.error('Failed to regenerate words', { error: getErrorMessage(error) });
-    await exit(1);
+    return await exit(1);
   }
 }
 
@@ -267,8 +270,15 @@ if (isEntryPoint(import.meta.url)) {
     batchTimeout: parseInt(values['batch-timeout'] ?? String(DEFAULTS.batchTimeout), 10),
   };
 
-  regenerateAllWords(options).catch(async (error: unknown) => {
-    logger.error('Regeneration tool failed', { error: getErrorMessage(error) });
-    await exit(1);
-  });
+  regenerateAllWords(options)
+    .then(async (failed) => {
+      if (failed > 0) {
+        logger.error('Regeneration finished with failures', { failed });
+        await exit(1);
+      }
+    })
+    .catch(async (error: unknown) => {
+      logger.error('Regeneration tool failed', { error: getErrorMessage(error) });
+      await exit(1);
+    });
 }

@@ -50,12 +50,13 @@ const CONCURRENCY_LIMIT = 10;
 /**
  * Processes items in batches with consistent logging and error tracking.
  * Limits concurrency to avoid OOM/fd-exhaustion on large datasets.
+ * Every item is attempted; the returned failure count decides the exit code.
  */
 async function bulkGenerate<T extends BulkItem>(
   items: T[],
   generate: (item: T) => Promise<boolean>,
   category: string,
-): Promise<void> {
+): Promise<number> {
   logger.info(`Starting ${category} generation`, { count: items.length });
 
   const results: PromiseSettledResult<boolean>[] = [];
@@ -91,6 +92,8 @@ async function bulkGenerate<T extends BulkItem>(
     skipped: skippedCount,
     errors: failures.length,
   });
+
+  return failures.length;
 }
 
 /**
@@ -179,10 +182,11 @@ async function main(): Promise<void> {
   }
 
   const runBoth = !cliValues.words && !cliValues.generic;
+  const failed = { count: 0 };
 
   if (cliValues.words || runBoth) {
     const allWords = getAllWords();
-    await bulkGenerate(
+    failed.count += await bulkGenerate(
       allWords.map(w => ({ label: `${w.word} (${w.date})`, word: w.word, date: w.date })),
       (item) => generateShareImage(item.word, item.date, { force: isForce }),
       'word',
@@ -191,11 +195,16 @@ async function main(): Promise<void> {
 
   if (cliValues.generic || runBoth) {
     const pages = getAllPageMetadata(getAllWords());
-    await bulkGenerate(
+    failed.count += await bulkGenerate(
       pages.map(p => ({ label: `${p.title} (${p.path})`, title: p.title, path: p.path })),
       (item) => generateGenericShareImage(item.title, item.path, { force: isForce }),
       'generic',
     );
+  }
+
+  if (failed.count > 0) {
+    logger.error('Image generation finished with failures', { failed: failed.count });
+    await exit(1);
   }
 
   await exit(0);

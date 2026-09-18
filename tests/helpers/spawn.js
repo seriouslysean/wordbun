@@ -8,15 +8,17 @@ import { spawn } from 'node:child_process';
  * @param {object} [options] - Spawn options
  * @param {Record<string, string>} [options.env] - Additional environment variables
  * @param {number} [options.timeout] - Process timeout in ms (default: 10000)
+ * @param {string} [options.cwd] - Working directory (tools resolve data paths from it)
  * @returns {Promise<{ stdout: string, stderr: string, code: number | null }>} Captured output and exit code
  */
 export const spawnTool = (args, options = {}) => {
-  const { env = {}, timeout = 10000 } = options;
+  const { env = {}, timeout = 10000, cwd } = options;
   const { promise, resolve, reject } = Promise.withResolvers();
 
   const proc = spawn(process.execPath, args, {
     env: { ...process.env, ...env },
     timeout,
+    cwd,
   });
 
   const chunks = { stdout: [], stderr: [] };
