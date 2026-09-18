@@ -316,8 +316,8 @@ adapters/logger/stats-math changes.
 
 Pairs the Astro 6.x image component rollout with finishing the `astro:env`
 migration. The type-safe env API is already partially adopted —
-`src/utils/seo-utils.ts` imports from `astro:env/client`. One file still
-reads `import.meta.env.SOURCE_DIR` directly.
+`src/utils/seo-utils.ts` and `src/utils/image-utils.ts` import from
+`astro:env/client`, and `SOURCE_DIR` is in the schema.
 
 **Responsive image inventory:**
 - `src/components/Footer.astro:44` — Wordnik logo, imported as
@@ -329,9 +329,6 @@ reads `import.meta.env.SOURCE_DIR` directly.
   needed.
 
 **astro:env adoption gaps:**
-- `src/utils/image-utils.ts:12` — `import.meta.env.SOURCE_DIR`. Add
-  `SOURCE_DIR: envField.string({ context: 'client', access: 'public',
-  default: '' })` to schema and migrate.
 - `astro.config.ts:46,137-138` — `WORDNIK_WEBSITE_URL` declared in
   `defaults` but never schemaed. Add the entry.
 - `src/utils/logger.ts:12,34` — `import.meta.env.DEV` and
@@ -342,18 +339,16 @@ reads `import.meta.env.SOURCE_DIR` directly.
 **Acceptance criteria:**
 - Footer Wordnik logo renders via `<Image>`; build output shows hashed,
   optimized asset; visual diff identical at 16x16.
-- `astro:env/client` schema includes `SOURCE_DIR`, `WORDNIK_WEBSITE_URL`.
-- No `import.meta.env.SOURCE_DIR` references remain in `src/`.
+- `astro:env/client` schema includes `WORDNIK_WEBSITE_URL`.
 - Boundary tests still green.
 - Lighthouse on `/` and a word page: no regression on LCP/CLS.
 
 **Step sequence:**
-1. Add `SOURCE_DIR` and `WORDNIK_WEBSITE_URL` to env schema.
-2. Migrate `src/utils/image-utils.ts:12` to `astro:env/client`.
-3. Replace `<img>` in `src/components/Footer.astro` with `<Image>`.
-4. Verify `:global(.footer__wordnik)` grayscale/opacity styles still
+1. Add `WORDNIK_WEBSITE_URL` to env schema.
+2. Replace `<img>` in `src/components/Footer.astro` with `<Image>`.
+3. Verify `:global(.footer__wordnik)` grayscale/opacity styles still
    target the new wrapper.
-5. Run typecheck, build, inspect `dist/` for hashed image output.
+4. Run typecheck, build, inspect `dist/` for hashed image output.
 6. Run unit + E2E suites.
 7. Audit speculation rules `eagerness` against a long browse page; tune
    if prefetch volume is excessive.
