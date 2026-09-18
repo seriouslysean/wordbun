@@ -71,6 +71,13 @@ jobs:
             exit 1
           fi
 
+          # setup-env keeps line breaks, but read below sees only the first
+          # line, so a two-line list would pass here and fail in the tool
+          if [[ "$DICTIONARY_ADAPTER$DICTIONARY_FALLBACK" == *$'\n'* ]]; then
+            echo "::error::DICTIONARY_ADAPTER and DICTIONARY_FALLBACK must each be a single line."
+            exit 1
+          fi
+
           ADAPTERS=("$DICTIONARY_ADAPTER")
           if [[ "$DICTIONARY_FALLBACK" != none ]]; then
             IFS=',' read -ra ENTRIES <<< "$DICTIONARY_FALLBACK"
