@@ -538,16 +538,19 @@ The workflow files are the reference for their steps; this is what each one is f
 | Add Word | `.github/workflows/add-word.yml` | Manual dispatch with a word, an optional date, and overwrite and preserve-case switches |
 | Deploy to GitHub Pages | `.github/workflows/deploy.yml` | Push to main, manual dispatch, and after an Add Word run on main that succeeded |
 | Site Deploy | `.github/workflows/site-deploy.yml` | Called by Deploy here and by each site repository's Deploy |
+| Site Add Word | `.github/workflows/site-add-word.yml` | Called by Add Word here and by each site repository's Add Word |
 
-**Add Word** checks the dictionary settings before adding anything and stops with an error if `DICTIONARY_ADAPTER` is empty, if either variable spans more than one line or names an adapter other than `wordnik`, `merriam-webster` or `wiktionary` (any case), or if a named adapter's API key is missing (Wiktionary needs none). `DICTIONARY_FALLBACK` may be empty or `none` in any case for no fallback, or a comma-separated list. It then runs `npm run tool:add-word` followed by the complete `npm run tool:generate-images`, and commits and pushes to the branch it was dispatched on. It stages only what the run writes: word JSON under the words directory, PNG cards under `images/social`, and `.image-settings-hash`, in whichever layout `SOURCE_DIR` selects. A run that changes nothing ends with a notice instead of a commit. Workflow inputs reach the shell as environment variables, never as `${{ }}` expressions inside `run:`, so a word is always data and never script.
+**Add Word** calls **Site Add Word**, the workflow every site repository's Add Word calls, with the same four inputs, and keeps `contents: write` and the `add-word` concurrency group, so two runs never write at once.
+
+**Site Add Word** checks out the tip of the dispatched branch into `site/`, so a run that waited behind another starts from the commit that run pushed, and keeps that checkout's credentials for the push. It checks out the engine, installs, runs `setup-env` and overlays the site content exactly as Site Deploy does. It checks the dictionary settings before adding anything and stops with an error if `DICTIONARY_ADAPTER` is empty, if either variable spans more than one line or names an adapter other than `wordnik`, `merriam-webster` or `wiktionary` (any case), or if a named adapter's API key is missing (Wiktionary needs none). `DICTIONARY_FALLBACK` may be empty or `none` in any case for no fallback, or a comma-separated list. It then runs `npm run tool:add-word` followed by the complete `npm run tool:generate-images` in `engine/`, copies back into `site/` only word JSON under the words directory, PNG cards under `images/social` and `.image-settings-hash`, in whichever layout `SOURCE_DIR` selects, and stages only those. The copy compares content and never deletes. It commits as the repository owner with the message `Add word: <word>` and pushes to the branch it was dispatched on; a push that is not a fast-forward fails the run, and nothing is ever forced. A run that changes nothing ends with a notice instead of a commit. Workflow inputs reach the shell as environment variables, never as `${{ }}` expressions inside `run:`, so a word is always data and never script.
 
 **Deploy** calls **Site Deploy**, the workflow every site repository calls, so the demo site builds exactly as a site does. Deploy keeps the triggers, the permissions, the `pages` concurrency group and the gate that skips failed or cancelled Add Word runs. A push made with `GITHUB_TOKEN` starts no `push` run, so Add Word's completion is what triggers the deploy of a new word. For `workflow_run`, `GITHUB_SHA` is the last commit on the default branch, so the site checkout builds the commit Add Word just pushed.
 
 **Site Deploy** checks out the calling repository into `site/` and this repository into `engine/` at the engine ref, runs `npm ci` and then `setup-env` in `engine/`, and mirrors `site/data/` and `site/public/` over the engine's with `rsync --delete`, keeping the engine's `favicon.svg` when the site has none. Every copy compares content (`--checksum`), since two checkouts made in the same second can hold a same-size file that rsync's size and time check would skip. It then runs the complete `npm run tool:generate-images`, so an engine or theme change never deploys stale cards (current cards are skipped and nothing is committed), builds in `engine/`, whose own `.git` gives the build its release fingerprint, and uploads `engine/dist`. A separate deploy job holds `pages: write`, `id-token: write` and the `github-pages` environment, which a job that calls a reusable workflow cannot declare. Before copying anything it stops when `SOURCE_DIR` is not `demo` in this repository or not empty in any other, rather than publish the other site's content, and when the site has no words directory or `public/`, which mirroring would otherwise empty.
 
-**Engine ref.** A called workflow cannot see the ref it was called at, so a site passes its own `uses:` value again as `workflow-ref`, written once through a YAML anchor. Site Deploy accepts only its own file in this repository at a release tag (`vX.Y.Z`) or a full commit SHA: a branch or a major tag like `v3` moves, and would check out code other than the workflow that is running. This repository calls with `./` and no `workflow-ref`, and a `./` call runs the called workflow from the caller's commit, so the engine checkout is `github.workflow_sha`.
+**Engine ref.** A called workflow cannot see the ref it was called at, so a site passes its own `uses:` value again as `workflow-ref`, written once through a YAML anchor. Site Deploy and Site Add Word each accept only their own file in this repository at a release tag (`vX.Y.Z`) or a full commit SHA: a branch or a major tag like `v3` moves, and would check out code other than the workflow that is running. This repository calls with `./` and no `workflow-ref`, and a `./` call runs the called workflow from the caller's commit, so the engine checkout is `github.workflow_sha`.
 
-**Environment.** Add Word, Build and Site Deploy all run the `.github/actions/setup-env` composite action, which copies repository variables and secrets into the job by name. Each runs `npm ci` before it, so no dependency's install script has the secrets in its environment. In Site Deploy, `vars` is the calling repository's, and its secrets arrive as the one secret `site-secrets`, which the caller sets to `toJSON(secrets)` and the action reads as `secrets-json`, as it reads a single repository's. The build job has no environment, so a value stored only on the `github-pages` environment does not reach it. A name missing from its `VAR_NAMES` or `SECRET_NAMES` list never reaches a job, whatever the repository settings say. `VAR_NAMES` is read only from repository variables and `SECRET_NAMES` only from secrets: API keys (`*_API_KEY`), `GA_*` and `SENTRY_*` are secrets and everything else is a variable, and a name stored in the other place is exported empty. `tests/architecture/env-transport.spec.js` fails when a variable in the `astro.config.ts` env schema is neither in those lists nor set by the action itself, or when a name is in the wrong list. `SENTRY_ENVIRONMENT` is in neither list: the action always sets it to `production`. The action also sets `TZ` from the `SITE_TZ` repository variable (default `America/New_York`), so "today" is the same date when a word is added and when the site is built. Every value is written to `$GITHUB_ENV` in the multiline `NAME<<delimiter` form with a random delimiter per value, so a value that spans lines stays one variable instead of failing the step or setting others.
+**Environment.** Build, Site Deploy and Site Add Word all run the `.github/actions/setup-env` composite action, which copies repository variables and secrets into the job by name. Each runs `npm ci` before it, so no dependency's install script has the secrets in its environment. In Site Deploy and Site Add Word, `vars` is the calling repository's, and its secrets arrive as the one secret `site-secrets`, which the caller sets to `toJSON(secrets)` and the action reads as `secrets-json`, as it reads a single repository's. Site Deploy's build job has no environment, so a value stored only on the `github-pages` environment does not reach the build. A name missing from its `VAR_NAMES` or `SECRET_NAMES` list never reaches a job, whatever the repository settings say. `VAR_NAMES` is read only from repository variables and `SECRET_NAMES` only from secrets: API keys (`*_API_KEY`), `GA_*` and `SENTRY_*` are secrets and everything else is a variable, and a name stored in the other place is exported empty. `tests/architecture/env-transport.spec.js` fails when a variable in the `astro.config.ts` env schema is neither in those lists nor set by the action itself, or when a name is in the wrong list. `SENTRY_ENVIRONMENT` is in neither list: the action always sets it to `production`. The action also sets `TZ` from the `SITE_TZ` repository variable (default `America/New_York`), so "today" is the same date when a word is added and when the site is built. Every value is written to `$GITHUB_ENV` in the multiline `NAME<<delimiter` form with a random delimiter per value, so a value that spans lines stays one variable instead of failing the step or setting others.
 
 ### Build Pipeline
 
@@ -581,6 +584,7 @@ data/words/YYYY/YYYYMMDD.json
 public/images/social/            # Cards and .image-settings-hash
 public/favicon.svg               # Optional; the engine's otherwise
 .github/workflows/deploy.yml
+.github/workflows/add-word.yml
 ```
 
 `.github/workflows/deploy.yml`, with `vX.Y.Z` the release to run:
@@ -617,19 +621,67 @@ jobs:
       site-secrets: ${{ toJSON(secrets) }}
 ```
 
+`.github/workflows/add-word.yml`, pinned to the same release:
+
+```yaml
+name: Add Word
+
+on:
+  workflow_dispatch:
+    inputs:
+      word:
+        description: 'The word to add'
+        required: true
+        type: string
+      date:
+        description: 'Date to add the word to (YYYYMMDD). Leave empty for today.'
+        required: false
+        type: string
+      overwrite:
+        description: 'Overwrite existing word if one exists for the date'
+        required: false
+        type: boolean
+        default: false
+      preserve_case:
+        description: 'Keep original capitalization'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: add-word
+  cancel-in-progress: false
+
+jobs:
+  add-word:
+    uses: &engine seriouslysean/occasional-wotd/.github/workflows/site-add-word.yml@vX.Y.Z
+    with:
+      workflow-ref: *engine
+      word: ${{ inputs.word }}
+      date: ${{ inputs.date }}
+      overwrite: ${{ inputs.overwrite }}
+      preserve_case: ${{ inputs.preserve_case }}
+    secrets:
+      site-secrets: ${{ toJSON(secrets) }}
+```
+
 The secrets go by name because `secrets: inherit` is only for callers in the same organization or enterprise, and site repositories live under a personal account. What the site repository needs in its settings:
 
 - Repository variables and secrets as listed under Environment Configuration, with `SOURCE_DIR` unset or empty. This repository keeps `SOURCE_DIR=demo`.
 - Pages built from GitHub Actions, with the `github-pages` environment allowing deployments from `main`.
 - Actions allowed to use reusable workflows from `seriouslysean/occasional-wotd`. A public repository can only call reusable workflows in public repositories, so this repository stays public.
+- Branch protection and rulesets on `main` that let Add Word's push with the workflow's `GITHUB_TOKEN` through, since it commits straight to the branch it was dispatched on.
 
-To move a site to a new release, change the pin in `uses:`; never move a published release tag. The first Deploy run in a site repository is the acceptance test for the cross-repository Pages deployment: confirm the site is live at its URL before retiring the fork's own workflows.
+To move a site to a new release, change both pins together; never move a published release tag. The first runs in a site repository are the acceptance test for the cross-repository setup: an Add Word run that commits the word and its cards to `main`, followed by the Deploy it triggers publishing the site at its URL, before the fork's own workflows are retired.
 
 ### Downstream Sync
 
 This repo is the upstream template. Downstream repos (wordbug, wordbun) fork it and diverge only in word data, images, and favicons. `npm run tool:sync` (`tools/sync-upstream.sh`) brings upstream changes into a downstream repo without touching `main`: it fetches `upstream`, creates `sync/upstream-<short sha>` from `main`, and merges `upstream/main` into it with `--no-ff --no-commit`, so even a fast-forward stops before a commit exists. It then runs `npm ci` and the quality gates in order (lint, typecheck, test, then the build and E2E with `SOURCE_DIR=demo BASE_PATH=/`) and commits the merge only when every gate passes without changing a file. It never pushes: review the branch, fast-forward `main` to it, and push. `npm run tool:sync -- --skip-e2e` skips E2E when Playwright browsers are not installed.
 
-It refuses to start below the repository root, off `main`, during a merge or rebase, or with modified, staged or untracked files, and never stashes; ignored files such as `.env` are fine. A `package-lock.json` conflict resolves to upstream's lockfile only when the merged `package.json` is upstream's. Any other conflict, or a failing gate, stops with the merge staged on the sync branch and the commands to finish or abandon it. An existing branch of the same name is refused. Merge-based (not rebase) so downstream can regular-push without force. The script no-ops in the upstream repo (no `upstream` remote). `tests/tools/sync-upstream.spec.js` runs it against real repositories in a temp dir with a fake `npm`.
+It refuses to start below the repository root, off `main`, during a merge or rebase, or with modified, staged or untracked files, and never stashes; ignored files such as `.env` are fine. A `package-lock.json` conflict resolves to upstream's lockfile only when the merged `package.json` is upstream's. Any other conflict, or a failing gate, stops with the merge staged on the sync branch and the commands to finish or abandon it. An existing branch of the same name is refused. Merge-based (not rebase) so downstream can regular-push without force. The script no-ops in the upstream repo (no `upstream` remote), and a site repository that calls the reusable workflows has nothing to merge: it moves its pins instead. `tests/tools/sync-upstream.spec.js` runs it against real repositories in a temp dir with a fake `npm`.
 
 ### Content Security Policy
 

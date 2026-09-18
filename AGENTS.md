@@ -240,7 +240,7 @@ These aren't enforced by tools, but the codebase follows them consistently:
 6. Push with tag: `git push && git push origin vX.Y.0`
 7. Create release: `gh release create vX.Y.0 --generate-notes --notes-start-tag vPREV`
 
-After releasing, sync downstream repos with `npm run tool:sync`: it merges upstream on a `sync/upstream-*` branch, commits only after every quality gate passes, and never pushes (merge-based, no force push).
+After releasing, sync downstream repos with `npm run tool:sync`: it merges upstream on a `sync/upstream-*` branch, commits only after every quality gate passes, and never pushes (merge-based, no force push). Site repositories that call the reusable Site Deploy and Site Add Word workflows instead move both `uses:` pins to the new tag (`docs/technical.md`, Site Repositories).
 
 ## Contributing via Git
 

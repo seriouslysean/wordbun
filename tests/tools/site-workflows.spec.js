@@ -7,7 +7,7 @@
  * a live run. Fixture checkouts live in a temp dir.
  */
 
-import { spawn } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -64,6 +64,8 @@ const runStep = (file, name, { env = {}, context = {} } = {}) => {
     env: {
       PATH: process.env.PATH,
       HOME: ctx.dir,
+      GIT_CONFIG_GLOBAL: '/dev/null',
+      GIT_CONFIG_NOSYSTEM: '1',
       GITHUB_OUTPUT: output,
       ...env,
       ...Object.fromEntries(Object.entries(declared).map(([key, value]) => [key, evaluate(value, context)])),
@@ -76,6 +78,10 @@ const runStep = (file, name, { env = {}, context = {} } = {}) => {
   proc.on('close', code => resolve({ code, output: chunks.join(''), outputs: fs.readFileSync(output, 'utf-8') }));
   return promise;
 };
+
+// name=value lines a step wrote to $GITHUB_OUTPUT
+const parseOutputs = text => Object.fromEntries(text.split('\n').filter(Boolean)
+  .map(line => [line.slice(0, line.indexOf('=')), line.slice(line.indexOf('=') + 1)]));
 
 const write = (file, content) => {
   const target = path.join(ctx.dir, file);
@@ -105,6 +111,7 @@ afterEach(() => {
 describe('site workflows', { timeout: 20000 }, () => {
   describe.each([
     ['site-deploy.yml'],
+    ['site-add-word.yml'],
   ])('%s engine ref', (file) => {
     const resolveRef = (workflowRef, repository = 'someone/wordbun') => runStep(file, 'Resolve engine ref', {
       env: { GITHUB_REPOSITORY: repository },
@@ -160,6 +167,7 @@ describe('site workflows', { timeout: 20000 }, () => {
 
   describe.each([
     ['site-deploy.yml'],
+    ['site-add-word.yml'],
   ])('%s overlay', (file) => {
     const overlay = (repository, sourceDir) => runStep(file, 'Overlay site content', {
       env: { GITHUB_REPOSITORY: repository, SOURCE_DIR: sourceDir },
@@ -246,6 +254,192 @@ describe('site workflows', { timeout: 20000 }, () => {
       expect(result.code).toBe(1);
       expect(result.output).toContain('::error::The site needs');
       expect(snapshot('engine')).toEqual(before);
+    });
+  });
+
+  describe('site-add-word.yml from input to push', () => {
+    const FILE = 'site-add-word.yml';
+    const OWNER = 'someone';
+    const SOCIAL = 'public/images/social';
+
+    // Stands in for the tools in engine/: logs its arguments NUL-separated,
+    // one call per line, and writes what add-word and a complete generation
+    // write, along with files that must never be committed. The generation
+    // also rewrites one card and loses another, and leaves the marker the
+    // size and time it had, as a new hash written in the same second would.
+    const FAKE_NPM = `#!/usr/bin/env bash
+printf '%s\\0' "$@" >> "$NPM_LOG"
+printf '\\n' >> "$NPM_LOG"
+case "$2" in
+  tool:add-word)
+    printf '{"word":"%s"}\\n' "\${@: -2:1}" > data/words/2026/20260918.json
+    echo draft > data/words/2026/20260918.json.bak
+    ;;
+  tool:generate-images)
+    echo new card > ${SOCIAL}/2026/20260918.png
+    echo refreshed card > ${SOCIAL}/2026/20260101.png
+    echo new marker > ${SOCIAL}/.image-settings-hash
+    touch -r ../site/${SOCIAL}/.image-settings-hash ${SOCIAL}/.image-settings-hash
+    echo stray > ${SOCIAL}/2026/20260918.webp
+    echo stray > ${SOCIAL}/debug.log
+    echo stray > public/stray.txt
+    rm ${SOCIAL}/2025/20250101.png
+    ;;
+esac
+`;
+
+    const git = (dir, ...args) => execFileSync('git', args, {
+      cwd: path.join(ctx.dir, dir),
+      encoding: 'utf-8',
+      stdio: 'pipe',
+      env: {
+        PATH: process.env.PATH,
+        HOME: ctx.dir,
+        GIT_CONFIG_GLOBAL: '/dev/null',
+        GIT_CONFIG_NOSYSTEM: '1',
+        GIT_AUTHOR_NAME: 'Fixture',
+        GIT_AUTHOR_EMAIL: 'fixture@example.com',
+        GIT_COMMITTER_NAME: 'Fixture',
+        GIT_COMMITTER_EMAIL: 'fixture@example.com',
+      },
+    }).trim();
+
+    const stepEnv = () => ({
+      PATH: `${path.join(ctx.dir, 'bin')}:${process.env.PATH}`,
+      NPM_LOG: path.join(ctx.dir, 'npm.log'),
+      GITHUB_REPOSITORY: `${OWNER}/wordbun`,
+      GITHUB_REPOSITORY_OWNER: OWNER,
+      GITHUB_REF: 'refs/heads/main',
+      SOURCE_DIR: '',
+    });
+
+    const npmCalls = () => fs.readFileSync(path.join(ctx.dir, 'npm.log'), 'utf-8')
+      .split('\n').filter(Boolean).map(line => line.split('\0').slice(0, -1));
+
+    // The steps from the overlay on, as the runner would run them after the
+    // checkouts, install and setup-env
+    const addWord = async ({ word, date = '', overwrite = 'false', preserveCase = 'false', beforeCommit = () => {} }) => {
+      const env = stepEnv();
+      const overlay = await runStep(FILE, 'Overlay site content', { env });
+      expect(overlay.code).toBe(0);
+
+      const added = await runStep(FILE, 'Add word', {
+        env,
+        context: { 'inputs.word': word, 'inputs.date': date, 'inputs.overwrite': overwrite, 'inputs.preserve_case': preserveCase },
+      });
+      const outputs = parseOutputs(added.outputs);
+      if (outputs.word_added !== '1') {
+        return { added, outputs };
+      }
+
+      const engineBefore = snapshot('engine');
+      expect((await runStep(FILE, 'Configure Git', { env })).code).toBe(0);
+      beforeCommit();
+      const committed = await runStep(FILE, 'Commit and push changes', {
+        env,
+        context: { 'steps.add_word.outputs.word': outputs.word },
+      });
+      return { added, outputs, committed, engineBefore, engineAfter: snapshot('engine') };
+    };
+
+    beforeEach(() => {
+      write('bin/npm', FAKE_NPM);
+      fs.chmodSync(path.join(ctx.dir, 'bin/npm'), 0o755);
+
+      write('engine/package.json', '{}\n');
+      write('engine/src/pages/index.astro', 'engine page\n');
+      write('engine/data/demo/words/2025/20250101.json', '{"word":"demo"}\n');
+      write('engine/public/favicon.svg', 'engine favicon\n');
+
+      git('.', 'init', '--quiet', '--bare', '--initial-branch=main', 'origin.git');
+      git('.', 'init', '--quiet', '--initial-branch=main', 'site');
+      write('site/data/words/2026/20260101.json', '{"word":"first"}\n');
+      write(`site/${SOCIAL}/2026/20260101.png`, 'old card\n');
+      write(`site/${SOCIAL}/2025/20250101.png`, 'kept card\n');
+      write(`site/${SOCIAL}/.image-settings-hash`, 'old marker\n');
+      git('site', 'add', '-A');
+      git('site', 'commit', '--quiet', '-m', 'site');
+      git('site', 'remote', 'add', 'origin', '../origin.git');
+      git('site', 'push', '--quiet', 'origin', 'main');
+    });
+
+    it('commits only the word file, cards and marker as the repository owner, and pushes', async () => {
+      const result = await addWord({ word: 'serendipity' });
+
+      expect(result.committed.code).toBe(0);
+      expect(git('site', 'show', '--name-status', '--format=', 'HEAD').split('\n')).toEqual([
+        'A\tdata/words/2026/20260918.json',
+        `M\t${SOCIAL}/.image-settings-hash`,
+        `M\t${SOCIAL}/2026/20260101.png`,
+        `A\t${SOCIAL}/2026/20260918.png`,
+      ]);
+      expect(git('site', 'log', '-1', '--format=%an <%ae>|%cn <%ce>|%s')).toBe(
+        `${OWNER} <${OWNER}@users.noreply.github.com>|${OWNER} <${OWNER}@users.noreply.github.com>|Add word: serendipity`,
+      );
+      expect(git('origin.git', 'rev-parse', 'main')).toBe(git('site', 'rev-parse', 'HEAD'));
+      expect(git('site', 'status', '--porcelain', '--untracked-files=all')).toBe('');
+      expect(fs.readFileSync(path.join(ctx.dir, 'site', SOCIAL, '2025/20250101.png'), 'utf-8')).toBe('kept card\n');
+      expect(result.engineAfter).toEqual(result.engineBefore);
+    });
+
+    it.each([
+      ['a command substitution, trimmed', '  $(touch PWNED)  ', '$(touch PWNED)'],
+      ['an apostrophe', "don't", "don't"],
+      ['a leading dash', '-ish', '-ish'],
+    ])('keeps %s as data', async (_, input, word) => {
+      const result = await addWord({ word: input });
+
+      expect(result.committed.code).toBe(0);
+      expect(npmCalls()[0]).toEqual(['run', 'tool:add-word', '--', '--', word, '']);
+      expect(git('site', 'log', '-1', '--format=%s')).toBe(`Add word: ${word}`);
+      expect(fs.readdirSync(ctx.dir, { recursive: true }).filter(file => path.basename(file) === 'PWNED')).toEqual([]);
+    });
+
+    it('passes the switches and the date to the tool', async () => {
+      const result = await addWord({ word: 'Japan', date: ' 20260918 ', overwrite: 'true', preserveCase: 'true' });
+
+      expect(result.committed.code).toBe(0);
+      expect(npmCalls()).toEqual([
+        ['run', 'tool:add-word', '--', '--overwrite', '--preserve-case', '--', 'Japan', '20260918'],
+        ['run', 'tool:generate-images'],
+      ]);
+    });
+
+    it('refuses a blank word before running a tool', async () => {
+      const result = await addWord({ word: ' \t ' });
+
+      expect(result.added.code).toBe(1);
+      expect(result.added.output).toContain('::error::Word cannot be empty');
+      expect(fs.existsSync(path.join(ctx.dir, 'npm.log'))).toBe(false);
+    });
+
+    it('ends without a commit when nothing changed', async () => {
+      await addWord({ word: 'serendipity' });
+      const head = git('site', 'rev-parse', 'HEAD');
+
+      const again = await addWord({ word: 'serendipity' });
+
+      expect(again.committed.code).toBe(0);
+      expect(again.committed.output).toContain('::notice::Nothing changed');
+      expect(git('site', 'rev-parse', 'HEAD')).toBe(head);
+      expect(git('origin.git', 'rev-parse', 'main')).toBe(head);
+    });
+
+    it('fails rather than force when main moved on', async () => {
+      const result = await addWord({
+        word: 'serendipity',
+        beforeCommit: () => {
+          git('.', 'clone', '--quiet', 'origin.git', 'other');
+          write('other/README.md', 'pushed meanwhile\n');
+          git('other', 'add', 'README.md');
+          git('other', 'commit', '--quiet', '-m', 'meanwhile');
+          git('other', 'push', '--quiet', 'origin', 'main');
+        },
+      });
+
+      expect(result.committed.code).not.toBe(0);
+      expect(result.committed.output).toMatch(/rejected|non-fast-forward|fetch first/);
+      expect(git('origin.git', 'rev-parse', 'main')).toBe(git('other', 'rev-parse', 'HEAD'));
     });
   });
 });
