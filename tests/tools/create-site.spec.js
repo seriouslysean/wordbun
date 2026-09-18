@@ -85,9 +85,6 @@ describe('create-site', { timeout: 20000 }, () => {
     const addWord = fs.readFileSync(path.join(ctx.dir, 'site/.github/workflows/add-word.yml'), 'utf-8');
     expect(load(deploy).jobs.deploy.uses).toBe(`seriouslysean/occasional-wotd/.github/workflows/site-deploy.yml@${ref}`);
     expect(load(addWord).jobs['add-word'].uses).toBe(`seriouslysean/occasional-wotd/.github/workflows/site-add-word.yml@${ref}`);
-    // The anchor passes the same value as workflow-ref
-    expect(load(deploy).jobs.deploy.with['workflow-ref']).toBe(load(deploy).jobs.deploy.uses);
-    expect(load(addWord).jobs['add-word'].with['workflow-ref']).toBe(load(addWord).jobs['add-word'].uses);
     expect(documentedCaller('site-deploy.yml')).toEqual([deploy.replaceAll(`@${ref}`, '@vX.Y.Z')]);
     expect(documentedCaller('site-add-word.yml')).toEqual([addWord.replaceAll(`@${ref}`, '@vX.Y.Z')]);
   });
@@ -110,7 +107,7 @@ describe('create-site', { timeout: 20000 }, () => {
     })]);
   });
 
-  // The same refs the reusable workflows refuse (tests/tools/site-workflows.spec.js)
+  // Refs that move, and the forms that are not a ref at all
   it.each([
     ['a moving major tag', 'v3'],
     ['a partial version', 'v3.23'],

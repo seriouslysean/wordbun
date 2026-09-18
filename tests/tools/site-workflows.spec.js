@@ -125,56 +125,47 @@ afterEach(() => {
 });
 
 describe('site workflows', { timeout: 20000 }, () => {
+  // The engine checkout is a uses: step, so no script runs: its with: values
+  // are evaluated as GitHub would evaluate them. The context holds only the
+  // job's own workflow identity, so a value that reads an input, a step
+  // output or github.workflow_sha fails here.
   describe.each([
-    ['site-deploy.yml'],
-    ['site-add-word.yml'],
-  ])('%s engine ref', (file) => {
-    const resolveRef = (workflowRef, repository = 'someone/wordbun') => runStep(file, 'Resolve engine ref', {
-      env: { GITHUB_REPOSITORY: repository },
-      context: { 'inputs.workflow-ref': workflowRef, 'github.workflow_sha': SHA },
-    });
-    const pinned = ref => `${ENGINE_REPOSITORY}/.github/workflows/${file}@${ref}`;
+    ['site-deploy.yml', 'deploy.yml'],
+    ['site-add-word.yml', 'add-word.yml'],
+  ])('%s engine checkout', (file, caller) => {
+    const engineCheckout = (repository) => {
+      const step = Object.values(workflow(file).jobs)
+        .flatMap(job => job.steps ?? [])
+        .find(found => found.name === 'Checkout engine');
+      expect(step.uses).toMatch(/^actions\/checkout@/);
+      const context = { 'job.workflow_repository': repository, 'job.workflow_sha': SHA };
+      return Object.fromEntries(Object.entries(step.with).map(([key, value]) => [key, evaluate(value, context)]));
+    };
 
-    it.each([
-      ['a release tag', 'v3.23.0'],
-      ['a full commit SHA', SHA],
-    ])('checks out this repository at %s from the pinned uses value', async (_, ref) => {
-      const result = await resolveRef(pinned(ref));
-
-      expect(result.code).toBe(0);
-      expect(result.outputs).toBe(`repository=${ENGINE_REPOSITORY}\nref=${ref}\n`);
-    });
-
-    it.each([
-      ['a moving major tag', pinned('v3')],
-      ['a partial version', pinned('v3.23')],
-      ['a branch', pinned('main')],
-      ['a full tag ref', pinned('refs/tags/v3.23.0')],
-      ['a short SHA', pinned(SHA.slice(0, 12))],
-      ['a second @', `${pinned('v3.23.0')}@v3.24.0`],
-      ['another repository', `someone/occasional-wotd/.github/workflows/${file}@v3.23.0`],
-      ['another workflow', `${ENGINE_REPOSITORY}/.github/workflows/build.yml@v3.23.0`],
-      ['a bare version', 'v3.23.0'],
-      ['junk', '$(touch PWNED)'],
-    ])('refuses %s', async (_, workflowRef) => {
-      const result = await resolveRef(workflowRef);
-
-      expect(result.code).toBe(1);
-      expect(result.output).toContain('::error::');
-      expect(result.outputs).toBe('');
-      expect(fs.existsSync(path.join(ctx.dir, 'PWNED'))).toBe(false);
+    // A site calling a release runs this repository's workflow, so the
+    // engine is the commit its uses: pin names and nothing the caller passes
+    it('checks out the repository and commit of the workflow that is running', () => {
+      expect(engineCheckout(ENGINE_REPOSITORY)).toEqual({
+        repository: ENGINE_REPOSITORY,
+        ref: SHA,
+        path: 'engine',
+        'persist-credentials': 'false',
+      });
     });
 
-    // A ./ call passes no workflow-ref and runs from the caller's commit,
-    // which for a fork is a commit only the fork has
-    it.each([
-      ['this repository', ENGINE_REPOSITORY],
-      ['a fork that has not moved to a thin site', 'seriouslysean/wordbug'],
-    ])('checks out the calling commit when %s calls its own copy', async (_, repository) => {
-      const result = await resolveRef('', repository);
+    // A ./ call runs the called workflow from the caller's own commit, which
+    // for a fork is a commit only the fork has
+    it('checks out the calling commit when a fork that has not moved to a thin site calls its own copy', () => {
+      expect(engineCheckout('seriouslysean/wordbug')).toMatchObject({ repository: 'seriouslysean/wordbug', ref: SHA });
+    });
 
-      expect(result.code).toBe(0);
-      expect(result.outputs).toBe(`repository=${repository}\nref=${SHA}\n`);
+    // GitHub refuses a call that passes an input the workflow does not
+    // declare, and a site caller calls a release, which actionlint cannot read
+    it('declares exactly the inputs the site caller passes', () => {
+      const template = load(fs.readFileSync(path.join(ROOT, 'tools/templates/site', caller), 'utf-8'));
+      const [job] = Object.values(template.jobs);
+
+      expect(Object.keys(workflow(file).on.workflow_call.inputs ?? {})).toEqual(Object.keys(job.with ?? {}));
     });
   });
 

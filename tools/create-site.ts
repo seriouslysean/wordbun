@@ -17,8 +17,8 @@ import { parseWordData } from '#utils/word-validation';
 const ENGINE_ROOT = path.join(import.meta.dirname, '..');
 const TEMPLATES = path.join(import.meta.dirname, 'templates', 'site');
 
-// The refs Site Deploy and Site Add Word accept: a branch or a major tag
-// moves, so the code checked out could differ from the workflow running
+// A release tag or a full commit SHA: a branch or a major tag moves, and
+// would change the engine a site runs without a change in the site
 const ENGINE_REF = /^(v[0-9]+\.[0-9]+\.[0-9]+|[0-9a-f]{40})$/;
 
 // The caller templates are the ones docs/technical.md shows, with this
