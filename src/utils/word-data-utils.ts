@@ -10,7 +10,7 @@ import type {
   WordProcessedData,
 } from '#types';
 import { MAX_PAST_WORDS_DISPLAY } from '#constants/text-patterns';
-import { getMonthSlugFromDate } from '#utils/date-utils';
+import { getMonthSlugFromDate, getTodayYYYYMMDD } from '#utils/date-utils';
 import {
   getAvailableYears,
   getAvailableLengths,
@@ -208,10 +208,10 @@ export const getCurrentWord = (words: WordData[] = allWords): WordData | null =>
     return null;
   }
 
-  const today = new Date();
-  const dateString = today.toISOString().slice(0, 10).replace(/-/g, '');
+  // Local date, matching add-word and the streak stats; toISOString() is UTC and disagrees near midnight
+  const today = getTodayYYYYMMDD();
 
-  const found = words.find(word => word.date <= dateString);
+  const found = words.find(word => word.date <= today);
 
   return found ?? words[words.length - 1] ?? null;
 };

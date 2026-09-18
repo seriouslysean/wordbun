@@ -97,6 +97,29 @@ describe('word-data-utils', () => {
       const result = getCurrentWord([]);
       expect(result).toBeNull();
     });
+
+    describe('near midnight, where the UTC date and the local date differ', () => {
+      afterEach(() => {
+        vi.unstubAllEnvs();
+      });
+
+      it('does not publish tomorrow\'s word while it is still this evening locally', () => {
+        // 21:00 on Jan 10 in New York is already Jan 11 in UTC
+        vi.stubEnv('TZ', 'America/New_York');
+        vi.setSystemTime(new Date('2025-01-11T02:00:00Z'));
+        const words = [{ word: 'tomorrow', date: '20250111', data: [] }, ...mockWordData];
+
+        expect(getCurrentWord(words).word).toBe('current');
+      });
+
+      it('publishes today\'s word once it is past midnight locally', () => {
+        // 01:00 on Jan 10 in Tokyo is still Jan 9 in UTC
+        vi.stubEnv('TZ', 'Asia/Tokyo');
+        vi.setSystemTime(new Date('2025-01-09T16:00:00Z'));
+
+        expect(getCurrentWord(mockWordData).word).toBe('current');
+      });
+    });
   });
 
   describe('getPastWords', () => {
