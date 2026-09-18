@@ -289,12 +289,12 @@ npm run tool:local tools/add-word.ts serendipity --overwrite
 Consolidated image generation (SVG templates, Sharp PNG conversion, 1200x630px OpenGraph).
 
 ```sh
-npm run tool:local tools/generate-images.ts                      # All images
-npm run tool:local tools/generate-images.ts --word serendipity   # Single word
-npm run tool:local tools/generate-images.ts --words              # All word images
-npm run tool:local tools/generate-images.ts --generic            # Generic page images
-npm run tool:local tools/generate-images.ts --page stats         # Specific page
-npm run tool:local tools/generate-images.ts --force              # Regenerate existing
+npm run tool:local tools/generate-images.ts                         # All images
+npm run tool:local tools/generate-images.ts -- --word serendipity   # Single word
+npm run tool:local tools/generate-images.ts -- --words              # All word images
+npm run tool:local tools/generate-images.ts -- --generic            # Generic page images
+npm run tool:local tools/generate-images.ts -- --page /stats        # Specific page
+npm run tool:local tools/generate-images.ts -- --force              # Regenerate existing
 ```
 
 ### `regenerate-all-words.ts`
