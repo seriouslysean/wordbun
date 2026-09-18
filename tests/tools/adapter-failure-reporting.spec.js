@@ -112,13 +112,14 @@ describe('add-word failure reporting', () => {
     });
   });
 
-  it('reports "not found" when every adapter said not found', async () => {
+  it('reports "not found", as input rather than a fault, when every adapter said not found', async () => {
     await addWord();
 
-    expect(ctx.logger.error).toHaveBeenCalledExactlyOnceWith('Word not found in dictionary', {
+    expect(ctx.logger.warn).toHaveBeenCalledWith('Word not found in dictionary', {
       word: WORD,
       errorMessage: `All dictionary adapters failed for "${WORD}": wordnik: ${NOT_FOUND} | wiktionary: ${NOT_FOUND}`,
     });
+    expect(ctx.logger.error).not.toHaveBeenCalled();
   });
 
   it.each([
@@ -132,7 +133,8 @@ describe('add-word failure reporting', () => {
 
     await addWord();
 
-    expect(ctx.logger.error).toHaveBeenCalledExactlyOnceWith('Word not found in dictionary', expect.objectContaining({ word: WORD }));
+    expect(ctx.logger.warn).toHaveBeenCalledWith('Word not found in dictionary', expect.objectContaining({ word: WORD }));
+    expect(ctx.logger.error).not.toHaveBeenCalled();
   });
 
   it('keeps the single-adapter message unchanged when no fallback is configured', async () => {
@@ -140,10 +142,11 @@ describe('add-word failure reporting', () => {
 
     await addWord();
 
-    expect(ctx.logger.error).toHaveBeenCalledExactlyOnceWith('Word not found in dictionary', {
+    expect(ctx.logger.warn).toHaveBeenCalledWith('Word not found in dictionary', {
       word: WORD,
       errorMessage: NOT_FOUND,
     });
+    expect(ctx.logger.error).not.toHaveBeenCalled();
   });
 });
 

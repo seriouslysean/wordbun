@@ -59,14 +59,16 @@ interface AddWordOptions {
 export async function addWord(input: string, options: AddWordOptions = {}): Promise<void> {
   const { date, overwrite = false, preserveCase = false } = options;
   const word = input?.trim();
+  // Refusals of the operator's input log at warn: the CLI logger forwards
+  // only error-level calls to Sentry, and a typo is not an application fault
   try {
     if (!word) {
-      logger.error('Word is required', { providedInput: input });
+      logger.warn('Word is required', { providedInput: input });
       await exit(1);
     }
 
     if (date && !isValidDate(date)) {
-      logger.error('Invalid date format', { providedDate: date, expectedFormat: 'YYYYMMDD' });
+      logger.warn('Invalid date format', { providedDate: date, expectedFormat: 'YYYYMMDD' });
       await exit(1);
     }
 
@@ -75,7 +77,7 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
 
     // Validate that date is not in the future
     if (!isNotFutureDate(targetDate)) {
-      logger.error('Cannot add words for future dates', {
+      logger.warn('Cannot add words for future dates', {
         requestedDate: targetDate,
         currentDate: getTodayYYYYMMDD(),
       });
@@ -85,7 +87,7 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
     // Check if file already exists for the target date
     const existing = checkExistingWord(targetDate);
     if (existing && !overwrite) {
-      logger.error('Word already exists for this date', {
+      logger.warn('Word already exists for this date', {
         date: existing.date,
         existingWord: existing.word,
       });
@@ -95,7 +97,7 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
     // Check if word already exists anywhere else in the system (always enforce global uniqueness)
     const existingWordByName = findExistingWord(word);
     if (existingWordByName && existingWordByName.date !== targetDate) {
-      logger.error('Word already exists for different date', {
+      logger.warn('Word already exists for different date', {
         word: word,
         existingDate: existingWordByName.date,
         requestedDate: targetDate,
@@ -111,7 +113,7 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
     // "Not found" only when every adapter said so; a rate limit or shape error
     // from one of them is a different problem and is reported as such
     if (isWordNotFound(error)) {
-      logger.error('Word not found in dictionary', { word, errorMessage });
+      logger.warn('Word not found in dictionary', { word, errorMessage });
     } else {
       logger.error('Failed to add word', { word, errorMessage });
     }
@@ -177,7 +179,7 @@ if (isEntryPoint(import.meta.url)) {
   const [word, date] = positionals;
 
   if (!word) {
-    logger.error('Word is required', { word });
+    logger.warn('Word is required', { word });
     showHelp(HELP_TEXT);
     await exit(1);
   } else {
