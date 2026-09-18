@@ -9,6 +9,7 @@ import type {
   WordGroupByYearResult,
   WordProcessedData,
 } from '#types';
+import { isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { MAX_PAST_WORDS_DISPLAY } from '#constants/text-patterns';
 import { getMonthSlugFromDate, getTodayYYYYMMDD } from '#utils/date-utils';
 import {
@@ -26,6 +27,7 @@ import {
   groupWordsByYear as groupWordsByYearPure,
   groupWordsByLength as groupWordsByLengthPure,
   groupWordsByLetter as groupWordsByLetterPure,
+  groupWordsByPartOfSpeech as groupWordsByPartOfSpeechPure,
 } from '#utils/word-data-utils';
 import { getErrorMessage } from '#utils/text-utils';
 import {
@@ -421,28 +423,19 @@ export const getWordsByLetter = (letter: string, words: WordData[] = allWords): 
 };
 
 /**
- * Groups words by their part of speech
+ * Groups words by their part of speech for the browse pages: base parts of
+ * speech only, keys and words in alphabetical order.
  *
  * @param words - Array of word data to group
  * @returns Object with part of speech keys and word arrays
  */
 export const groupWordsByPartOfSpeech = (words: WordData[]): WordGroupByPartOfSpeechResult => {
-  const groups: Record<string, WordData[]> = {};
-  for (const word of words) {
-    if (!Array.isArray(word.data)) { continue; }
-    const seen = new Set<string>();
-    for (const def of word.data) {
-      if (!def.partOfSpeech) { continue; }
-      const normalized = normalizeToBasePOS(def.partOfSpeech);
-      if (!normalized || seen.has(normalized)) { continue; }
-      seen.add(normalized);
-      (groups[normalized] ??= []).push(word);
-    }
-  }
+  const groups = groupWordsByPartOfSpeechPure(words);
   return Object.fromEntries(
     Object.entries(groups)
+      .filter(([pos]) => isBasePartOfSpeech(pos))
       .toSorted(([a], [b]) => a.localeCompare(b))
-      .map(([pos, posWords]) => [pos, posWords.toSorted((a, b) => a.word.localeCompare(b.word))])
+      .map(([pos, posWords]) => [pos, (posWords ?? []).toSorted((a, b) => a.word.localeCompare(b.word))])
   );
 };
 

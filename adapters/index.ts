@@ -4,7 +4,7 @@ import { wordnikAdapter } from '#adapters/wordnik';
 import type { DictionaryAdapter, DictionaryResponse, FetchOptions } from '#types';
 import { logger } from '#utils/logger';
 import { getErrorMessage } from '#utils/text-utils';
-import { isValidDictionaryData } from '#utils/word-validation';
+import { isValidDictionaryData } from '#utils/word-data-utils';
 
 const ADAPTER_REGISTRY: Record<string, DictionaryAdapter> = {
   'wordnik': wordnikAdapter,

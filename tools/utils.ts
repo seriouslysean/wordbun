@@ -13,8 +13,8 @@ import { formatDate, isValidDate } from '#utils/date-utils';
 import { getErrorMessage, logger } from '#utils/logger';
 import { slugify } from '#utils/text-utils';
 import { isRecord, isString } from '#utils/type-guards';
-import { mergeEnrichment, normalizeToBasePOS } from '#utils/word-data-utils';
-import { isValidDictionaryData, parseWordData } from '#utils/word-validation';
+import { findValidDefinition, isValidDictionaryData, mergeEnrichment, normalizeToBasePOS } from '#utils/word-data-utils';
+import { parseWordData } from '#utils/word-validation';
 
 // ---------------------------------------------------------------------------
 // Image generation constants
@@ -415,12 +415,13 @@ export function buildWordData(params: {
 }
 
 /**
- * The headword's primary part of speech (first defined), normalized to a base
- * type, used to focus WordNet relations on the dominant sense. Undefined when no
- * definition carries a usable POS, in which case all senses are considered.
+ * The headword's primary part of speech (that of its first displayable
+ * definition), normalized to a base type, used to focus WordNet relations on
+ * the dominant sense. Undefined when no definition carries a usable POS, in
+ * which case all senses are considered.
  */
 export function primaryPartOfSpeech(definitions: DictionaryResponse['definitions']): string | undefined {
-  const raw = definitions.find(def => def.partOfSpeech)?.partOfSpeech;
+  const raw = findValidDefinition(definitions)?.partOfSpeech;
   const base = raw ? normalizeToBasePOS(raw) : '';
   return base || undefined;
 }

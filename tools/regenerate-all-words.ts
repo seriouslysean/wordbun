@@ -10,7 +10,8 @@ import type { WordEnrichment } from '#types';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { flattenErrors } from '#utils/text-utils';
 import { isRecord } from '#utils/type-guards';
-import { isValidDictionaryData, isWordEnrichment } from '#utils/word-validation';
+import { isValidDictionaryData } from '#utils/word-data-utils';
+import { isWordEnrichment } from '#utils/word-validation';
 
 interface StoredEntry {
   preserveCase: boolean;

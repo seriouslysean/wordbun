@@ -367,17 +367,18 @@ describe('fetchWithFallback', () => {
     await expect(fetchWithFallback('test')).rejects.toThrow('Word not found');
   });
 
-  it('falls through when the primary answers without usable definitions', async () => {
+  it('falls through when the primary answers with text but no part of speech', async () => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
     vi.stubEnv('DICTIONARY_FALLBACK', 'wiktionary');
 
-    const emptyResponse = { word: 'test', definitions: [], meta: { source: 'Merriam-Webster', attribution: '', url: '' } };
+    // No page could display this, so it is not a usable answer
+    const unlabelledResponse = { word: 'test', definitions: [{ text: 'Charles Francis 1900-1985' }], meta: { source: 'Merriam-Webster', attribution: '', url: '' } };
     const fallbackResponse = { word: 'test', definitions: [{ text: 'a test', partOfSpeech: 'noun' }], meta: { source: 'Wiktionary', attribution: '', url: '' } };
 
     vi.doMock('#adapters/merriam-webster', () => ({
       merriamWebsterAdapter: {
         name: 'merriam-webster',
-        fetchWordData: vi.fn().mockResolvedValue(emptyResponse),
+        fetchWordData: vi.fn().mockResolvedValue(unlabelledResponse),
         transformToWordData: vi.fn(),
         transformWordData: vi.fn(),
         isValidResponse: vi.fn(),

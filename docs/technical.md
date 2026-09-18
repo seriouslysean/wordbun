@@ -35,9 +35,9 @@ utils/                           # Pure Node.js utilities (13 files)
   text-pattern-utils.ts          # Pattern detection (palindromes, double letters, etc.)
   text-utils.ts                  # slugify(), syllable counting, re-exports
   url-utils.ts                   # URL generation for routes
-  word-data-utils.ts             # Word filtering (by year, length, letter, etc.)
+  word-data-utils.ts             # Displayability rule, word filtering (by year, length, letter, etc.)
   word-stats-utils.ts            # Statistics calculation algorithms
-  word-validation.ts             # Dictionary data validation
+  word-validation.ts             # Shape guards for stored word files and the words.json index
 
 tools/                           # CLI tools (Node.js only, no Astro deps)
   add-word.ts                    # Add new words with validation
@@ -265,6 +265,13 @@ All user-facing strings go through `locales/en.json`. The `t(key)` function from
 - Each word can only be used once across all dates (global uniqueness)
 - No future dates
 - Word must exist in the configured dictionary
+- The dictionary's answer must contain at least one displayable definition (see below); otherwise the fallback chain moves on, and an exhausted chain fails the add
+
+### Displayable Definitions
+
+`getDisplayableDefinitions()` in `utils/word-data-utils.ts` is the one rule for which of a word's definitions count. A definition is displayable when it has a part of speech and non-empty text. Abbreviation-labelled definitions are displayable only when the word has no displayable grammatical definition: a lookup of "sad" also returns SAD, "seasonal affective disorder", which must not become a sense of the adjective, while "pb&j" has nothing but its abbreviation, so that is what its page shows.
+
+Everything that shows, counts, groups or accepts definitions goes through it: the word page senses (`getWordSenses`), the primary definition used for meta descriptions, RSS and JSON-LD (`findValidDefinition`), the part-of-speech browse pages (`getAvailablePartsOfSpeech`, `getWordsByPartOfSpeech`, `groupWordsByPartOfSpeech`), and add-time acceptance (`isValidDictionaryData`, checked by `fetchWithFallback` and the tools). A record with text but no part of speech is refused at add time because no page could display it.
 - Strict YYYYMMDD format
 
 ## CLI Tools
@@ -487,9 +494,9 @@ See [AGENTS.md - The Boundary](../AGENTS.md#the-boundary) for the principle and 
 | `text-pattern-utils.ts` | Palindrome, double/triple letter detection |
 | `text-utils.ts` | `slugify()`, syllable counting |
 | `url-utils.ts` | Route URL builders |
-| `word-data-utils.ts` | Word filtering by year/length/letter/pos |
+| `word-data-utils.ts` | Displayability rule, add-time acceptance, word filtering by year/length/letter/pos |
 | `word-stats-utils.ts` | Statistics computation |
-| `word-validation.ts` | Dictionary data validation |
+| `word-validation.ts` | Shape guards for stored word files and the `words.json` index |
 
 **`src/utils/`** (Astro-specific):
 

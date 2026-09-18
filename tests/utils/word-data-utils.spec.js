@@ -32,8 +32,11 @@ import {
   getAvailablePartsOfSpeech,
   normalizePartOfSpeech,
   findValidDefinition,
-  isValidDefinition,
+  getDisplayableDefinitions,
+  isValidDictionaryData,
   getWordSenses,
+  getWordsByPartOfSpeech as getWordsByPartOfSpeechPure,
+  groupWordsByPartOfSpeech as groupWordsByPartOfSpeechPure,
   corpusRelationMatch,
   corpusRelations,
   mergeEnrichment,
@@ -579,6 +582,15 @@ describe('word-data-utils', () => {
       expect(grouped['adjective'][0].word).toBe('valid');
     });
 
+    it('leaves non-base parts of speech out of the browse groups', () => {
+      const data = [
+        { word: 'kick the bucket', date: '20250120', data: [{ text: 'to die', partOfSpeech: 'idiom' }] },
+        { word: 'valid', date: '20250119', data: [{ text: 'Valid definition', partOfSpeech: 'adjective' }] },
+      ];
+
+      expect(Object.keys(groupWordsByPartOfSpeech(data))).toEqual(['adjective']);
+    });
+
     it('handles empty arrays', () => {
       expect(getAvailablePartsOfSpeech([])).toEqual([]);
       expect(getWordsByPartOfSpeech('noun', [])).toEqual([]);
@@ -638,16 +650,198 @@ describe('pure groupWords* helpers (utils/word-data-utils)', () => {
 });
 
 describe('word-page surfacing helpers (utils/word-data-utils)', () => {
-  describe('isValidDefinition', () => {
+  // Shapes taken from stored records: "sad" carries its adjective senses plus
+  // the abbreviation SAD; "pb&j" carries nothing but its abbreviation.
+  const sadLike = {
+    word: 'sad',
+    date: '20250103',
+    adapter: 'merriam-webster',
+    data: [
+      { id: 'sad', partOfSpeech: 'adjective', text: 'affected with or expressive of grief or unhappiness' },
+      { id: 'SAD', partOfSpeech: 'abbreviation', text: 'seasonal affective disorder' },
+    ],
+  };
+  const pbjLike = {
+    word: 'pb&j',
+    date: '20250102',
+    adapter: 'merriam-webster',
+    data: [{ id: 'PB+J', partOfSpeech: 'abbreviation', text: 'peanut butter and jelly' }],
+  };
+  const textOnly = {
+    word: 'unlabelled',
+    date: '20250101',
+    adapter: 'merriam-webster',
+    data: [{ id: 'unlabelled', text: 'text with no part of speech' }],
+  };
+  const emptyText = {
+    word: 'blank',
+    date: '20241231',
+    adapter: 'merriam-webster',
+    data: [{ id: 'blank', partOfSpeech: 'noun', text: '   ' }],
+  };
+
+  describe('getDisplayableDefinitions', () => {
     it('requires a part of speech and non-empty text', () => {
-      expect(isValidDefinition({ partOfSpeech: 'noun', text: 'a thing' })).toBe(true);
-      expect(isValidDefinition({ text: 'a thing' })).toBe(false);
-      expect(isValidDefinition({ partOfSpeech: 'noun', text: '   ' })).toBe(false);
-      expect(isValidDefinition({ partOfSpeech: 'noun' })).toBe(false);
+      expect(getDisplayableDefinitions([{ partOfSpeech: 'noun', text: 'a thing' }])).toHaveLength(1);
+      expect(getDisplayableDefinitions(textOnly.data)).toEqual([]);
+      expect(getDisplayableDefinitions(emptyText.data)).toEqual([]);
+      expect(getDisplayableDefinitions([{ partOfSpeech: 'noun' }])).toEqual([]);
+      expect(getDisplayableDefinitions([{ partOfSpeech: '  ', text: 'a thing' }])).toEqual([]);
     });
 
     it('joins array text (Wordnik inconsistency)', () => {
-      expect(isValidDefinition({ partOfSpeech: 'noun', text: ['a', 'thing'] })).toBe(true);
+      expect(getDisplayableDefinitions([{ partOfSpeech: 'noun', text: ['a', 'thing'] }])).toHaveLength(1);
+    });
+
+    it('returns nothing for a missing definitions array', () => {
+      expect(getDisplayableDefinitions(undefined)).toEqual([]);
+    });
+
+    it('hides abbreviations from a word that has a grammatical definition', () => {
+      expect(getDisplayableDefinitions(sadLike.data)).toEqual([sadLike.data[0]]);
+    });
+
+    it('hides abbreviations whatever order the dictionary lists them in', () => {
+      expect(getDisplayableDefinitions(sadLike.data.toReversed())).toEqual([sadLike.data[0]]);
+    });
+
+    it('shows abbreviations when they are all the word has', () => {
+      expect(getDisplayableDefinitions(pbjLike.data)).toEqual(pbjLike.data);
+    });
+
+    it('does not let an undisplayable grammatical definition hide an abbreviation', () => {
+      const data = [{ partOfSpeech: 'noun', text: '' }, ...pbjLike.data];
+      expect(getDisplayableDefinitions(data)).toEqual(pbjLike.data);
+    });
+  });
+
+  describe('isValidDictionaryData', () => {
+    it('validates array with valid dictionary definitions', () => {
+      const validData = [
+        {
+          text: 'A test definition',
+          partOfSpeech: 'noun'
+        },
+        {
+          text: 'To test something',
+          partOfSpeech: 'verb'
+        }
+      ];
+
+      expect(isValidDictionaryData(validData)).toBe(true);
+    });
+
+    it('refuses entries having only text, which no page could display', () => {
+      expect(isValidDictionaryData([{ text: 'A definition with text only' }])).toBe(false);
+    });
+
+    it('refuses entries having only partOfSpeech', () => {
+      expect(isValidDictionaryData([{ partOfSpeech: 'noun' }])).toBe(false);
+    });
+
+    it('accepts a word whose only definitions are abbreviations', () => {
+      expect(isValidDictionaryData([{ partOfSpeech: 'abbreviation', text: 'peanut butter and jelly' }])).toBe(true);
+    });
+
+    it('rejects empty array', () => {
+      expect(isValidDictionaryData([])).toBe(false);
+    });
+
+    it('rejects non-array input', () => {
+      expect(isValidDictionaryData(null)).toBe(false);
+      expect(isValidDictionaryData(undefined)).toBe(false);
+      expect(isValidDictionaryData('string')).toBe(false);
+      expect(isValidDictionaryData(123)).toBe(false);
+      expect(isValidDictionaryData({})).toBe(false);
+    });
+
+    it('rejects array with entries missing both text and partOfSpeech', () => {
+      const invalidData = [
+        {
+          someOtherField: 'value'
+        }
+      ];
+
+      expect(isValidDictionaryData(invalidData)).toBe(false);
+    });
+
+    it('rejects array with entries having empty text and partOfSpeech', () => {
+      const invalidData = [
+        {
+          text: '',
+          partOfSpeech: '  '
+        }
+      ];
+
+      expect(isValidDictionaryData(invalidData)).toBe(false);
+    });
+
+    it('refuses entries whose text or partOfSpeech is not a string', () => {
+      expect(isValidDictionaryData([{ text: 123, partOfSpeech: 'noun' }])).toBe(false);
+      expect(isValidDictionaryData([{ text: 'Valid text', partOfSpeech: 456 }])).toBe(false);
+    });
+
+    it('accepts mixed array where at least one entry is displayable', () => {
+      const mixedData = [
+        {
+          text: 'Text without a part of speech'
+        },
+        {
+          text: 'Valid definition',
+          partOfSpeech: 'noun'
+        }
+      ];
+
+      expect(isValidDictionaryData(mixedData)).toBe(true);
+    });
+
+    it('handles whitespace in text and partOfSpeech', () => {
+      const validData = [
+        {
+          text: '  Valid text with whitespace  ',
+          partOfSpeech: '  noun  '
+        }
+      ];
+
+      expect(isValidDictionaryData(validData)).toBe(true);
+    });
+
+    it('rejects array with only whitespace in text and partOfSpeech', () => {
+      const invalidData = [
+        {
+          text: '   ',
+          partOfSpeech: '\t\n  '
+        }
+      ];
+
+      expect(isValidDictionaryData(invalidData)).toBe(false);
+    });
+  });
+
+  describe('consumers of the displayability rule agree', () => {
+    const corpus = [sadLike, pbjLike, textOnly, emptyText];
+
+    it.each([
+      { fixture: sadLike, partsOfSpeech: ['adjective'], text: sadLike.data[0].text },
+      { fixture: pbjLike, partsOfSpeech: ['abbreviation'], text: 'peanut butter and jelly' },
+      { fixture: textOnly, partsOfSpeech: [], text: null },
+      { fixture: emptyText, partsOfSpeech: [], text: null },
+    ])('for $fixture.word', ({ fixture, partsOfSpeech, text }) => {
+      const displayed = partsOfSpeech.length > 0;
+      const [primary = null] = partsOfSpeech;
+
+      expect(getWordSenses(fixture).map(sense => sense.partOfSpeech)).toEqual(partsOfSpeech);
+      expect(findValidDefinition(fixture.data)).toEqual(displayed ? { text, partOfSpeech: primary } : null);
+      expect(getAvailablePartsOfSpeech([fixture])).toEqual(partsOfSpeech);
+      expect(isValidDictionaryData(fixture.data)).toBe(displayed);
+
+      // Grouping and filtering run over the whole corpus, so a hidden
+      // abbreviation would show up as membership of the wrong bucket.
+      const groups = groupWordsByPartOfSpeechPure(corpus);
+      const memberships = Object.keys(groups).filter(pos => groups[pos].includes(fixture));
+      expect(memberships).toEqual(partsOfSpeech);
+      expect(['abbreviation', 'adjective', 'noun'].filter(pos => getWordsByPartOfSpeechPure(pos, corpus).includes(fixture)))
+        .toEqual(partsOfSpeech);
     });
   });
 
