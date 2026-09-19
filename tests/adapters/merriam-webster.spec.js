@@ -378,12 +378,26 @@ describe('merriam-webster adapter', () => {
       expect(isCanonicalResponse(result, 'test')).toBe(true);
     });
 
-    it('yields no definitions for an entry without shortdef', async () => {
+    it('yields no definitions for an entry without shortdef beside one with it', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ meta: { id: 'test', src: 'collegiate' } }]));
+      const entries = [
+        { meta: { id: 'test', src: 'collegiate' } },
+        { meta: { id: 'test:2', src: 'collegiate' }, fl: 'verb', shortdef: ['to try'] },
+      ];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, entries));
 
       const result = await merriamWebsterAdapter.fetchWordData('test');
-      expect(result.definitions).toEqual([]);
+      expect(result.definitions.map(definition => definition.text)).toEqual(['to try']);
+    });
+
+    it('reports an answer in which no entry has shortdef as an unexpected shape', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      const { WordNotFoundError } = await import('#utils/adapter-utils');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ meta: { id: 'test', src: 'collegiate' } }]));
+
+      const error = await merriamWebsterAdapter.fetchWordData('test').catch(e => e);
+      expect(error).not.toBeInstanceOf(WordNotFoundError);
+      expect(error.message).toBe('Merriam-Webster returned an unexpected response shape for "test"');
     });
 
     it('ignores an etymology whose first element is not text', async () => {

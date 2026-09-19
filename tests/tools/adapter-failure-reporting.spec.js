@@ -173,6 +173,86 @@ describe('add-word failure reporting', () => {
   });
 });
 
+// Only a dictionary that lists no definition at all does not have the word.
+// One whose field holding the definitions is renamed, or whose every
+// definition is blank, has changed its API: a fault, reported at error.
+describe('add-word when a dictionary answers with no definition to keep', () => {
+  const HOSTS = { 'merriam-webster': 'merriamWebster', wordnik: 'wordnik', wiktionary: 'wiktionary' };
+  const MW_ENTRY = { meta: { id: WORD, src: 'collegiate' }, fl: 'noun' };
+  const wiktionaryEntry = definitions => [{ word: WORD, meanings: [{ partOfSpeech: 'noun', definitions }] }];
+  const unexpectedShape = source => ({
+    level: 'error',
+    message: 'Failed to add word',
+    errorMessage: `${source} returned an unexpected response shape for "${WORD}"`,
+  });
+  const notFound = { level: 'warn', message: 'Word not found in dictionary', errorMessage: NOT_FOUND };
+
+  it.each([
+    {
+      adapter: 'merriam-webster',
+      answer: 'shortdef renamed to shortdefs',
+      body: [{ ...MW_ENTRY, shortdefs: ['a place'] }],
+      reported: unexpectedShape('Merriam-Webster'),
+    },
+    {
+      adapter: 'merriam-webster',
+      answer: 'every shortdef blank',
+      body: [{ ...MW_ENTRY, shortdef: ['', ' '] }],
+      reported: unexpectedShape('Merriam-Webster'),
+    },
+    {
+      adapter: 'wordnik',
+      answer: 'text renamed to definitionText',
+      body: [{ partOfSpeech: 'noun', definitionText: 'a place' }],
+      reported: unexpectedShape('Wordnik'),
+    },
+    {
+      adapter: 'wordnik',
+      answer: 'every text empty',
+      body: [{ partOfSpeech: 'noun', text: '' }, { partOfSpeech: 'verb', text: '' }],
+      reported: unexpectedShape('Wordnik'),
+    },
+    {
+      adapter: 'wiktionary',
+      answer: 'every definition empty',
+      body: wiktionaryEntry([{ definition: '' }, { definition: '' }]),
+      reported: unexpectedShape('Wiktionary'),
+    },
+    {
+      adapter: 'merriam-webster',
+      answer: 'an entry that is only a cross-reference, its shortdef empty',
+      body: [{ ...MW_ENTRY, cxs: [{ cxl: 'past tense of', cxtis: [{ cxt: 'run' }] }], shortdef: [] }],
+      reported: notFound,
+    },
+    {
+      adapter: 'wiktionary',
+      answer: 'a meaning whose definitions list is empty',
+      body: wiktionaryEntry([]),
+      reported: notFound,
+    },
+    {
+      adapter: 'wordnik',
+      answer: 'an empty definitions list',
+      body: [],
+      reported: notFound,
+    },
+  ])('reports $adapter answering with $answer at $reported.level', async ({ adapter, body, reported }) => {
+    vi.stubEnv('DICTIONARY_ADAPTER', adapter);
+    vi.stubEnv('DICTIONARY_FALLBACK', 'none');
+    vi.stubEnv('MERRIAM_WEBSTER_API_KEY', 'test-key');
+    vi.stubEnv('MERRIAM_WEBSTER_API_URL', 'https://mw.test/api/v3/references');
+    ctx[HOSTS[adapter]] = httpResponse(200, body);
+
+    await addWord();
+
+    expect(ctx.logger[reported.level]).toHaveBeenCalledExactlyOnceWith(reported.message, {
+      word: WORD,
+      errorMessage: reported.errorMessage,
+    });
+    expect(ctx.logger[reported.level === 'error' ? 'warn' : 'error']).not.toHaveBeenCalled();
+  });
+});
+
 describe('regenerate-all-words rate-limit backoff', () => {
   it('backs off when the primary was rate limited and the fallback said not found', async () => {
     ctx.wordnik = httpResponse(429);

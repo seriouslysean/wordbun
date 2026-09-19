@@ -465,8 +465,9 @@ describe('fetchWithFallback', () => {
   });
 });
 
-// A dictionary that answers with no definition for the headword has not
-// changed its API: it does not have the word. Real adapters, fetch stubbed.
+// A dictionary that lists no definition for the headword has not changed its
+// API: it does not have the word. One that lists definitions but gives none of
+// them text has. Real adapters, fetch stubbed.
 describe('fetchWithFallback when a dictionary answers with no definitions', () => {
   const answers = { wordnik: null, merriamWebster: null };
 
@@ -514,15 +515,15 @@ describe('fetchWithFallback when a dictionary answers with no definitions', () =
     expect(isWordNotFound(error)).toBe(true);
   });
 
-  it('reports a Wordnik answer whose every definition lacks text as not found', async () => {
+  it('reports a Wordnik answer whose every definition lacks text as an unexpected shape', async () => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'wordnik');
     vi.stubEnv('DICTIONARY_FALLBACK', 'none');
     answers.wordnik = [{ partOfSpeech: 'noun' }, { text: '  ', partOfSpeech: 'noun' }];
     const { fetchWithFallback } = await import('#adapters');
-    const { WordNotFoundError } = await import('#utils/adapter-utils');
+    const { isWordNotFound } = await import('#utils/adapter-utils');
 
     const error = await catchError(fetchWithFallback('test'));
-    expect(error).toBeInstanceOf(WordNotFoundError);
-    expect(error.message).toBe(NOT_FOUND);
+    expect(isWordNotFound(error)).toBe(false);
+    expect(error.message).toBe('Wordnik returned an unexpected response shape for "test"');
   });
 });

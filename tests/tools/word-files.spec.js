@@ -60,13 +60,15 @@ describe('a site with no words yet', () => {
   const noCorpus = [
     ['no words directory', () => {}],
     ['a words directory with no years', () => fs.mkdirSync(wordsDir())],
+    // What a failed first add-word leaves: the year directory is made before the fetch
+    ['a year directory with no word files', () => fs.mkdirSync(path.join(wordsDir(), '2025'), { recursive: true })],
   ];
 
   it.each(noCorpus)('has no existing word for add-word\'s duplicate check, which allows it, with %s', async (_, setUp) => {
     setUp();
     const { findExistingWord } = await import('#tools/utils');
 
-    expect(findExistingWord('alpha', { allowEmpty: true })).toBeNull();
+    expect(findExistingWord('alpha', { allowEmpty: true })).toEqual({ match: null, failures: [] });
     expect(ctx.logger.error).not.toHaveBeenCalled();
   });
 
@@ -75,7 +77,7 @@ describe('a site with no words yet', () => {
     const { findExistingWord } = await import('#tools/utils');
 
     // generate-images --word: with no corpus the word cannot be looked up
-    expect(findExistingWord('alpha')).toBeNull();
+    expect(findExistingWord('alpha')).toEqual({ match: null, failures: [wordsDir()] });
     expect(ctx.logger.error).toHaveBeenCalledOnce();
   });
 

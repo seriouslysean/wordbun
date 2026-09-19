@@ -69,9 +69,12 @@ function parseFallbackChain(): string[] {
  * as any other adapter failure, so the chain moves on instead of returning a
  * malformed or empty result, and the fault stays in the final error. A
  * response with no definitions at all is the partner not having the word (a
- * Merriam-Webster entry that is only a cross-reference, Wordnik senses with
- * no text), not a changed API, so it is reported as not found before the
- * guard, whose contract requires a definition, would call it a broken shape.
+ * Merriam-Webster entry that is only a cross-reference, a Wiktionary meaning
+ * with no definitions), not a changed API, so it is reported as not found
+ * before the guard, whose contract requires a definition, would call it a
+ * broken shape. buildDictionaryResponse has already refused a list whose
+ * every definition was blank, so an empty list here is one the partner sent
+ * empty.
  */
 async function fetchUsable(adapter: DictionaryAdapter, word: string, options?: FetchOptions): Promise<DictionaryResponse> {
   const response = await adapter.fetchWordData(word, options);
