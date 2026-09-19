@@ -204,6 +204,16 @@ describe('adapter-utils', () => {
       expect(definition).toStrictEqual({ text: 'Good fortune' });
     });
 
+    it('drops blank entries from a list, and the list when none are left', () => {
+      const definition = buildDefinition({
+        text: 'Good fortune',
+        examples: [' ', 'a happy find', ''],
+        synonyms: [''],
+      }, TEST_POS_MAP);
+
+      expect(definition).toStrictEqual({ text: 'Good fortune', examples: ['a happy find'] });
+    });
+
     it('carries an unmappable part of speech as the label', () => {
       expect(buildDefinition({ text: 'An American seismologist', partOfSpeech: 'biographical name' }, TEST_POS_MAP))
         .toStrictEqual({ label: 'biographical name', text: 'An American seismologist' });

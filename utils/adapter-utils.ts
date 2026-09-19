@@ -169,17 +169,23 @@ export interface DefinitionSource {
   antonyms?: string[];
 }
 
+const nonblankEntries = (values: string[] | undefined): string[] => values?.filter(isNonblankString) ?? [];
+
 /**
  * Builds a canonical definition from what an adapter read. The part of speech
  * is classified through the adapter's map, and an optional value that is
- * missing, blank or empty is omitted, so no stored record carries `""` or `[]`.
- * Keys follow the order stored records already use.
+ * missing, blank or empty is omitted, as is a blank entry in a list, so no
+ * stored record carries `""` or `[]`. Keys follow the order stored records
+ * already use.
  */
 export function buildDefinition(
   source: DefinitionSource,
   posMap: Readonly<Record<string, BasePartOfSpeech>>,
 ): DictionaryDefinition {
-  const { text, partOfSpeech, id, attributionText, sourceDictionary, sourceUrl, examples, synonyms, antonyms } = source;
+  const { text, partOfSpeech, id, attributionText, sourceDictionary, sourceUrl } = source;
+  const examples = nonblankEntries(source.examples);
+  const synonyms = nonblankEntries(source.synonyms);
+  const antonyms = nonblankEntries(source.antonyms);
   return {
     ...(isNonblankString(id) ? { id } : {}),
     ...classifyPartOfSpeech(partOfSpeech, posMap),
@@ -187,9 +193,9 @@ export function buildDefinition(
     ...(isNonblankString(attributionText) ? { attributionText } : {}),
     ...(isNonblankString(sourceDictionary) ? { sourceDictionary } : {}),
     ...(isNonblankString(sourceUrl) ? { sourceUrl } : {}),
-    ...(examples?.length ? { examples } : {}),
-    ...(synonyms?.length ? { synonyms } : {}),
-    ...(antonyms?.length ? { antonyms } : {}),
+    ...(examples.length > 0 ? { examples } : {}),
+    ...(synonyms.length > 0 ? { synonyms } : {}),
+    ...(antonyms.length > 0 ? { antonyms } : {}),
   };
 }
 
