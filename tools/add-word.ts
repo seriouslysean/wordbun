@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { paths } from '#config/paths';
 import { isEntryPoint } from '#tools/entry';
-import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
+import { COMMON_ENV_DOCS, parseToolArgs, showHelp } from '#tools/help-utils';
 import { createWordEntry, findExistingWord } from '#tools/utils';
 import type { WordData } from '#types';
 import { getTodayYYYYMMDD, isValidDate } from '#utils/date-utils';
@@ -157,11 +157,8 @@ Requirements:
 ${COMMON_ENV_DOCS}
 `;
 
-// Parse command line arguments
-import { parseArgs } from 'node:util';
-
 if (isEntryPoint(import.meta.url)) {
-  const { values, positionals } = parseArgs({
+  const { values, positionals } = await parseToolArgs({
     args: process.argv.slice(2),
     options: {
       help: { type: 'boolean', short: 'h', default: false },

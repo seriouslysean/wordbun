@@ -1,7 +1,5 @@
-import { parseArgs } from 'node:util';
-
 import { isEntryPoint } from '#tools/entry';
-import { showHelp } from '#tools/help-utils';
+import { parseToolArgs, showHelp } from '#tools/help-utils';
 import {
   findExistingWord,
   generateGenericShareImage,
@@ -249,7 +247,7 @@ async function main(options: GenerateImagesOptions): Promise<void> {
 // Everything that reads argv lives behind the guard, so importing this module
 // runs no CLI code.
 if (isEntryPoint(import.meta.url)) {
-  const { values } = parseArgs({
+  const { values } = await parseToolArgs({
     args: process.argv.slice(2),
     options: {
       help: { type: 'boolean', short: 'h', default: false },
