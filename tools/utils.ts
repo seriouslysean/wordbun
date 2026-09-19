@@ -195,19 +195,21 @@ interface WordLookup {
 export function findExistingWord(word: string, options: WordFileScanOptions = {}): WordLookup {
   const lowerWord = word.toLowerCase();
   const { files, failures } = getWordFiles(options);
+  const parseFailures: string[] = [];
 
   for (const file of files) {
     try {
       const data = parseWordData(fs.readFileSync(file.path, 'utf-8'), file.path);
       if (data.word.toLowerCase() === lowerWord) {
-        return { match: data, failures };
+        return { match: data, failures: [...failures, ...parseFailures] };
       }
     } catch (error) {
-      logger.warn('Failed to read word file', { path: file.path, error: getErrorMessage(error) });
+      logger.error('Failed to parse word file', { path: file.path, error: getErrorMessage(error) });
+      parseFailures.push(file.path);
     }
   }
 
-  return { match: null, failures };
+  return { match: null, failures: [...failures, ...parseFailures] };
 }
 
 interface WordCorpus {

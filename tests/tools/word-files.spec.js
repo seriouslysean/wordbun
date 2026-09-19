@@ -56,6 +56,37 @@ describe('getWordFiles', () => {
   });
 });
 
+describe('findExistingWord with malformed stored data', () => {
+  it('reports a file whose headword is readable but whose record is invalid', async () => {
+    const yearDir = path.join(wordsDir(), '2025');
+    const filePath = path.join(yearDir, '20250701.json');
+    fs.mkdirSync(yearDir, { recursive: true });
+    fs.writeFileSync(filePath, JSON.stringify({ word: 'alpha' }));
+    const { findExistingWord } = await import('#tools/utils');
+
+    expect(findExistingWord('beta')).toEqual({ match: null, failures: [filePath] });
+    expect(ctx.logger.error).toHaveBeenCalledOnce();
+    expect(ctx.logger.warn).not.toHaveBeenCalled();
+  });
+
+  it('keeps parse failures when it finds a valid word elsewhere', async () => {
+    const yearDir = path.join(wordsDir(), '2025');
+    const malformedPath = path.join(yearDir, '20250702.json');
+    const validPath = path.join(yearDir, '20250701.json');
+    fs.mkdirSync(yearDir, { recursive: true });
+    fs.writeFileSync(malformedPath, JSON.stringify({ word: 'alpha' }));
+    fs.writeFileSync(validPath, JSON.stringify({ ...STORED, word: 'beta', date: '20250701' }));
+    const { findExistingWord } = await import('#tools/utils');
+
+    expect(findExistingWord('beta')).toEqual({
+      match: { ...STORED, word: 'beta', date: '20250701' },
+      failures: [malformedPath],
+    });
+    expect(ctx.logger.error).toHaveBeenCalledOnce();
+    expect(ctx.logger.warn).not.toHaveBeenCalled();
+  });
+});
+
 describe('a site with no words yet', () => {
   const noCorpus = [
     ['no words directory', () => {}],
