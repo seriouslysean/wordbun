@@ -1,5 +1,4 @@
 import { BASE_PATH, SITE_URL } from 'astro:env/client';
-import { logger } from '#astro-utils/logger';
 import { BASE_PATHS, BROWSE_PATHS, ROUTES, STATS_SLUGS } from '#constants/urls';
 import { isPathUnderBase } from '#utils/url-utils';
 
@@ -89,7 +88,6 @@ export const getFullUrl = (path = '/'): string => {
     const url = new URL(relativePath, SITE_URL);
     return url.toString();
   } catch (error) {
-    logger.error('Failed to construct URL', { path, siteUrl: SITE_URL, error });
     throw new Error(`Failed to construct URL for path: ${path}`, { cause: error });
   }
 };

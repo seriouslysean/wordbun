@@ -497,7 +497,11 @@ export function getPageTitle(path: string): string {
  * @param words - Word dataset to evaluate
  * @returns Page metadata object
  */
-export function getPageMetadata(path: string, words: WordData[] = []): PageMetadataResult {
+function getPageMetadataForMap(
+  path: string,
+  words: WordData[],
+  pageMetadata?: Record<string, PageMeta>,
+): PageMetadataResult {
   if (!path) {
     throw new Error('getPageMetadata: path is required');
   }
@@ -586,7 +590,7 @@ export function getPageMetadata(path: string, words: WordData[] = []): PageMetad
   }
 
 
-  const PAGE_METADATA = createPageMetadata(words);
+  const PAGE_METADATA = pageMetadata ?? createPageMetadata(words);
   const metadata = PAGE_METADATA[path];
   if (!metadata) {
     return {
@@ -636,6 +640,19 @@ export function getPageMetadata(path: string, words: WordData[] = []): PageMetad
   }
 }
 
+export function getPageMetadata(path: string, words: WordData[] = []): PageMetadataResult {
+  return getPageMetadataForMap(path, words);
+}
+
+/**
+ * Create a page metadata lookup that reuses the precomputed stats for one dataset.
+ * Callers using mutable or ad-hoc datasets should use getPageMetadata directly.
+ */
+export function createPageMetadataLookup(words: WordData[]) {
+  const pageMetadata = createPageMetadata(words);
+  return (path: string): PageMetadataResult => getPageMetadataForMap(path, words, pageMetadata);
+}
+
 /**
  * Get metadata for all pages
  * @param words - Word dataset to evaluate
@@ -647,13 +664,13 @@ export function getAllPageMetadata(words: WordData[]) {
   // Get static pages (excluding root '/')
   const staticPages = Object.keys(PAGE_METADATA)
     .filter(path => path !== '/')
-    .map(path => (Object.assign({ path }, getPageMetadata(path, words))));
+    .map(path => (Object.assign({ path }, getPageMetadataForMap(path, words, PAGE_METADATA))));
 
   // Get dynamic year pages
   const years = getAvailableYears(words);
   const yearPages = years.map(year => {
     const path = ROUTES.YEAR(year);
-    return { path, ...getPageMetadata(path, words) };
+    return { path, ...getPageMetadataForMap(path, words, PAGE_METADATA) };
   });
 
   // Get dynamic month pages
@@ -664,26 +681,26 @@ export function getAllPageMetadata(words: WordData[]) {
         return [];
       }
       const path = ROUTES.MONTH(year, monthSlug);
-      return [{ path, ...getPageMetadata(path, words) }];
+      return [{ path, ...getPageMetadataForMap(path, words, PAGE_METADATA) }];
     }),
   );
 
   // Get dynamic word length pages
   const lengthPages = getAvailableLengths(words).map(length => {
     const path = getLengthUrl(length);
-    return Object.assign({ path }, getPageMetadata(path, words));
+    return Object.assign({ path }, getPageMetadataForMap(path, words, PAGE_METADATA));
   });
 
   // Get dynamic word letter pages  
   const letterPages = getAvailableLetters(words).map(letter => {
     const path = getLetterUrl(letter);
-    return Object.assign({ path }, getPageMetadata(path, words));
+    return Object.assign({ path }, getPageMetadataForMap(path, words, PAGE_METADATA));
   });
 
   // Get dynamic part-of-speech pages  
   const partOfSpeechPages = getAvailablePartsOfSpeech(words).map(partOfSpeech => {
     const path = getPartOfSpeechUrl(partOfSpeech);
-    return Object.assign({ path }, getPageMetadata(path, words));
+    return Object.assign({ path }, getPageMetadataForMap(path, words, PAGE_METADATA));
   });
 
   return [...staticPages, ...yearPages, ...monthPages, ...lengthPages, ...letterPages, ...partOfSpeechPages];

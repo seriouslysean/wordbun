@@ -12,7 +12,7 @@ vi.mock('#astro-utils/url-utils', () => ({
 }));
 
 vi.mock('#utils/page-metadata-utils', () => ({
-  getPageMetadata: vi.fn((pathname, words) => ({ pathname, count: words.length })),
+  createPageMetadataLookup: vi.fn(words => pathname => ({ pathname, count: words.length })),
   getAllPageMetadata: vi.fn(words => words.map(w => ({ path: `/word/${w.word}` }))),
 }));
 

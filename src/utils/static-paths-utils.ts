@@ -163,8 +163,7 @@ const toStatsPageProps = (config: StatsConfig): StatsPageProps => {
  * @returns Array of path definitions for stats pages
  */
 export const generateStatsStaticPaths = async () => {
-  const { getWordsFromCollection } = await import('#astro-utils/word-data-utils');
-  const words = await getWordsFromCollection();
+  const { allWords: words } = await import('#astro-utils/word-data-utils');
 
   const statsConfig = createStatsConfig(words);
 

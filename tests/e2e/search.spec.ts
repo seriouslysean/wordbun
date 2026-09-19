@@ -57,3 +57,61 @@ test.describe('header search', () => {
     await context.close();
   });
 });
+
+test('keeps only the latest query while the word index is loading', async ({ page }) => {
+  // oxlint-disable-next-line consistent-function-scoping
+  let releaseResponse: () => void = () => {};
+  const responseReady = new Promise<void>(resolve => {
+    releaseResponse = resolve;
+  });
+
+  await page.route('**/words.json', async route => {
+    await responseReady;
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify([
+        { word: 'alpha', date: '20250101' },
+        { word: 'banana', date: '20250102' },
+      ]),
+    });
+  });
+  await page.goto('/');
+  await page.locator('#site-search-toggle').click();
+
+  const input = page.locator('#site-search-input');
+  await input.fill('a');
+  await input.fill('b');
+  releaseResponse();
+
+  const results = page.locator('#site-search-results a');
+  await expect(results).toHaveCount(1);
+  await expect(results.first()).toContainText('banana');
+});
+
+test('recovers when the word index request fails', async ({ page }) => {
+  let requests = 0;
+  await page.route('**/words.json', async route => {
+    requests += 1;
+    if (requests === 1) {
+      await route.fulfill({ status: 500 });
+      return;
+    }
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify([{ word: 'banana', date: '20250102' }]),
+    });
+  });
+  await page.goto('/');
+  await page.locator('#site-search-toggle').click();
+
+  const input = page.locator('#site-search-input');
+  await input.fill('a');
+  await expect.poll(() => requests).toBe(1);
+  // Let the rejected request clear the in-flight cache before retrying.
+  await page.waitForTimeout(50);
+  await input.fill('b');
+  await expect.poll(() => requests).toBe(2);
+
+  await expect(page.locator('#site-search-results a')).toHaveCount(1);
+  await expect(page.locator('#site-search-results a').first()).toContainText('banana');
+});

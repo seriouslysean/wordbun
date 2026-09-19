@@ -6,6 +6,18 @@ import {
   vi,
 } from 'vitest';
 
+vi.mock('#utils/word-stats-utils', async importOriginal => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    getChronologicalMilestones: vi.fn(actual.getChronologicalMilestones),
+    getLetterPatternStats: vi.fn(actual.getLetterPatternStats),
+    getLetterStats: vi.fn(actual.getLetterStats),
+    getPatternStats: vi.fn(actual.getPatternStats),
+    getWordEndingStats: vi.fn(actual.getWordEndingStats),
+  };
+});
+
 // Mock the i18n utils to return predictable test data
 vi.mock('#utils/i18n-utils', () => ({
   t: vi.fn((key, params = {}) => {
@@ -34,11 +46,13 @@ vi.mock('#utils/i18n-utils', () => ({
 }));
 
 import {
+  createPageMetadataLookup,
   getAllPageMetadata,
   getDefinition,
   getPageMetadata,
   getPageTitle,
 } from '#utils/page-metadata-utils';
+import { getLetterStats } from '#utils/word-stats-utils';
 
 // Clean up mock after this test file to prevent leakage to other tests
 afterAll(() => {
@@ -54,6 +68,20 @@ const mockWords = [
 ];
 
 describe('page-metadata-utils', () => {
+  it('reuses corpus stats for a lookup while custom datasets stay fresh', () => {
+    const words = [{ word: 'test', date: '20240101' }];
+    const lookup = createPageMetadataLookup(words);
+
+    lookup('/stats');
+    lookup('/stats/word-facts');
+
+    expect(vi.mocked(getLetterStats)).toHaveBeenCalledTimes(1);
+    const customWords = [{ word: 'one', date: '20240101' }];
+    expect(getPageMetadata('/word', customWords).secondaryText).toBe('1 Mock Items');
+    customWords.push({ word: 'two', date: '20240102' });
+    expect(getPageMetadata('/word', customWords).secondaryText).toBe('2 Mock Items');
+  });
+
   describe('getPageMetadata', () => {
     it('titles the most common letter page with the letter the page lists', () => {
       // 'i' has the most occurrences; 'a' is in the most words, and the page
