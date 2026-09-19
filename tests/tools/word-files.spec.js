@@ -62,12 +62,21 @@ describe('a site with no words yet', () => {
     ['a words directory with no years', () => fs.mkdirSync(wordsDir())],
   ];
 
-  it.each(noCorpus)('has no existing word for the duplicate check, with %s', async (_, setUp) => {
+  it.each(noCorpus)('has no existing word for add-word\'s duplicate check, which allows it, with %s', async (_, setUp) => {
     setUp();
     const { findExistingWord } = await import('#tools/utils');
 
-    expect(findExistingWord('alpha')).toBeNull();
+    expect(findExistingWord('alpha', { allowEmpty: true })).toBeNull();
     expect(ctx.logger.error).not.toHaveBeenCalled();
+  });
+
+  it.each(noCorpus)('is reported at error to a lookup that needs data, with %s', async (_, setUp) => {
+    setUp();
+    const { findExistingWord } = await import('#tools/utils');
+
+    // generate-images --word: with no corpus the word cannot be looked up
+    expect(findExistingWord('alpha')).toBeNull();
+    expect(ctx.logger.error).toHaveBeenCalledOnce();
   });
 
   it.each(noCorpus)('is a failure to the bulk tools, which need data, with %s', async (_, setUp) => {

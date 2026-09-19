@@ -173,12 +173,15 @@ export const getWordFiles = ({ allowEmpty = false }: WordFileScanOptions = {}): 
 };
 
 /**
- * Checks if a word already exists by scanning word files. With no words
- * directory, or no year in it, nothing exists yet, which is not a fault.
+ * Checks if a word already exists by scanning word files. A missing or empty
+ * words directory is logged at error unless the caller sets `allowEmpty`, as
+ * add-word's duplicate check does: there nothing exists yet, which is not a
+ * fault. A lookup that needs the word (generate-images --word) leaves it off,
+ * so a mistyped SOURCE_DIR is reported as such, not as a missing word.
  */
-export function findExistingWord(word: string): WordData | null {
+export function findExistingWord(word: string, options: WordFileScanOptions = {}): WordData | null {
   const lowerWord = word.toLowerCase();
-  const { files } = getWordFiles({ allowEmpty: true });
+  const { files } = getWordFiles(options);
 
   for (const file of files) {
     try {

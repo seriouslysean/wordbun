@@ -94,8 +94,9 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
       await exit(1);
     }
 
-    // Check if word already exists anywhere else in the system (always enforce global uniqueness)
-    const existingWordByName = findExistingWord(word);
+    // Check if word already exists anywhere else in the system (always enforce global uniqueness).
+    // A new site has no words yet, so an empty corpus is not a fault here.
+    const existingWordByName = findExistingWord(word, { allowEmpty: true });
     if (existingWordByName && existingWordByName.date !== targetDate) {
       logger.warn('Word already exists for different date', {
         word: word,
