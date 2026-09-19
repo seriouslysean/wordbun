@@ -141,7 +141,14 @@ async function generateSingleImage(word: string, options: GenerateImageOptions):
  * Generates image for a specific page path
  */
 async function generatePageImage(pagePath: string, options: GenerateImageOptions): Promise<boolean> {
-  const allPages = getAllPageMetadata(getAllWords().words);
+  const { words, failures } = getAllWords();
+  // The page list is built from the corpus, so a partial one could draw a
+  // wrong card. Each unreadable directory or file is already logged at error.
+  if (failures.length > 0) {
+    return false;
+  }
+
+  const allPages = getAllPageMetadata(words);
   const page = allPages.find(p => p.path === pagePath);
 
   // An unknown page path is the operator's typo too

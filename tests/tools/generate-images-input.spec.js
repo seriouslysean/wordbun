@@ -57,4 +57,15 @@ describe('generate-images without word data', () => {
     expect(code).toBe(1);
     expect(stderr).toContain('[error] Word directory does not exist');
   }, 35000);
+
+  it('fails --page rather than draw its card from a partial corpus', async () => {
+    const { code, stderr } = await spawnTool(
+      ['--import', LOG_LEVELS, 'tools/generate-images.ts', '--page', '/stats'],
+      { env: { ...missingSource, IMAGES_OUTPUT_DIR: ctx.outputDir }, timeout: 30000 },
+    );
+
+    expect(code).toBe(1);
+    expect(stderr).toContain('[error] Word directory does not exist');
+    expect(fs.readdirSync(ctx.outputDir)).toEqual([]);
+  }, 35000);
 });
