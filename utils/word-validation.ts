@@ -1,7 +1,17 @@
-import type { StoredDictionaryDefinition, WordData, WordEnrichment, WordIndexEntry } from '#types';
+import type {
+  DictionaryReference, StoredDictionaryDefinition, WordData, WordEnrichment, WordIndexEntry,
+} from '#types';
 import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
 
 const isTextField = (value: unknown): value is string | string[] => isString(value) || isStringArray(value);
+
+// The shape the content schema accepts; whether references fit the text is
+// toDefinitionSegments' check when the page is built
+const isStoredReference = (value: unknown): value is DictionaryReference =>
+  isRecord(value) && Number.isInteger(value.start) && Number.isInteger(value.end) && isString(value.url);
+
+const isStoredReferences = (value: unknown): value is DictionaryReference[] =>
+  Array.isArray(value) && value.every(isStoredReference);
 
 const isStoredDictionaryDefinition = (value: unknown): value is StoredDictionaryDefinition =>
   isRecord(value)
@@ -9,6 +19,7 @@ const isStoredDictionaryDefinition = (value: unknown): value is StoredDictionary
   && isOptional(value.partOfSpeech, isString)
   && isOptional(value.label, isString)
   && isOptional(value.text, isTextField)
+  && isOptional(value.references, isStoredReferences)
   && isOptional(value.attributionText, isString)
   && isOptional(value.sourceDictionary, isString)
   && isOptional(value.sourceUrl, isString)
