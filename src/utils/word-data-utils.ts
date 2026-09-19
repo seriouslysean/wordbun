@@ -10,9 +10,11 @@ import type {
   WordProcessedData,
 } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
-import { MAX_PAST_WORDS_DISPLAY } from '#constants/text-patterns';
+import { HOMEPAGE_PREVIOUS_WORDS, MAX_PAST_WORDS_DISPLAY } from '#constants/text-patterns';
 import { getMonthSlugFromDate, getTodayYYYYMMDD } from '#utils/date-utils';
 import {
+  findCurrentWord,
+  getPreviousWords,
   getAvailableYears,
   getAvailableLengths,
   getWordsByYear,
@@ -217,11 +219,15 @@ export const getCurrentWord = (words: WordData[] = allWords): WordData | null =>
   }
 
   // Local date, matching add-word and the streak stats; toISOString() is UTC and disagrees near midnight
-  const today = getTodayYYYYMMDD();
+  return findCurrentWord(words, getTodayYYYYMMDD());
+};
 
-  const found = words.find(word => word.date <= today);
-
-  return found ?? words.at(-1) ?? null;
+/**
+ * The homepage's current word and the previous words listed below it.
+ */
+export const getHomepageWords = (words: WordData[] = allWords): { currentWord: WordData | null; previousWords: WordData[] } => {
+  const currentWord = getCurrentWord(words);
+  return { currentWord, previousWords: getPreviousWords(words, currentWord, HOMEPAGE_PREVIOUS_WORDS) };
 };
 
 /**

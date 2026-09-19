@@ -4,6 +4,22 @@ import { MAX_SENSE_EXAMPLES } from '#constants/text-patterns';
 import { slugify } from '#utils/text-utils';
 
 /**
+ * The word a site shows as today's: the newest word dated on or before
+ * `today`, or the oldest word when every word is dated later.
+ * Words are expected newest first.
+ */
+export const findCurrentWord = (words: WordData[], today: string): WordData | null =>
+  words.find(word => word.date <= today) ?? words.at(-1) ?? null;
+
+/**
+ * The words listed below the current word on the homepage: the newest words
+ * dated before it, so a word dated later is never shown as previous.
+ * Words are expected newest first.
+ */
+export const getPreviousWords = (words: WordData[], currentWord: WordData | null, count: number): WordData[] =>
+  currentWord ? words.filter(word => word.date < currentWord.date).slice(0, count) : [];
+
+/**
  * Normalized definition text: joins array text (Wordnik inconsistency) and trims.
  */
 const getDefinitionText = (def: DictionaryDefinition): string => {

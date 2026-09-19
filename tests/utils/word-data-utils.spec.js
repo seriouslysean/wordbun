@@ -40,6 +40,8 @@ import {
   corpusRelationMatch,
   corpusRelations,
   mergeEnrichment,
+  findCurrentWord,
+  getPreviousWords,
 } from '#utils/word-data-utils';
 import {
   extractWordDefinition,
@@ -997,4 +999,28 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
     });
   });
 
+});
+
+describe('homepage selection', () => {
+  const later = { word: 'later', date: '20260101' };
+  const current = { word: 'current', date: '20250101' };
+  const older = { word: 'older', date: '20241201' };
+  const oldest = { word: 'oldest', date: '20241101' };
+  const words = [later, current, older, oldest];
+
+  it('picks the newest word dated on or before today', () => {
+    expect(findCurrentWord(words, '20250615')).toBe(current);
+    expect(findCurrentWord(words, '20250101')).toBe(current);
+  });
+
+  it('falls back to the oldest word when every word is dated later', () => {
+    expect(findCurrentWord(words, '20240101')).toBe(oldest);
+    expect(findCurrentWord([], '20250101')).toBeNull();
+  });
+
+  it('lists only words dated before the current word, newest first', () => {
+    expect(getPreviousWords(words, current, 4)).toEqual([older, oldest]);
+    expect(getPreviousWords(words, current, 1)).toEqual([older]);
+    expect(getPreviousWords(words, null, 4)).toEqual([]);
+  });
 });
