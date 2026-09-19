@@ -86,9 +86,9 @@ export interface DictionaryReference {
 /**
  * The fields of a canonical definition other than its classification. Every
  * string is nonblank, every array nonempty and every URL absolute http(s); an
- * adapter omits a field it has no value for. `text` is stable under the
- * definition markup parser: partner tags and encoded characters it would
- * transform are refused, though ordinary text may contain `<`. A
+ * adapter or stored-data normalizer omits a field it has no value for. `text`
+ * contains no partner tags, though ordinary text and encoded characters may
+ * contain `<` or `&`. A
  * cross-reference is one of `references`, which are in order, do not overlap,
  * and each cover nonblank text. The type cannot say so, so
  * isCanonicalResponse in utils/adapter-utils.ts checks it at fetch time.
@@ -124,32 +124,10 @@ export type DictionaryClassification =
     };
 
 /**
- * The canonical definition every adapter returns: the partner's vocabulary
- * translated into ours. Stored records keep the looser
- * StoredDictionaryDefinition shape until they are normalized.
+ * The canonical definition every adapter returns and every word file stores:
+ * the partner's vocabulary translated into ours.
  */
 export type DictionaryDefinition = DictionaryDefinitionFields & DictionaryClassification;
-
-/**
- * A definition as stored in a word file and read by the site. Looser than
- * DictionaryDefinition because records written before the canonical contract
- * may carry any part-of-speech string, text fragments, empty arrays, no text,
- * or Wordnik's cross-reference markup inside the text instead of
- * `references`. Every canonical definition is also a stored one.
- */
-export interface StoredDictionaryDefinition {
-  id?: string;
-  partOfSpeech?: string;
-  label?: string;
-  text?: string | string[];
-  references?: DictionaryReference[];
-  attributionText?: string;
-  sourceDictionary?: string;
-  sourceUrl?: string;
-  examples?: string[];
-  synonyms?: string[];
-  antonyms?: string[];
-}
 
 // === TOOL TYPES ===
 

@@ -29,7 +29,6 @@ import {
   getWordsByYear,
   getAvailableLetters,
   getAvailablePartsOfSpeech,
-  normalizePartOfSpeech,
   findValidDefinition,
   getDisplayableDefinitions,
   isValidDictionaryData,
@@ -216,7 +215,7 @@ describe('word-data-utils', () => {
           { text: 'No part of speech', sourceUrl: 'https://example.com/other' },
           {
             text: 'An MW def',
-            partOfSpeech: 'transitive verb',
+            partOfSpeech: 'verb',
             attributionText: "from Merriam-Webster's Collegiate Dictionary",
             sourceDictionary: 'collegiate',
             sourceUrl: 'https://www.merriam-webster.com/dictionary/test',
@@ -236,7 +235,11 @@ describe('word-data-utils', () => {
     });
 
     it('needs no adapter: a record from any source, or none, reads the same way', () => {
-      const data = [{ text: 'A taxonomic <xref>order</xref>', partOfSpeech: 'noun' }];
+      const data = [{
+        text: 'A taxonomic order',
+        partOfSpeech: 'noun',
+        references: [{ start: 12, end: 17, url: 'https://www.wordnik.com/words/order' }],
+      }];
 
       for (const adapter of ['wordnik', 'wiktionary', 'static']) {
         expect(getWordDetails({ word: 'test', date: '', adapter, data })).toEqual({
@@ -441,23 +444,6 @@ describe('word-data-utils', () => {
       expect(result).toEqual({ text: 'Valid definition', partOfSpeech: 'noun' });
     });
 
-    it('handles text as array', () => {
-      const definitions = [
-        { text: ['Sea of', 'An enclosed arm...'] }, // no partOfSpeech
-        { text: 'Valid definition', partOfSpeech: 'proper noun' },
-      ];
-      const result = findValidDefinition(definitions);
-      expect(result).toEqual({ text: 'Valid definition', partOfSpeech: 'proper noun' });
-    });
-
-    it('joins array text when partOfSpeech present', () => {
-      const definitions = [
-        { text: ['Part one', 'Part two'], partOfSpeech: 'noun' },
-      ];
-      const result = findValidDefinition(definitions);
-      expect(result).toEqual({ text: 'Part one Part two', partOfSpeech: 'noun' });
-    });
-
     it('returns null for empty array', () => {
       expect(findValidDefinition([])).toBeNull();
     });
@@ -470,9 +456,9 @@ describe('word-data-utils', () => {
       expect(findValidDefinition(definitions)).toBeNull();
     });
 
-    it('returns the text a page shows, with markup read and no outer whitespace', () => {
+    it('returns canonical text without its outer whitespace', () => {
       const definitions = [
-        { text: ' A taxonomic <xref>order</xref> &amp; <ant>class</ant> ', partOfSpeech: 'noun' },
+        { text: ' A taxonomic order & class ', partOfSpeech: 'noun' },
       ];
       expect(findValidDefinition(definitions)).toEqual({ text: 'A taxonomic order & class', partOfSpeech: 'noun' });
     });
@@ -514,32 +500,6 @@ describe('word-data-utils', () => {
   });
 
   describe('part-of-speech utilities', () => {
-    it('normalizes case and whitespace', () => {
-      expect(normalizePartOfSpeech('noun')).toBe('noun');
-      expect(normalizePartOfSpeech('Adjective')).toBe('adjective');
-      expect(normalizePartOfSpeech('VERB  ')).toBe('verb');
-    });
-
-    it('maps known variants via legacy compat layer', () => {
-      expect(normalizePartOfSpeech('transitive verb')).toBe('verb');
-      expect(normalizePartOfSpeech('intransitive verb')).toBe('verb');
-      expect(normalizePartOfSpeech('auxiliary verb')).toBe('verb');
-      expect(normalizePartOfSpeech('proper noun')).toBe('noun');
-      expect(normalizePartOfSpeech('noun plural')).toBe('noun');
-      expect(normalizePartOfSpeech('definite article')).toBe('article');
-    });
-
-    it('passes through unmappable variants unchanged', () => {
-      expect(normalizePartOfSpeech('idiom')).toBe('idiom');
-      expect(normalizePartOfSpeech('phrase')).toBe('phrase');
-    });
-
-    it('removes trailing punctuation', () => {
-      expect(normalizePartOfSpeech('noun.')).toBe('noun');
-      expect(normalizePartOfSpeech('verb!')).toBe('verb');
-      expect(normalizePartOfSpeech('adjective,')).toBe('adjective');
-    });
-
     it('returns sorted unique parts of speech', () => {
       const result = getAvailablePartsOfSpeech(mockWordDataWithComplexPartOfSpeech);
       expect(result).toEqual(['adjective', 'adverb', 'article', 'noun', 'verb']);
@@ -703,8 +663,8 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       expect(getDisplayableDefinitions([{ partOfSpeech: '  ', text: 'a thing' }])).toEqual([]);
     });
 
-    it('joins array text (Wordnik inconsistency)', () => {
-      expect(getDisplayableDefinitions([{ partOfSpeech: 'noun', text: ['a', 'thing'] }])).toHaveLength(1);
+    it('refuses legacy text fragments', () => {
+      expect(getDisplayableDefinitions([{ partOfSpeech: 'noun', text: ['a', 'thing'] }])).toEqual([]);
     });
 
     it('returns nothing for a missing definitions array', () => {
@@ -813,15 +773,15 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       expect(isValidDictionaryData(mixedData)).toBe(true);
     });
 
-    it('handles whitespace in text and partOfSpeech', () => {
-      const validData = [
+    it('refuses a noncanonical part of speech with whitespace', () => {
+      const invalidData = [
         {
           text: '  Valid text with whitespace  ',
           partOfSpeech: '  noun  '
         }
       ];
 
-      expect(isValidDictionaryData(validData)).toBe(true);
+      expect(isValidDictionaryData(invalidData)).toBe(false);
     });
 
     it('rejects array with only whitespace in text and partOfSpeech', () => {
@@ -884,13 +844,12 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       ]);
     });
 
-    it('shows a stored cross-reference as a link, whether written as ranges or as Wordnik markup', () => {
+    it('shows stored cross-reference ranges as links', () => {
       const word = {
         word: 'amblypygi',
         date: '20230106',
         adapter: 'wordnik',
         data: [
-          { partOfSpeech: 'noun', text: 'A taxonomic <xref>order</xref> of arachnids.' },
           {
             partOfSpeech: 'noun',
             text: 'A taxonomic order of arachnids.',
@@ -904,7 +863,7 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
         { type: 'text', text: ' of arachnids.' },
       ];
 
-      expect(getWordSenses(word).map(sense => sense.segments)).toEqual([segments, segments]);
+      expect(getWordSenses(word).map(sense => sense.segments)).toEqual([segments]);
     });
 
     it('falls back to the single best definition when the id filter matches nothing', () => {

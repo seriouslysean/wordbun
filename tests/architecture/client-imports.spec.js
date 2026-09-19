@@ -46,11 +46,9 @@ const CLIENT_VALUE_EDGES = new Set([
   'utils/i18n-utils.ts -> #locales/en.json',
   'utils/i18n-utils.ts -> #utils/type-guards',
   'utils/logger-core.ts -> #types',
-  'utils/reference-utils.ts -> #utils/type-guards',
   'utils/text-pattern-utils.ts -> #constants/text-patterns',
   'utils/text-utils.ts -> #utils/text-pattern-utils',
   'utils/url-utils.ts -> #constants/urls',
-  'utils/word-validation.ts -> #utils/reference-utils',
   'utils/word-validation.ts -> #utils/type-guards',
 ]);
 
