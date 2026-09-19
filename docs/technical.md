@@ -25,9 +25,10 @@ src/
   assets/                        # Static assets
 
 utils/                           # Pure Node.js utilities (13 files)
-  adapter-utils.ts               # Shared adapter helpers (POS, transforms, HTTP)
+  adapter-utils.ts               # Shared adapter helpers (POS, definition builders, canonical guard, HTTP)
   breadcrumb-utils.ts            # Breadcrumb navigation logic
   date-utils.ts                  # Date manipulation (YYYYMMDD format)
+  definition-text.ts             # Definition markup parser, cross-reference checks, definition segments
   i18n-utils.ts                  # Translation helpers (t(), tp())
   logger-core.ts                 # Logger factory (SentryBridge + output filter)
   logger.ts                      # CLI logger wrapper (@sentry/node)
@@ -64,8 +65,8 @@ constants/
 types/                           # Shared TypeScript definitions
   index.ts                       # Barrel export
   adapters.ts                    # DictionaryAdapter, DictionaryResponse
-  common.ts                      # LogContext, PathConfig, FetchOptions, SourceMeta, DictionaryDefinition
-  word.ts                        # WordData, WordProcessedData, stats result types
+  common.ts                      # LogContext, PathConfig, FetchOptions, SourceMeta, DictionaryDefinition, DictionaryReference
+  word.ts                        # WordData, WordProcessedData, WordSense, DefinitionSegment, stats result types
   stats.ts                       # StatsDefinition, StatsSlug, SuffixKey
   schema.ts                      # JSON-LD schema types
   seo.ts                         # SEO metadata types
@@ -132,7 +133,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 | `MERRIAM_WEBSTER_DICTIONARY` | `collegiate` | MW dictionary edition |
 | `WORDNIK_API_KEY` | — | Wordnik API key |
 | `WORDNIK_API_URL` | `https://api.wordnik.com/v4` | Wordnik API endpoint |
-| `WORDNIK_WEBSITE_URL` | `https://www.wordnik.com` | Wordnik website (for cross-ref links) |
+| `WORDNIK_WEBSITE_URL` | `https://www.wordnik.com` | Wordnik website that cross-references link to, when a Wordnik definition is fetched or a stored one rendered; the default also applies to the CLI tools |
 
 ### Deployment
 
@@ -233,6 +234,8 @@ Each word is a JSON file at `data/[{SOURCE_DIR}/]words/{year}/{YYYYMMDD}.json` (
 }
 ```
 
+A definition with cross-references also carries `references`, ranges of its `text` (see Dictionary Adapters). Records written before those existed may instead hold Wordnik's markup inside `text`; the site reads both (see Rendering Definitions).
+
 ### Content Collections
 
 Words load via Astro Content Collections at build time. `src/content.config.ts` uses `glob()` with `__WORD_DATA_PATH__` (injected by `astro.config.ts`) to find JSON files.
@@ -274,7 +277,25 @@ All user-facing strings go through `locales/en.json`. The `t(key)` function from
 
 `getDisplayableDefinitions()` in `utils/word-data-utils.ts` is the one rule for which of a word's definitions count. A definition is displayable when it has a part of speech and non-empty text. Abbreviation-labelled definitions are displayable only when the word has no displayable grammatical definition: a lookup of "sad" also returns SAD, "seasonal affective disorder", which must not become a sense of the adjective, while "pb&j" has nothing but its abbreviation, so that is what its page shows.
 
-Everything that shows, counts, groups or accepts definitions goes through it: the word page senses (`getWordSenses`), the primary definition used for meta descriptions, RSS and JSON-LD (`findValidDefinition`), the part-of-speech browse pages (`getAvailablePartsOfSpeech`, `getWordsByPartOfSpeech`, `groupWordsByPartOfSpeech`), and add-time acceptance (`isValidDictionaryData`, checked by `fetchWithFallback` on every adapter's answer, so the tools only ever receive usable definitions). A record with text but no part of speech is refused at add time because no page could display it; a `label` (see Dictionary Adapters) is not a part of speech.
+Everything that shows, counts, groups or accepts definitions goes through it: the word page senses (`getWordSenses`), the primary definition used for meta descriptions, RSS and JSON-LD (`findValidDefinition`) and for the source link (`getWordDetails`), the part-of-speech browse pages (`getAvailablePartsOfSpeech`, `getWordsByPartOfSpeech`, `groupWordsByPartOfSpeech`), and add-time acceptance (`isValidDictionaryData`, checked by `fetchWithFallback` on every adapter's answer, so the tools only ever receive usable definitions). A record with text but no part of speech is refused at add time because no page could display it; a `label` (see Dictionary Adapters) is not a part of speech.
+
+### Rendering Definitions
+
+A page never renders stored text as HTML, and never asks which adapter wrote a record. `toDefinitionSegments()` in `utils/definition-text.ts` turns a definition into runs of plain text and cross-references (`DefinitionSegment` in `types/word.ts`), with the whitespace around the whole dropped:
+
+```typescript
+toDefinitionSegments({
+  text: 'A taxonomic order of arachnids.',
+  references: [{ start: 12, end: 17, url: 'https://www.wordnik.com/words/order' }],
+});
+// [{ type: 'text', text: 'A taxonomic ' },
+//  { type: 'reference', text: 'order', url: 'https://www.wordnik.com/words/order' },
+//  { type: 'text', text: ' of arachnids.' }]
+```
+
+`WordSenses.astro` renders each text run as escaped text and each reference as an `<a>`; there is no `set:html`, so no stored or fetched text becomes markup. `getWordSenses()` builds the senses from it, and `findValidDefinition()` and `getWordDetails()` join the runs into the plain text that meta descriptions, JSON-LD and the RSS feed use.
+
+A definition with `references` is canonical and is used as it is; references that do not fit its text fail the build. One without them is read through `parseDefinitionMarkup()`, the same parser the Wordnik adapter uses, because records stored before the canonical contract hold Wordnik's markup in `text`: an `<xref>` still renders as a link and any other tag as its text. Once stored records are normalized to canonical definitions (#98), that fallback goes.
 
 ## Dictionary Adapters
 
@@ -295,14 +316,17 @@ Each `DictionaryDefinition` (`types/common.ts`):
 
 | Field | Rule |
 |---|---|
-| `text` | Required: one nonblank string, never an array of fragments |
+| `text` | Required: one nonblank string of plain text, never an array of fragments, with nothing shaped like an HTML tag in it (a `<` that starts no tag, as in `(<20 mg/dL)`, is text) |
+| `references` | The cross-references in `text`: a nonempty list of `{ start, end, url }` (JavaScript string offsets, `end` exclusive), in order, not overlapping, each over nonblank text, `url` absolute http(s) |
 | `partOfSpeech` | A value of the vocabulary in `constants/parts-of-speech.ts` |
 | `label` | The partner's raw term when it maps to no part of speech; never beside `partOfSpeech` |
 | `id`, `attributionText`, `sourceDictionary` | Nonblank when present |
 | `sourceUrl` | Absolute http(s) URL when present |
 | `examples`, `synonyms`, `antonyms` | Nonempty lists of nonblank strings when present |
 
-No other key is allowed, and a field with no value is omitted rather than stored as `""` or `[]`. A definition with neither `partOfSpeech` nor `label` is one the partner did not classify. A `label` is not a part of speech: a definition carrying only a label is not displayable and is never grouped under a part of speech. Markup inside `text` (Wordnik's `<xref>`) is still allowed.
+No other key is allowed, and a field with no value is omitted rather than stored as `""` or `[]`. A definition with neither `partOfSpeech` nor `label` is one the partner did not classify. A `label` is not a part of speech: a definition carrying only a label is not displayable and is never grouped under a part of speech.
+
+A partner's formatting is the adapter's to translate. Wordnik marks cross-references up inside its text; `parseDefinitionMarkup()` (`utils/definition-text.ts`) reads `<xref>word</xref>` as a reference to the Wordnik page for the word, lowercased, and `<internalXref urlencoded="target">label</internalXref>` as one to the page it names, keeps the text of any other tag (`<ant>`, `<i>`) without a link, and decodes character references. Merriam-Webster's cross-reference tokens (`{sx|...}`, `{a_link|...}`, `{d_link|...}`, `{dxt|...}`) appear only in its definition tree and example sentences, never in the `shortdef` a definition's text comes from, so `stripMarkup()` keeps them as plain words. Wiktionary's text is plain already.
 
 Each adapter's `POS_MAP` is written `satisfies Readonly<Record<string, BasePartOfSpeech>>`, so a mapping can only name a vocabulary value. `buildDefinition()` in `utils/adapter-utils.ts` classifies the partner's term (`classifyPartOfSpeech()`) and omits empty values; `buildDictionaryResponse()` does the same for the envelope and drops every definition whose text is blank, for all adapters, so one empty sense (a Wordnik definition without text, a blank Merriam-Webster `shortdef`) never gets the rest refused.
 
@@ -320,8 +344,8 @@ Stored word files keep the looser `StoredDictionaryDefinition` shape, which `Wor
 
 ### Adding an Adapter
 
-1. Write `adapters/<name>.ts` exporting a `DictionaryAdapter` whose `name` is its registry key. Guard the partner's raw response with type guards; throw `WordNotFoundError` for a missing word, `RateLimitError` for a 429 (`throwOnHttpError()` does both) and `throwUnexpectedShape()` for a body it cannot read.
-2. Translate with `buildDefinition()` and `buildDictionaryResponse()`, mapping part-of-speech terms through a `POS_MAP` that `satisfies Readonly<Record<string, BasePartOfSpeech>>`.
+1. Write `adapters/<name>.ts` exporting a `DictionaryAdapter` (a `name` and `fetchWordData()`, nothing else) whose `name` is its registry key. Guard the partner's raw response with type guards; throw `WordNotFoundError` for a missing word, `RateLimitError` for a 429 (`throwOnHttpError()` does both) and `throwUnexpectedShape()` for a body it cannot read.
+2. Translate with `buildDefinition()` and `buildDictionaryResponse()`, mapping part-of-speech terms through a `POS_MAP` that `satisfies Readonly<Record<string, BasePartOfSpeech>>`. Pass plain text; a cross-reference goes in `references`, never as markup in the text.
 3. Register it in `ADAPTER_REGISTRY` in `adapters/index.ts`.
 4. Add `tests/adapters/fixtures/<name>/` with at least one recorded response body, plus `not-found.json` if the partner answers a missing word with a body. A fixture built by hand rather than recorded says so in the directory, as `fixtures/wordnik/README.md` does. The contract suite fails until the directory exists and every response in it comes out canonical, with a displayable definition.
 5. Unit-test the adapter's own translation in `tests/adapters/<name>.spec.js`.
@@ -549,6 +573,7 @@ See [AGENTS.md - The Boundary](../AGENTS.md#the-boundary) for the principle and 
 |------|---------|
 | `breadcrumb-utils.ts` | Breadcrumb navigation generation |
 | `date-utils.ts` | YYYYMMDD parsing, formatting, validation |
+| `definition-text.ts` | Definition markup parser, cross-reference checks, `toDefinitionSegments()` |
 | `i18n-utils.ts` | `t()` translation, `tp()` pluralization |
 | `logger-core.ts` | Logger factory (SentryBridge, output filter) |
 | `logger.ts` | CLI logger wrapper with @sentry/node |
@@ -556,7 +581,7 @@ See [AGENTS.md - The Boundary](../AGENTS.md#the-boundary) for the principle and 
 | `text-pattern-utils.ts` | Palindrome, double/triple letter detection |
 | `text-utils.ts` | `slugify()`, syllable counting |
 | `url-utils.ts` | Route URL builders |
-| `word-data-utils.ts` | Displayability rule, add-time acceptance, word filtering by year/length/letter/pos |
+| `word-data-utils.ts` | Displayability rule, add-time acceptance, word senses and details, word filtering by year/length/letter/pos |
 | `word-stats-utils.ts` | Statistics computation |
 | `word-validation.ts` | Shape guards for stored word files and the `words.json` index |
 

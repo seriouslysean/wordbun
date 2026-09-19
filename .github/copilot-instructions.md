@@ -47,7 +47,7 @@ export const getWordsByLength = (length: number, words = allWords) => pure(lengt
 
 ## Adapters
 
-- Adapters own vocabulary, not behaviour. Each translates its partner's terms into the canonical contract (`DictionaryResponse`, `DictionaryDefinition`): a vocabulary part of speech or the raw term as `label`, text as one string, empty optional fields omitted. Retries, query case, fallback and input handling belong with the caller; an adapter looks up exactly the word it is given.
+- Adapters own vocabulary, not behaviour. Each translates its partner's terms into the canonical contract (`DictionaryResponse`, `DictionaryDefinition`): a vocabulary part of speech or the raw term as `label`, text as one plain string with cross-references as `references` ranges, empty optional fields omitted. An adapter only fetches: pages render stored records without it. Retries, query case, fallback and input handling belong with the caller; an adapter looks up exactly the word it is given.
 - The contract is enforced, not trusted: `fetchWithFallback()` checks every answer with `isCanonicalResponse()` (`utils/adapter-utils.ts`) and refuses a broken one whole, so the chain moves on and the fault is reported.
 - `tests/adapters/contract.spec.js` holds every registered adapter to the same guard: a fixture directory `tests/adapters/fixtures/<adapter name>/` with at least one successful response, each coming out canonical with a displayable definition.
 - Shared translation lives in `utils/adapter-utils.ts` (`buildDefinition()`, `buildDictionaryResponse()`); the registry in `adapters/index.ts` dispatches by name.

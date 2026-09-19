@@ -40,25 +40,10 @@ export interface DictionaryAdapter {
   fetchWordData(word: string, options?: FetchOptions): Promise<DictionaryResponse>;
 }
 
-
-// TODO: Future consideration for data format abstraction
-// Currently, WordData.data contains adapter-specific response format (WordnikDefinition[])
-// For true adapter independence, we'd need:
-// 1. Generic storage format that's adapter-agnostic
-// 2. Migration strategy for existing Wordnik-formatted data
-// 3. Versioning system for data format changes
-//
-// Potential approach:
-// interface WordDataV2 {
-//   word: string;
-//   date: string;
-//   adapter: string;
-//   version: number;
-//   definitions: DictionaryDefinition[]; // Generic format
-//   rawData?: unknown; // Optional original adapter response
-// }
-//
-// This would allow:
-// - Adapter-independent queries and processing
-// - Backward compatibility through migration
-// - Future-proof data storage
+// Adapter independence: an adapter's answer is the canonical contract above,
+// and the site renders stored records from their data alone (see
+// toDefinitionSegments in utils/definition-text.ts), never through the adapter
+// that wrote them. Stored records keep the looser StoredDictionaryDefinition
+// shape until #98 normalizes them to DictionaryDefinition; until then, text
+// stored with Wordnik's cross-reference markup is read through the same
+// parser the Wordnik adapter uses.
