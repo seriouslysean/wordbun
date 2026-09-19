@@ -232,6 +232,10 @@ Each word is a JSON file at `data/[{SOURCE_DIR}/]words/{year}/{YYYYMMDD}.json` (
 }
 ```
 
+### Demo Data
+
+The demo words (`data/demo/words/`, built with `SOURCE_DIR=demo`) spell the site title on the homepage: the current word `occasional` (20250121), then `word`, `of`, `the`, `day` (20250117) as the previous words. New demo words must be dated before 20250117; `tests/src/pages/index.spec.js` fails on any demo word dated later.
+
 ### Content Collections
 
 Words load via Astro Content Collections at build time. `src/content.config.ts` uses `glob()` with `__WORD_DATA_PATH__` (injected by `astro.config.ts`) to find JSON files.
