@@ -114,9 +114,10 @@ interface WordFileScan {
 
 interface WordFileScanOptions {
   /**
-   * Reads a missing or empty words directory as an empty corpus instead of a
-   * failure. Duplicate detection sets it: a new site's first word has nothing
-   * to collide with. Bulk tools need data and leave it off.
+   * Reads a words directory that is missing or holds no word file as an empty
+   * corpus instead of a failure. Duplicate detection sets it: a new site's
+   * first word has nothing to collide with. Bulk tools need data and leave it
+   * off.
    */
   allowEmpty?: boolean;
 }
@@ -130,11 +131,6 @@ interface WordFileScanOptions {
 export const getWordFiles = ({ allowEmpty = false }: WordFileScanOptions = {}): WordFileScan => {
   const exists = fs.existsSync(paths.words);
   const years = exists ? fs.readdirSync(paths.words).filter(dir => /^\d{4}$/.test(dir)) : [];
-
-  if (years.length === 0 && !allowEmpty) {
-    logger.error(exists ? 'No year directories found' : 'Word directory does not exist', { path: paths.words });
-    return { files: [], failures: [paths.words] };
-  }
 
   const failures: string[] = [];
   const files = years.flatMap(year => {
@@ -168,6 +164,14 @@ export const getWordFiles = ({ allowEmpty = false }: WordFileScanOptions = {}): 
     }
   });
 
+  // No word file and nothing unreadable to account for it: the directory is
+  // missing, has no year in it, or has years with no file in them, which a
+  // failed first add-word leaves (it makes the year directory before fetching)
+  if (files.length === 0 && failures.length === 0 && !allowEmpty) {
+    logger.error(exists ? 'No word files found' : 'Word directory does not exist', { path: paths.words });
+    return { files: [], failures: [paths.words] };
+  }
+
   // Sort by date (newest first) for consistency
   return { files: files.toSorted((a, b) => b.date.localeCompare(a.date)), failures };
 };
@@ -179,10 +183,11 @@ interface WordLookup {
 }
 
 /**
- * Checks if a word already exists by scanning word files. A missing or empty
- * words directory is logged at error unless the caller sets `allowEmpty`, as
- * add-word's duplicate check does: there nothing exists yet, which is not a
- * fault. A lookup that needs the word (generate-images --word) leaves it off
+ * Checks if a word already exists by scanning word files. A words directory
+ * that is missing or holds no word file is logged at error unless the caller
+ * sets `allowEmpty`, as add-word's duplicate check does: there nothing exists
+ * yet, which is not a fault. A lookup that needs the word (generate-images
+ * --word) leaves it off
  * and reads `failures`: with no match and a failed scan, the word may be in
  * what could not be read, so a mistyped SOURCE_DIR is reported as such, not
  * as a missing word.

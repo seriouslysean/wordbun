@@ -60,6 +60,8 @@ describe('a site with no words yet', () => {
   const noCorpus = [
     ['no words directory', () => {}],
     ['a words directory with no years', () => fs.mkdirSync(wordsDir())],
+    // What a failed first add-word leaves: the year directory is made before the fetch
+    ['a year directory with no word files', () => fs.mkdirSync(path.join(wordsDir(), '2025'), { recursive: true })],
   ];
 
   it.each(noCorpus)('has no existing word for add-word\'s duplicate check, which allows it, with %s', async (_, setUp) => {
