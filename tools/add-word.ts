@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { paths } from '#config/paths';
 import { isEntryPoint } from '#tools/entry';
-import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
+import { COMMON_ENV_DOCS, parseToolArgs, showHelp } from '#tools/help-utils';
 import { createWordEntry, findExistingWord } from '#tools/utils';
 import type { WordData } from '#types';
 import { getTodayYYYYMMDD, isValidDate } from '#utils/date-utils';
@@ -94,8 +94,9 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
       await exit(1);
     }
 
-    // Check if word already exists anywhere else in the system (always enforce global uniqueness)
-    const existingWordByName = findExistingWord(word);
+    // Check if word already exists anywhere else in the system (always enforce global uniqueness).
+    // A new site has no words yet, so an empty corpus is not a fault here.
+    const existingWordByName = findExistingWord(word, { allowEmpty: true });
     if (existingWordByName && existingWordByName.date !== targetDate) {
       logger.warn('Word already exists for different date', {
         word: word,
@@ -156,11 +157,8 @@ Requirements:
 ${COMMON_ENV_DOCS}
 `;
 
-// Parse command line arguments
-import { parseArgs } from 'node:util';
-
 if (isEntryPoint(import.meta.url)) {
-  const { values, positionals } = parseArgs({
+  const { values, positionals } = await parseToolArgs({
     args: process.argv.slice(2),
     options: {
       help: { type: 'boolean', short: 'h', default: false },

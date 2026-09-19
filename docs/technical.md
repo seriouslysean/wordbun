@@ -328,7 +328,7 @@ Stored word files keep the looser `StoredDictionaryDefinition` shape, which `Wor
 
 ## CLI Tools
 
-All tools are pure Node.js (no Astro deps) and use `util.parseArgs()` for argument parsing.
+All tools are pure Node.js (no Astro deps) and parse their arguments through `parseToolArgs` (`tools/help-utils.ts`), a `util.parseArgs()` wrapper: a command line it cannot parse, such as an unknown `--batchsize=5` or `--word` without its value, is refused with one warn-level line naming the problem and pointing to `--help`, and exit 1, instead of an uncaught stack trace.
 
 Tools run directly on Node's built-in TypeScript support (`node tools/<tool>.ts`); there is no loader or compile step. `npm run tool:local <tool>` runs a tool through `node --env-file-if-exists=.env`, so `.env` is loaded when present and variables already in the environment win. When `.env` is absent Node prints `.env not found. Continuing without it.` to stderr and carries on. The bare `tool:*` scripts (`tool:generate-images`, `tool:regenerate-all-words`, ...) do not load `.env`: image tools render without the site title and the Merriam-Webster adapter throws without its key.
 
@@ -429,7 +429,7 @@ The `isLogContext` type guard from `#types` validates the context argument befor
 
 **The `exit()` helper**: Always use `await exit(code)` instead of `process.exit()` in error handlers. `process.exit()` kills in-flight async work immediately, losing pending Sentry events. `exit()` flushes first.
 
-**Error level means fault**: only `logger.error` creates a Sentry event (`captureException` for an `Error`, otherwise `captureMessage` at level `error`); `warn`, `info` and `debug` only print. So CLI tools refuse operator input at `warn`: add-word's blank word, malformed or future date, date or word already taken, and a word every adapter in the chain reported as not found; generate-images' `--word` that is not in the data and `--page` that is not a page; and regenerate-all-words' malformed `--timeout`, `--batch-size` or `--batch-timeout` all exit 1 with a warn-level message. Network failures, HTTP errors, unexpected response shapes, rate limits, unreadable word files and missing configuration log at `error`. A missing or empty words directory is not a fault to add-word's duplicate check, since a new site's first word has nothing to collide with, but the bulk runs of generate-images and regenerate-all-words, which need data, fail on it at `error`.
+**Error level means fault**: only `logger.error` creates a Sentry event (`captureException` for an `Error`, otherwise `captureMessage` at level `error`); `warn`, `info` and `debug` only print. So CLI tools refuse operator input at `warn`: add-word's blank word, malformed or future date, date or word already taken, and a word every adapter in the chain reported as not found; generate-images' `--word` that is not in the data and `--page` that is not a page; regenerate-all-words' malformed `--timeout`, `--batch-size` or `--batch-timeout`; and a command line any of them cannot parse all exit 1 with a warn-level message. Network failures, HTTP errors, unexpected response shapes, rate limits, unreadable word files and missing configuration log at `error`. A missing or empty words directory is not a fault to add-word's duplicate check, since a new site's first word has nothing to collide with, but generate-images (its `--word` and `--page` runs included) and regenerate-all-words, which need data, fail on it at `error`.
 
 ## Statistics System
 

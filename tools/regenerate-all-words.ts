@@ -1,10 +1,9 @@
 import fs from 'node:fs';
 import { setTimeout as delay } from 'node:timers/promises';
-import { parseArgs } from 'node:util';
 
 import { fetchWithFallback } from '#adapters';
 import { isEntryPoint } from '#tools/entry';
-import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
+import { COMMON_ENV_DOCS, parseToolArgs, showHelp } from '#tools/help-utils';
 import { buildWordData, getWordFiles, primaryPartOfSpeech, tryFetchRelations } from '#tools/utils';
 import type { WordEnrichment } from '#types';
 import { isRateLimited } from '#utils/adapter-utils';
@@ -241,7 +240,7 @@ ${COMMON_ENV_DOCS}
 `;
 
 if (isEntryPoint(import.meta.url)) {
-  const { values } = parseArgs({
+  const { values } = await parseToolArgs({
     args: process.argv.slice(2),
     options: {
       help: { type: 'boolean', short: 'h', default: false },
