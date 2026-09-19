@@ -80,6 +80,17 @@ describe('wiktionary adapter', () => {
       expect(result.definitions.every(d => d.partOfSpeech === 'noun')).toBe(true);
     });
 
+    it('drops a blank definition and keeps the rest of the entry', async () => {
+      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
+      const { isCanonicalResponse } = await import('#utils/adapter-utils');
+      const entry = { word: 'test', meanings: [{ partOfSpeech: 'noun', definitions: [{ definition: '' }, { definition: 'A thing' }, { definition: ' ' }] }] };
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [entry]));
+
+      const result = await wiktionaryAdapter.fetchWordData('test');
+      expect(result.definitions.map(definition => definition.text)).toEqual(['A thing']);
+      expect(isCanonicalResponse(result, 'test')).toBe(true);
+    });
+
     it('reports the word exactly as the caller gave it', async () => {
       const { wiktionaryAdapter } = await import('#adapters/wiktionary');
       const fixture = loadFixture('serendipity');

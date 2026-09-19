@@ -204,7 +204,10 @@ export function buildDefinition(
  * Every field is reported as supplied, the word included: case is the
  * caller's decision (--preserve-case), not the adapter's. A blank attribution
  * or URL and a blank headword field are omitted, and so is a headword with
- * nothing left in it.
+ * nothing left in it. A definition whose text is blank is dropped: a partner
+ * sense with nothing to show (Wordnik's optional text, a blank
+ * Merriam-Webster shortdef) is not a reason to refuse the others. A response
+ * left with no definition is the partner not having the word.
  */
 export function buildDictionaryResponse(
   word: string,
@@ -222,7 +225,7 @@ export function buildDictionaryResponse(
   };
   return {
     word,
-    definitions,
+    definitions: definitions.filter(definition => isNonblankString(definition.text)),
     meta: {
       source,
       ...(isNonblankString(attribution) ? { attribution } : {}),

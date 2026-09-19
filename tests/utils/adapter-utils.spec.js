@@ -231,6 +231,13 @@ describe('adapter-utils', () => {
       expect(buildDictionaryResponse('test', [], 'Test', '', undefined).meta).toStrictEqual({ source: 'Test' });
     });
 
+    it('drops a definition whose text is blank, keeping the others in order', () => {
+      const definitions = [{ text: '' }, { text: 'A trial', partOfSpeech: 'noun' }, { text: ' \n' }, { text: 'An exam' }];
+
+      expect(buildDictionaryResponse('test', definitions, 'Test', undefined, undefined).definitions)
+        .toStrictEqual([{ text: 'A trial', partOfSpeech: 'noun' }, { text: 'An exam' }]);
+    });
+
     it('keeps only the headword fields that have a value', () => {
       const response = buildDictionaryResponse('test', [], 'Test', 'from Test', 'https://example.com', {
         pronunciation: 'test', audio: undefined, etymology: ' ',

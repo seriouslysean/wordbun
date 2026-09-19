@@ -157,27 +157,20 @@ export const wordnikAdapter: DictionaryAdapter = {
       `${baseUrl}/word.json/${encodeURIComponent(queryWord)}/definitions?limit=${limit}&includeRelated=false&useCanonical=false&includeTags=false&api_key=${apiKey}`;
 
     const data = await fetchDefinitions(word, buildUrl);
-    const definitions = data.flatMap((def) => {
-      // Wordnik occasionally splits text into fragments; the contract has one string
-      const text = Array.isArray(def.text) ? def.text.join(' ') : def.text;
-      // Wordnik's Definition model declares text optional, so a definition
-      // without any is well-formed but has nothing to show: it is skipped
-      // rather than refusing the response
-      if (!text?.trim()) {
-        return [];
-      }
-      return [buildDefinition({
-        id: def.id,
-        partOfSpeech: def.partOfSpeech,
-        text,
-        attributionText: def.attributionText,
-        sourceDictionary: def.sourceDictionary,
-        sourceUrl: def.wordnikUrl || def.attributionUrl,
-        examples: def.exampleUses?.flatMap(example => (example.text ? [example.text] : [])),
-        synonyms: relatedWordsOfType(def, 'synonym'),
-        antonyms: relatedWordsOfType(def, 'antonym'),
-      }, POS_MAP)];
-    });
+    const definitions = data.map(def => buildDefinition({
+      id: def.id,
+      partOfSpeech: def.partOfSpeech,
+      // Wordnik occasionally splits text into fragments; the contract has one
+      // string. Its Definition model declares text optional: a definition
+      // without any is well-formed, and buildDictionaryResponse drops it.
+      text: Array.isArray(def.text) ? def.text.join(' ') : def.text ?? '',
+      attributionText: def.attributionText,
+      sourceDictionary: def.sourceDictionary,
+      sourceUrl: def.wordnikUrl || def.attributionUrl,
+      examples: def.exampleUses?.flatMap(example => (example.text ? [example.text] : [])),
+      synonyms: relatedWordsOfType(def, 'synonym'),
+      antonyms: relatedWordsOfType(def, 'antonym'),
+    }, POS_MAP));
     const headword = { pronunciation: data[0]?.textProns?.[0]?.raw };
     return buildDictionaryResponse(
       word,

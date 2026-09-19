@@ -304,7 +304,7 @@ Each `DictionaryDefinition` (`types/common.ts`):
 
 No other key is allowed, and a field with no value is omitted rather than stored as `""` or `[]`. A definition with neither `partOfSpeech` nor `label` is one the partner did not classify. A `label` is not a part of speech: a definition carrying only a label is not displayable and is never grouped under a part of speech. Markup inside `text` (Wordnik's `<xref>`) is still allowed.
 
-Each adapter's `POS_MAP` is written `satisfies Readonly<Record<string, BasePartOfSpeech>>`, so a mapping can only name a vocabulary value. `buildDefinition()` in `utils/adapter-utils.ts` classifies the partner's term (`classifyPartOfSpeech()`) and omits empty values; `buildDictionaryResponse()` does the same for the envelope.
+Each adapter's `POS_MAP` is written `satisfies Readonly<Record<string, BasePartOfSpeech>>`, so a mapping can only name a vocabulary value. `buildDefinition()` in `utils/adapter-utils.ts` classifies the partner's term (`classifyPartOfSpeech()`) and omits empty values; `buildDictionaryResponse()` does the same for the envelope and drops every definition whose text is blank, for all adapters, so one empty sense (a Wordnik definition without text, a blank Merriam-Webster `shortdef`) never gets the rest refused.
 
 Stored word files keep the looser `StoredDictionaryDefinition` shape, which `WordData.data` and the content collection schema accept, so records written before the contract still load.
 

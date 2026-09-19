@@ -367,6 +367,17 @@ describe('merriam-webster adapter', () => {
       expect(error.message).toBe('Word "test" not found in Collegiate Dictionary.');
     });
 
+    it('drops a blank short definition and keeps the rest of the entry', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      const { isCanonicalResponse } = await import('#utils/adapter-utils');
+      const entry = { meta: { id: 'test', src: 'collegiate' }, fl: 'noun', shortdef: ['', 'a real test', '  '] };
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [entry]));
+
+      const result = await merriamWebsterAdapter.fetchWordData('test');
+      expect(result.definitions.map(definition => definition.text)).toEqual(['a real test']);
+      expect(isCanonicalResponse(result, 'test')).toBe(true);
+    });
+
     it('yields no definitions for an entry without shortdef', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ meta: { id: 'test', src: 'collegiate' } }]));
