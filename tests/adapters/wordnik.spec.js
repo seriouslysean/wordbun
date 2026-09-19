@@ -133,31 +133,50 @@ describe('wordnik adapter', () => {
       vi.stubEnv('WORDNIK_API_KEY', 'test-key');
     });
 
-    it('passes through base POS unchanged', async () => {
+    // Every value of the partOfSpeech filter in Wordnik's API spec
+    // (https://developer.wordnik.com/api-docs/swagger.json; "posessive" is its
+    // spelling), then the spaced labels its source dictionaries put in
+    // responses: AHD's "transitive verb", GCIDE's "noun plural", Wiktionary's
+    // "proper noun". Verb forms and name types stay labels.
+    it.each([
+      ['noun', { partOfSpeech: 'noun' }],
+      ['adjective', { partOfSpeech: 'adjective' }],
+      ['verb', { partOfSpeech: 'verb' }],
+      ['adverb', { partOfSpeech: 'adverb' }],
+      ['interjection', { partOfSpeech: 'interjection' }],
+      ['pronoun', { partOfSpeech: 'pronoun' }],
+      ['preposition', { partOfSpeech: 'preposition' }],
+      ['abbreviation', { partOfSpeech: 'abbreviation' }],
+      ['affix', { label: 'affix' }],
+      ['article', { partOfSpeech: 'article' }],
+      ['auxiliary-verb', { partOfSpeech: 'verb' }],
+      ['conjunction', { partOfSpeech: 'conjunction' }],
+      ['definite-article', { partOfSpeech: 'article' }],
+      ['family-name', { label: 'family-name' }],
+      ['given-name', { label: 'given-name' }],
+      ['idiom', { label: 'idiom' }],
+      ['imperative', { label: 'imperative' }],
+      ['noun-plural', { partOfSpeech: 'noun' }],
+      ['noun-posessive', { partOfSpeech: 'noun' }],
+      ['past-participle', { label: 'past-participle' }],
+      ['phrasal-prefix', { label: 'phrasal-prefix' }],
+      ['proper-noun', { partOfSpeech: 'noun' }],
+      ['proper-noun-plural', { partOfSpeech: 'noun' }],
+      ['proper-noun-posessive', { partOfSpeech: 'noun' }],
+      ['suffix', { label: 'suffix' }],
+      ['verb-intransitive', { partOfSpeech: 'verb' }],
+      ['verb-transitive', { partOfSpeech: 'verb' }],
+      ['intransitive verb', { partOfSpeech: 'verb' }],
+      ['transitive verb', { partOfSpeech: 'verb' }],
+      ['phrasal verb', { partOfSpeech: 'verb' }],
+      ['proper noun', { partOfSpeech: 'noun' }],
+      ['noun plural', { partOfSpeech: 'noun' }],
+    ])('translates %s', async (raw, classification) => {
       const { wordnikAdapter } = await import('#adapters/wordnik');
-      const defs = [{ id: '1', text: 'A test', partOfSpeech: 'noun', attributionText: 'test' }];
-      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ text: 'A sense', partOfSpeech: raw }]));
 
-      const result = await wordnikAdapter.fetchWordData('test');
-      expect(result.definitions[0].partOfSpeech).toBe('noun');
-    });
-
-    it('normalizes hyphenated verb variants', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      const defs = [{ id: '1', text: 'To do', partOfSpeech: 'auxiliary-verb', attributionText: 'test' }];
-      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
-
-      const result = await wordnikAdapter.fetchWordData('have');
-      expect(result.definitions[0].partOfSpeech).toBe('verb');
-    });
-
-    it('normalizes noun variants', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      const defs = [{ id: '1', text: 'More than one', partOfSpeech: 'noun-plural', attributionText: 'test' }];
-      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
-
-      const result = await wordnikAdapter.fetchWordData('indices');
-      expect(result.definitions[0].partOfSpeech).toBe('noun');
+      const { definitions: [definition] } = await wordnikAdapter.fetchWordData('test');
+      expect({ partOfSpeech: definition.partOfSpeech, label: definition.label }).toEqual(classification);
     });
 
     it('keeps an unmappable POS, as Wordnik gave it, as the label', async () => {
@@ -186,7 +205,7 @@ describe('wordnik adapter', () => {
         word: 'break',
         definitions: [
           {
-            label: 'verb-transitive',
+            partOfSpeech: 'verb',
             text: 'To cause to separate into pieces suddenly or violently.',
             attributionText: ahd,
             sourceDictionary: 'ahd-5',

@@ -24,14 +24,31 @@ import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guard
  * Maps Wordnik POS strings to elementary POS types.
  * A value not in this map and not already a base POS is kept as the
  * definition's `label` instead of a part of speech.
+ *
+ * Wordnik's API spec lists hyphenated values (`verb-transitive`), but as the
+ * values of the definitions endpoint's `partOfSpeech` filter; the response
+ * field is a free string. A response carries the label of the definition's
+ * source dictionary, spaced: the Wordnik records this repository stored
+ * before it moved to Merriam-Webster have AHD's `transitive verb` and
+ * `phrasal verb`, GCIDE's `noun plural` and Wiktionary's `proper noun`, and
+ * no hyphenated value. Both forms are mapped. Name types, affixes, idioms
+ * and the verb forms `past-participle` and `imperative` stay labels: neither
+ * other adapter maps a participle or a mood to a part of speech.
  */
 const POS_MAP = {
   'auxiliary-verb': 'verb',
+  'verb-intransitive': 'verb',
+  'verb-transitive': 'verb',
+  'definite-article': 'article',
+  'noun-plural': 'noun',
+  // "posessive" is the spec's spelling
+  'noun-posessive': 'noun',
+  'proper-noun': 'noun',
+  'proper-noun-plural': 'noun',
+  'proper-noun-posessive': 'noun',
   'intransitive verb': 'verb',
   'transitive verb': 'verb',
   'phrasal verb': 'verb',
-  'proper-noun': 'noun',
-  'noun-plural': 'noun',
   'proper noun': 'noun',
   'noun plural': 'noun',
 } satisfies Readonly<Record<string, BasePartOfSpeech>>;
