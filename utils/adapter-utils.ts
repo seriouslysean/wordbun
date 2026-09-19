@@ -2,10 +2,10 @@ import type {
   DictionaryClassification, DictionaryDefinition, DictionaryReference, DictionaryResponse,
 } from '#types';
 import { type BasePartOfSpeech, isBasePartOfSpeech } from '#constants/parts-of-speech';
-import { parseDefinitionMarkup } from '#utils/definition-text';
-import { areValidReferences } from '#utils/reference-utils';
+import { hasMarkup } from '#utils/definition-markup';
 import { flattenErrors, getErrorMessage } from '#utils/text-utils';
-import { isHttpUrl, isNonblankString, isOptional, isRecord, isString } from '#utils/type-guards';
+import { isHttpUrl, isNonblankString, isOptional, isRecord } from '#utils/type-guards';
+import { isDictionaryDefinition } from '#utils/stored-word-validation';
 
 /**
  * The dictionary has no entry for the word: a misspelling, or a word it does
@@ -249,10 +249,6 @@ export function buildDictionaryResponse(
 const RESPONSE_KEYS: ReadonlySet<string> = new Set(['word', 'definitions', 'meta', 'headword']);
 const META_KEYS: ReadonlySet<string> = new Set(['source', 'attribution', 'url']);
 const HEADWORD_KEYS: ReadonlySet<string> = new Set(['pronunciation', 'audio', 'etymology']);
-const DEFINITION_KEYS: ReadonlySet<string> = new Set([
-  'id', 'partOfSpeech', 'label', 'text', 'references', 'attributionText', 'sourceDictionary', 'sourceUrl',
-  'examples', 'synonyms', 'antonyms',
-]);
 
 /**
  * True when the object carries no key outside the contract. A key whose value
@@ -260,43 +256,6 @@ const DEFINITION_KEYS: ReadonlySet<string> = new Set([
  */
 const hasOnlyKeys = (value: Record<string, unknown>, keys: ReadonlySet<string>): boolean =>
   Object.entries(value).every(([key, field]) => field === undefined || keys.has(key));
-
-const isNonblankStringList = (value: unknown): value is string[] =>
-  Array.isArray(value) && value.length > 0 && value.every(isNonblankString);
-
-const isVocabularyPartOfSpeech = (value: unknown): value is BasePartOfSpeech =>
-  isString(value) && isBasePartOfSpeech(value);
-
-/**
- * True for nonblank plain text whose cross-references, when it has any, are a
- * nonempty list that fits it. Markup left in the text is an adapter that did
- * not translate its partner's formatting.
- */
-const isCanonicalText = (text: unknown, references: unknown): boolean => {
-  if (!isNonblankString(text)) {
-    return false;
-  }
-  const parsed = parseDefinitionMarkup(text);
-  return parsed.text === text
-    && parsed.references.length === 0
-    && isOptional(references, (list): list is DictionaryReference[] =>
-      Array.isArray(list) && list.length > 0 && areValidReferences(text, list));
-};
-
-const isCanonicalDefinition = (value: unknown): value is DictionaryDefinition =>
-  isRecord(value)
-  && hasOnlyKeys(value, DEFINITION_KEYS)
-  && isCanonicalText(value.text, value.references)
-  && isOptional(value.partOfSpeech, isVocabularyPartOfSpeech)
-  && isOptional(value.label, isNonblankString)
-  && (value.partOfSpeech === undefined || value.label === undefined)
-  && isOptional(value.id, isNonblankString)
-  && isOptional(value.attributionText, isNonblankString)
-  && isOptional(value.sourceDictionary, isNonblankString)
-  && isOptional(value.sourceUrl, isHttpUrl)
-  && isOptional(value.examples, isNonblankStringList)
-  && isOptional(value.synonyms, isNonblankStringList)
-  && isOptional(value.antonyms, isNonblankStringList);
 
 const isCanonicalMeta = (value: unknown): value is DictionaryResponse['meta'] =>
   isRecord(value)
@@ -327,6 +286,6 @@ export const isCanonicalResponse = (value: unknown, word: string): value is Dict
   && hasOnlyKeys(value, RESPONSE_KEYS)
   && value.word === word
   && Array.isArray(value.definitions) && value.definitions.length > 0
-  && value.definitions.every(isCanonicalDefinition)
+  && value.definitions.every(definition => isDictionaryDefinition(definition) && !hasMarkup(definition.text))
   && isCanonicalMeta(value.meta)
   && isOptional(value.headword, isCanonicalHeadword);

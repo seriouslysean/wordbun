@@ -250,21 +250,10 @@ describe('definition-text', () => {
         .toStrictEqual([referenceRun('AT&amp;T', 'https://example.com/att')]);
     });
 
-    it('reads stored text written before references through the markup parser', () => {
-      expect(toDefinitionSegments({ text: 'A short <xref>rest</xref> period, <ant>not</ant> <internalXref urlencoded="light-box">this</internalXref>.' }))
-        .toStrictEqual([
-          textRun('A short '),
-          referenceRun('rest', wordnik('rest')),
-          textRun(' period, not '),
-          referenceRun('this', wordnik('light-box')),
-          textRun('.'),
-        ]);
-    });
-
     it('drops the whitespace around the whole, even from inside a reference', () => {
       expect(toDefinitionSegments({ text: '  a rest  ', references: [{ start: 1, end: 3, url: wordnik('a') }] }))
         .toStrictEqual([referenceRun('a', wordnik('a')), textRun(' rest')]);
-      expect(toDefinitionSegments({ text: ' <xref>rest</xref> \n' })).toStrictEqual([referenceRun('rest', wordnik('rest'))]);
+      expect(toDefinitionSegments({ text: ' <xref>rest</xref> \n' })).toStrictEqual([textRun('<xref>rest</xref>')]);
     });
 
     it('returns nothing for blank text', () => {
@@ -272,14 +261,14 @@ describe('definition-text', () => {
     });
 
     it.each([
-      ['a script element', '<script>alert(1)</script>', [textRun('alert(1)')]],
-      ['an image with an event handler', 'a <img src=x onerror=alert(1)> b', [textRun('a  b')]],
-      ['an unbalanced tag', '<b>bold <xref>rest', [textRun('bold rest')]],
-      ['an encoded script element', '&lt;script&gt;alert(1)&lt;/script&gt;', [textRun('<script>alert(1)</script>')]],
+      ['a script element', '<script>alert(1)</script>'],
+      ['an image with an event handler', 'a <img src=x onerror=alert(1)> b'],
+      ['an unbalanced tag', '<b>bold <xref>rest'],
+      ['an encoded script element', '&lt;script&gt;alert(1)&lt;/script&gt;'],
       ['a bracket that is not a tag', 'a < b', [textRun('a < b')]],
-      ['a nested xref', '<xref>a <xref>b</xref> c</xref>', [textRun('a '), referenceRun('b', wordnik('b')), textRun(' c')]],
-    ])('turns %s into text and links only, never markup', (_case, markup, segments) => {
-      expect(toDefinitionSegments({ text: markup })).toStrictEqual(segments);
+      ['a nested xref', '<xref>a <xref>b</xref> c</xref>'],
+    ])('keeps canonical %s as escaped text data', (_case, text, expected = textRun(text)) => {
+      expect(toDefinitionSegments({ text })).toStrictEqual(Array.isArray(expected) ? expected : [expected]);
     });
 
     it('throws when stored references do not fit the text', () => {

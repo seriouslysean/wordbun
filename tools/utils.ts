@@ -15,8 +15,8 @@ import { getSocialCardPath, SOCIAL_DIR } from '#utils/image-path-utils';
 import { getErrorMessage, logger } from '#utils/logger';
 import { collapseWhitespace } from '#utils/text-utils';
 import { isRecord, isString } from '#utils/type-guards';
-import { findValidDefinition, mergeEnrichment, normalizeToBasePOS } from '#utils/word-data-utils';
-import { parseWordData } from '#utils/word-validation';
+import { findValidDefinition, mergeEnrichment } from '#utils/word-data-utils';
+import { parseWordData } from '#utils/stored-word-validation';
 
 // ---------------------------------------------------------------------------
 // Image generation constants
@@ -552,9 +552,7 @@ export function buildWordData(params: {
  * which case all senses are considered.
  */
 export function primaryPartOfSpeech(definitions: DictionaryResponse['definitions']): string | undefined {
-  const raw = findValidDefinition(definitions)?.partOfSpeech;
-  const base = raw ? normalizeToBasePOS(raw) : '';
-  return base || undefined;
+  return findValidDefinition(definitions)?.partOfSpeech;
 }
 
 /**

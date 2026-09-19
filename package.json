@@ -26,6 +26,7 @@
     "tool:generate-all-images": "node tools/generate-images.ts",
     "tool:generate-images": "node tools/generate-images.ts",
     "tool:local": "node --env-file-if-exists=.env",
+    "tool:normalize-word-data": "node tools/normalize-word-data.ts",
     "tool:regenerate-all-words": "node tools/regenerate-all-words.ts",
     "tool:sync": "./tools/sync-upstream.sh",
     "test": "vitest run --coverage",

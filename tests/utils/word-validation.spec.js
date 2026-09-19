@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 
-import { isWordData, isWordIndex, parseWordData } from '#utils/word-validation';
+import { isWordData, parseWordData } from '#utils/stored-word-validation';
+import { isWordIndex } from '#utils/word-validation';
 
 const DEMO_WORD_FILE = path.join(import.meta.dirname, '..', '..', 'data', 'demo', 'words', '2025', '20250101.json');
 const VALID_WORD = { word: 'test', date: '20250101', adapter: 'wordnik', data: [{ text: 'a test', partOfSpeech: 'noun' }] };
@@ -21,7 +22,10 @@ describe('word-validation', () => {
         rawData: { anything: 1 },
         enrichment: { synonyms: ['exam'], pronunciation: 'test', audio: 'https://example.com/t.mp3', etymology: 'Latin' },
         data: [
-          { id: 'test', text: ['a', 'test'], examples: ['x'], synonyms: [], antonyms: [], sourceUrl: '' },
+          {
+            id: 'test', text: 'a test', examples: ['x'], synonyms: ['exam'], antonyms: ['answer'],
+            sourceUrl: 'https://example.com/test',
+          },
           { text: 'x', label: 'affix' },
           { text: 'a rest', references: [{ start: 2, end: 6, url: 'https://www.wordnik.com/words/rest' }] },
         ],
@@ -41,6 +45,7 @@ describe('word-validation', () => {
       expect(isWordData({ ...VALID_WORD, adapter: undefined })).toBe(false);
       expect(isWordData({ ...VALID_WORD, data: undefined })).toBe(false);
       expect(isWordData({ ...VALID_WORD, data: {} })).toBe(false);
+      expect(isWordData({ ...VALID_WORD, extra: true })).toBe(false);
       // The content schema requires at least one definition; a file without
       // one fails the build, so the CLI must not accept it either
       expect(isWordData({ ...VALID_WORD, data: [] })).toBe(false);
@@ -61,7 +66,11 @@ describe('word-validation', () => {
       expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 6 }] }))).toBe(false);
       expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 6, url: 'javascript:alert(1)' }] }))).toBe(false);
       expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 9, url: 'https://example.com' }] }))).toBe(false);
-      expect(isWordData(withDefinition({ text: ['a', 'rest'], references: [{ start: 2, end: 6, url: 'https://example.com' }] }))).toBe(true);
+      expect(isWordData(withDefinition({ text: ['a', 'rest'], references: [{ start: 2, end: 6, url: 'https://example.com' }] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', partOfSpeech: 'transitive verb' }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', partOfSpeech: 'noun', label: 'thing' }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', examples: [] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', extra: true }))).toBe(false);
       expect(isWordData(withDefinition({ attributionText: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ sourceDictionary: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ sourceUrl: 1 }))).toBe(false);
@@ -79,6 +88,7 @@ describe('word-validation', () => {
       expect(isWordData({ ...VALID_WORD, enrichment: { pronunciation: { raw: 'x' } } })).toBe(false);
       expect(isWordData({ ...VALID_WORD, enrichment: { audio: 1 } })).toBe(false);
       expect(isWordData({ ...VALID_WORD, enrichment: { etymology: ['x'] } })).toBe(false);
+      expect(isWordData({ ...VALID_WORD, enrichment: { note: 'unknown' } })).toBe(false);
     });
   });
 
@@ -114,4 +124,5 @@ describe('word-validation', () => {
       expect(isWordIndex([{ word: 'test', date: 20250101 }])).toBe(false);
     });
   });
+
 });

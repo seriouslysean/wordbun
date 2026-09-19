@@ -9,7 +9,7 @@ import type { WordData } from '#types';
 import { getTodayYYYYMMDD, isValidDate } from '#utils/date-utils';
 import { isWordNotFound } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
-import { parseWordData } from '#utils/word-validation';
+import { parseWordData } from '#utils/stored-word-validation';
 
 /**
  * Checks if a file exists for the given date and returns the existing word if found

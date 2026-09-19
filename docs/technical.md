@@ -28,6 +28,7 @@ utils/                           # Pure Node.js utilities (25 files)
   adapter-utils.ts               # Shared adapter helpers (POS, definition builders, canonical guard, HTTP)
   breadcrumb-utils.ts            # Breadcrumb navigation logic
   date-utils.ts                  # Date manipulation (YYYYMMDD format)
+  definition-markup.ts          # Definition tag recognition and strict legacy validation
   definition-text.ts             # Definition markup parser, cross-reference checks, definition segments
   i18n-utils.ts                  # Translation helpers (t(), tp())
   logger-core.ts                 # Logger factory (SentryBridge + output filter)
@@ -36,14 +37,17 @@ utils/                           # Pure Node.js utilities (25 files)
   text-pattern-utils.ts          # Pattern detection (palindromes, double letters, etc.)
   text-utils.ts                  # slugify(), syllable counting, re-exports
   url-utils.ts                   # URL generation for routes
+  stored-word-validation.ts      # Canonical stored-word shape guards
+  word-data-normalizer.ts        # Offline legacy-record normalization
   word-data-utils.ts             # Displayability rule, word filtering (by year, length, letter, etc.)
   word-stats-utils.ts            # Statistics calculation algorithms
-  word-validation.ts             # Shape guards for stored word files and the words.json index
+  word-validation.ts             # Client-safe words.json index guard
 
 tools/                           # CLI tools (Node.js only, no Astro deps)
   add-word.ts                    # Add new words with validation
   generate-images.ts             # Social image generation (consolidated)
   help-utils.ts                  # Shared help system
+  normalize-word-data.ts         # Offline stored-data migration
   regenerate-all-words.ts        # Batch word data refresh
   utils.ts                       # Shared tool utilities
 
@@ -234,7 +238,7 @@ Each word is a JSON file at `data/[{SOURCE_DIR}/]words/{year}/{YYYYMMDD}.json` (
 }
 ```
 
-A definition with cross-references also carries `references`, ranges of its `text` (see Dictionary Adapters). Records written before those existed may instead hold Wordnik's markup inside `text`; the site reads both (see Rendering Definitions).
+A definition with cross-references also carries `references`, ranges of its `text` (see Dictionary Adapters). The offline normalizer converts older Wordnik markup to those ranges before the site reads the record.
 
 ### Demo Data
 
@@ -299,7 +303,7 @@ toDefinitionSegments({
 
 `WordSenses.astro` renders each text run as escaped text and each reference as an `<a>`; there is no `set:html`, so no stored or fetched text becomes markup. `getWordSenses()` builds the senses from it, and `findValidDefinition()` and `getWordDetails()` join the runs into the plain text that meta descriptions, JSON-LD and the RSS feed use. JSON-LD cannot go through Astro's escaping without corrupting it, so `StructuredData.astro` writes it with `serializeJsonLd()` (`utils/text-utils.ts`), which writes every `<` as `\u003c`: definition text holding `</script>` cannot close the element.
 
-A definition with `references` is canonical and is used as it is; references that do not fit its text fail the build. One without them is read through `parseDefinitionMarkup()`, the same parser the Wordnik adapter uses, because records stored before the canonical contract hold Wordnik's markup in `text`: an `<xref>` still renders as a link and any other tag as its text. Once stored records are normalized to canonical definitions (#98), that fallback goes.
+A definition's text and optional `references` are used as stored; references that do not fit the text fail the build. Legacy partner markup is accepted only by the offline normalizer, not interpreted while pages render.
 
 ## Dictionary Adapters
 
@@ -320,7 +324,7 @@ Each `DictionaryDefinition` (`types/common.ts`):
 
 | Field | Rule |
 |---|---|
-| `text` | Required: one nonblank string of plain text, never an array of fragments, with nothing shaped like an HTML tag in it (a `<` that starts no tag, as in `(<20 mg/dL)`, is text) |
+| `text` | Required: one nonblank string of plain text, never an array of fragments; adapters translate partner markup before returning it |
 | `references` | The cross-references in `text`: a nonempty list of `{ start, end, url }` (JavaScript string offsets, `end` exclusive), in order, not overlapping, each over nonblank text, `url` absolute http(s) |
 | `partOfSpeech` | A value of the vocabulary in `constants/parts-of-speech.ts` |
 | `label` | The partner's raw term when it maps to no part of speech; never beside `partOfSpeech` |
@@ -334,7 +338,7 @@ A partner's formatting is the adapter's to translate. Wordnik marks cross-refere
 
 Each adapter's `POS_MAP` is written `satisfies Readonly<Record<string, BasePartOfSpeech>>`, so a mapping can only name a vocabulary value. `buildDefinition()` in `utils/adapter-utils.ts` classifies the partner's term (`classifyPartOfSpeech()`) and omits empty values; `buildDictionaryResponse()` does the same for the envelope and drops every definition whose text is blank, for all adapters, so one empty sense (a Wordnik definition without text, a blank Merriam-Webster `shortdef`) never gets the rest refused. When every definition in a nonempty list is blank it throws `throwUnexpectedShape()` instead: senses with no text in any of them mean the partner changed how it sends text (a renamed text field reads as none), not that it lacks the word.
 
-Stored word files keep the looser `StoredDictionaryDefinition` shape, which `WordData.data` and the content collection schema accept, so records written before the contract still load.
+Stored word files use the same `DictionaryDefinition` shape. `npm run tool:normalize-word-data -- --dry-run` previews the offline migration of a legacy corpus; without `--dry-run` it converts partner markup to structured references, maps known legacy parts of speech, and omits empty fields. It never calls a dictionary API or invents a label, and it stops without writing when any file is malformed.
 
 ### Enforcement
 
@@ -579,6 +583,7 @@ See [AGENTS.md - The Boundary](../AGENTS.md#the-boundary) for the principle and 
 |------|---------|
 | `breadcrumb-utils.ts` | Breadcrumb navigation generation |
 | `date-utils.ts` | YYYYMMDD parsing, formatting, validation |
+| `definition-markup.ts` | Definition tag recognition and strict legacy validation |
 | `definition-text.ts` | Definition markup parser, cross-reference checks, `toDefinitionSegments()` |
 | `i18n-utils.ts` | `t()` translation, `tp()` pluralization |
 | `logger-core.ts` | Logger factory (SentryBridge, output filter) |
@@ -587,9 +592,11 @@ See [AGENTS.md - The Boundary](../AGENTS.md#the-boundary) for the principle and 
 | `text-pattern-utils.ts` | Palindrome, double/triple letter detection |
 | `text-utils.ts` | `slugify()`, syllable counting |
 | `url-utils.ts` | Route URL builders |
+| `stored-word-validation.ts` | Canonical stored-word shape guards |
+| `word-data-normalizer.ts` | Offline legacy-record normalization |
 | `word-data-utils.ts` | Displayability rule, add-time acceptance, word senses and details, word filtering by year/length/letter/pos |
 | `word-stats-utils.ts` | Statistics computation |
-| `word-validation.ts` | Shape guards for stored word files and the `words.json` index |
+| `word-validation.ts` | Client-safe `words.json` index guard |
 
 **`src/utils/`** (Astro-specific):
 
