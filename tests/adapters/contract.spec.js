@@ -3,7 +3,9 @@
  * a directory of partner response bodies under fixtures/<adapter name>/.
  * not-found.json, where present, is the partner's answer for a word it does
  * not have; every other .json file is a successful answer, and its adapter
- * must turn it into a response the canonical guard accepts.
+ * must turn it into a response the canonical guard accepts, with at least one
+ * definition a page can display: the guard alone accepts a response whose
+ * every definition is label-only, which add-word would refuse.
  */
 
 import fs from 'node:fs';
@@ -72,16 +74,18 @@ describe('adapter contract', () => {
       expect(successFixtures(adapterName)).not.toEqual([]);
     });
 
-    it.each(successFixtures(adapterName))('turns %s into a canonical response', async (file) => {
+    it.each(successFixtures(adapterName))('turns %s into a canonical, usable response', async (file) => {
       const body = fs.readFileSync(path.join(FIXTURES_DIR, adapterName, file), 'utf-8');
       vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(body, { status: 200 })));
       const word = path.basename(file, '.json');
       const { getAdapterByName } = await import('#adapters');
       const { isCanonicalResponse } = await import('#utils/adapter-utils');
+      const { isValidDictionaryData } = await import('#utils/word-data-utils');
 
       const response = await getAdapterByName(adapterName).fetchWordData(word);
 
       expect(isCanonicalResponse(response, word)).toBe(true);
+      expect(isValidDictionaryData(response.definitions)).toBe(true);
     });
   });
 });

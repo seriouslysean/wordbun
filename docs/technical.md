@@ -316,14 +316,14 @@ Stored word files keep the looser `StoredDictionaryDefinition` shape, which `Wor
 
 - a directory `tests/adapters/fixtures/<adapter name>/` for every registered adapter, and none for anything else
 - at least one successful response in it: every `.json` file except `not-found.json`, which holds the partner's answer for a word it does not have
-- that each successful response, fed through its adapter with `fetch` stubbed and the file name as the word, passes `isCanonicalResponse()`
+- that each successful response, fed through its adapter with `fetch` stubbed and the file name as the word, passes `isCanonicalResponse()` and has at least one displayable definition (`isValidDictionaryData()`): the guard alone accepts a response whose every definition carries only a label, which `fetchWithFallback()` would refuse
 
 ### Adding an Adapter
 
 1. Write `adapters/<name>.ts` exporting a `DictionaryAdapter` whose `name` is its registry key. Guard the partner's raw response with type guards; throw `WordNotFoundError` for a missing word, `RateLimitError` for a 429 (`throwOnHttpError()` does both) and `throwUnexpectedShape()` for a body it cannot read.
 2. Translate with `buildDefinition()` and `buildDictionaryResponse()`, mapping part-of-speech terms through a `POS_MAP` that `satisfies Readonly<Record<string, BasePartOfSpeech>>`.
 3. Register it in `ADAPTER_REGISTRY` in `adapters/index.ts`.
-4. Add `tests/adapters/fixtures/<name>/` with at least one recorded response body, plus `not-found.json` if the partner answers a missing word with a body. A fixture built by hand rather than recorded says so in the directory, as `fixtures/wordnik/README.md` does. The contract suite fails until the directory exists and every response in it comes out canonical.
+4. Add `tests/adapters/fixtures/<name>/` with at least one recorded response body, plus `not-found.json` if the partner answers a missing word with a body. A fixture built by hand rather than recorded says so in the directory, as `fixtures/wordnik/README.md` does. The contract suite fails until the directory exists and every response in it comes out canonical, with a displayable definition.
 5. Unit-test the adapter's own translation in `tests/adapters/<name>.spec.js`.
 
 ## CLI Tools
