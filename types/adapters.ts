@@ -2,7 +2,7 @@
  * Common adapter interfaces for dictionary services
  */
 
-import type { DictionaryDefinition, FetchOptions, WordData, WordProcessedData } from '#types';
+import type { DictionaryDefinition, FetchOptions } from '#types';
 
 /**
  * What an adapter answers for a lookup. Like its definitions, every string is
@@ -26,28 +26,18 @@ export interface DictionaryResponse {
   };
 }
 
+/**
+ * A dictionary adapter fetches and translates, and nothing else: the site
+ * renders stored records without asking which adapter wrote them.
+ */
 export interface DictionaryAdapter {
   name: string;
 
   /**
-   * Fetch word data from the dictionary service
+   * Fetch a word from the dictionary service, translated into the canonical
+   * contract
    */
   fetchWordData(word: string, options?: FetchOptions): Promise<DictionaryResponse>;
-
-  /**
-   * Transform raw API response to our internal WordData format
-   */
-  transformToWordData(response: DictionaryResponse, date: string): WordData;
-
-  /**
-   * Transform WordData to processed format for display
-   */
-  transformWordData(wordData: WordData): WordProcessedData;
-
-  /**
-   * Validate if the response contains usable word data
-   */
-  isValidResponse(response: unknown): boolean;
 }
 
 

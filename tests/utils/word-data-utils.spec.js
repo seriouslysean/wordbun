@@ -12,7 +12,6 @@ import {
   getCurrentWord,
   getPastWords,
   getWordByDate,
-  getWordDetails,
   getWordsByLength,
   getWordsByMonth,
   groupWordsByLength,
@@ -34,6 +33,7 @@ import {
   findValidDefinition,
   getDisplayableDefinitions,
   isValidDictionaryData,
+  getWordDetails,
   getWordSenses,
   getWordsByPartOfSpeech as getWordsByPartOfSpeechPure,
   groupWordsByPartOfSpeech as groupWordsByPartOfSpeechPure,
@@ -200,44 +200,49 @@ describe('word-data-utils', () => {
 
   describe('getWordDetails', () => {
     it('handles missing word data', () => {
-      const result = getWordDetails(null);
-      expect(result).toEqual({ partOfSpeech: '', definition: '', meta: null });
+      expect(getWordDetails(null)).toEqual({ partOfSpeech: '', definition: '', meta: null });
+      expect(getWordDetails({ word: 'test', date: '20250101', adapter: 'wordnik', data: [] }))
+        .toEqual({ partOfSpeech: '', definition: '', meta: null });
     });
 
-    it('dispatches to the correct adapter based on wordData.adapter field', () => {
-      const wordnikWord = {
-        word: 'test',
-        date: '20250101',
-        adapter: 'wordnik',
-        data: [{ text: 'A wordnik def', partOfSpeech: 'noun', attributionText: 'from Wordnik' }],
-      };
-      const result = getWordDetails(wordnikWord);
-      expect(result.definition).toBe('A wordnik def');
-      expect(result.partOfSpeech).toBe('noun');
-    });
-
-    it('dispatches to merriam-webster adapter when adapter field says so', () => {
-      const mwWord = {
+    it('reads the first displayable definition and its source from the stored record', () => {
+      const word = {
         word: 'test',
         date: '20250101',
         adapter: 'merriam-webster',
-        data: [{ text: 'An MW def', partOfSpeech: 'noun', attributionText: 'from Merriam-Webster' }],
+        data: [
+          { text: 'No part of speech', sourceUrl: 'https://example.com/other' },
+          {
+            text: 'An MW def',
+            partOfSpeech: 'transitive verb',
+            attributionText: "from Merriam-Webster's Collegiate Dictionary",
+            sourceDictionary: 'collegiate',
+            sourceUrl: 'https://www.merriam-webster.com/dictionary/test',
+          },
+        ],
       };
-      const result = getWordDetails(mwWord);
-      expect(result.definition).toBe('An MW def');
-      expect(result.meta.attributionText).toContain('Merriam-Webster');
+
+      expect(getWordDetails(word)).toEqual({
+        partOfSpeech: 'verb',
+        definition: 'An MW def',
+        meta: {
+          attributionText: "from Merriam-Webster's Collegiate Dictionary",
+          sourceDictionary: 'collegiate',
+          sourceUrl: 'https://www.merriam-webster.com/dictionary/test',
+        },
+      });
     });
 
-    it('dispatches to wiktionary adapter when adapter field says so', () => {
-      const wiktionaryWord = {
-        word: 'test',
-        date: '20250101',
-        adapter: 'wiktionary',
-        data: [{ text: 'A wiktionary def', partOfSpeech: 'noun', attributionText: 'from Wiktionary' }],
-      };
-      const result = getWordDetails(wiktionaryWord);
-      expect(result.definition).toBe('A wiktionary def');
-      expect(result.meta.attributionText).toContain('Wiktionary');
+    it('needs no adapter: a record from any source, or none, reads the same way', () => {
+      const data = [{ text: 'A taxonomic <xref>order</xref>', partOfSpeech: 'noun' }];
+
+      for (const adapter of ['wordnik', 'wiktionary', 'static']) {
+        expect(getWordDetails({ word: 'test', date: '', adapter, data })).toEqual({
+          partOfSpeech: 'noun',
+          definition: 'A taxonomic order',
+          meta: { attributionText: undefined, sourceDictionary: undefined, sourceUrl: undefined },
+        });
+      }
     });
   });
 

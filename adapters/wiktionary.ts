@@ -14,8 +14,6 @@ import {
   throwOnHttpError,
   throwUnexpectedShape,
   throwWordNotFound,
-  transformToWordData,
-  transformWordData,
 } from '#utils/adapter-utils';
 import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
 
@@ -97,17 +95,5 @@ export const wiktionaryAdapter: DictionaryAdapter = {
       }, POS_MAP)));
 
     return buildDictionaryResponse(word, definitions, 'Wiktionary', attribution, sourceUrl);
-  },
-
-  transformToWordData(response: DictionaryResponse, date: string) {
-    return transformToWordData('wiktionary', response, date);
-  },
-
-  transformWordData(wordData) {
-    return transformWordData(wordData, 'from Wiktionary');
-  },
-
-  isValidResponse(response: unknown): boolean {
-    return Array.isArray(response) && isFreeDictionaryEntry(response[0]);
   },
 };

@@ -1,5 +1,5 @@
 import type {
-  DefinitionSegment, StoredDictionaryDefinition, WordData, WordEnrichment, WordGrouping, WordSense,
+  DefinitionSegment, StoredDictionaryDefinition, WordData, WordEnrichment, WordGrouping, WordProcessedData, WordSense,
 } from '#types';
 import { BASE_PARTS_OF_SPEECH, isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { MAX_SENSE_EXAMPLES } from '#constants/text-patterns';
@@ -132,6 +132,13 @@ const getDefinitionSegments = (def: DisplayableDefinition): DefinitionSegment[] 
   });
 
 /**
+ * A displayable definition as a page shows it, as plain text: a
+ * cross-reference is kept as the words it links.
+ */
+const getDefinitionPlainText = (def: DisplayableDefinition): string =>
+  getDefinitionSegments(def).map(segment => segment.text).join('');
+
+/**
  * The one displayability rule. Everything that shows, counts, groups or accepts
  * a word's definitions goes through it, so those answers cannot disagree.
  *
@@ -181,9 +188,28 @@ export function findValidDefinition(definitions: StoredDictionaryDefinition[]): 
     return null;
   }
 
-  const text = getDefinitionSegments(definition).map(segment => segment.text).join('');
-  return { text, partOfSpeech: definition.partOfSpeech };
+  return { text: getDefinitionPlainText(definition), partOfSpeech: definition.partOfSpeech };
 }
+
+/**
+ * A word's first displayable definition, its part of speech, and the source
+ * the definition came from, read from the stored record alone: which adapter
+ * wrote the record does not matter. Empty when nothing is displayable, as for
+ * a word without data.
+ */
+export const getWordDetails = (wordData: WordData): WordProcessedData => {
+  const [definition] = getDisplayableDefinitions(wordData?.data ?? []);
+  if (!definition) {
+    return { partOfSpeech: '', definition: '', meta: null };
+  }
+
+  const { attributionText, sourceDictionary, sourceUrl } = definition;
+  return {
+    partOfSpeech: normalizeToBasePOS(definition.partOfSpeech),
+    definition: getDefinitionPlainText(definition),
+    meta: { attributionText, sourceDictionary, sourceUrl },
+  };
+};
 
 /**
  * The normalized parts of speech a word is displayed under, each listed once.

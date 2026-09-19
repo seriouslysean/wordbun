@@ -30,33 +30,6 @@ describe('wordnik adapter', () => {
     vi.stubEnv('WORDNIK_API_URL', 'https://api.wordnik.com/v4');
   });
 
-  describe('transformWordData', () => {
-    it('handles valid word data', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      const result = wordnikAdapter.transformWordData({
-        data: [{ text: 'A test definition', partOfSpeech: 'noun' }],
-      });
-      expect(result.definition).toContain('A test definition');
-      expect(result.partOfSpeech).toBe('noun');
-    });
-
-    it('handles missing word data', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      expect(() => wordnikAdapter.transformWordData(null)).not.toThrow();
-      expect(() => wordnikAdapter.transformWordData(undefined)).not.toThrow();
-    });
-
-    it('handles missing data gracefully', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      expect(wordnikAdapter.transformWordData(null)).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-
-    it('handles empty data arrays', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      expect(wordnikAdapter.transformWordData({ data: [] })).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-  });
-
   describe('CONFIG', () => {
     it('exports configuration constants', async () => {
       const { CONFIG } = await import('#adapters/wordnik');
@@ -370,15 +343,6 @@ describe('wordnik adapter', () => {
       expect(isWordnikDefinitions([{ relatedWords: [{ relationshipType: 1, words: ['luck'] }] }])).toBe(false);
       expect(isWordnikDefinitions([{ textProns: ['pron'] }])).toBe(false);
       expect(isWordnikDefinitions([{ textProns: [{ raw: 1 }] }])).toBe(false);
-    });
-  });
-
-  describe('isValidResponse', () => {
-    it('requires a non-empty array of definitions', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      expect(wordnikAdapter.isValidResponse(VALID_DEFINITIONS)).toBe(true);
-      expect(wordnikAdapter.isValidResponse([])).toBe(false);
-      expect(wordnikAdapter.isValidResponse({ message: 'truthy non-array' })).toBe(false);
     });
   });
 });

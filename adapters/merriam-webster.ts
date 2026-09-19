@@ -19,8 +19,6 @@ import {
   throwOnHttpError,
   throwUnexpectedShape,
   throwWordNotFound,
-  transformToWordData,
-  transformWordData,
   WordNotFoundError,
 } from '#utils/adapter-utils';
 import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
@@ -325,17 +323,5 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
     };
 
     return buildDictionaryResponse(word, definitions, 'Merriam-Webster', attribution, sourceUrl, headword);
-  },
-
-  transformToWordData(response: DictionaryResponse, date: string) {
-    return transformToWordData('merriam-webster', response, date);
-  },
-
-  transformWordData(wordData) {
-    return transformWordData(wordData, 'from Merriam-Webster');
-  },
-
-  isValidResponse(response: unknown): boolean {
-    return isEntryArray(response);
   },
 };

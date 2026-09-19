@@ -23,9 +23,6 @@ const mockFailingAdapter = (modulePath, exportName, name, error) => {
     [exportName]: {
       name,
       fetchWordData: vi.fn().mockRejectedValue(error),
-      transformToWordData: vi.fn(),
-      transformWordData: vi.fn(),
-      isValidResponse: vi.fn(),
     },
   }));
 };
@@ -55,9 +52,6 @@ describe('fetchWithFallback', () => {
       wordnikAdapter: {
         name: 'wordnik',
         fetchWordData: vi.fn().mockResolvedValue(mockResponse),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -78,9 +72,6 @@ describe('fetchWithFallback', () => {
       merriamWebsterAdapter: {
         name: 'merriam-webster',
         fetchWordData: vi.fn().mockRejectedValue(new Error('Word not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -88,9 +79,6 @@ describe('fetchWithFallback', () => {
       wiktionaryAdapter: {
         name: 'wiktionary',
         fetchWordData: vi.fn().mockResolvedValue(fallbackResponse),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -115,9 +103,6 @@ describe('fetchWithFallback', () => {
       wordnikAdapter: {
         name: 'wordnik',
         fetchWordData: vi.fn().mockRejectedValue(new Error('Word not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -125,9 +110,6 @@ describe('fetchWithFallback', () => {
       wiktionaryAdapter: {
         name: 'wiktionary',
         fetchWordData: vi.fn().mockResolvedValue(fallbackResponse),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -145,9 +127,6 @@ describe('fetchWithFallback', () => {
       wordnikAdapter: {
         name: 'wordnik',
         fetchWordData: vi.fn().mockRejectedValue(new Error('Word not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -166,9 +145,6 @@ describe('fetchWithFallback', () => {
       merriamWebsterAdapter: {
         name: 'merriam-webster',
         fetchWordData: vi.fn().mockRejectedValue(new Error('MW: not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -176,9 +152,6 @@ describe('fetchWithFallback', () => {
       wiktionaryAdapter: {
         name: 'wiktionary',
         fetchWordData: vi.fn().mockRejectedValue(new Error('Wiktionary: not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -199,9 +172,6 @@ describe('fetchWithFallback', () => {
       merriamWebsterAdapter: {
         name: 'merriam-webster',
         fetchWordData: vi.fn().mockRejectedValue(new Error('MW: not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -209,9 +179,6 @@ describe('fetchWithFallback', () => {
       wordnikAdapter: {
         name: 'wordnik',
         fetchWordData: vi.fn().mockRejectedValue(new Error('Wordnik: not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -219,9 +186,6 @@ describe('fetchWithFallback', () => {
       wiktionaryAdapter: {
         name: 'wiktionary',
         fetchWordData: vi.fn().mockResolvedValue(wiktionaryResponse),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -251,9 +215,6 @@ describe('fetchWithFallback', () => {
       merriamWebsterAdapter: {
         name: 'merriam-webster',
         fetchWordData: vi.fn().mockRejectedValue(new Error('MW: not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -261,9 +222,6 @@ describe('fetchWithFallback', () => {
       wordnikAdapter: {
         name: 'wordnik',
         fetchWordData: vi.fn().mockResolvedValue(wordnikResponse),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -283,9 +241,6 @@ describe('fetchWithFallback', () => {
       merriamWebsterAdapter: {
         name: 'merriam-webster',
         fetchWordData: vi.fn().mockRejectedValue(new Error('MW: not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -293,9 +248,6 @@ describe('fetchWithFallback', () => {
       wordnikAdapter: {
         name: 'wordnik',
         fetchWordData: vi.fn().mockRejectedValue(new Error('Wordnik: not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -303,9 +255,6 @@ describe('fetchWithFallback', () => {
       wiktionaryAdapter: {
         name: 'wiktionary',
         fetchWordData: vi.fn().mockRejectedValue(new Error('Wiktionary: not found')),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -362,9 +311,6 @@ describe('fetchWithFallback', () => {
       wiktionaryAdapter: {
         name: 'wiktionary',
         fetchWordData: vi.fn().mockResolvedValue(fallbackResponse),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -414,9 +360,6 @@ describe('fetchWithFallback', () => {
       merriamWebsterAdapter: {
         name: 'merriam-webster',
         fetchWordData: vi.fn().mockResolvedValue(unlabelledResponse),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -424,9 +367,6 @@ describe('fetchWithFallback', () => {
       wiktionaryAdapter: {
         name: 'wiktionary',
         fetchWordData: vi.fn().mockResolvedValue(fallbackResponse),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -449,9 +389,6 @@ describe('fetchWithFallback', () => {
       wordnikAdapter: {
         name: 'wordnik',
         fetchWordData: vi.fn().mockResolvedValue({ word: 'test', definitions: [{ text: 'A prefix', label: 'affix' }], meta: { source: 'Wordnik' } }),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -471,9 +408,6 @@ describe('fetchWithFallback', () => {
       wordnikAdapter: {
         name: 'wordnik',
         fetchWordData: vi.fn().mockResolvedValue(brokenResponse),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -481,9 +415,6 @@ describe('fetchWithFallback', () => {
       wiktionaryAdapter: {
         name: 'wiktionary',
         fetchWordData: vi.fn().mockResolvedValue(fallbackResponse),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -504,9 +435,6 @@ describe('fetchWithFallback', () => {
       wordnikAdapter: {
         name: 'wordnik',
         fetchWordData: vi.fn().mockResolvedValue({ word: 'Test', definitions: [{ text: 'a test', partOfSpeech: 'noun' }], meta: { source: 'Wordnik' } }),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
 
@@ -523,9 +451,6 @@ describe('fetchWithFallback', () => {
       wordnikAdapter: {
         name: 'wordnik',
         fetchWordData: vi.fn().mockResolvedValue({ word: 'test', definitions: [{ text: 'a test', partOfSpeech: 'noun', examples: [] }], meta: { source: 'Wordnik' } }),
-        transformToWordData: vi.fn(),
-        transformWordData: vi.fn(),
-        isValidResponse: vi.fn(),
       },
     }));
     const fallbackError = new Error(NOT_FOUND);

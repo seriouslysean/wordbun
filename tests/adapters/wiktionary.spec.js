@@ -197,45 +197,6 @@ describe('wiktionary adapter', () => {
     });
   });
 
-  describe('transformWordData', () => {
-    it('transforms valid word data', async () => {
-      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
-      const result = wiktionaryAdapter.transformWordData({
-        data: [{ text: 'a definition', partOfSpeech: 'noun', attributionText: 'from Wiktionary', sourceUrl: 'https://en.wiktionary.org' }],
-      });
-      expect(result.definition).toBe('a definition');
-      expect(result.partOfSpeech).toBe('noun');
-      expect(result.meta.attributionText).toBe('from Wiktionary');
-    });
-
-    it('handles null input', async () => {
-      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
-      expect(wiktionaryAdapter.transformWordData(null)).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-
-    it('handles empty data array', async () => {
-      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
-      expect(wiktionaryAdapter.transformWordData({ data: [] })).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-  });
-
-  describe('transformToWordData', () => {
-    it('creates word data with wiktionary adapter field', async () => {
-      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
-      const response = {
-        word: 'test',
-        definitions: [{ text: 'a test', partOfSpeech: 'noun' }],
-        meta: { source: 'Wiktionary', attribution: 'from Wiktionary', url: '' },
-      };
-
-      const result = wiktionaryAdapter.transformToWordData(response, '20250101');
-      expect(result.adapter).toBe('wiktionary');
-      expect(result.word).toBe('test');
-      expect(result.date).toBe('20250101');
-      expect(result.data).toEqual(response.definitions);
-    });
-  });
-
   describe('isFreeDictionaryEntry', () => {
     it.each(['serendipity', 'pneumonoultramicroscopicsilicovolcanoconiosis'])('accepts every entry of the recorded %s response', async (name) => {
       const { isFreeDictionaryEntry } = await import('#adapters/wiktionary');
@@ -256,38 +217,11 @@ describe('wiktionary adapter', () => {
       expect(isFreeDictionaryEntry({ meanings: [{ partOfSpeech: 'noun', definitions: [{ definition: 'x', antonyms: [1] }] }] })).toBe(false);
       expect(isFreeDictionaryEntry({ meanings: [{ partOfSpeech: 'noun', definitions }], sourceUrls: 'url' })).toBe(false);
     });
-  });
 
-  describe('isValidResponse', () => {
-    it('returns false when a later meaning of the first entry is malformed', async () => {
-      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
+    it('rejects an entry whose later meaning is malformed', async () => {
+      const { isFreeDictionaryEntry } = await import('#adapters/wiktionary');
       const [entry] = loadFixture('serendipity');
-      const malformed = [{ ...entry, meanings: [...entry.meanings, { partOfSpeech: 'noun' }] }];
-      expect(wiktionaryAdapter.isValidResponse(malformed)).toBe(false);
-    });
-
-    it('returns true for valid entry arrays', async () => {
-      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
-      const fixture = loadFixture('serendipity');
-      expect(wiktionaryAdapter.isValidResponse(fixture)).toBe(true);
-    });
-
-    it('returns false for empty arrays', async () => {
-      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
-      expect(wiktionaryAdapter.isValidResponse([])).toBe(false);
-    });
-
-    it('returns false for non-arrays', async () => {
-      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
-      const fixture = loadFixture('not-found');
-      expect(wiktionaryAdapter.isValidResponse(fixture)).toBe(false);
-      expect(wiktionaryAdapter.isValidResponse(null)).toBe(false);
-      expect(wiktionaryAdapter.isValidResponse(undefined)).toBe(false);
-    });
-
-    it('returns false for entries without meanings', async () => {
-      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
-      expect(wiktionaryAdapter.isValidResponse([{ word: 'test', meanings: [] }])).toBe(false);
+      expect(isFreeDictionaryEntry({ ...entry, meanings: [...entry.meanings, { partOfSpeech: 'noun' }] })).toBe(false);
     });
   });
 });

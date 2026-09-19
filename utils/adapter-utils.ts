@@ -1,11 +1,10 @@
 import type {
-  DictionaryClassification, DictionaryDefinition, DictionaryReference, DictionaryResponse, WordData, WordProcessedData,
+  DictionaryClassification, DictionaryDefinition, DictionaryReference, DictionaryResponse,
 } from '#types';
 import { type BasePartOfSpeech, isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { areValidReferences, hasMarkup } from '#utils/definition-text';
 import { flattenErrors, getErrorMessage } from '#utils/text-utils';
 import { isHttpUrl, isNonblankString, isOptional, isRecord, isString } from '#utils/type-guards';
-import { findValidDefinition } from '#utils/word-data-utils';
 
 /**
  * The dictionary has no entry for the word: a misspelling, or a word it does
@@ -318,50 +317,3 @@ export const isCanonicalResponse = (value: unknown, word: string): value is Dict
   && value.definitions.every(isCanonicalDefinition)
   && isCanonicalMeta(value.meta)
   && isOptional(value.headword, isCanonicalHeadword);
-
-/**
- * Shared transformToWordData for all adapters.
- * Converts a DictionaryResponse + date into the stored WordData format.
- */
-export function transformToWordData(adapterName: string, response: DictionaryResponse, date: string): WordData {
-  return {
-    word: response.word,
-    date,
-    adapter: adapterName,
-    data: response.definitions,
-    rawData: response,
-  };
-}
-
-/**
- * Shared transformWordData for all adapters.
- * Extracts the first valid definition for display.
- * Optional processText hook for adapter-specific text transforms (e.g. Wordnik xrefs).
- */
-export function transformWordData(
-  wordData: WordData,
-  defaultAttribution: string,
-  processText?: (text: string) => string,
-): WordProcessedData {
-  if (!wordData?.data || wordData.data.length === 0) {
-    return { partOfSpeech: '', definition: '', meta: null };
-  }
-
-  const validDefinition = findValidDefinition(wordData.data);
-  if (!validDefinition) {
-    return { partOfSpeech: '', definition: '', meta: null };
-  }
-
-  const fullDefinition = wordData.data.find(d => d.partOfSpeech === validDefinition.partOfSpeech);
-  const text = processText ? processText(validDefinition.text) : validDefinition.text;
-
-  return {
-    partOfSpeech: validDefinition.partOfSpeech,
-    definition: text,
-    meta: {
-      attributionText: fullDefinition?.attributionText || defaultAttribution,
-      sourceDictionary: fullDefinition?.sourceDictionary,
-      sourceUrl: fullDefinition?.sourceUrl || '',
-    },
-  };
-}

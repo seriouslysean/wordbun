@@ -13,8 +13,6 @@ import {
   throwOnHttpError,
   throwUnexpectedShape,
   throwWordNotFound,
-  transformToWordData,
-  transformWordData,
 } from '#utils/adapter-utils';
 import { parseDefinitionMarkup } from '#utils/definition-text';
 import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
@@ -132,8 +130,8 @@ async function fetchDefinitions(word: string, buildUrl: (w: string) => string): 
 }
 
 /**
- * Wordnik adapter implementing the generic DictionaryAdapter interface.
- * Provides methods to fetch, transform, and validate word data from the Wordnik API.
+ * Wordnik adapter implementing the generic DictionaryAdapter interface:
+ * fetches a word's definitions from the Wordnik API and translates them.
  */
 export const wordnikAdapter: DictionaryAdapter = {
   name: 'wordnik',
@@ -190,22 +188,5 @@ export const wordnikAdapter: DictionaryAdapter = {
       data[0]?.wordnikUrl,
       headword,
     );
-  },
-
-  transformToWordData(response: DictionaryResponse, date: string) {
-    return transformToWordData('wordnik', response, date);
-  },
-
-  transformWordData(wordData) {
-    return transformWordData(wordData, 'from Wordnik');
-  },
-
-  /**
-   * Validates if the API response contains usable word data
-   * @param response - The raw API response to validate
-   * @returns True if response contains valid data, false otherwise
-   */
-  isValidResponse(response: unknown): boolean {
-    return isWordnikDefinitions(response) && response.length > 0;
   },
 };

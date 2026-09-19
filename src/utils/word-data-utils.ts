@@ -1,13 +1,11 @@
 import crypto from 'node:crypto';
 
-import { getAdapterByName } from '#adapters';
 import type {
   WordAdjacentResult,
   WordData,
   WordGroupByLengthResult,
   WordGroupByPartOfSpeechResult,
   WordGroupByYearResult,
-  WordProcessedData,
 } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { MAX_PAST_WORDS_DISPLAY } from '#constants/text-patterns';
@@ -174,35 +172,6 @@ export const antiStreakStats = getAntiStreakStats(allWords);
 export const milestoneWords = getChronologicalMilestones(allWords);
 
 /**
- * Processes raw word data into a standardized format for display.
- * Extracts part of speech, definition, and metadata using the current adapter.
- *
- * @param wordData - Raw word data containing dictionary definitions
- * @returns Processed word data with standardized fields for UI consumption
- */
-export function getProcessedWord(wordData: WordData): WordProcessedData {
-  try {
-    const adapter = getAdapterByName(wordData.adapter);
-    const result = adapter.transformWordData(wordData);
-    return {
-      ...result,
-      partOfSpeech: result.partOfSpeech ? normalizeToBasePOS(result.partOfSpeech) : '',
-    };
-  } catch {
-    // Fallback for mock/synthetic words (e.g. 404 page) with no real adapter
-    const validDef = findValidDefinition(wordData.data);
-    if (!validDef) {
-      return { partOfSpeech: '', definition: '', meta: null };
-    }
-    return {
-      partOfSpeech: normalizeToBasePOS(validDef.partOfSpeech),
-      definition: validDef.text,
-      meta: null,
-    };
-  }
-}
-
-/**
  * Retrieves the current word that should be displayed based on today's date.
  * Returns the most recent word with a date less than or equal to today.
  * Falls back to the first available word if none match the date criteria.
@@ -285,22 +254,6 @@ export const getAdjacentWords = (date: string, words: WordData[] = allWords): Wo
     nextWord: words[currentIndex - 1] || null,
   };
 };
-
-/**
- * Safely extracts and processes word details from raw word data.
- * Handles cases where word data might be incomplete or malformed.
- *
- * @param word - Raw word data containing dictionary definitions
- * @returns Processed word details with safe defaults for missing data
- */
-export const getWordDetails = (word: WordData): WordProcessedData => {
-  if (!word?.data) {
-    return { partOfSpeech: '', definition: '', meta: null };
-  }
-
-  return getProcessedWord(word);
-};
-
 
 /**
  * Retrieves all words that occurred within a specific month of a given year.

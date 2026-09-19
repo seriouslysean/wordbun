@@ -475,36 +475,6 @@ describe('merriam-webster adapter', () => {
     });
   });
 
-  describe('transformWordData', () => {
-    it('transforms valid word data', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      const result = merriamWebsterAdapter.transformWordData({
-        data: [{ text: 'a definition', partOfSpeech: 'noun', attributionText: 'from Merriam-Webster', sourceUrl: 'https://merriam-webster.com' }],
-      });
-      expect(result.definition).toBe('a definition');
-      expect(result.partOfSpeech).toBe('noun');
-      expect(result.meta.attributionText).toContain('Merriam-Webster');
-    });
-
-    it('handles null input', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      expect(merriamWebsterAdapter.transformWordData(null)).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-
-    it('handles empty data array', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      expect(merriamWebsterAdapter.transformWordData({ data: [] })).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-
-    it('uses default attribution when missing', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      const result = merriamWebsterAdapter.transformWordData({
-        data: [{ text: 'a definition', partOfSpeech: 'noun' }],
-      });
-      expect(result.meta.attributionText).toBe('from Merriam-Webster');
-    });
-  });
-
   describe('isMWEntry', () => {
     const recordedFixtures = ['hot-dog', 'learned', 'ludicrous', 'richter-scale', 'serendipity', 'speed', 'test'];
 
@@ -580,38 +550,6 @@ describe('merriam-webster adapter', () => {
       expect(isMWEntry(withSseq([[['sense', { dt: [['vis', [{ t: 1 }]]] }]]]))).toBe(false);
       expect(isMWEntry(withSseq([[['sense', { sdsense: 'also' }]]]))).toBe(false);
       expect(isMWEntry(withSseq([[['sense', { sdsense: { dt: 'text' } }]]]))).toBe(false);
-    });
-  });
-
-  describe('isValidResponse', () => {
-    it('returns true for valid entry arrays', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      const fixture = loadFixture('serendipity');
-      expect(merriamWebsterAdapter.isValidResponse(fixture)).toBe(true);
-    });
-
-    it('returns false when an element is not an entry', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      expect(merriamWebsterAdapter.isValidResponse([null])).toBe(false);
-      expect(merriamWebsterAdapter.isValidResponse([...loadFixture('serendipity'), null])).toBe(false);
-    });
-
-    it('returns false for string suggestion arrays', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      const fixture = loadFixture('not-found');
-      expect(merriamWebsterAdapter.isValidResponse(fixture)).toBe(false);
-    });
-
-    it('returns false for empty arrays', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      expect(merriamWebsterAdapter.isValidResponse([])).toBe(false);
-    });
-
-    it('returns false for non-arrays', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      expect(merriamWebsterAdapter.isValidResponse(null)).toBe(false);
-      expect(merriamWebsterAdapter.isValidResponse(undefined)).toBe(false);
-      expect(merriamWebsterAdapter.isValidResponse('string')).toBe(false);
     });
   });
 

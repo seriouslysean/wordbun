@@ -22,8 +22,9 @@ export function getAdapterNames(): readonly string[] {
 }
 
 /**
- * Returns a dictionary adapter by its canonical name.
- * Used at build time to dispatch on `wordData.adapter` field.
+ * Returns a dictionary adapter by its canonical name, for the configured
+ * primary and each fallback. The site never looks one up: it renders stored
+ * records without their adapter.
  */
 export function getAdapterByName(name: string): DictionaryAdapter {
   const adapter = ADAPTER_REGISTRY[name.toLowerCase()];
