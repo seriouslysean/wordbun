@@ -4,8 +4,9 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    include: ['tests/**/*.spec.js'],
-    setupFiles: ['tests/setup.js'],
+    include: ['tests/**/*.spec.ts'],
+    exclude: ['tests/e2e/**'],
+    setupFiles: ['tests/setup.ts'],
     env: {
       BASE_PATH: '/',
       SOURCE_DIR: 'demo',

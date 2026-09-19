@@ -24,7 +24,7 @@ npm run typecheck
 
 **What passing looks like:** `Result (N files): - 0 errors - 0 warnings - 0 hints`
 
-This runs `astro check` which includes both TypeScript compilation and Astro-specific diagnostics. Common issues:
+This runs `astro check` for production TypeScript and Astro diagnostics, then `tsc -p tsconfig.tests.json --noEmit` for the strict test project. Common issues:
 - Missing null checks (strict null checks are enabled)
 - Unsafe indexed access (`noUncheckedIndexedAccess` is on — array/object index results are `T | undefined`)
 - Import alias errors (using relative paths instead of `#` aliases)
@@ -48,7 +48,7 @@ The test suite has four layers. If a specific layer fails, it tells you what kin
 - **Architecture tests** (`tests/architecture/`) — you crossed the utils/ boundary
 - **CLI integration tests** (`tests/tools/`) — an import chain pulls in `astro:*` outside Astro
 
-**If tests fail:** Read the failure message. Fix the code, not the test (unless the test expectation is genuinely wrong). Run the specific failing test in isolation to iterate faster: `npx vitest run tests/path/to/file.spec.js`
+**If tests fail:** Read the failure message. Fix the code, not the test (unless the test expectation is genuinely wrong). Run the specific failing test in isolation to iterate faster: `npx vitest run tests/path/to/file.spec.ts`
 
 ## Gate 4: Build (full integration)
 

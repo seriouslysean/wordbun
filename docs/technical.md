@@ -84,9 +84,9 @@ locales/
   en.json                        # English translations
 
 tests/
-  setup.js                       # Global mocks (astro:env/client, astro:content, translations)
-  helpers/spawn.js               # CLI tool process spawner
-  helpers/log-levels.js          # Preload that marks a spawned tool's warn and error lines
+  setup.ts                       # Global mocks (astro:env/client, astro:content, translations)
+  helpers/spawn.ts               # CLI tool process spawner
+  helpers/log-levels.ts          # Preload that marks a spawned tool's warn and error lines
   adapters/                      # Adapter tests and contract suite (Vitest)
   adapters/fixtures/<adapter>/   # Partner response bodies, one directory per registered adapter
   architecture/                  # Import boundary enforcement (Vitest)
@@ -242,7 +242,7 @@ A definition with cross-references also carries `references`, ranges of its `tex
 
 ### Demo Data
 
-The demo words (`data/demo/words/`, built with `SOURCE_DIR=demo`) spell the site title on the homepage: the current word `occasional` (20250121), then `word`, `of`, `the`, `day` (20250117) as the previous words. New demo words must be dated before 20250117; `tests/src/pages/index.spec.js` fails on any demo word dated later.
+The demo words (`data/demo/words/`, built with `SOURCE_DIR=demo`) spell the site title on the homepage: the current word `occasional` (20250121), then `word`, `of`, `the`, `day` (20250117) as the previous words. New demo words must be dated before 20250117; `tests/src/pages/index.spec.ts` fails on any demo word dated later.
 
 ### Content Collections
 
@@ -344,7 +344,7 @@ Stored word files use the same `DictionaryDefinition` shape. `npm run tool:norma
 
 `isCanonicalResponse()` in `utils/adapter-utils.ts` checks every rule above, including the ones a type cannot express. `fetchWithFallback()` applies it once to every adapter's answer, before displayability. A response that breaks it is refused whole with an unexpected-shape error: the chain moves on, and the fault stays in the final `AggregateError`. An answer with no definitions at all is read first, as the partner not having the word rather than a changed API: a Merriam-Webster entry that is only a cross-reference (`ran`, past tense of `run`, has an empty `shortdef`) or a Wiktionary meaning with an empty `definitions` list is a `WordNotFoundError`, so when every adapter says the same, add-word refuses the word at warn. Only a definition list the partner sent empty reaches that check empty. An answer that lists definitions but has nothing to keep is an unexpected shape before it gets there: `buildDictionaryResponse()` refuses a list whose every definition is blank (a Wordnik `text` renamed, every Wiktionary `definition` empty), and the Merriam-Webster adapter refuses an answer none of whose entries has `shortdef`, which the API documents as a top-level member of the entry and nowhere marks optional.
 
-`tests/adapters/contract.spec.js` applies the same guard to fixtures. It enumerates the registry (`getAdapterNames()` in `adapters/index.ts`) and requires:
+`tests/adapters/contract.spec.ts` applies the same guard to fixtures. It enumerates the registry (`getAdapterNames()` in `adapters/index.ts`) and requires:
 
 - a directory `tests/adapters/fixtures/<adapter name>/` for every registered adapter, and none for anything else
 - at least one successful response in it: every `.json` file except `not-found.json`, which holds the partner's answer for a word it does not have
@@ -356,7 +356,7 @@ Stored word files use the same `DictionaryDefinition` shape. `npm run tool:norma
 2. Translate with `buildDefinition()` and `buildDictionaryResponse()`, mapping part-of-speech terms through a `POS_MAP` that `satisfies Readonly<Record<string, BasePartOfSpeech>>`. Pass plain text; a cross-reference goes in `references`, never as markup in the text.
 3. Register it in `ADAPTER_REGISTRY` in `adapters/index.ts`.
 4. Add `tests/adapters/fixtures/<name>/` with at least one recorded response body, plus `not-found.json` if the partner answers a missing word with a body. A fixture built by hand rather than recorded says so in the directory, as `fixtures/wordnik/README.md` does. The contract suite fails until the directory exists and every response in it comes out canonical, with a displayable definition.
-5. Unit-test the adapter's own translation in `tests/adapters/<name>.spec.js`.
+5. Unit-test the adapter's own translation in `tests/adapters/<name>.spec.ts`.
 
 ## CLI Tools
 
@@ -364,7 +364,7 @@ All tools are pure Node.js (no Astro deps) and parse their arguments through `pa
 
 Tools run directly on Node's built-in TypeScript support (`node tools/<tool>.ts`); there is no loader or compile step. `npm run tool:local <tool>` runs a tool through `node --env-file-if-exists=.env`, so `.env` is loaded when present and variables already in the environment win. When `.env` is absent Node prints `.env not found. Continuing without it.` to stderr and carries on. The bare `tool:*` scripts (`tool:generate-images`, `tool:regenerate-all-words`, ...) do not load `.env`: image tools render without the site title and the Merriam-Webster adapter throws without its key.
 
-npm keeps any flag written before a bare `--` for itself, so a tool's flags always follow one: `npm run tool:local tools/add-word.ts -- --help` and `npm run tool:add-word -- --help` print the tool's help, and without the separator npm prints its own. `tests/architecture/npm-scripts.spec.js` enforces this in `package.json`, tool help text, docs and workflows.
+npm keeps any flag written before a bare `--` for itself, so a tool's flags always follow one: `npm run tool:local tools/add-word.ts -- --help` and `npm run tool:add-word -- --help` print the tool's help, and without the separator npm prints its own. `tests/architecture/npm-scripts.spec.ts` enforces this in `package.json`, tool help text, docs and workflows.
 
 ### `add-word.ts`
 
@@ -484,7 +484,7 @@ Definitions live in `constants/stats.ts`. Computation functions in `utils/word-s
 - **Typography**: Liberation Sans Regular + Bold (`tools/fonts/liberation-sans/`), gradient text with theme colors
 - **Settings**: `createSvg` draws the card text and `SITE_TITLE` on one line each, so any run of whitespace, line breaks included, becomes one space and the ends are trimmed. The gradient takes `COLOR_PRIMARY`, `COLOR_PRIMARY_LIGHT` and `COLOR_PRIMARY_DARK` as CSS hex colors (`#rgb`, `#rgba`, `#rrggbb`, `#rrggbbaa`; surrounding whitespace ignored, empty means the default). Any other value, a named color included, stops the run before any image is written with an error naming the variable, since librsvg draws a malformed stop as black. The site's own stylesheet does not validate these.
 - **Output**: `public/{SOURCE_DIR}/images/social/2024/20240105-giggle.png` (word, lowercased, spaces and punctuation kept) and `public/{SOURCE_DIR}/images/social/pages/browse-2023-april.png` (page path flattened into one slug); the homepage and word pages use the word's card. The `SOURCE_DIR` segment is omitted when unset.
-- **One contract**: `utils/image-path-utils.ts` owns these paths. The generator writes them and `src/utils/image-utils.ts` links to them, so they cannot drift; the existing file names are the contract, since renaming a rule orphans every committed card upstream and downstream. The site emits absolute `og:image`/`twitter:image` URLs through `getFullUrl`, with each path segment passed through `encodeURI` plus `?` and `#`, so spaces become `%20` while `&` stays literal (`astro preview` decodes with `decodeURI`, which leaves `%26` undecoded; GitHub Pages serves both forms). `tests/architecture/social-images.spec.js` checks the demo dataset and its cards under `public/demo/`, never a fork's own words: Vitest pins `SOURCE_DIR=demo`, so a fork running the suite checks the demo words and cards it merges from upstream. It fails if any emitted URL names an untracked card or any tracked card is unreferenced. Both sides of that check read the page list from `getAllPageMetadata`, so it cannot see a listed page that has no route; `tests/architecture/page-routes.spec.js` resolves every metadata path against the files under `src/pages` (`index.astro` serves its directory, a `[param]` file or directory matches any segment that no literal file or directory at that level claims, `.ts` endpoints are not pages) and fails on any path with no page.
+- **One contract**: `utils/image-path-utils.ts` owns these paths. The generator writes them and `src/utils/image-utils.ts` links to them, so they cannot drift; the existing file names are the contract, since renaming a rule orphans every committed card upstream and downstream. The site emits absolute `og:image`/`twitter:image` URLs through `getFullUrl`, with each path segment passed through `encodeURI` plus `?` and `#`, so spaces become `%20` while `&` stays literal (`astro preview` decodes with `decodeURI`, which leaves `%26` undecoded; GitHub Pages serves both forms). `tests/architecture/social-images.spec.ts` checks the demo dataset and its cards under `public/demo/`, never a fork's own words: Vitest pins `SOURCE_DIR=demo`, so a fork running the suite checks the demo words and cards it merges from upstream. It fails if any emitted URL names an untracked card or any tracked card is unreferenced. Both sides of that check read the page list from `getAllPageMetadata`, so it cannot see a listed page that has no route; `tests/architecture/page-routes.spec.ts` resolves every metadata path against the files under `src/pages` (`index.astro` serves its directory, a `[param]` file or directory matches any segment that no literal file or directory at that level claims, `.ts` endpoints are not pages) and fails on any path with no page.
 - **Skip guard**: `.image-settings-hash` (in the `social/` directory) is JSON with two parts. `settings` is an md5 fingerprint of what determines every image's bytes, inputs and renderer alike: three probe SVGs rendered through the real template (colors, site title, dimensions, layout, and, from a 45-letter probe wider than the card, the scaling that fits a long word), the PNG options, both font files, and `sharp.versions` (sharp, libvips and the libraries bundled with it), so a sharp upgrade that re-quantizes the palette invalidates the cache on its own. `cards` maps each card's path (relative to the images directory) to a short hash of its own inputs, the exact text and date passed to `createSvg`, because a card's text can change while its path does not: page titles such as the most and least common letter come from the corpus, and a word card's file name lowercases the word while the card shows it as stored. Each run reads the marker once. A card is rendered when the settings differ, its entry is missing or differs, or its file is missing; otherwise it is skipped. `--force` renders every card. A marker that is missing, not JSON, or the bare fingerprint older runs wrote leaves the settings unknown, so the next run renders every card once. The marker is written (cards sorted by path, so its diff shows only real changes) only by a run that covered all words and all pages with no failures, whether that was the default run or `--words --generic` together, so `--word`, `--page`, and `--words` or `--generic` alone never certify the corpus. That run records every card it saw, so entries for cards that no longer exist drop out. `npm run build` copies `public/` verbatim and never regenerates images.
 - **CI**: the Add Word workflow runs the complete generation (`npm run tool:generate-images`) after adding a word, not `--word`. With a current marker that renders the new word's card and any page card whose title the new word changed, and skips the rest; after a settings, font or sharp change it regenerates every card once and commits them with the refreshed marker (`git add data/ public/` picks up both). A single-image run could never write the marker, so the skip guard would stay stale in CI forever.
 
@@ -535,6 +535,8 @@ E2E tests follow user journeys: each test starts at an entry point, discovers co
 | CLI Integration | `tests/tools/` | Vitest | Slow | Process spawning, protocol errors |
 | E2E | `tests/e2e/` | Playwright | Slow | Built site navigation, SEO, accessibility |
 
+`npm run typecheck` checks production code with `astro check` and the complete TypeScript test tree with the strict `tsconfig.tests.json` project. The production `tsconfig.json` continues to exclude tests.
+
 ### Coverage
 
 Vitest thresholds: lines 80%, functions 80%, branches 85%, statements 80%.
@@ -566,10 +568,10 @@ All five trigger on PR to main and push to main. Lint, Typecheck, Test, and Buil
 ### Key Regression Test
 
 CLI tools broke when Node.js-side code imported Astro-only modules (`#astro-utils/*`, `@sentry/astro`, Vite build-time globals). Permanently prevented by:
-- `tests/architecture/utils-boundary.spec.js` — detects forbidden imports in all Node.js-side directories (`utils/`, `adapters/`, `constants/`, `config/`)
-- `tests/tools/cli-integration.spec.js` — catches `astro:` protocol errors in real processes
+- `tests/architecture/utils-boundary.spec.ts` — detects forbidden imports in all Node.js-side directories (`utils/`, `adapters/`, `constants/`, `config/`)
+- `tests/tools/cli-integration.spec.ts` — catches `astro:` protocol errors in real processes
 
-The browser side has the mirror-image rule. Bundled `<script>` blocks import a few modules from `utils/` and `src/utils/`, and Vite ships whatever those import as values, so one re-export can put dictionary code in every page's JavaScript. `tests/architecture/client-imports.spec.js` follows the value imports those scripts reach through `utils/`, `types/`, `constants/` and `src/utils/`, and fails on any edge (`module -> specifier`) missing from its explicit list of today's edges, so a new import fails even between modules already listed; a listed edge that is no longer reached must be removed. `import type` is always allowed.
+The browser side has the mirror-image rule. Bundled `<script>` blocks import a few modules from `utils/` and `src/utils/`, and Vite ships whatever those import as values, so one re-export can put dictionary code in every page's JavaScript. `tests/architecture/client-imports.spec.ts` follows the value imports those scripts reach through `utils/`, `types/`, `constants/` and `src/utils/`, and fails on any edge (`module -> specifier`) missing from its explicit list of today's edges, so a new import fails even between modules already listed; a listed edge that is no longer reached must be removed. `import type` is always allowed.
 
 ## Utility Architecture
 

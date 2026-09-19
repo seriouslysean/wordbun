@@ -273,7 +273,7 @@ helpers that do real work: `getBasePath`, `getPathname`, `getUrl`,
 2. Update unit tests to cover sorted keys, sorted buckets, alphabetic-only
    letter filter, base-POS-only filter.
 3. Replace wrapper bodies with one-line delegators.
-4. Extend `tests/architecture/utils-boundary.spec.js` to include the four
+4. Extend `tests/architecture/utils-boundary.spec.ts` to include the four
    `groupWordsBy*` names.
 5. Delete the 23 zero-arg `STATS_SLUGS`/`BASE_PATHS`/`BROWSE_PATHS`
    wrappers in `src/utils/url-utils.ts`.

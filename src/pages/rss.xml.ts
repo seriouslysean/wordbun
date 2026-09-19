@@ -8,7 +8,7 @@ import { getFullUrl, getWordUrl } from '#astro-utils/url-utils';
 import { YYYYMMDDToDate } from '#utils/date-utils';
 import { RSS_FEED_WORD_COUNT } from '#constants/text-patterns';
 
-export async function GET(context: APIContext) {
+export async function GET(context: Pick<APIContext, 'site'>) {
 
   // Get the latest words for RSS feed (2 weeks worth if daily)
   const latestWords = allWords.slice(0, RSS_FEED_WORD_COUNT);
