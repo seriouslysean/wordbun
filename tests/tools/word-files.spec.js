@@ -66,7 +66,7 @@ describe('a site with no words yet', () => {
     setUp();
     const { findExistingWord } = await import('#tools/utils');
 
-    expect(findExistingWord('alpha', { allowEmpty: true })).toBeNull();
+    expect(findExistingWord('alpha', { allowEmpty: true })).toEqual({ match: null, failures: [] });
     expect(ctx.logger.error).not.toHaveBeenCalled();
   });
 
@@ -75,7 +75,7 @@ describe('a site with no words yet', () => {
     const { findExistingWord } = await import('#tools/utils');
 
     // generate-images --word: with no corpus the word cannot be looked up
-    expect(findExistingWord('alpha')).toBeNull();
+    expect(findExistingWord('alpha')).toEqual({ match: null, failures: [wordsDir()] });
     expect(ctx.logger.error).toHaveBeenCalledOnce();
   });
 

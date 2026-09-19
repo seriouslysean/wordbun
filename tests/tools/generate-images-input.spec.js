@@ -56,6 +56,8 @@ describe('generate-images without word data', () => {
 
     expect(code).toBe(1);
     expect(stderr).toContain('[error] Word directory does not exist');
+    // The word may be in data that could not be read, so it is not called missing
+    expect(stderr).not.toContain('Word not found in data files');
   }, 35000);
 
   it('fails --page rather than draw its card from a partial corpus', async () => {

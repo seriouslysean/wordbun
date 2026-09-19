@@ -172,29 +172,37 @@ export const getWordFiles = ({ allowEmpty = false }: WordFileScanOptions = {}): 
   return { files: files.toSorted((a, b) => b.date.localeCompare(a.date)), failures };
 };
 
+interface WordLookup {
+  match: WordData | null;
+  /** Directories and files the scan could not read, each already logged */
+  failures: string[];
+}
+
 /**
  * Checks if a word already exists by scanning word files. A missing or empty
  * words directory is logged at error unless the caller sets `allowEmpty`, as
  * add-word's duplicate check does: there nothing exists yet, which is not a
- * fault. A lookup that needs the word (generate-images --word) leaves it off,
- * so a mistyped SOURCE_DIR is reported as such, not as a missing word.
+ * fault. A lookup that needs the word (generate-images --word) leaves it off
+ * and reads `failures`: with no match and a failed scan, the word may be in
+ * what could not be read, so a mistyped SOURCE_DIR is reported as such, not
+ * as a missing word.
  */
-export function findExistingWord(word: string, options: WordFileScanOptions = {}): WordData | null {
+export function findExistingWord(word: string, options: WordFileScanOptions = {}): WordLookup {
   const lowerWord = word.toLowerCase();
-  const { files } = getWordFiles(options);
+  const { files, failures } = getWordFiles(options);
 
   for (const file of files) {
     try {
       const data = parseWordData(fs.readFileSync(file.path, 'utf-8'), file.path);
       if (data.word.toLowerCase() === lowerWord) {
-        return data;
+        return { match: data, failures };
       }
     } catch (error) {
       logger.warn('Failed to read word file', { path: file.path, error: getErrorMessage(error) });
     }
   }
 
-  return null;
+  return { match: null, failures };
 }
 
 interface WordCorpus {

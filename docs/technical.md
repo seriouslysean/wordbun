@@ -309,7 +309,7 @@ npm run tool:local tools/generate-images.ts -- --page /stats        # Specific p
 npm run tool:local tools/generate-images.ts -- --force              # Regenerate existing
 ```
 
-A bulk run reads the corpus once. A word file that cannot be read, or is not valid word data, is logged and counted as a failure: its card and the pages it feeds would be missing, so the run exits 1 and does not certify the image cache. `--word` and `--page` log such a file and carry on.
+A bulk run reads the corpus once. A word file that cannot be read, or is not valid word data, is logged and counted as a failure: its card and the pages it feeds would be missing, so the run exits 1 and does not certify the image cache. `--word` logs such a file and still draws the card of a word it finds; when it finds none and part of the data could not be read, it exits 1 without calling the word missing, since the word may be in what could not be read. `--page` draws nothing and exits 1, since a page title can depend on the corpus.
 
 ### `regenerate-all-words.ts`
 

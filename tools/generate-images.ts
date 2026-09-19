@@ -113,7 +113,12 @@ async function bulkGenerate<T extends BulkItem>(
  * Generates image for a specific word
  */
 async function generateSingleImage(word: string, options: GenerateImageOptions): Promise<boolean> {
-  const wordData = findExistingWord(word);
+  const { match: wordData, failures } = findExistingWord(word);
+  // The word may be in data the scan could not read, each part of which is
+  // already logged at error: that is the fault, not a missing word
+  if (!wordData && failures.length > 0) {
+    return false;
+  }
   // A word that is not in the data is the operator's typo, refused at warn as
   // add-word refuses its input: the CLI logger forwards only errors to Sentry
   if (!wordData) {
