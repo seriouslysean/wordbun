@@ -207,8 +207,11 @@ export function buildDefinition(
  * or URL and a blank headword field are omitted, and so is a headword with
  * nothing left in it. A definition whose text is blank is dropped: a partner
  * sense with nothing to show (Wordnik's optional text, a blank
- * Merriam-Webster shortdef) is not a reason to refuse the others. A response
- * left with no definition is the partner not having the word.
+ * Merriam-Webster shortdef) is not a reason to refuse the others. When every
+ * definition is blank, though, the partner has changed how it sends text (a
+ * renamed field reads as none): that throws as an unexpected shape. Only an
+ * empty list, which fetchWithFallback reports as not found, is the partner
+ * not having the word.
  */
 export function buildDictionaryResponse(
   word: string,
@@ -218,6 +221,10 @@ export function buildDictionaryResponse(
   url: string | undefined,
   headword?: DictionaryResponse['headword'],
 ): DictionaryResponse {
+  const kept = definitions.filter(definition => isNonblankString(definition.text));
+  if (definitions.length > 0 && kept.length === 0) {
+    throwUnexpectedShape(source, word);
+  }
   const { pronunciation, audio, etymology } = headword ?? {};
   const captured = {
     ...(isNonblankString(pronunciation) ? { pronunciation } : {}),
@@ -226,7 +233,7 @@ export function buildDictionaryResponse(
   };
   return {
     word,
-    definitions: definitions.filter(definition => isNonblankString(definition.text)),
+    definitions: kept,
     meta: {
       source,
       ...(isNonblankString(attribution) ? { attribution } : {}),

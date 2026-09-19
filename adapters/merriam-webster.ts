@@ -294,6 +294,13 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
     if (!isEntryArray(entries)) {
       throwUnexpectedShape('Merriam-Webster', word);
     }
+    // The API documents shortdef as a top-level member of the entry, at its
+    // end, and marks it nowhere as optional; an entry that is only a
+    // cross-reference still carries it, empty. With it on no entry the field
+    // has moved or been renamed, which is not the word being missing.
+    if (entries.every(entry => entry.shortdef === undefined)) {
+      throwUnexpectedShape('Merriam-Webster', word);
+    }
 
     const sourceUrl = buildSourceUrl(word);
     const attribution = `from Merriam-Webster's ${getDictionaryLabel()}`;
