@@ -1,6 +1,6 @@
 import { decodeHTML } from 'entities';
 
-import type { DictionaryReference } from '#types';
+import type { DefinitionSegment, DictionaryReference } from '#types';
 import { isHttpUrl, isNonblankString, isRecord } from '#utils/type-guards';
 
 /**
@@ -137,3 +137,42 @@ export const areValidReferences = (text: string, value: unknown): value is Dicti
     && start < end
     && end <= text.length
     && isNonblankString(text.slice(start, end)));
+
+/**
+ * A definition as a page shows it: runs of plain text and cross-references,
+ * without the whitespace around the whole. Definitions with `references` are
+ * canonical and used as they are. Definitions without them are read through
+ * parseDefinitionMarkup, since a record stored before the canonical contract
+ * may still carry Wordnik's markup in its text. Canonical text has no tags,
+ * so the parser leaves it as it is unless it holds a character reference
+ * such as `&amp;`, which no stored record does. Nothing returned is markup,
+ * so a caller renders each run as escaped text or a link.
+ *
+ * Throws when the references do not fit the text: a record that cannot be
+ * shown as it was written.
+ */
+export function toDefinitionSegments(definition: { text: string; references?: DictionaryReference[] }): DefinitionSegment[] {
+  const { text, references } = definition.references ? definition : parseDefinitionMarkup(definition.text);
+  if (!areValidReferences(text, references)) {
+    throw new Error(`Cross-references do not fit the definition "${text}"`);
+  }
+
+  const start = text.length - text.trimStart().length;
+  const end = text.trimEnd().length;
+  // A reference covers nonblank text, so trimming the ends leaves it nonempty
+  const ranges = references.map(reference => ({
+    ...reference,
+    start: Math.max(reference.start, start),
+    end: Math.min(reference.end, end),
+  }));
+  const plain = (from: number, to: number): DefinitionSegment[] =>
+    (from < to ? [{ type: 'text', text: text.slice(from, to) }] : []);
+
+  return [
+    ...ranges.flatMap((range, index): DefinitionSegment[] => [
+      ...plain(ranges[index - 1]?.end ?? start, range.start),
+      { type: 'reference', text: text.slice(range.start, range.end), url: range.url },
+    ]),
+    ...plain(ranges.at(-1)?.end ?? start, end),
+  ];
+}

@@ -1,6 +1,9 @@
-import type { StoredDictionaryDefinition, WordData, WordEnrichment, WordGrouping, WordSense } from '#types';
+import type {
+  DefinitionSegment, StoredDictionaryDefinition, WordData, WordEnrichment, WordGrouping, WordSense,
+} from '#types';
 import { BASE_PARTS_OF_SPEECH, isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { MAX_SENSE_EXAMPLES } from '#constants/text-patterns';
+import { toDefinitionSegments } from '#utils/definition-text';
 import { slugify } from '#utils/text-utils';
 
 /**
@@ -120,6 +123,15 @@ const isAbbreviation = (def: DisplayableDefinition): boolean =>
   normalizePartOfSpeech(def.partOfSpeech) === BASE_PARTS_OF_SPEECH.ABBREVIATION;
 
 /**
+ * A displayable definition as a page shows it (see toDefinitionSegments).
+ */
+const getDefinitionSegments = (def: DisplayableDefinition): DefinitionSegment[] =>
+  toDefinitionSegments({
+    text: Array.isArray(def.text) ? def.text.join(' ') : def.text,
+    ...(def.references ? { references: def.references } : {}),
+  });
+
+/**
  * The one displayability rule. Everything that shows, counts, groups or accepts
  * a word's definitions goes through it, so those answers cannot disagree.
  *
@@ -155,8 +167,10 @@ export const isValidDictionaryData = (data: StoredDictionaryDefinition[]): boole
   getDisplayableDefinitions(data).length > 0;
 
 /**
- * Finds a word's first displayable definition.
- * Handles text as either string or array (Wordnik API inconsistency).
+ * Finds a word's first displayable definition. Its text is what a page shows,
+ * as plain text: fragments joined, markup read, a cross-reference kept as the
+ * words it links, and no whitespace around the whole. Meta descriptions,
+ * JSON-LD and the RSS feed use it as it is.
  *
  * @param definitions - Array of dictionary definitions
  * @returns First displayable definition or null if none found
@@ -167,8 +181,7 @@ export function findValidDefinition(definitions: StoredDictionaryDefinition[]): 
     return null;
   }
 
-  // Text is returned untrimmed; callers own presentation
-  const text = Array.isArray(definition.text) ? definition.text.join(' ') : definition.text;
+  const text = getDefinitionSegments(definition).map(segment => segment.text).join('');
   return { text, partOfSpeech: definition.partOfSpeech };
 }
 
@@ -285,11 +298,12 @@ export const getWordSenses = (wordData: WordData): WordSense[] => {
     return examples;
   };
 
-  const senses = getDisplayableDefinitions(wordData.data)
+  const displayable = getDisplayableDefinitions(wordData.data);
+  const senses = displayable
     .filter(def => !def.id || slugify(def.id) === wordSlug)
     .map(def => ({
       partOfSpeech: normalizeToBasePOS(def.partOfSpeech),
-      text: getDefinitionText(def),
+      segments: getDefinitionSegments(def),
       examples: collectSenseExamples(def),
     }));
 
@@ -297,9 +311,9 @@ export const getWordSenses = (wordData: WordData): WordSense[] => {
     return senses;
   }
 
-  const fallback = findValidDefinition(wordData.data);
+  const [fallback] = displayable;
   return fallback
-    ? [{ partOfSpeech: normalizeToBasePOS(fallback.partOfSpeech), text: fallback.text, examples: [] }]
+    ? [{ partOfSpeech: normalizeToBasePOS(fallback.partOfSpeech), segments: getDefinitionSegments(fallback), examples: [] }]
     : [];
 };
 

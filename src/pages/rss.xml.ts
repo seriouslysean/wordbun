@@ -28,11 +28,8 @@ export async function GET(context: APIContext) {
         throw new Error(`Invalid date format for word ${word.word}: ${word.date}`);
       }
 
-      // Strip HTML tags from definition for clean RSS
-      const cleanDefinition = definition.replaceAll(/<[^>]*>/g, '');
-
-      // Simple format: (part of speech) definition
-      const description = `(${partOfSpeech}) ${cleanDefinition}`;
+      // Simple format: (part of speech) definition, already plain text
+      const description = `(${partOfSpeech}) ${definition}`;
 
       return {
         title: word.word,

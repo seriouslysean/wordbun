@@ -29,10 +29,18 @@ export interface WordEnrichment {
   etymology?: string;
 }
 
+/**
+ * One run of a definition as a page shows it: plain text, or the text of a
+ * cross-reference and where it links. Never markup; see toDefinitionSegments.
+ */
+export type DefinitionSegment =
+  | { type: 'text'; text: string }
+  | { type: 'reference'; text: string; url: string };
+
 /** A single displayable sense of a word (one slide in the senses slider). */
 export interface WordSense {
   partOfSpeech: string;
-  text: string;
+  segments: DefinitionSegment[];
   // Up to MAX_SENSE_EXAMPLES example sentences for this sense (may be empty).
   examples: string[];
 }

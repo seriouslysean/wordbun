@@ -2,9 +2,13 @@ import {
   afterEach, beforeEach, describe, expect, it, vi,
 } from 'vitest';
 
-import { areValidReferences, hasMarkup, parseDefinitionMarkup } from '#utils/definition-text';
+import {
+  areValidReferences, hasMarkup, parseDefinitionMarkup, toDefinitionSegments,
+} from '#utils/definition-text';
 
 const wordnik = word => `https://www.wordnik.com/words/${word}`;
+const textRun = value => ({ type: 'text', text: value });
+const referenceRun = (value, url) => ({ type: 'reference', text: value, url });
 
 describe('definition-text', () => {
   beforeEach(() => {
@@ -198,6 +202,82 @@ describe('definition-text', () => {
       ['a key outside the reference', [{ ...ORDER, label: 'order' }]],
     ])('rejects %s', (_case, references) => {
       expect(areValidReferences(TEXT, references)).toBe(false);
+    });
+  });
+
+  describe('toDefinitionSegments', () => {
+    it('splits canonical text at its references', () => {
+      const definition = {
+        text: 'A taxonomic order within the class Arachnida.',
+        references: [
+          { start: 12, end: 17, url: wordnik('order') },
+          { start: 29, end: 34, url: wordnik('class') },
+          { start: 35, end: 44, url: wordnik('arachnida') },
+        ],
+      };
+
+      expect(toDefinitionSegments(definition)).toStrictEqual([
+        textRun('A taxonomic '),
+        referenceRun('order', wordnik('order')),
+        textRun(' within the '),
+        referenceRun('class', wordnik('class')),
+        textRun(' '),
+        referenceRun('Arachnida', wordnik('arachnida')),
+        textRun('.'),
+      ]);
+    });
+
+    it('starts and ends with a reference when the text does', () => {
+      expect(toDefinitionSegments({ text: 'rest', references: [{ start: 0, end: 4, url: wordnik('rest') }] }))
+        .toStrictEqual([referenceRun('rest', wordnik('rest'))]);
+    });
+
+    it('returns plain text as one run', () => {
+      expect(toDefinitionSegments({ text: 'to read aloud' })).toStrictEqual([textRun('to read aloud')]);
+    });
+
+    it('uses canonical text as it is, without reading it as markup', () => {
+      expect(toDefinitionSegments({ text: 'AT&amp;T', references: [{ start: 0, end: 8, url: 'https://example.com/att' }] }))
+        .toStrictEqual([referenceRun('AT&amp;T', 'https://example.com/att')]);
+    });
+
+    it('reads stored text written before references through the markup parser', () => {
+      expect(toDefinitionSegments({ text: 'A short <xref>rest</xref> period, <ant>not</ant> <internalXref urlencoded="light-box">this</internalXref>.' }))
+        .toStrictEqual([
+          textRun('A short '),
+          referenceRun('rest', wordnik('rest')),
+          textRun(' period, not '),
+          referenceRun('this', wordnik('light-box')),
+          textRun('.'),
+        ]);
+    });
+
+    it('drops the whitespace around the whole, even from inside a reference', () => {
+      expect(toDefinitionSegments({ text: '  a rest  ', references: [{ start: 1, end: 3, url: wordnik('a') }] }))
+        .toStrictEqual([referenceRun('a', wordnik('a')), textRun(' rest')]);
+      expect(toDefinitionSegments({ text: ' <xref>rest</xref> \n' })).toStrictEqual([referenceRun('rest', wordnik('rest'))]);
+    });
+
+    it('returns nothing for blank text', () => {
+      expect(toDefinitionSegments({ text: '   ' })).toStrictEqual([]);
+    });
+
+    it.each([
+      ['a script element', '<script>alert(1)</script>', [textRun('alert(1)')]],
+      ['an image with an event handler', 'a <img src=x onerror=alert(1)> b', [textRun('a  b')]],
+      ['an unbalanced tag', '<b>bold <xref>rest', [textRun('bold rest')]],
+      ['an encoded script element', '&lt;script&gt;alert(1)&lt;/script&gt;', [textRun('<script>alert(1)</script>')]],
+      ['a bracket that is not a tag', 'a < b', [textRun('a < b')]],
+      ['a nested xref', '<xref>a <xref>b</xref> c</xref>', [textRun('a '), referenceRun('b', wordnik('b')), textRun(' c')]],
+    ])('turns %s into text and links only, never markup', (_case, markup, segments) => {
+      expect(toDefinitionSegments({ text: markup })).toStrictEqual(segments);
+    });
+
+    it('throws when stored references do not fit the text', () => {
+      expect(() => toDefinitionSegments({ text: 'a rest', references: [{ start: 2, end: 9, url: wordnik('rest') }] }))
+        .toThrow('Cross-references do not fit the definition "a rest"');
+      expect(() => toDefinitionSegments({ text: 'a rest', references: [{ start: 2, end: 6, url: 'javascript:alert(1)' }] }))
+        .toThrow('Cross-references do not fit');
     });
   });
 });

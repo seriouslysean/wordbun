@@ -463,6 +463,13 @@ describe('word-data-utils', () => {
       expect(findValidDefinition(definitions)).toBeNull();
     });
 
+    it('returns the text a page shows, with markup read and no outer whitespace', () => {
+      const definitions = [
+        { text: ' A taxonomic <xref>order</xref> &amp; <ant>class</ant> ', partOfSpeech: 'noun' },
+      ];
+      expect(findValidDefinition(definitions)).toEqual({ text: 'A taxonomic order & class', partOfSpeech: 'noun' });
+    });
+
     it('skips empty text values', () => {
       const definitions = [
         { text: '', partOfSpeech: 'noun' },
@@ -865,9 +872,32 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
     it('returns every valid headword sense and excludes compound entries', () => {
       const senses = getWordSenses(reading);
       expect(senses).toEqual([
-        { partOfSpeech: 'noun', text: 'the act of reading', examples: [] },
-        { partOfSpeech: 'verb', text: 'to read aloud', examples: [] },
+        { partOfSpeech: 'noun', segments: [{ type: 'text', text: 'the act of reading' }], examples: [] },
+        { partOfSpeech: 'verb', segments: [{ type: 'text', text: 'to read aloud' }], examples: [] },
       ]);
+    });
+
+    it('shows a stored cross-reference as a link, whether written as ranges or as Wordnik markup', () => {
+      const word = {
+        word: 'amblypygi',
+        date: '20230106',
+        adapter: 'wordnik',
+        data: [
+          { partOfSpeech: 'noun', text: 'A taxonomic <xref>order</xref> of arachnids.' },
+          {
+            partOfSpeech: 'noun',
+            text: 'A taxonomic order of arachnids.',
+            references: [{ start: 12, end: 17, url: 'https://www.wordnik.com/words/order' }],
+          },
+        ],
+      };
+      const segments = [
+        { type: 'text', text: 'A taxonomic ' },
+        { type: 'reference', text: 'order', url: 'https://www.wordnik.com/words/order' },
+        { type: 'text', text: ' of arachnids.' },
+      ];
+
+      expect(getWordSenses(word).map(sense => sense.segments)).toEqual([segments, segments]);
     });
 
     it('falls back to the single best definition when the id filter matches nothing', () => {
@@ -877,7 +907,7 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
         adapter: 'wordnik',
         data: [{ id: 'unrelated', partOfSpeech: 'noun', text: 'a definition' }],
       };
-      expect(getWordSenses(word)).toEqual([{ partOfSpeech: 'noun', text: 'a definition', examples: [] }]);
+      expect(getWordSenses(word)).toEqual([{ partOfSpeech: 'noun', segments: [{ type: 'text', text: 'a definition' }], examples: [] }]);
     });
 
     it('returns an empty array for missing or invalid data', () => {
