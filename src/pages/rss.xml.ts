@@ -1,6 +1,7 @@
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_LOCALE } from 'astro:env/client';
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
+import { escapeText } from 'entities';
 import { getWordsFromCollection } from '#astro-utils/word-data-utils';
 import { extractWordDefinition } from '#astro-utils/word-data-utils';
 import { getFullUrl, getWordUrl } from '#astro-utils/url-utils';
@@ -29,7 +30,7 @@ export async function GET(context: APIContext) {
       }
 
       // Simple format: (part of speech) definition, already plain text
-      const description = `(${partOfSpeech}) ${definition}`;
+      const description = escapeText(`(${partOfSpeech}) ${definition}`);
 
       return {
         title: word.word,

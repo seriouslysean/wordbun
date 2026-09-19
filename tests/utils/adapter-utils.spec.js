@@ -306,6 +306,7 @@ describe('adapter-utils', () => {
       ['blank text', withDefinition({ text: '  ' })],
       ['markup left in the text', withDefinition({ text: 'A procedure for <xref>critical</xref> evaluation', references: undefined })],
       ['an unknown tag left in the text', withDefinition({ text: 'A procedure for <i>critical</i> evaluation' })],
+      ['encoded text that the markup parser would change', withDefinition({ text: '&lt;b&gt;critical&lt;/b&gt;' })],
       ['an empty references list', withDefinition({ references: [] })],
       ['references that are not a list', withDefinition({ references: { start: 16, end: 24, url: 'https://example.com/critical' } })],
       ['a reference past the end of the text', withDefinition({ references: [{ start: 30, end: 40, url: 'https://example.com/critical' }] })],

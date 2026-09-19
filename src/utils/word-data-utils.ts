@@ -28,6 +28,7 @@ import {
   groupWordsByPartOfSpeech as groupWordsByPartOfSpeechPure,
 } from '#utils/word-data-utils';
 import { getErrorMessage } from '#utils/text-utils';
+import { isWordData } from '#utils/word-validation';
 import {
   getLetterStats,
   getWordStats,
@@ -54,6 +55,9 @@ export async function getWordsFromCollection(): Promise<WordData[]> {
         ...entry.data,
         date: extractedDate || entry.data.date,
       };
+      if (!isWordData(wordData)) {
+        throw new Error(`Invalid word data for "${entry.data.word}" in ${entry.id}`);
+      }
       return wordData;
     })
     .toSorted((a, b) => b.date.localeCompare(a.date));
@@ -92,7 +96,7 @@ async function getAllWords(): Promise<WordData[]> {
       logger.info('Loaded words successfully', { count: wordCache.value.length });
     } catch (error) {
       logger.error('Failed to load words', { error: getErrorMessage(error) });
-      wordCache.value = [];
+      throw error;
     }
   }
   return wordCache.value;
@@ -402,5 +406,3 @@ export const groupWordsByPartOfSpeech = (words: WordData[]): WordGroupByPartOfSp
 export const getWordsByPartOfSpeech = (partOfSpeech: string, words: WordData[] = allWords): WordData[] => {
   return getWordsByPartOfSpeechPure(partOfSpeech, words);
 };
-
-

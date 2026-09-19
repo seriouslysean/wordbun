@@ -2,7 +2,8 @@ import type {
   DictionaryClassification, DictionaryDefinition, DictionaryReference, DictionaryResponse,
 } from '#types';
 import { type BasePartOfSpeech, isBasePartOfSpeech } from '#constants/parts-of-speech';
-import { areValidReferences, hasMarkup } from '#utils/definition-text';
+import { parseDefinitionMarkup } from '#utils/definition-text';
+import { areValidReferences } from '#utils/reference-utils';
 import { flattenErrors, getErrorMessage } from '#utils/text-utils';
 import { isHttpUrl, isNonblankString, isOptional, isRecord, isString } from '#utils/type-guards';
 
@@ -271,11 +272,16 @@ const isVocabularyPartOfSpeech = (value: unknown): value is BasePartOfSpeech =>
  * nonempty list that fits it. Markup left in the text is an adapter that did
  * not translate its partner's formatting.
  */
-const isCanonicalText = (text: unknown, references: unknown): boolean =>
-  isNonblankString(text)
-  && !hasMarkup(text)
-  && isOptional(references, (list): list is DictionaryReference[] =>
-    Array.isArray(list) && list.length > 0 && areValidReferences(text, list));
+const isCanonicalText = (text: unknown, references: unknown): boolean => {
+  if (!isNonblankString(text)) {
+    return false;
+  }
+  const parsed = parseDefinitionMarkup(text);
+  return parsed.text === text
+    && parsed.references.length === 0
+    && isOptional(references, (list): list is DictionaryReference[] =>
+      Array.isArray(list) && list.length > 0 && areValidReferences(text, list));
+};
 
 const isCanonicalDefinition = (value: unknown): value is DictionaryDefinition =>
   isRecord(value)

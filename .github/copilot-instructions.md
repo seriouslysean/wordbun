@@ -62,6 +62,7 @@ TypeScript aliases (`#utils`, `#astro-utils`, `#types`, `#constants`, `#config`,
 - `#astro-utils/*` -> `src/utils/*` (Astro only)
 - `#components/*` -> `src/components/*`
 - `#layouts/*` -> `src/layouts/*`
+- `#pages/*` -> `src/pages/*`
 - `#types` / `#types/*` -> `types/`
 - `#constants/*` -> `constants/*`
 - `#config/*` -> `config/*`

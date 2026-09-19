@@ -3,8 +3,9 @@ import {
 } from 'vitest';
 
 import {
-  areValidReferences, hasMarkup, parseDefinitionMarkup, toDefinitionSegments,
+  hasMarkup, parseDefinitionMarkup, toDefinitionSegments,
 } from '#utils/definition-text';
+import { areValidReferences } from '#utils/reference-utils';
 
 const wordnik = word => `https://www.wordnik.com/words/${word}`;
 const textRun = value => ({ type: 'text', text: value });
@@ -155,6 +156,14 @@ describe('definition-text', () => {
         references: [],
       });
     });
+
+    it('scans a long unterminated tag without quadratic backtracking', () => {
+      const markup = `<${'a'.repeat(100_000)}`;
+      const startedAt = performance.now();
+
+      expect(parseDefinitionMarkup(markup)).toStrictEqual({ text: markup, references: [] });
+      expect(performance.now() - startedAt).toBeLessThan(500);
+    }, 20_000);
   });
 
   describe('hasMarkup', () => {

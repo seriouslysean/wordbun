@@ -1,7 +1,7 @@
 import { decodeHTML } from 'entities';
 
 import type { DefinitionSegment, DictionaryReference } from '#types';
-import { isHttpUrl, isNonblankString, isRecord } from '#utils/type-guards';
+import { areValidReferences } from '#utils/reference-utils';
 
 /**
  * A definition's text read out of markup: plain text, and each
@@ -15,7 +15,7 @@ export interface DefinitionText {
 // An HTML-style tag: `<`, an optional `/`, a name that starts with a letter,
 // then anything but angle brackets up to `>`. A `<` without a name after it,
 // as in "a < b" or "(<20 mg/dL)", is text.
-const TAG = /<(\/?)([A-Za-z][\w-]*)([^<>]*)>/;
+const TAG = /<(\/?)([A-Za-z][\w-]*)((?![\w-])[^<>]*)>/;
 const TAGS = new RegExp(TAG.source, 'g');
 
 // Wordnik's <internalXref> names its target already URL-encoded
@@ -78,11 +78,12 @@ const closeReference = (open: OpenReference, text: string): DictionaryReference 
  * Reads Wordnik's definition markup as plain text and cross-references.
  * `<xref>word</xref>` links the Wordnik page for the word it wraps, and
  * `<internalXref urlencoded="target">label</internalXref>` the page it names.
- * Any other tag is dropped and its content kept as text, so nothing in the
- * result is markup. Character references (`&lt;`, `&amp;`) are decoded, as a
- * browser would. Cross-references do not nest: a new one opening abandons the
- * one still open, whose text stays plain; a closing tag that matches nothing
- * open is dropped, and so is a reference never closed.
+ * Any other tag is dropped and its content kept as text. Character references
+ * (`&lt;`, `&amp;`) are decoded, as a browser would, so the result can contain
+ * angle brackets or tag-shaped text; callers render every text run escaped.
+ * Cross-references do not nest: a new one opening abandons the one still open,
+ * whose text stays plain; a closing tag that matches nothing open is dropped,
+ * and so is a reference never closed.
  *
  * The one parser of this markup: the Wordnik adapter translates fetched text
  * with it, and the site reads stored text written before the canonical
@@ -113,30 +114,6 @@ export function parseDefinitionMarkup(markup: string): DefinitionText {
 
   return { text: text + decodeHTML(markup.slice(cursor)), references };
 }
-
-const REFERENCE_KEYS: ReadonlySet<string> = new Set(['start', 'end', 'url']);
-
-const isReference = (value: unknown): value is DictionaryReference =>
-  isRecord(value)
-  && Object.keys(value).every(key => REFERENCE_KEYS.has(key))
-  && Number.isInteger(value.start)
-  && Number.isInteger(value.end)
-  && isHttpUrl(value.url);
-
-/**
- * True when the value is a list of cross-references that fit the text: each
- * starts no earlier than the previous one ended, covers at least one
- * character, stays inside the text, covers nonblank text, and links an
- * absolute http(s) URL. An empty list fits any text.
- */
-export const areValidReferences = (text: string, value: unknown): value is DictionaryReference[] =>
-  Array.isArray(value)
-  && value.every(isReference)
-  && value.every(({ start, end }, index) =>
-    start >= (value[index - 1]?.end ?? 0)
-    && start < end
-    && end <= text.length
-    && isNonblankString(text.slice(start, end)));
 
 /**
  * A definition as a page shows it: runs of plain text and cross-references,

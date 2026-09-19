@@ -64,6 +64,7 @@
   "imports": {
     "#components/*": "./src/components/*",
     "#layouts/*": "./src/layouts/*",
+    "#pages/*": "./src/pages/*",
     "#astro-utils/*": "./src/utils/*.ts",
     "#utils/*": "./utils/*.ts",
     "#types": "./types/index.ts",

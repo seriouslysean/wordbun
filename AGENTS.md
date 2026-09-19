@@ -185,6 +185,7 @@ Node resolves these without guessing extensions, so the rule is: aliases for Typ
 | `#astro-utils/*` | `src/utils/*` | Astro only, never from `utils/` or `tools/` |
 | `#components/*` | `src/components/*` | |
 | `#layouts/*` | `src/layouts/*` | |
+| `#pages/*` | `src/pages/*` | |
 | `#types`, `#types/*` | `types/` | |
 | `#constants/*` | `constants/*` | |
 | `#config/*` | `config/*` | |

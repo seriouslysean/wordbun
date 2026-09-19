@@ -59,6 +59,9 @@ describe('word-validation', () => {
       expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: '2', end: 6, url: 'https://example.com' }] }))).toBe(false);
       expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 6.5, url: 'https://example.com' }] }))).toBe(false);
       expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 6 }] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 6, url: 'javascript:alert(1)' }] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 9, url: 'https://example.com' }] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: ['a', 'rest'], references: [{ start: 2, end: 6, url: 'https://example.com' }] }))).toBe(true);
       expect(isWordData(withDefinition({ attributionText: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ sourceDictionary: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ sourceUrl: 1 }))).toBe(false);

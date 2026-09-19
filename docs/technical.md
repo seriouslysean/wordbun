@@ -293,7 +293,7 @@ toDefinitionSegments({
 //  { type: 'text', text: ' of arachnids.' }]
 ```
 
-`WordSenses.astro` renders each text run as escaped text and each reference as an `<a>`; there is no `set:html`, so no stored or fetched text becomes markup. `getWordSenses()` builds the senses from it, and `findValidDefinition()` and `getWordDetails()` join the runs into the plain text that meta descriptions, JSON-LD and the RSS feed use. JSON-LD cannot go through Astro's escaping without corrupting it, so `StructuredData.astro` writes it with `serializeJsonLd()` (`utils/text-utils.ts`), which writes every `<` as `<`: definition text holding `</script>` cannot close the element.
+`WordSenses.astro` renders each text run as escaped text and each reference as an `<a>`; there is no `set:html`, so no stored or fetched text becomes markup. `getWordSenses()` builds the senses from it, and `findValidDefinition()` and `getWordDetails()` join the runs into the plain text that meta descriptions, JSON-LD and the RSS feed use. JSON-LD cannot go through Astro's escaping without corrupting it, so `StructuredData.astro` writes it with `serializeJsonLd()` (`utils/text-utils.ts`), which writes every `<` as `\u003c`: definition text holding `</script>` cannot close the element.
 
 A definition with `references` is canonical and is used as it is; references that do not fit its text fail the build. One without them is read through `parseDefinitionMarkup()`, the same parser the Wordnik adapter uses, because records stored before the canonical contract hold Wordnik's markup in `text`: an `<xref>` still renders as a link and any other tag as its text. Once stored records are normalized to canonical definitions (#98), that fallback goes.
 

@@ -86,9 +86,11 @@ export interface DictionaryReference {
 /**
  * The fields of a canonical definition other than its classification. Every
  * string is nonblank, every array nonempty and every URL absolute http(s); an
- * adapter omits a field it has no value for. `text` is plain text with no
- * markup: a cross-reference is one of `references`, which are in order, do
- * not overlap, and each cover nonblank text. The type cannot say so, so
+ * adapter omits a field it has no value for. `text` is stable under the
+ * definition markup parser: partner tags and encoded characters it would
+ * transform are refused, though ordinary text may contain `<`. A
+ * cross-reference is one of `references`, which are in order, do not overlap,
+ * and each cover nonblank text. The type cannot say so, so
  * isCanonicalResponse in utils/adapter-utils.ts checks it at fetch time.
  */
 interface DictionaryDefinitionFields {
