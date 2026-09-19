@@ -32,11 +32,9 @@ const CLIENT_VALUE_EDGES = new Set([
   'src/utils/url-utils.ts -> astro:env/client',
   'utils/i18n-utils.ts -> #locales/en.json',
   'utils/i18n-utils.ts -> #utils/type-guards',
-  'utils/reference-utils.ts -> #utils/type-guards',
   'utils/text-pattern-utils.ts -> #constants/text-patterns',
   'utils/text-utils.ts -> #utils/text-pattern-utils',
   'utils/url-utils.ts -> #constants/urls',
-  'utils/word-validation.ts -> #utils/reference-utils',
   'utils/word-validation.ts -> #utils/type-guards',
 ]);
 

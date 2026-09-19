@@ -49,7 +49,7 @@ if (antiStreakStats.longestGap > 0) {
 const { title, description } = getPageMetadata(Astro.url.pathname);
 ---
 <Layout title={title} description={description}>
-  <main class="streaks">
+  <div class="streaks">
     <Heading text={title} />
     <DescriptionText text={description} />
 
@@ -72,7 +72,7 @@ const { title, description } = getPageMetadata(Astro.url.pathname);
         )}
       </StatsSection>
     )}
-  </main>
+  </div>
 </Layout>
 
 <style>

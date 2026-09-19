@@ -19,7 +19,6 @@ import {
   getAvailableMonths,
   getAvailableLetters,
   getAvailablePartsOfSpeech,
-  normalizeToBasePOS,
   findValidDefinition,
   getWordsByLength as getWordsByLengthPure,
   getWordsByLetter as getWordsByLetterPure,
@@ -30,7 +29,7 @@ import {
   groupWordsByPartOfSpeech as groupWordsByPartOfSpeechPure,
 } from '#utils/word-data-utils';
 import { getErrorMessage } from '#utils/text-utils';
-import { isWordData } from '#utils/word-validation';
+import { isWordData } from '#utils/stored-word-validation';
 import {
   getLetterStats,
   getWordStats,
@@ -79,7 +78,7 @@ export function extractWordDefinition(wordData: WordData): { definition: string;
   if (validDefinition) {
     return {
       definition: validDefinition.text,
-      partOfSpeech: normalizeToBasePOS(validDefinition.partOfSpeech),
+      partOfSpeech: validDefinition.partOfSpeech,
     };
   }
 

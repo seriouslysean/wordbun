@@ -26,7 +26,7 @@ const hasMultiple = senses.length > 1;
             <p class="word-senses__text">
               {sense.partOfSpeech && (
                 <span class="word-senses__pos">{sense.partOfSpeech}.</span>
-              )}<span>{sense.segments.map(segment => (segment.type === 'reference'
+              )}{sense.partOfSpeech && ' '}<span>{sense.segments.map(segment => (segment.type === 'reference'
                 ? <a class="word-senses__reference" href={segment.url} target="_blank" rel="noopener noreferrer">{segment.text}</a>
                 : segment.text))}</span>
             </p>

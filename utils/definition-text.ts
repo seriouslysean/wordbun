@@ -1,7 +1,11 @@
 import { decodeHTML } from 'entities';
 
 import type { DefinitionSegment, DictionaryReference } from '#types';
+import { DEFAULT_WORDNIK_WEBSITE_URL } from '#constants/defaults';
+import { DEFINITION_TAG_SOURCE } from '#utils/definition-markup';
 import { areValidReferences } from '#utils/reference-utils';
+
+export { hasMarkup } from '#utils/definition-markup';
 
 /**
  * A definition's text read out of markup: plain text, and each
@@ -12,34 +16,22 @@ export interface DefinitionText {
   references: DictionaryReference[];
 }
 
-// An HTML-style tag: `<`, an optional `/`, a name that starts with a letter,
-// then anything but angle brackets up to `>`. A `<` without a name after it,
-// as in "a < b" or "(<20 mg/dL)", is text.
-const TAG = /<(\/?)([A-Za-z][\w-]*)((?![\w-])[^<>]*)>/;
-const TAGS = new RegExp(TAG.source, 'g');
+const TAGS = new RegExp(DEFINITION_TAG_SOURCE, 'g');
 
 // Wordnik's <internalXref> names its target already URL-encoded
 const INTERNAL_XREF_TARGET = /\burlencoded\s*=\s*(["'])(.*?)\1/i;
 const URL_PATH_SEGMENT = /^(?:[\w.~-]|%[\dA-Fa-f]{2})+$/;
 
-const WORDNIK_WEBSITE_URL = 'https://www.wordnik.com';
-
 // Read at call time rather than import time so the build, the CLI and tests
 // each see their own environment. Defaults like MERRIAM_WEBSTER_API_URL: the
 // Add Word workflow does not set it, and a fetched cross-reference needs it.
 const wordnikWordsUrl = (path: string): string =>
-  `${process.env.WORDNIK_WEBSITE_URL || WORDNIK_WEBSITE_URL}/words/${path}`;
+  `${process.env.WORDNIK_WEBSITE_URL || DEFAULT_WORDNIK_WEBSITE_URL}/words/${path}`;
 
 /**
  * The Wordnik page for a word, lowercased as Wordnik's own word URLs are.
  */
 const generateWordnikWordUrl = (word: string): string => wordnikWordsUrl(encodeURIComponent(word.toLowerCase()));
-
-/**
- * True when the text holds anything shaped like an HTML tag. Canonical text
- * is plain, so a tag in it is markup an adapter failed to translate.
- */
-export const hasMarkup = (text: string): boolean => TAG.test(text);
 
 // A cross-reference opened and not yet closed. An <xref> links the word it
 // wraps, so its URL waits for the closing tag; an <internalXref> names its
@@ -86,8 +78,7 @@ const closeReference = (open: OpenReference, text: string): DictionaryReference 
  * and so is a reference never closed.
  *
  * The one parser of this markup: the Wordnik adapter translates fetched text
- * with it, and the site reads stored text written before the canonical
- * contract through it.
+ * with it, and the offline normalizer translates legacy stored text.
  */
 export function parseDefinitionMarkup(markup: string): DefinitionText {
   const references: DictionaryReference[] = [];
@@ -117,19 +108,14 @@ export function parseDefinitionMarkup(markup: string): DefinitionText {
 
 /**
  * A definition as a page shows it: runs of plain text and cross-references,
- * without the whitespace around the whole. Definitions with `references` are
- * canonical and used as they are. Definitions without them are read through
- * parseDefinitionMarkup, since a record stored before the canonical contract
- * may still carry Wordnik's markup in its text. Canonical text has no tags,
- * so the parser leaves it as it is unless it holds a character reference
- * such as `&amp;`, which no stored record does. Nothing returned is markup,
- * so a caller renders each run as escaped text or a link.
+ * without the whitespace around the whole. Stored definitions are canonical,
+ * so their text is already plain and their links are explicit ranges.
  *
  * Throws when the references do not fit the text: a record that cannot be
  * shown as it was written.
  */
 export function toDefinitionSegments(definition: { text: string; references?: DictionaryReference[] }): DefinitionSegment[] {
-  const { text, references } = definition.references ? definition : parseDefinitionMarkup(definition.text);
+  const { text, references = [] } = definition;
   if (!areValidReferences(text, references)) {
     throw new Error(`Cross-references do not fit the definition "${text}"`);
   }

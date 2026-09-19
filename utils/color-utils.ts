@@ -1,6 +1,8 @@
 // CSS hex notation: #rgb, #rgba, #rrggbb or #rrggbbaa.
 const HEX_COLOR = /^#(?:[\da-f]{3,4}|[\da-f]{6}|[\da-f]{8})$/i;
 
+export const isHexColor = (value: string): boolean => HEX_COLOR.test(value.trim());
+
 /**
  * Resolve a color setting to a CSS hex color. Unset, empty or blank means the
  * default; surrounding whitespace is ignored, as CSS ignores it. Anything
@@ -15,7 +17,7 @@ const HEX_COLOR = /^#(?:[\da-f]{3,4}|[\da-f]{6}|[\da-f]{8})$/i;
  */
 export const resolveHexColor = (name: string, value: string | undefined, fallback: string): string => {
   const color = value?.trim() || fallback;
-  if (!HEX_COLOR.test(color)) {
+  if (!isHexColor(color)) {
     throw new Error(`${name} must be a hex color such as #9a3412, got ${JSON.stringify(value)}`);
   }
   return color.toLowerCase();

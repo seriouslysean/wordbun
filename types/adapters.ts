@@ -43,7 +43,4 @@ export interface DictionaryAdapter {
 // Adapter independence: an adapter's answer is the canonical contract above,
 // and the site renders stored records from their data alone (see
 // toDefinitionSegments in utils/definition-text.ts), never through the adapter
-// that wrote them. Stored records keep the looser StoredDictionaryDefinition
-// shape until #98 normalizes them to DictionaryDefinition; until then, text
-// stored with Wordnik's cross-reference markup is read through the same
-// parser the Wordnik adapter uses.
+// that wrote them. Stored records use this same canonical definition shape.

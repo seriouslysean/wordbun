@@ -2,7 +2,7 @@
  * Word data types - Our internal data structures
  */
 
-import type { SourceMeta, StoredDictionaryDefinition } from '#types';
+import type { DictionaryDefinition, SourceMeta } from '#types';
 
 // Our processed word data after transformation
 export interface WordProcessedData {
@@ -52,7 +52,7 @@ export interface WordData {
   date: string;
   // Which dictionary adapter was used
   adapter: string;
-  data: StoredDictionaryDefinition[];
+  data: DictionaryDefinition[];
   // Optional word-level enrichment (WordNet relations + adapter headword capture)
   enrichment?: WordEnrichment;
   // Optionally store the raw API response for debugging or migration

@@ -74,6 +74,12 @@ describe('i18n-utils', () => {
       expect(tp('common.words', 999)).toBe('999 Words');
     });
 
+    it('pluralizes part-of-speech titles', () => {
+      expect(tp('common.title_with_part_of_speech', 0, { value: 'interjection' })).toBe('No interjection words');
+      expect(tp('common.title_with_part_of_speech', 1, { value: 'interjection' })).toBe('1 interjection word');
+      expect(tp('common.title_with_part_of_speech', 2, { value: 'interjection' })).toBe('2 interjection words');
+    });
+
     it('handles string counts', () => {
       expect(tp('common.words', '0')).toBe('No Words');
       expect(tp('common.words', '1')).toBe('1 Word');

@@ -9,7 +9,7 @@ import type { WordEnrichment } from '#types';
 import { isRateLimited } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { isRecord } from '#utils/type-guards';
-import { isWordEnrichment } from '#utils/word-validation';
+import { isWordEnrichment } from '#utils/stored-word-validation';
 
 interface StoredEntry {
   preserveCase: boolean;
