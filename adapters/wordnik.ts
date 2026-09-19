@@ -51,6 +51,10 @@ const POS_MAP = {
   'phrasal verb': 'verb',
   'proper noun': 'noun',
   'noun plural': 'noun',
+  'auxiliary verb': 'verb',
+  'definite article': 'article',
+  // Merriam-Webster defines an initialism as an abbreviation formed from initial letters
+  'initialism': 'abbreviation',
 } satisfies Readonly<Record<string, BasePartOfSpeech>>;
 
 /**

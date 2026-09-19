@@ -127,7 +127,8 @@ export function throwUnexpectedShape(apiName: string, word: string): never {
  * Returns a base POS, a mapped POS, or undefined for unmappable values.
  */
 export function normalizePOS(raw: string, posMap: Readonly<Record<string, BasePartOfSpeech>>): BasePartOfSpeech | undefined {
-  const cleaned = raw.toLowerCase().trim();
+  // Some source dictionaries end the label with a period ("definite article.")
+  const cleaned = raw.toLowerCase().trim().replace(/[.,;:!?]+$/, '');
   if (isBasePartOfSpeech(cleaned)) {
     return cleaned;
   }

@@ -124,6 +124,11 @@ describe('adapter-utils', () => {
       expect(normalizePOS('VERB', TEST_POS_MAP)).toBe('verb');
     });
 
+    it('ignores trailing punctuation, as some dictionaries end labels with a period', () => {
+      expect(normalizePOS('noun.', TEST_POS_MAP)).toBe('noun');
+      expect(normalizePOS('transitive verb.', TEST_POS_MAP)).toBe('verb');
+    });
+
     it('maps known variants via the provided map', () => {
       expect(normalizePOS('transitive verb', TEST_POS_MAP)).toBe('verb');
       expect(normalizePOS('proper noun', TEST_POS_MAP)).toBe('noun');

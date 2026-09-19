@@ -171,6 +171,9 @@ describe('wordnik adapter', () => {
       ['phrasal verb', { partOfSpeech: 'verb' }],
       ['proper noun', { partOfSpeech: 'noun' }],
       ['noun plural', { partOfSpeech: 'noun' }],
+      ['auxiliary verb', { partOfSpeech: 'verb' }],
+      ['definite article.', { partOfSpeech: 'article' }],
+      ['initialism', { partOfSpeech: 'abbreviation' }],
     ])('translates %s', async (raw, classification) => {
       const { wordnikAdapter } = await import('#adapters/wordnik');
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ text: 'A sense', partOfSpeech: raw }]));
