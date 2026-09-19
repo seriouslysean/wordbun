@@ -212,6 +212,7 @@ describe('wordnik adapter', () => {
             sourceUrl,
             examples: ['The plate broke when it hit the floor.'],
             synonyms: ['shatter', 'smash'],
+            antonyms: ['mend'],
           },
           {
             partOfSpeech: 'noun',
@@ -403,6 +404,7 @@ describe('wordnik adapter', () => {
       expect(isWordnikDefinitions([{ relatedWords: ['luck'] }])).toBe(false);
       expect(isWordnikDefinitions([{ relatedWords: [{ words: 'luck' }] }])).toBe(false);
       expect(isWordnikDefinitions([{ relatedWords: [{ words: [1] }] }])).toBe(false);
+      expect(isWordnikDefinitions([{ relatedWords: [{ relationshipType: 1, words: ['luck'] }] }])).toBe(false);
       expect(isWordnikDefinitions([{ textProns: ['pron'] }])).toBe(false);
       expect(isWordnikDefinitions([{ textProns: [{ raw: 1 }] }])).toBe(false);
     });

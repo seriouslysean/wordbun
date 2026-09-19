@@ -4,9 +4,10 @@
 
 import type { RateLimit } from '#types';
 
-// Wordnik's "Related" model. Only the field the adapter reads and guards is
-// declared; the API also sends relationshipType, gram and label1-4.
+// Wordnik's "Related" model. Only the fields the adapter reads and guards are
+// declared; the API also sends gram and label1-4.
 export interface WordnikRelated {
+  relationshipType?: string;
   words?: string[];
 }
 

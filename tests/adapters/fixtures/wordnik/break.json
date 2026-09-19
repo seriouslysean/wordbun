@@ -20,6 +20,19 @@
                 ]
             },
             {
+                "relationshipType": "antonym",
+                "words": [
+                    "mend"
+                ]
+            },
+            {
+                "relationshipType": "same-context",
+                "words": [
+                    "crack",
+                    "split"
+                ]
+            },
+            {
                 "relationshipType": "variant",
                 "gram": "break"
             }

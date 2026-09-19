@@ -72,14 +72,17 @@ const isExampleUses = (value: unknown): value is NonNullable<WordnikDefinition['
   Array.isArray(value) && value.every(example => isRecord(example) && isOptional(example.text, isString));
 
 const isRelatedWords = (value: unknown): value is NonNullable<WordnikDefinition['relatedWords']> =>
-  Array.isArray(value) && value.every(related => isRecord(related) && isOptional(related.words, isStringArray));
+  Array.isArray(value) && value.every(related => isRecord(related)
+    && isOptional(related.relationshipType, isString)
+    && isOptional(related.words, isStringArray));
 
 const isTextProns = (value: unknown): value is NonNullable<WordnikDefinition['textProns']> =>
   Array.isArray(value) && value.every(pron => isRecord(pron) && isOptional(pron.raw, isString));
 
 /**
  * Checks every field fetchWordData reads from a definition, including the
- * `words` of each relatedWords entry and the `raw` of each textProns entry.
+ * `relationshipType` and `words` of each relatedWords entry and the `raw` of
+ * each textProns entry.
  * All are optional in Wordnik's responses, so a field is either absent or must
  * have the read type.
  */
@@ -98,6 +101,14 @@ const isWordnikDefinition = (value: unknown): value is WordnikDefinition =>
 
 export const isWordnikDefinitions = (value: unknown): value is WordnikDefinition[] =>
   Array.isArray(value) && value.every(isWordnikDefinition);
+
+/**
+ * The words of a definition's relations of one type. Only synonyms and
+ * antonyms have a field in the canonical definition; other relationship
+ * types (same-context, variant, rhyme...) are not read.
+ */
+const relatedWordsOfType = (def: WordnikDefinition, relationshipType: string): string[] =>
+  def.relatedWords?.flatMap(related => (related.relationshipType === relationshipType ? related.words ?? [] : [])) ?? [];
 
 /**
  * Fetches definitions from Wordnik for a single word.
@@ -155,7 +166,6 @@ export const wordnikAdapter: DictionaryAdapter = {
       if (!text?.trim()) {
         return [];
       }
-      // Wordnik's definitions carry no antonyms, so none are set
       return [buildDefinition({
         id: def.id,
         partOfSpeech: def.partOfSpeech,
@@ -164,7 +174,8 @@ export const wordnikAdapter: DictionaryAdapter = {
         sourceDictionary: def.sourceDictionary,
         sourceUrl: def.wordnikUrl || def.attributionUrl,
         examples: def.exampleUses?.flatMap(example => (example.text ? [example.text] : [])),
-        synonyms: def.relatedWords?.flatMap(related => related.words ?? []),
+        synonyms: relatedWordsOfType(def, 'synonym'),
+        antonyms: relatedWordsOfType(def, 'antonym'),
       }, POS_MAP)];
     });
     const headword = { pronunciation: data[0]?.textProns?.[0]?.raw };
