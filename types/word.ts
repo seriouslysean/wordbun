@@ -29,10 +29,18 @@ export interface WordEnrichment {
   etymology?: string;
 }
 
+/**
+ * One run of a definition as a page shows it: plain text, or the text of a
+ * cross-reference and where it links. Never markup; see toDefinitionSegments.
+ */
+export type DefinitionSegment =
+  | { type: 'text'; text: string }
+  | { type: 'reference'; text: string; url: string };
+
 /** A single displayable sense of a word (one slide in the senses slider). */
 export interface WordSense {
   partOfSpeech: string;
-  text: string;
+  segments: DefinitionSegment[];
   // Up to MAX_SENSE_EXAMPLES example sentences for this sense (may be empty).
   examples: string[];
 }
@@ -40,8 +48,10 @@ export interface WordSense {
 // Our main word file structure (adapter-agnostic)
 export interface WordData {
   word: string;
-  date: string; // YYYYMMDD format
-  adapter: string; // Which dictionary adapter was used
+  // YYYYMMDD format
+  date: string;
+  // Which dictionary adapter was used
+  adapter: string;
   data: DictionaryDefinition[];
   // Optional word-level enrichment (WordNet relations + adapter headword capture)
   enrichment?: WordEnrichment;

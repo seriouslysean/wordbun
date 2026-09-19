@@ -57,9 +57,11 @@ When you need shared logic, put the pure function in `utils/` and create a thin 
 
 ### Adapters are pass-throughs
 
-External API adapters (`adapters/`) look up exactly what they're given and report exactly what they get back. Case normalization, retries, fallback strategies, and input sanitization belong with the **caller**, not the adapter. When the caller decides `--preserve-case`, the adapter respects it without second-guessing.
+External API adapters (`adapters/`) own vocabulary, not behaviour. An adapter translates its partner's terms into the canonical contract (`DictionaryResponse` in `types/adapters.ts`, `DictionaryDefinition` in `types/common.ts`): a part of speech from the vocabulary, or the partner's unmappable term kept as `label`; text as one plain string, with cross-references as `references` ranges rather than markup; an optional field omitted rather than left empty. An adapter only fetches: pages render stored records without it. Retries, the case of the query, fallback, and input handling belong with the **caller**. An adapter looks up exactly the word it is given and reports it back unchanged: when the caller decides `--preserve-case`, the adapter respects it without second-guessing.
 
-Three adapters: `merriam-webster.ts`, `wordnik.ts`, `wiktionary.ts`. Shared infrastructure in `utils/adapter-utils.ts` (HTTP error handling, JSON parsing, POS normalization, response transforms). The adapter registry in `adapters/index.ts` dispatches by name; `fetchWithFallback()` handles the fallback chain.
+The contract is enforced, not trusted. `isCanonicalResponse()` in `utils/adapter-utils.ts` is the one guard: `fetchWithFallback()` applies it to every adapter's answer, and a response that breaks it is refused whole, so the chain moves on and the fault is reported. Of the responses adapters return, only one whose definition list the partner sent empty is read as the word not being there (not found, before the guard); every other response is held to the guard. An answer that lists definitions with no text in any of them, or lacks on every entry a field the partner documents, never becomes that empty list: it is reported as an unexpected shape. `tests/adapters/contract.spec.ts` holds every registered adapter to the same guard: each needs a fixture directory under `tests/adapters/fixtures/` named after it, with at least one successful response, and every such response must come out canonical, with at least one definition a page can display.
+
+Three adapters: `merriam-webster.ts`, `wordnik.ts`, `wiktionary.ts`. Shared infrastructure in `utils/adapter-utils.ts` (HTTP error handling, JSON parsing, POS classification, definition and response builders, the canonical guard); Wordnik's markup parser lives in `utils/definition-text.ts`, and the offline normalizer uses it for legacy stored definitions. The adapter registry in `adapters/index.ts` dispatches by name; `fetchWithFallback()` handles the fallback chain.
 
 ## The Boundary
 
@@ -136,7 +138,7 @@ const ctx = rawContext as LogContext;
 
 Each test owns its setup and leaves no trace. Vitest provides purpose-built APIs — use them:
 
-- `mockEnv.FIELD = value` — `astro:env/client` variables (mutable object from `tests/setup.js`)
+- `mockEnv.FIELD = value` — `astro:env/client` variables (mutable object from `tests/setup.ts`)
 - `vi.stubGlobal()` — build-time Vite defines (auto-restores)
 - `vi.resetModules()` + dynamic `import()` — module re-evaluation
 - `vi.useFakeTimers()` / `vi.useRealTimers()` — time control
@@ -159,9 +161,9 @@ Each test owns its setup and leaves no trace. Vitest provides purpose-built APIs
 
 **Validate E2E assertions against built HTML.** Before pushing E2E changes, build the site (`npm run build`) and verify selectors match the actual `dist/` output. Check element classes, href patterns, and page structure. A passing typecheck does not catch selector mismatches — only the built HTML reveals the truth.
 
-**Real data over feature flags.** When a test or page needs data to exercise a code path, add demo words that produce it — don't add flags to skip the empty case. Every page the site can build should always be built. If stats pages render with zero results, that's a signal to expand the demo dataset, not to hide the page behind a flag. Feature flags for test convenience create parallel code paths that diverge from production and obscure coverage gaps.
+**Real data over feature flags.** When a test or page needs data to exercise a code path, add demo words that produce it — don't add flags to skip the empty case. Every page the site can build should always be built. If stats pages render with zero results, that's a signal to expand the demo dataset, not to hide the page behind a flag. Feature flags for test convenience create parallel code paths that diverge from production and obscure coverage gaps. Date new demo words before 20250117: the five newest spell the site title on the demo homepage.
 
-Test data lives close to use: global fixtures in `tests/setup.js`, per-file data at describe-block scope, shared helpers (used in 3+ files) in `tests/helpers/` via `#tests/*`.
+Test data lives close to use: global fixtures in `tests/setup.ts`, per-file data at describe-block scope, shared helpers (used in 3+ files) in `tests/helpers/` via `#tests/*`.
 
 ### CSS: one breakpoint, scoped styles
 
@@ -175,7 +177,7 @@ Test data lives close to use: global fixtures in `tests/setup.js`, per-file data
 
 Node.js subpath imports (`#` prefix) in `package.json` — the single source of truth for TypeScript, Vite, and Vitest. Always use aliases, never relative paths.
 
-Node resolves these without guessing extensions, so the rule is: aliases for TypeScript directories (`#utils`, `#astro-utils`, `#types`, `#constants`, `#config`, `#adapters`, `#tools`) are written without an extension and the `imports` target supplies `.ts`; every other alias carries the file's extension in the specifier (`#components/WordChips.astro`, `#locales/en.json`, `#tests/helpers/spawn.js`). JSON imports take `with { type: 'json' }`. There is no `paths` block in `tsconfig.json` — do not add one.
+Node resolves these without guessing extensions, so the rule is: aliases for TypeScript directories (`#utils`, `#astro-utils`, `#types`, `#constants`, `#config`, `#adapters`, `#tools`) are written without an extension and the `imports` target supplies `.ts`; every other alias carries the file's extension in the specifier (`#components/WordChips.astro`, `#locales/en.json`, `#tests/helpers/spawn.ts`). JSON imports take `with { type: 'json' }`. There is no `paths` block in `tsconfig.json` — do not add one.
 
 | Alias | Directory | Context |
 |-------|-----------|---------|
@@ -183,6 +185,7 @@ Node resolves these without guessing extensions, so the rule is: aliases for Typ
 | `#astro-utils/*` | `src/utils/*` | Astro only, never from `utils/` or `tools/` |
 | `#components/*` | `src/components/*` | |
 | `#layouts/*` | `src/layouts/*` | |
+| `#pages/*` | `src/pages/*` | |
 | `#types`, `#types/*` | `types/` | |
 | `#constants/*` | `constants/*` | |
 | `#config/*` | `config/*` | |

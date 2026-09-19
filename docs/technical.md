@@ -24,10 +24,12 @@ src/
   styles/                        # CSS files
   assets/                        # Static assets
 
-utils/                           # Pure Node.js utilities (13 files)
-  adapter-utils.ts               # Shared adapter helpers (POS, transforms, HTTP)
+utils/                           # Pure Node.js utilities (25 files)
+  adapter-utils.ts               # Shared adapter helpers (POS, definition builders, canonical guard, HTTP)
   breadcrumb-utils.ts            # Breadcrumb navigation logic
   date-utils.ts                  # Date manipulation (YYYYMMDD format)
+  definition-markup.ts          # Definition tag recognition and strict legacy validation
+  definition-text.ts             # Definition markup parser, cross-reference checks, definition segments
   i18n-utils.ts                  # Translation helpers (t(), tp())
   logger-core.ts                 # Logger factory (SentryBridge + output filter)
   logger.ts                      # CLI logger wrapper (@sentry/node)
@@ -35,14 +37,17 @@ utils/                           # Pure Node.js utilities (13 files)
   text-pattern-utils.ts          # Pattern detection (palindromes, double letters, etc.)
   text-utils.ts                  # slugify(), syllable counting, re-exports
   url-utils.ts                   # URL generation for routes
-  word-data-utils.ts             # Word filtering (by year, length, letter, etc.)
+  stored-word-validation.ts      # Canonical stored-word shape guards
+  word-data-normalizer.ts        # Offline legacy-record normalization
+  word-data-utils.ts             # Displayability rule, word filtering (by year, length, letter, etc.)
   word-stats-utils.ts            # Statistics calculation algorithms
-  word-validation.ts             # Dictionary data validation
+  word-validation.ts             # Client-safe words.json index guard
 
 tools/                           # CLI tools (Node.js only, no Astro deps)
   add-word.ts                    # Add new words with validation
   generate-images.ts             # Social image generation (consolidated)
   help-utils.ts                  # Shared help system
+  normalize-word-data.ts         # Offline stored-data migration
   regenerate-all-words.ts        # Batch word data refresh
   utils.ts                       # Shared tool utilities
 
@@ -56,7 +61,7 @@ config/
   paths.ts                       # Path configuration (SOURCE_DIR-based)
 
 constants/
-  parts-of-speech.ts             # Part of speech normalization mappings
+  parts-of-speech.ts             # Part-of-speech vocabulary (grammatical categories plus abbreviation)
   stats.ts                       # Statistics definitions and slugs
   text-patterns.ts               # Regex patterns, milestones, word endings
   urls.ts                        # URL constants, route builders
@@ -64,8 +69,8 @@ constants/
 types/                           # Shared TypeScript definitions
   index.ts                       # Barrel export
   adapters.ts                    # DictionaryAdapter, DictionaryResponse
-  common.ts                      # LogContext, PathConfig, FetchOptions, SourceMeta
-  word.ts                        # WordData, WordProcessedData, stats result types
+  common.ts                      # LogContext, PathConfig, FetchOptions, SourceMeta, DictionaryDefinition, DictionaryReference
+  word.ts                        # WordData, WordProcessedData, WordSense, DefinitionSegment, stats result types
   stats.ts                       # StatsDefinition, StatsSlug, SuffixKey
   schema.ts                      # JSON-LD schema types
   seo.ts                         # SEO metadata types
@@ -79,9 +84,11 @@ locales/
   en.json                        # English translations
 
 tests/
-  setup.js                       # Global mocks (astro:env/client, astro:content, translations)
-  helpers/spawn.js               # CLI tool process spawner
-  adapters/                      # Adapter tests (Vitest)
+  setup.ts                       # Global mocks (astro:env/client, astro:content, translations)
+  helpers/spawn.ts               # CLI tool process spawner
+  helpers/log-levels.ts          # Preload that marks a spawned tool's warn and error lines
+  adapters/                      # Adapter tests and contract suite (Vitest)
+  adapters/fixtures/<adapter>/   # Partner response bodies, one directory per registered adapter
   architecture/                  # Import boundary enforcement (Vitest)
   config/                        # Config tests (Vitest)
   constants/                     # Constants tests (Vitest)
@@ -99,6 +106,7 @@ tests/
   skills -> ../.agents/skills/   # Symlink to agent skills
 
 .github/
+  actionlint.yaml                # actionlint configuration
   actions/setup-env/             # Composite action: repository variables and secrets into the job
   workflows/                     # CI: lint, typecheck, test, build, e2e; add-word; deploy
   copilot-instructions.md        # GitHub Copilot guidelines
@@ -125,13 +133,13 @@ All environment variables are validated in `astro.config.ts` (single source of t
 |----------|---------|---------|
 | `SOURCE_DIR` | `''` | Data source subdirectory (unset = root paths) |
 | `DICTIONARY_ADAPTER` | `wordnik` | Primary dictionary API (`merriam-webster`, `wordnik`, `wiktionary`) |
-| `DICTIONARY_FALLBACK` | `wiktionary` | Fallback chain, comma-separated (e.g. `wordnik,wiktionary`) |
+| `DICTIONARY_FALLBACK` | `wiktionary` | Fallback chain, comma-separated (e.g. `wordnik,wiktionary`); empty means the default Wiktionary fallback, `none` (any case) disables it |
 | `MERRIAM_WEBSTER_API_KEY` | — | Merriam-Webster API key |
 | `MERRIAM_WEBSTER_API_URL` | `https://dictionaryapi.com/api/v3/references` | MW API endpoint |
 | `MERRIAM_WEBSTER_DICTIONARY` | `collegiate` | MW dictionary edition |
 | `WORDNIK_API_KEY` | — | Wordnik API key |
 | `WORDNIK_API_URL` | `https://api.wordnik.com/v4` | Wordnik API endpoint |
-| `WORDNIK_WEBSITE_URL` | `https://www.wordnik.com` | Wordnik website (for cross-ref links) |
+| `WORDNIK_WEBSITE_URL` | `https://www.wordnik.com` | Wordnik website that cross-references link to, when a Wordnik definition is fetched or a stored one rendered; the default also applies to the CLI tools |
 
 ### Deployment
 
@@ -232,6 +240,12 @@ Each word is a JSON file at `data/[{SOURCE_DIR}/]words/{year}/{YYYYMMDD}.json` (
 }
 ```
 
+A definition with cross-references also carries `references`, ranges of its `text` (see Dictionary Adapters). The offline normalizer converts older Wordnik markup to those ranges before the site reads the record.
+
+### Demo Data
+
+The demo words (`data/demo/words/`, built with `SOURCE_DIR=demo`) spell the site title on the homepage: the current word `occasional` (20250121), then `word`, `of`, `the`, `day` (20250117) as the previous words. New demo words must be dated before 20250117; `tests/src/pages/index.spec.ts` fails on any demo word dated later.
+
 ### Content Collections
 
 Words load via Astro Content Collections at build time. `src/content.config.ts` uses `glob()` with `__WORD_DATA_PATH__` (injected by `astro.config.ts`) to find JSON files.
@@ -266,19 +280,97 @@ All user-facing strings go through `locales/en.json`. The `t(key)` function from
 - Each word can only be used once across all dates (global uniqueness)
 - No future dates
 - Word must exist in the configured dictionary
+- The dictionary's answer must contain at least one displayable definition (see below); otherwise the fallback chain moves on, and an exhausted chain fails the add
 - Strict YYYYMMDD format
+
+### Displayable Definitions
+
+`getDisplayableDefinitions()` in `utils/word-data-utils.ts` is the one rule for which of a word's definitions count. A definition is displayable when it has a part of speech and non-empty text. Abbreviation-labelled definitions are displayable only when the word has no displayable grammatical definition: a lookup of "sad" also returns SAD, "seasonal affective disorder", which must not become a sense of the adjective, while "pb&j" has nothing but its abbreviation, so that is what its page shows.
+
+Everything that shows, counts, groups or accepts definitions goes through it: the word page senses (`getWordSenses`), the primary definition used for meta descriptions, RSS and JSON-LD (`findValidDefinition`) and for the source link (`getWordDetails`), the part-of-speech browse pages (`getAvailablePartsOfSpeech`, `getWordsByPartOfSpeech`, `groupWordsByPartOfSpeech`), and add-time acceptance (`isValidDictionaryData`, checked by `fetchWithFallback` on every adapter's answer, so the tools only ever receive usable definitions). A record with text but no part of speech is refused at add time because no page could display it; a `label` (see Dictionary Adapters) is not a part of speech.
+
+### Rendering Definitions
+
+A page never renders stored text as HTML, and never asks which adapter wrote a record. `toDefinitionSegments()` in `utils/definition-text.ts` turns a definition into runs of plain text and cross-references (`DefinitionSegment` in `types/word.ts`), with the whitespace around the whole dropped:
+
+```typescript
+toDefinitionSegments({
+  text: 'A taxonomic order of arachnids.',
+  references: [{ start: 12, end: 17, url: 'https://www.wordnik.com/words/order' }],
+});
+// [{ type: 'text', text: 'A taxonomic ' },
+//  { type: 'reference', text: 'order', url: 'https://www.wordnik.com/words/order' },
+//  { type: 'text', text: ' of arachnids.' }]
+```
+
+`WordSenses.astro` renders each text run as escaped text and each reference as an `<a>`; there is no `set:html`, so no stored or fetched text becomes markup. `getWordSenses()` builds the senses from it, and `findValidDefinition()` and `getWordDetails()` join the runs into the plain text that meta descriptions, JSON-LD and the RSS feed use. JSON-LD cannot go through Astro's escaping without corrupting it, so `StructuredData.astro` writes it with `serializeJsonLd()` (`utils/text-utils.ts`), which writes every `<` as `\u003c`: definition text holding `</script>` cannot close the element.
+
+A definition's text and optional `references` are used as stored; references that do not fit the text fail the build. Legacy partner markup is accepted only by the offline normalizer, not interpreted while pages render.
+
+## Dictionary Adapters
+
+An adapter (`adapters/`) translates its partner dictionary's response into one canonical contract and does nothing else. Retries, the case of the query, the fallback chain and input handling belong to the callers (`fetchWithFallback()` and the CLI tools).
+
+### Canonical Contract
+
+`fetchWordData(word)` returns a `DictionaryResponse` (`types/adapters.ts`):
+
+| Field | Rule |
+|---|---|
+| `word` | Exactly the word requested |
+| `definitions` | At least one `DictionaryDefinition` |
+| `meta` | `source` nonblank; `attribution` nonblank and `url` absolute http(s) when present |
+| `headword` | Omitted, or at least one of `pronunciation` and `etymology` (nonblank) and `audio` (absolute http(s) URL) |
+
+Each `DictionaryDefinition` (`types/common.ts`):
+
+| Field | Rule |
+|---|---|
+| `text` | Required: one nonblank string of plain text, never an array of fragments; adapters translate partner markup before returning it |
+| `references` | The cross-references in `text`: a nonempty list of `{ start, end, url }` (JavaScript string offsets, `end` exclusive), in order, not overlapping, each over nonblank text, `url` absolute http(s) |
+| `partOfSpeech` | A value of the vocabulary in `constants/parts-of-speech.ts` |
+| `label` | The partner's raw term when it maps to no part of speech; never beside `partOfSpeech` |
+| `id`, `attributionText`, `sourceDictionary` | Nonblank when present |
+| `sourceUrl` | Absolute http(s) URL when present |
+| `examples`, `synonyms`, `antonyms` | Nonempty lists of nonblank strings when present |
+
+No other key is allowed, and a field with no value is omitted rather than stored as `""` or `[]`. A definition with neither `partOfSpeech` nor `label` is one the partner did not classify. A `label` is not a part of speech: a definition carrying only a label is not displayable and is never grouped under a part of speech.
+
+A partner's formatting is the adapter's to translate. Wordnik marks cross-references up inside its text; `parseDefinitionMarkup()` (`utils/definition-text.ts`) reads `<xref>word</xref>` as a reference to the Wordnik page for the word, lowercased, and `<internalXref urlencoded="target">label</internalXref>` as one to the page it names, keeps the text of any other tag (`<ant>`, `<i>`) without a link, and decodes character references. Merriam-Webster's cross-reference tokens (`{sx|...}`, `{a_link|...}`, `{d_link|...}`, `{dxt|...}`) appear only in its definition tree and example sentences, never in the `shortdef` a definition's text comes from, so `stripMarkup()` keeps them as plain words. Wiktionary's text is plain already.
+
+Each adapter's `POS_MAP` is written `satisfies Readonly<Record<string, BasePartOfSpeech>>`, so a mapping can only name a vocabulary value. `buildDefinition()` in `utils/adapter-utils.ts` classifies the partner's term (`classifyPartOfSpeech()`) and omits empty values; `buildDictionaryResponse()` does the same for the envelope and drops every definition whose text is blank, for all adapters, so one empty sense (a Wordnik definition without text, a blank Merriam-Webster `shortdef`) never gets the rest refused. When every definition in a nonempty list is blank it throws `throwUnexpectedShape()` instead: senses with no text in any of them mean the partner changed how it sends text (a renamed text field reads as none), not that it lacks the word.
+
+Stored word files use the same `DictionaryDefinition` shape. `npm run tool:normalize-word-data -- --dry-run` previews the offline migration of a legacy corpus; without `--dry-run` it converts partner markup to structured references, maps known legacy parts of speech, and omits empty fields. It never calls a dictionary API or invents a label, and it stops without writing when any file is malformed.
+
+### Enforcement
+
+`isCanonicalResponse()` in `utils/adapter-utils.ts` checks every rule above, including the ones a type cannot express. `fetchWithFallback()` applies it once to every adapter's answer, before displayability. A response that breaks it is refused whole with an unexpected-shape error: the chain moves on, and the fault stays in the final `AggregateError`. An answer with no definitions at all is read first, as the partner not having the word rather than a changed API: a Merriam-Webster entry that is only a cross-reference (`ran`, past tense of `run`, has an empty `shortdef`) or a Wiktionary meaning with an empty `definitions` list is a `WordNotFoundError`, so when every adapter says the same, add-word refuses the word at warn. Only a definition list the partner sent empty reaches that check empty. An answer that lists definitions but has nothing to keep is an unexpected shape before it gets there: `buildDictionaryResponse()` refuses a list whose every definition is blank (a Wordnik `text` renamed, every Wiktionary `definition` empty), and the Merriam-Webster adapter refuses an answer none of whose entries has `shortdef`, which the API documents as a top-level member of the entry and nowhere marks optional.
+
+`tests/adapters/contract.spec.ts` applies the same guard to fixtures. It enumerates the registry (`getAdapterNames()` in `adapters/index.ts`) and requires:
+
+- a directory `tests/adapters/fixtures/<adapter name>/` for every registered adapter, and none for anything else
+- at least one successful response in it: every `.json` file except `not-found.json`, which holds the partner's answer for a word it does not have
+- that each successful response, fed through its adapter with `fetch` stubbed and the file name as the word, passes `isCanonicalResponse()` and has at least one displayable definition (`isValidDictionaryData()`): the guard alone accepts a response whose every definition carries only a label, which `fetchWithFallback()` would refuse
+
+### Adding an Adapter
+
+1. Write `adapters/<name>.ts` exporting a `DictionaryAdapter` (a `name` and `fetchWordData()`, nothing else) whose `name` is its registry key. Guard the partner's raw response with type guards; throw `WordNotFoundError` for a missing word, `RateLimitError` for a 429 (`throwOnHttpError()` does both) and `throwUnexpectedShape()` for a body it cannot read, such as one missing a field the partner documents on every entry (Merriam-Webster's `shortdef`). A readable answer whose definition list the partner sent empty needs no throw: pass it through and `fetchWithFallback()` reports it as not found. Pass every definition the partner listed to `buildDictionaryResponse()`, blank ones included: when every one is blank it throws as an unexpected shape, since a partner that lists definitions has the word.
+2. Translate with `buildDefinition()` and `buildDictionaryResponse()`, mapping part-of-speech terms through a `POS_MAP` that `satisfies Readonly<Record<string, BasePartOfSpeech>>`. Pass plain text; a cross-reference goes in `references`, never as markup in the text.
+3. Register it in `ADAPTER_REGISTRY` in `adapters/index.ts`.
+4. Add `tests/adapters/fixtures/<name>/` with at least one recorded response body, plus `not-found.json` if the partner answers a missing word with a body. A fixture built by hand rather than recorded says so in the directory, as `fixtures/wordnik/README.md` does. The contract suite fails until the directory exists and every response in it comes out canonical, with a displayable definition.
+5. Unit-test the adapter's own translation in `tests/adapters/<name>.spec.ts`.
 
 ## CLI Tools
 
-All tools are pure Node.js (no Astro deps) and use `util.parseArgs()` for argument parsing.
+All tools are pure Node.js (no Astro deps) and parse their arguments through `parseToolArgs` (`tools/help-utils.ts`), a `util.parseArgs()` wrapper: a command line it cannot parse, such as an unknown `--batchsize=5` or `--word` without its value, is refused with one warn-level line naming the problem and pointing to `--help`, and exit 1, instead of an uncaught stack trace.
 
 Tools run directly on Node's built-in TypeScript support (`node tools/<tool>.ts`); there is no loader or compile step. `npm run tool:local <tool>` runs a tool through `node --env-file-if-exists=.env`, so `.env` is loaded when present and variables already in the environment win. When `.env` is absent Node prints `.env not found. Continuing without it.` to stderr and carries on. The bare `tool:*` scripts (`tool:generate-images`, `tool:regenerate-all-words`, ...) do not load `.env`: image tools render without the site title and the Merriam-Webster adapter throws without its key.
 
-npm keeps any flag written before a bare `--` for itself, so a tool's flags always follow one: `npm run tool:local tools/add-word.ts -- --help` and `npm run tool:add-word -- --help` print the tool's help, and without the separator npm prints its own. `tests/architecture/npm-scripts.spec.js` enforces this in `package.json`, tool help text, docs and workflows.
+npm keeps any flag written before a bare `--` for itself, so a tool's flags always follow one: `npm run tool:local tools/add-word.ts -- --help` and `npm run tool:add-word -- --help` print the tool's help, and without the separator npm prints its own. `tests/architecture/npm-scripts.spec.ts` enforces this in `package.json`, tool help text, docs and workflows.
 
 ### `add-word.ts`
 
-Adds a word with dictionary validation, duplicate detection, and automatic image generation.
+Adds a word with dictionary validation and duplicate detection. It does not render the social card: the Add Word workflow runs the complete image generation afterwards (see Image Generation).
 
 ```sh
 npm run tool:local tools/add-word.ts serendipity
@@ -287,22 +379,26 @@ npm run tool:local tools/add-word.ts -- Japan --preserve-case
 npm run tool:local tools/add-word.ts -- serendipity --overwrite
 ```
 
+Failures are classified by error type, never by message text. Adapters throw `WordNotFoundError` (from `utils/adapter-utils.ts`) for a 404, an empty answer, a Merriam-Webster suggestion list or an entry only in another Merriam-Webster dictionary, and `RateLimitError` for a 429; `fetchWithFallback()` throws it for a definition list the partner sent empty. A 200 whose body is not an array at all is an unexpected shape, not a missing word: the API changed. So is every other answer with no definition to keep (a field the adapter reads renamed, every definition blank) and an answer that breaks the canonical contract (see Dictionary Adapters). add-word reports "Word not found in dictionary" only when every adapter in the chain threw `WordNotFoundError` (`isWordNotFound`); a rate limit, outage or unexpected shape anywhere in the chain is reported as a failure to add. regenerate-all-words backs off when any adapter threw `RateLimitError` (`isRateLimited`).
+
 ### `generate-images.ts`
 
 Consolidated image generation (SVG templates, Sharp PNG conversion, 1200x630px OpenGraph).
 
 ```sh
 npm run tool:local tools/generate-images.ts                         # All images
-npm run tool:local tools/generate-images.ts -- --word serendipity   # Single word
+npm run tool:local tools/generate-images.ts -- --word japan         # Single word
 npm run tool:local tools/generate-images.ts -- --words              # All word images
 npm run tool:local tools/generate-images.ts -- --generic            # Generic page images
 npm run tool:local tools/generate-images.ts -- --page /stats        # Specific page
 npm run tool:local tools/generate-images.ts -- --force              # Regenerate existing
 ```
 
+A bulk run reads the corpus once. A word file that cannot be read, or is not valid word data, is logged and counted as a failure: its card and the pages it feeds would be missing, so the run exits 1 and does not certify the image cache. `--word` logs such a file and still draws the card of a word it finds; when it finds none and part of the data could not be read, it exits 1 without calling the word missing, since the word may be in what could not be read. `--page` draws nothing and exits 1, since a page title can depend on the corpus.
+
 ### `regenerate-all-words.ts`
 
-Batch refresh of word data from the dictionary API. Supports dry-run mode and rate limiting. `--force` re-sources every word through the configured adapter chain (the `adapter` field follows); pronunciation audio and etymology come only from Merriam-Webster, so run it via `tool:local` with `MERRIAM_WEBSTER_API_KEY` in `.env` to backfill them.
+Batch refresh of word data from the dictionary API. Supports dry-run mode and rate limiting. A word file it cannot read (not JSON, or no `word` string) counts as a failure, in a dry run too, so the exit code says whether every stored word was covered. `--force` re-sources every word through the configured adapter chain (the `adapter` field follows); pronunciation audio and etymology come only from Merriam-Webster, so run it via `tool:local` with `MERRIAM_WEBSTER_API_KEY` in `.env` to backfill them.
 
 ## URL System
 
@@ -319,10 +415,12 @@ Two-tier system supporting root and subdirectory deployments:
 
 ```
 /                           # Homepage (current word)
-/words/{word}               # Individual word pages
-/{YYYYMMDD}/                # Date-based word access
+/word/                     # All words
+/word/{word}                # Individual word pages
 /browse/                    # Browse hub
-/browse/year/{year}         # Words by year
+/browse/year/               # Words by year index
+/browse/{year}              # Words by year
+/browse/{year}/{month}      # Words by month
 /browse/letter/{letter}     # Words by starting letter
 /browse/length/{n}          # Words by length
 /browse/part-of-speech/{p}  # Words by part of speech
@@ -367,6 +465,8 @@ The `isLogContext` type guard from `#types` validates the context argument befor
 
 **The `exit()` helper**: Always use `await exit(code)` instead of `process.exit()` in error handlers. `process.exit()` kills in-flight async work immediately, losing pending Sentry events. `exit()` flushes first.
 
+**Error level means fault**: only `logger.error` creates a Sentry event (`captureException` for an `Error`, otherwise `captureMessage` at level `error`); `warn`, `info` and `debug` only print. So CLI tools refuse operator input at `warn`: add-word's blank word, malformed or future date, date or word already taken, and a word every adapter in the chain reported as not found; generate-images' `--word` that is not in the data and `--page` that is not a page; regenerate-all-words' malformed `--timeout`, `--batch-size` or `--batch-timeout`; and a command line any of them cannot parse all exit 1 with a warn-level message. Network failures, HTTP errors, unexpected response shapes, rate limits, unreadable word files and missing configuration log at `error`. A words directory that is missing or holds no word file (no year directory, or year directories with no word file in them, which a failed first add-word leaves since it makes the year directory before fetching) is not a fault to add-word's duplicate check, since a new site's first word has nothing to collide with, but generate-images (its `--word` and `--page` runs included) and regenerate-all-words, which need data, fail on it at `error`.
+
 ## Statistics System
 
 All statistics computed at build time from `allWords`:
@@ -384,9 +484,11 @@ Definitions live in `constants/stats.ts`. Computation functions in `utils/word-s
 - **Templates**: Programmatic SVG with OpenType.js text measurement
 - **Conversion**: Sharp PNG rasterization (1200x630px, 90% quality, 128-color palette)
 - **Typography**: Liberation Sans Regular + Bold (`tools/fonts/liberation-sans/`), gradient text with theme colors
-- **Output**: `public/images/social/{SOURCE_DIR}/2024/20240105-giggle.png` (word) and `public/images/social/pages/{page}.png` (static). `SOURCE_DIR` segment is omitted when unset.
-- **Skip guard**: `.image-settings-hash` is an md5 fingerprint of what determines an image's bytes, inputs and renderer alike: two probe SVGs rendered through the real template (colors, site title, dimensions, layout), the PNG options, both font files, and `sharp.versions` (sharp, libvips and the libraries bundled with it), so a sharp upgrade that re-quantizes the palette invalidates the cache on its own. Each run compares it once; on a mismatch every existing image in that run is regenerated, otherwise existing files are skipped. `--force` regenerates regardless. The marker is only written by a run that covered all words and all pages with no failures, whether that was the default run or `--words --generic` together, so `--word`, `--page`, and `--words` or `--generic` alone never certify the corpus. `npm run build` copies `public/` verbatim and never regenerates images.
-- **CI**: the Add Word workflow runs the complete generation (`npm run tool:generate-images`) after adding a word, not `--word`. With a current marker that renders the new word's card and skips the rest; after a settings, font or sharp change it regenerates every card once and commits them with the refreshed marker (the commit step stages every PNG under `images/social` and the marker). A single-image run could never write the marker, so the skip guard would stay stale in CI forever.
+- **Settings**: `createSvg` draws the card text and `SITE_TITLE` on one line each, so any run of whitespace, line breaks included, becomes one space and the ends are trimmed. The gradient takes `COLOR_PRIMARY`, `COLOR_PRIMARY_LIGHT` and `COLOR_PRIMARY_DARK` as CSS hex colors (`#rgb`, `#rgba`, `#rrggbb`, `#rrggbbaa`; surrounding whitespace ignored, empty means the default). Any other value, a named color included, stops the run before any image is written with an error naming the variable, since librsvg draws a malformed stop as black. `astro.config.ts` applies the same hex-color rule to the site's stylesheet settings.
+- **Output**: `public/{SOURCE_DIR}/images/social/2024/20240105-giggle.png` (word, lowercased, spaces and punctuation kept) and `public/{SOURCE_DIR}/images/social/pages/browse-2023-april.png` (page path flattened into one slug); the homepage and word pages use the word's card. The `SOURCE_DIR` segment is omitted when unset.
+- **One contract**: `utils/image-path-utils.ts` owns these paths. The generator writes them and `src/utils/image-utils.ts` links to them, so they cannot drift; the existing file names are the contract, since renaming a rule orphans every committed card upstream and downstream. The site emits absolute `og:image`/`twitter:image` URLs through `getFullUrl`, with each path segment passed through `encodeURI` plus `?` and `#`, so spaces become `%20` while `&` stays literal (`astro preview` decodes with `decodeURI`, which leaves `%26` undecoded; GitHub Pages serves both forms). `tests/architecture/social-images.spec.ts` checks the demo dataset and its cards under `public/demo/`, never a fork's own words: Vitest pins `SOURCE_DIR=demo`, so a fork running the suite checks the demo words and cards it merges from upstream. It fails if any emitted URL names an untracked card or any tracked card is unreferenced. Both sides of that check read the page list from `getAllPageMetadata`, so it cannot see a listed page that has no route; `tests/architecture/page-routes.spec.ts` resolves every metadata path against the files under `src/pages` (`index.astro` serves its directory, a `[param]` file or directory matches any segment that no literal file or directory at that level claims, `.ts` endpoints are not pages) and fails on any path with no page.
+- **Skip guard**: `.image-settings-hash` (in the `social/` directory) is JSON with two parts. `settings` is an md5 fingerprint of what determines every image's bytes, inputs and renderer alike: three probe SVGs rendered through the real template (colors, site title, dimensions, layout, and, from a 45-letter probe wider than the card, the scaling that fits a long word), the PNG options, both font files, and `sharp.versions` (sharp, libvips and the libraries bundled with it), so a sharp upgrade that re-quantizes the palette invalidates the cache on its own. `cards` maps each card's path (relative to the images directory) to a short hash of its own inputs, the exact text and date passed to `createSvg`, because a card's text can change while its path does not: page titles such as the most and least common letter come from the corpus, and a word card's file name lowercases the word while the card shows it as stored. Each run reads the marker once. A card is rendered when the settings differ, its entry is missing or differs, or its file is missing; otherwise it is skipped. `--force` renders every card. A marker that is missing, not JSON, or the bare fingerprint older runs wrote leaves the settings unknown, so the next run renders every card once. The marker is written (cards sorted by path, so its diff shows only real changes) only by a run that covered all words and all pages with no failures, whether that was the default run or `--words --generic` together, so `--word`, `--page`, and `--words` or `--generic` alone never certify the corpus. That run records every card it saw, so entries for cards that no longer exist drop out. `npm run build` copies `public/` verbatim and never regenerates images.
+- **CI**: the Add Word workflow runs the complete generation (`npm run tool:generate-images`) after adding a word, not `--word`. With a current marker that renders the new word's card and any page card whose title the new word changed, and skips the rest; after a settings, font or sharp change it regenerates every card once and commits them with the refreshed marker (`git add data/ public/` picks up both). A single-image run could never write the marker, so the skip guard would stay stale in CI forever.
 
 ## Testing
 
@@ -435,6 +537,8 @@ E2E tests follow user journeys: each test starts at an entry point, discovers co
 | CLI Integration | `tests/tools/` | Vitest | Slow | Process spawning, protocol errors |
 | E2E | `tests/e2e/` | Playwright | Slow | Built site navigation, SEO, accessibility |
 
+`npm run typecheck` checks production code with `astro check` and the complete TypeScript test tree with the strict `tsconfig.tests.json` project. The production `tsconfig.json` continues to exclude tests.
+
 ### Coverage
 
 Vitest thresholds: lines 80%, functions 80%, branches 85%, statements 80%.
@@ -466,8 +570,10 @@ All five trigger on PR to main and push to main. Lint, Typecheck, Test, and Buil
 ### Key Regression Test
 
 CLI tools broke when Node.js-side code imported Astro-only modules (`#astro-utils/*`, `@sentry/astro`, Vite build-time globals). Permanently prevented by:
-- `tests/architecture/utils-boundary.spec.js` — detects forbidden imports in all Node.js-side directories (`utils/`, `adapters/`, `constants/`, `config/`)
-- `tests/tools/cli-integration.spec.js` — catches `astro:` protocol errors in real processes
+- `tests/architecture/utils-boundary.spec.ts` — detects forbidden imports in all Node.js-side directories (`utils/`, `adapters/`, `constants/`, `config/`)
+- `tests/tools/cli-integration.spec.ts` — catches `astro:` protocol errors in real processes
+
+The browser side has the mirror-image rule. Bundled `<script>` blocks import a few modules from `utils/` and `src/utils/`, and Vite ships whatever those import as values, so one re-export can put dictionary code in every page's JavaScript. `tests/architecture/client-imports.spec.ts` follows the value imports those scripts reach through `utils/`, `types/`, `constants/` and `src/utils/`, and fails on any edge (`module -> specifier`) missing from its explicit list of today's edges, so a new import fails even between modules already listed; a listed edge that is no longer reached must be removed. `import type` is always allowed.
 
 ## Utility Architecture
 
@@ -481,6 +587,8 @@ See [AGENTS.md - The Boundary](../AGENTS.md#the-boundary) for the principle and 
 |------|---------|
 | `breadcrumb-utils.ts` | Breadcrumb navigation generation |
 | `date-utils.ts` | YYYYMMDD parsing, formatting, validation |
+| `definition-markup.ts` | Definition tag recognition and strict legacy validation |
+| `definition-text.ts` | Definition markup parser, cross-reference checks, `toDefinitionSegments()` |
 | `i18n-utils.ts` | `t()` translation, `tp()` pluralization |
 | `logger-core.ts` | Logger factory (SentryBridge, output filter) |
 | `logger.ts` | CLI logger wrapper with @sentry/node |
@@ -488,9 +596,11 @@ See [AGENTS.md - The Boundary](../AGENTS.md#the-boundary) for the principle and 
 | `text-pattern-utils.ts` | Palindrome, double/triple letter detection |
 | `text-utils.ts` | `slugify()`, syllable counting |
 | `url-utils.ts` | Route URL builders |
-| `word-data-utils.ts` | Word filtering by year/length/letter/pos |
+| `stored-word-validation.ts` | Canonical stored-word shape guards |
+| `word-data-normalizer.ts` | Offline legacy-record normalization |
+| `word-data-utils.ts` | Displayability rule, add-time acceptance, word senses and details, word filtering by year/length/letter/pos |
 | `word-stats-utils.ts` | Statistics computation |
-| `word-validation.ts` | Dictionary data validation |
+| `word-validation.ts` | Client-safe `words.json` index guard |
 
 **`src/utils/`** (Astro-specific):
 
@@ -538,11 +648,11 @@ The workflow files are the reference for their steps; this is what each one is f
 | Add Word | `.github/workflows/add-word.yml` | Manual dispatch with a word, an optional date, and overwrite and preserve-case switches |
 | Deploy to GitHub Pages | `.github/workflows/deploy.yml` | Push to main, manual dispatch, and after an Add Word run on main that succeeded |
 
-**Add Word** checks the dictionary settings before adding anything and stops with an error if `DICTIONARY_ADAPTER` is empty, if either variable spans more than one line or names an adapter other than `wordnik`, `merriam-webster` or `wiktionary` (any case), or if a named adapter's API key is missing (Wiktionary needs none). `DICTIONARY_FALLBACK` may be empty or `none` in any case for no fallback, or a comma-separated list. It then runs `npm run tool:add-word` followed by the complete `npm run tool:generate-images`, and commits and pushes to the branch it was dispatched on. It stages only what the run writes: word JSON under the words directory, PNG cards under `images/social`, and `.image-settings-hash`, in whichever layout `SOURCE_DIR` selects. A run that changes nothing ends with a notice instead of a commit. Workflow inputs reach the shell as environment variables, never as `${{ }}` expressions inside `run:`, so a word is always data and never script.
+**Add Word** checks the dictionary settings before adding anything and stops with an error if `DICTIONARY_ADAPTER` is empty, if either variable spans more than one line or names an adapter other than `wordnik`, `merriam-webster` or `wiktionary` (any case), or if a named adapter's API key is missing (Wiktionary needs none). `DICTIONARY_FALLBACK` may be empty for the default Wiktionary fallback, `none` in any case for no fallback, or a comma-separated list. It then runs `npm run tool:add-word` followed by the complete `npm run tool:generate-images`, and commits and pushes to the branch it was dispatched on. It stages only what the run writes: word JSON under the words directory, PNG cards under `images/social`, and `.image-settings-hash`, in whichever layout `SOURCE_DIR` selects. A run that changes nothing ends with a notice instead of a commit. Workflow inputs reach the shell as environment variables, never as `${{ }}` expressions inside `run:`, so a word is always data and never script.
 
 **Deploy** builds and publishes `dist/`. A push made with `GITHUB_TOKEN` starts no `push` run, so Add Word's completion is what triggers the deploy of a new word; failed or cancelled Add Word runs are skipped. For `workflow_run`, `GITHUB_SHA` is the last commit on the default branch, so the default checkout builds the commit Add Word just pushed.
 
-**Environment.** Add Word, Deploy and Build all run the `.github/actions/setup-env` composite action, which copies repository variables and secrets into the job by name. Each runs `npm ci` before it, so no dependency's install script has the secrets in its environment. A name missing from its `VAR_NAMES` or `SECRET_NAMES` list never reaches a job, whatever the repository settings say. `VAR_NAMES` is read only from repository variables and `SECRET_NAMES` only from secrets: API keys (`*_API_KEY`), `GA_*` and `SENTRY_*` are secrets and everything else is a variable, and a name stored in the other place is exported empty. `tests/architecture/env-transport.spec.js` fails when a variable in the `astro.config.ts` env schema is neither in those lists nor set by the action itself, or when a name is in the wrong list. `SENTRY_ENVIRONMENT` is in neither list: the action always sets it to `production`. The action also sets `TZ` from the `SITE_TZ` repository variable (default `America/New_York`), so "today" is the same date when a word is added and when the site is built. Every value is written to `$GITHUB_ENV` in the multiline `NAME<<delimiter` form with a random delimiter per value, so a value that spans lines stays one variable instead of failing the step or setting others.
+**Environment.** Add Word, Deploy and Build all run the `.github/actions/setup-env` composite action, which copies repository variables and secrets into the job by name. Each runs `npm ci` before it, so no dependency's install script has the secrets in its environment. A name missing from its `VAR_NAMES` or `SECRET_NAMES` list never reaches a job, whatever the repository settings say. `VAR_NAMES` is read only from repository variables and `SECRET_NAMES` only from secrets: API keys (`*_API_KEY`), `GA_*` and `SENTRY_*` are secrets and everything else is a variable, and a name stored in the other place is exported empty. `tests/architecture/env-transport.spec.ts` fails when a variable in the `astro.config.ts` env schema is neither in those lists nor set by the action itself, or when a name is in the wrong list. `SENTRY_ENVIRONMENT` is in neither list: the action always sets it to `production`. The action also sets `TZ` from the `SITE_TZ` repository variable (default `America/New_York`), so "today" is the same date when a word is added and when the site is built. Every value is written to `$GITHUB_ENV` in the multiline `NAME<<delimiter` form with a random delimiter per value, so a value that spans lines stays one variable instead of failing the step or setting others.
 
 ### Build Pipeline
 

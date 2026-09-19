@@ -159,7 +159,7 @@ const showConnections = totalWords >= WORD_GRAPH_MIN_WORDS && wordGraph.nodes.le
 const { title, description, secondaryText } = getPageMetadata(Astro.url.pathname);
 ---
 <Layout title={title} description={description}>
-  <main class="stats">
+  <div class="stats">
     <Heading text={title} secondaryText={secondaryText} />
     <DescriptionText text={description} />
 
@@ -219,7 +219,7 @@ const { title, description, secondaryText } = getPageMetadata(Astro.url.pathname
         <WordGraph graph={wordGraph} />
       </StatsSection>
     )}
-  </main>
+  </div>
 </Layout>
 
 <style>

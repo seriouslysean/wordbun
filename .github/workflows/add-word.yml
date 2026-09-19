@@ -59,7 +59,8 @@ jobs:
       # a missing key would otherwise pass as a word defined by another source
       # and a misspelt fallback would go unnoticed until the primary failed.
       # Adapter names are the ones adapters/index.ts registers, in any case,
-      # and a DICTIONARY_FALLBACK of none (any case) or empty means no fallback.
+      # and a DICTIONARY_FALLBACK of none (any case) means no fallback; empty
+      # selects the default Wiktionary fallback.
       - name: Validate dictionary adapters and API keys
         run: |
           shopt -s nocasematch

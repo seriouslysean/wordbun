@@ -69,8 +69,9 @@ the build process itself; the others are real gaps.
 
 - Astro responsive image component not yet utilized; one `<img>` in
   `Footer.astro`.
-- Astro type-safe environment variables API: ~95% adopted. `SOURCE_DIR` in
-  `src/utils/image-utils.ts:12` still reads from `import.meta.env`.
+- Astro type-safe environment variables API: `SOURCE_DIR` is in the schema
+  and read through `astro:env/client`. `WORDNIK_WEBSITE_URL` still has a
+  default in `astro.config.ts` but no schema entry.
 - See Tier 1 "Astro Best Practices" in [features.md](features.md).
 
 ## Local Development Notes
