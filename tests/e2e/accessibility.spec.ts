@@ -18,6 +18,13 @@ test.describe('accessibility', () => {
 		// Skip link targets main content
 		const href = await skipLink.getAttribute('href');
 		expect(href).toBe('#main-content');
+
+		await page.keyboard.press('Enter');
+		const main = page.locator('#main-content');
+		await expect(page).toHaveURL(/#main-content$/);
+		await expect.poll(() => main.evaluate(element =>
+			document.activeElement === element || element.matches(':target'))).toBe(true);
+		await expect(main).toBeInViewport();
 	});
 
 	test('document has lang and viewport attributes', async ({ page }) => {

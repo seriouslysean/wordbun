@@ -26,7 +26,8 @@ const createConsoleSpy = () => ({
 });
 
 describe('logger', () => {
-  const ctx = { consoleSpy: /** @type {ReturnType<typeof createConsoleSpy>} */ ({}) };
+  /** @type {{consoleSpy: ReturnType<typeof createConsoleSpy>}} */
+  const ctx = { consoleSpy: {} };
 
   beforeEach(() => {
     ctx.consoleSpy = createConsoleSpy();

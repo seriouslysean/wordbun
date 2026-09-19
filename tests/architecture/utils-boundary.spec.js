@@ -2,7 +2,7 @@
  * Architecture tests to enforce the Node.js / Astro boundary
  *
  * These tests prevent boundary violations by ensuring:
- * 1. Node.js-side code (utils/, adapters/, tools/, constants/, config/) never
+ * 1. Node.js-side code (utils/, adapters/, tools/, constants/, config/, types/) never
  *    imports Astro-only modules (#astro-utils/*, astro:*, @sentry/astro)
  * 2. Delegated logic is imported from utils/, not duplicated in src/utils/
  */
@@ -10,12 +10,39 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, it, expect } from 'vitest';
+import ts from 'typescript';
 
 const UTILS_DIR = path.join(process.cwd(), 'utils');
 const SRC_UTILS_DIR = path.join(process.cwd(), 'src', 'utils');
-const NODE_SIDE_DIRS = ['utils', 'adapters', 'constants', 'config'].map(
+const NODE_SIDE_DIRS = ['utils', 'adapters', 'tools', 'constants', 'config', 'types'].map(
   dir => path.join(process.cwd(), dir),
 );
+
+const getTypeScriptFiles = dir => fs.readdirSync(dir, { withFileTypes: true })
+  .flatMap(entry => {
+    if (entry.isDirectory()) {
+      return getTypeScriptFiles(path.join(dir, entry.name));
+    }
+    return entry.name.endsWith('.ts') ? [path.join(dir, entry.name)] : [];
+  });
+
+const getImportSpecifiers = (content) => {
+  const source = ts.createSourceFile('boundary-scan.ts', content, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const specifiers = [];
+  const visit = (node) => {
+    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node))
+      && node.moduleSpecifier && ts.isStringLiteralLike(node.moduleSpecifier)) {
+      specifiers.push(node.moduleSpecifier.text);
+    }
+    if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword
+      && node.arguments[0] && ts.isStringLiteralLike(node.arguments[0])) {
+      specifiers.push(node.arguments[0].text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return specifiers;
+};
 
 describe('Architecture: utils/ boundary enforcement', () => {
   it('Node.js-side code must not import Astro-only modules', () => {
@@ -23,27 +50,36 @@ describe('Architecture: utils/ boundary enforcement', () => {
       if (!fs.existsSync(dir)) {
         continue;
       }
-      const tsFiles = fs.readdirSync(dir).filter(f => f.endsWith('.ts'));
-
-      for (const file of tsFiles) {
-        const filePath = path.join(dir, file);
+      for (const filePath of getTypeScriptFiles(dir)) {
         const content = fs.readFileSync(filePath, 'utf-8');
-        const label = `${path.basename(dir)}/${file}`;
+        const label = path.relative(process.cwd(), filePath);
+        const forbidden = getImportSpecifiers(content).filter(specifier =>
+          specifier === '#astro-utils'
+          || specifier.startsWith('#astro-utils/')
+          || specifier.startsWith('astro:')
+          || specifier === '@sentry/astro'
+          || specifier.startsWith('@sentry/astro/'));
 
-        expect(
-          content.match(/from ['"]#astro-utils\//g),
-          `${label} imports from #astro-utils/* (breaks CLI tools)`,
-        ).toBeNull();
-        expect(
-          content.match(/from ['"]astro:/g),
-          `${label} imports from astro:* (breaks CLI tools)`,
-        ).toBeNull();
-        expect(
-          content.match(/from ['"]@sentry\/astro['"]/g),
-          `${label} imports @sentry/astro (breaks CLI tools)`,
-        ).toBeNull();
+        expect(forbidden, `${label} imports Astro-only modules (breaks CLI tools)`).toEqual([]);
       }
     }
+  });
+
+  it('extracts every literal module import form', () => {
+    const source = [
+      "import value from '#utils/value';",
+      "export { value } from '#types';",
+      "import '#constants/setup';",
+      "const module = import('astro:content', { with: { type: 'json' } });",
+      "// import('@sentry/astro')",
+    ].join('\n');
+
+    expect(getImportSpecifiers(source)).toEqual([
+      '#utils/value',
+      '#types',
+      '#constants/setup',
+      'astro:content',
+    ]);
   });
 
   it('src/utils/word-data-utils.ts must import filtering functions from utils/', () => {
@@ -108,22 +144,18 @@ describe('Architecture: utils/ boundary enforcement', () => {
       if (!fs.existsSync(dir)) {
         continue;
       }
-      const tsFiles = fs.readdirSync(dir).filter(f => f.endsWith('.ts'));
-
-      for (const file of tsFiles) {
-        const filePath = path.join(dir, file);
+      for (const filePath of getTypeScriptFiles(dir)) {
         const content = fs.readFileSync(filePath, 'utf-8');
-        const label = `${path.basename(dir)}/${file}`;
+        const label = path.relative(process.cwd(), filePath);
+        const imports = getImportSpecifiers(content).filter(specifier => specifier.startsWith('#'));
 
-        const imports = content.match(/from ['"]#[^'"]+['"]/g) || [];
-
-        for (const importStatement of imports) {
+        for (const specifier of imports) {
           const hasAllowedPrefix = allowedPrefixes.some(allowed =>
-            importStatement.includes(`'${allowed}`) || importStatement.includes(`"${allowed}`)
+            specifier === allowed || specifier.startsWith(`${allowed}/`)
           );
 
           expect(hasAllowedPrefix,
-            `${label} has import ${importStatement} which doesn't match allowed prefixes: ${allowedPrefixes.join(', ')}`
+            `${label} imports ${specifier}, which doesn't match allowed prefixes: ${allowedPrefixes.join(', ')}`
           ).toBe(true);
         }
       }

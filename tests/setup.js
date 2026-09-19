@@ -53,7 +53,7 @@ afterEach(() => {
 // Mock fixture data for testing
 const mockWordData = [
   {
-    id: '2025/20250121.json',
+    id: '2025/20250121',
     data: {
       word: 'occasional',
       date: '20250121',
@@ -68,7 +68,7 @@ const mockWordData = [
     },
   },
   {
-    id: '2025/20250120.json',
+    id: '2025/20250120',
     data: {
       word: 'word',
       date: '20250120',
@@ -83,7 +83,7 @@ const mockWordData = [
     },
   },
   {
-    id: '2025/20250119.json',
+    id: '2025/20250119',
     data: {
       word: 'serendipity',
       date: '20250119',

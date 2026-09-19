@@ -19,6 +19,10 @@ export default defineConfig({
       name: 'chromium',
       use: { browserName: 'chromium' },
     },
+    {
+      name: 'chromium-mobile',
+      use: { browserName: 'chromium', viewport: { width: 390, height: 844 } },
+    },
   ],
   webServer: {
     // --ignore-lock keeps the preview in the foreground when Astro detects a coding agent

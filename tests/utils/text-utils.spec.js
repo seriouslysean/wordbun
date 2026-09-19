@@ -20,8 +20,10 @@ import {
 describe('text-utils', () => {
   describe('getVowelCount', () => {
     it('counts vowels correctly', () => {
-      expect(getVowelCount('hello')).toBe(2); // e, o
-      expect(getVowelCount('magnificent')).toBe(4); // a, i, i, e
+      // e, o
+      expect(getVowelCount('hello')).toBe(2);
+      // a, i, i, e
+      expect(getVowelCount('magnificent')).toBe(4);
       expect(getVowelCount('aeiou')).toBe(5);
       expect(getVowelCount('AEIOU')).toBe(5);
     });
@@ -40,8 +42,10 @@ describe('text-utils', () => {
 
   describe('getConsonantCount', () => {
     it('counts consonants correctly', () => {
-      expect(getConsonantCount('hello')).toBe(3); // h, l, l
-      expect(getConsonantCount('magnificent')).toBe(7); // m, g, n, f, c, n, t
+      // h, l, l
+      expect(getConsonantCount('hello')).toBe(3);
+      // m, g, n, f, c, n, t
+      expect(getConsonantCount('magnificent')).toBe(7);
       expect(getConsonantCount('bcdfg')).toBe(5);
       expect(getConsonantCount('BCDFG')).toBe(5);
     });
@@ -87,16 +91,22 @@ describe('text-utils', () => {
 
   describe('countSyllables', () => {
     it('counts syllables for common words', () => {
-      expect(countSyllables('hello')).toBe(2); // hel-lo
-      expect(countSyllables('magnificent')).toBe(4); // mag-nif-i-cent
+      // hel-lo
+      expect(countSyllables('hello')).toBe(2);
+      // mag-nif-i-cent
+      expect(countSyllables('magnificent')).toBe(4);
       expect(countSyllables('cat')).toBe(1);
-      expect(countSyllables('beautiful')).toBe(3); // beau-ti-ful
+      // beau-ti-ful
+      expect(countSyllables('beautiful')).toBe(3);
     });
 
     it('handles special cases', () => {
-      expect(countSyllables('ululated')).toBe(4); // special case defined in code
-      expect(countSyllables('the')).toBe(1); // ends with 'e' but still 1 syllable
-      expect(countSyllables('ate')).toBe(1); // ends with 'e'
+      // special case defined in code
+      expect(countSyllables('ululated')).toBe(4);
+      // ends with 'e' but still 1 syllable
+      expect(countSyllables('the')).toBe(1);
+      // ends with 'e'
+      expect(countSyllables('ate')).toBe(1);
     });
 
     it('ensures minimum of 1 syllable', () => {
@@ -146,13 +156,18 @@ describe('text-utils', () => {
 
   describe('hasTripleLetters', () => {
     it('returns true for words with triple or more consecutive letters', () => {
-      expect(hasTripleLetters('zzz')).toBe(true); // three z's
-      expect(hasTripleLetters('aaa')).toBe(true); // three a's
-      expect(hasTripleLetters('goooood')).toBe(true); // four o's
+      // three z's
+      expect(hasTripleLetters('zzz')).toBe(true);
+      // three a's
+      expect(hasTripleLetters('aaa')).toBe(true);
+      // four o's
+      expect(hasTripleLetters('goooood')).toBe(true);
     });
     it('returns false for words with only double or no consecutive letters', () => {
-      expect(hasTripleLetters('bookkeeper')).toBe(false); // only double letters
-      expect(hasTripleLetters('committee')).toBe(false); // only double letters
+      // only double letters
+      expect(hasTripleLetters('bookkeeper')).toBe(false);
+      // only double letters
+      expect(hasTripleLetters('committee')).toBe(false);
       expect(hasTripleLetters('letter')).toBe(false);
       expect(hasTripleLetters('cat')).toBe(false);
     });
@@ -160,17 +175,23 @@ describe('text-utils', () => {
 
   describe('hasAlphabeticalSequence', () => {
     it('returns true for words with three consecutive alphabetical letters', () => {
-      expect(hasAlphabeticalSequence('abc')).toBe(true); // a-b-c
-      expect(hasAlphabeticalSequence('xyz')).toBe(true); // x-y-z
-      expect(hasAlphabeticalSequence('defg')).toBe(true); // d-e-f
-      expect(hasAlphabeticalSequence('definitely')).toBe(true); // d-e-f at start
+      // a-b-c
+      expect(hasAlphabeticalSequence('abc')).toBe(true);
+      // x-y-z
+      expect(hasAlphabeticalSequence('xyz')).toBe(true);
+      // d-e-f
+      expect(hasAlphabeticalSequence('defg')).toBe(true);
+      // d-e-f at start
+      expect(hasAlphabeticalSequence('definitely')).toBe(true);
     });
     it('returns false for words without such a sequence', () => {
       expect(hasAlphabeticalSequence('hello')).toBe(false);
       expect(hasAlphabeticalSequence('world')).toBe(false);
       expect(hasAlphabeticalSequence('jumpy')).toBe(false);
-      expect(hasAlphabeticalSequence('abacus')).toBe(false); // a-b but then breaks with a-c
-      expect(hasAlphabeticalSequence('jumped')).toBe(false); // no consecutive sequences
+      // a-b but then breaks with a-c
+      expect(hasAlphabeticalSequence('abacus')).toBe(false);
+      // no consecutive sequences
+      expect(hasAlphabeticalSequence('jumped')).toBe(false);
     });
   });
 

@@ -1,11 +1,20 @@
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 // Header search is a progressive enhancement: a magnifying-glass icon (revealed
 // by JS) opens a panel that filters words by starts-with.
 
+const discoverQuery = async (page: Page): Promise<string> => {
+  const word = page.locator('.past-words a.word-link .word-link__word').first();
+  await expect(word).toBeVisible();
+  return (await word.textContent())?.trim().toLowerCase() ?? '';
+};
+
 test.describe('header search', () => {
   test('opens from the header icon, filters by starts-with, and navigates', async ({ page }) => {
     await page.goto('/');
+    const query = await discoverQuery(page);
+    expect(query).not.toBe('');
 
     const toggle = page.locator('#site-search-toggle');
     await expect(toggle).toBeVisible();
@@ -13,12 +22,12 @@ test.describe('header search', () => {
 
     const input = page.locator('#site-search-input');
     await expect(input).toBeVisible();
-    await input.fill('wor');
+    await input.fill(query);
 
     const results = page.locator('#site-search-results a');
     await expect(results.first()).toBeVisible();
     for (const text of await results.allTextContents()) {
-      expect(text.toLowerCase().startsWith('wor')).toBe(true);
+      expect(text.toLowerCase().startsWith(query)).toBe(true);
     }
 
     await results.first().click();
@@ -27,10 +36,12 @@ test.describe('header search', () => {
 
   test('clearing the query removes the results', async ({ page }) => {
     await page.goto('/');
+    const query = await discoverQuery(page);
+    expect(query).not.toBe('');
     await page.locator('#site-search-toggle').click();
 
     const input = page.locator('#site-search-input');
-    await input.fill('wor');
+    await input.fill(query);
     await expect(page.locator('#site-search-results a').first()).toBeVisible();
 
     await input.fill('');

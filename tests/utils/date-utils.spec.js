@@ -26,14 +26,19 @@ describe('shared date-utils', () => {
     });
 
     it('handles leap year dates', () => {
-      expect(isValidDate('20240229')).toBe(true); // 2024 is leap year
-      expect(isValidDate('20230229')).toBe(false); // 2023 is not leap year
+      // 2024 is leap year
+      expect(isValidDate('20240229')).toBe(true);
+      // 2023 is not leap year
+      expect(isValidDate('20230229')).toBe(false);
     });
 
     it('rejects invalid dates', () => {
-      expect(isValidDate('20240230')).toBe(false); // Feb 30 doesn't exist
-      expect(isValidDate('20241301')).toBe(false); // Month 13 doesn't exist
-      expect(isValidDate('20240001')).toBe(false); // Day 0 doesn't exist
+      // Feb 30 doesn't exist
+      expect(isValidDate('20240230')).toBe(false);
+      // Month 13 doesn't exist
+      expect(isValidDate('20241301')).toBe(false);
+      // Day 0 doesn't exist
+      expect(isValidDate('20240001')).toBe(false);
     });
 
     it('rejects invalid formats', () => {
@@ -97,8 +102,10 @@ describe('shared date-utils', () => {
     });
 
     it('handles edge cases', () => {
-      expect(formatISODate('20241231')).toBe('2024-12-31'); // Last day of year
-      expect(formatISODate('20240301')).toBe('2024-03-01'); // First day of March
+      // Last day of year
+      expect(formatISODate('20241231')).toBe('2024-12-31');
+      // First day of March
+      expect(formatISODate('20240301')).toBe('2024-03-01');
     });
   });
 
@@ -130,7 +137,8 @@ describe('shared date-utils', () => {
       const result = YYYYMMDDToDate('20240319');
       expect(result).toBeInstanceOf(Date);
       expect(result?.getFullYear()).toBe(2024);
-      expect(result?.getMonth()).toBe(2); // March is month 2 (0-indexed)
+      // March is month 2 (0-indexed)
+      expect(result?.getMonth()).toBe(2);
       expect(result?.getDate()).toBe(19);
     });
 
@@ -139,16 +147,19 @@ describe('shared date-utils', () => {
       const date2 = YYYYMMDDToDate('20241225');
 
       expect(date1?.getFullYear()).toBe(2024);
-      expect(date1?.getMonth()).toBe(0); // January
+      // January
+      expect(date1?.getMonth()).toBe(0);
       expect(date1?.getDate()).toBe(1);
 
       expect(date2?.getFullYear()).toBe(2024);
-      expect(date2?.getMonth()).toBe(11); // December
+      // December
+      expect(date2?.getMonth()).toBe(11);
       expect(date2?.getDate()).toBe(25);
     });
 
     it('returns null for invalid date strings', () => {
-      expect(YYYYMMDDToDate('20240230')).toBe(null); // Feb 30 doesn't exist
+      // Feb 30 doesn't exist
+      expect(YYYYMMDDToDate('20240230')).toBe(null);
       expect(YYYYMMDDToDate('invalid')).toBe(null);
       expect(YYYYMMDDToDate('')).toBe(null);
     });
@@ -156,7 +167,8 @@ describe('shared date-utils', () => {
     it('handles leap year dates', () => {
       const result = YYYYMMDDToDate('20240229');
       expect(result).toBeInstanceOf(Date);
-      expect(result?.getMonth()).toBe(1); // February
+      // February
+      expect(result?.getMonth()).toBe(1);
       expect(result?.getDate()).toBe(29);
     });
   });
@@ -170,7 +182,8 @@ describe('shared date-utils', () => {
 
     it('returns "Invalid Month" for invalid date strings', () => {
       expect(getMonthNameFromDate('invalid')).toBe('Invalid Month');
-      expect(getMonthNameFromDate('20251301')).toBe('Invalid Month'); // Invalid month
+      // Invalid month
+      expect(getMonthNameFromDate('20251301')).toBe('Invalid Month');
     });
   });
 
