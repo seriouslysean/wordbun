@@ -14,6 +14,7 @@ import {
   isAllVowels,
   isPalindrome,
   isStartEndSame,
+  serializeJsonLd,
 } from '#utils/text-utils';
 
 describe('text-utils', () => {
@@ -261,5 +262,26 @@ describe('collapseWhitespace', () => {
 
   it('leaves single-line text alone', () => {
     expect(collapseWhitespace("rock & roll's")).toBe("rock & roll's");
+  });
+});
+
+describe('serializeJsonLd', () => {
+  const schema = {
+    '@type': 'DefinedTerm',
+    description: 'Encoded </script><img src=x onerror=alert(1)> and a < b',
+  };
+
+  it('writes no < that could end the script element', () => {
+    expect(serializeJsonLd(schema)).not.toContain('<');
+    expect(serializeJsonLd(schema)).toContain(String.raw`\u003c/script>\u003cimg`);
+  });
+
+  it('parses back to the same value', () => {
+    expect(JSON.parse(serializeJsonLd(schema))).toStrictEqual(schema);
+  });
+
+  it('matches JSON.stringify when there is no <', () => {
+    const plain = { '@type': 'WebSite', name: 'occasional-wotd & friends' };
+    expect(serializeJsonLd(plain)).toBe(JSON.stringify(plain));
   });
 });
