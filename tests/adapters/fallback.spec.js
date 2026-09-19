@@ -1,5 +1,5 @@
 import {
-  beforeEach, describe, expect, it, vi,
+  afterEach, beforeEach, describe, expect, it, vi,
 } from 'vitest';
 
 const mockLogger = vi.hoisted(() => ({
@@ -537,5 +537,67 @@ describe('fetchWithFallback', () => {
     expect(error).toBeInstanceOf(AggregateError);
     expect(error.errors.map(e => e.message)).toEqual([BROKEN_CONTRACT, NOT_FOUND]);
     expect(error.message).toBe(`All dictionary adapters failed for "test": wordnik: ${BROKEN_CONTRACT} | wiktionary: ${NOT_FOUND}`);
+  });
+});
+
+// A dictionary that answers with no definition for the headword has not
+// changed its API: it does not have the word. Real adapters, fetch stubbed.
+describe('fetchWithFallback when a dictionary answers with no definitions', () => {
+  const answers = { wordnik: null, merriamWebster: null };
+
+  beforeEach(() => {
+    // The tests above replace adapters with vi.doMock, which outlives them
+    for (const adapter of ['#adapters/wordnik', '#adapters/merriam-webster', '#adapters/wiktionary']) {
+      vi.doUnmock(adapter);
+    }
+    vi.resetModules();
+    vi.stubEnv('WORDNIK_API_KEY', 'test-key');
+    vi.stubEnv('WORDNIK_API_URL', 'https://wordnik.test/v4');
+    vi.stubEnv('MERRIAM_WEBSTER_API_KEY', 'test-key');
+    vi.stubEnv('MERRIAM_WEBSTER_API_URL', 'https://mw.test/api/v3/references');
+    vi.stubGlobal('fetch', vi.fn((url) => {
+      if (String(url).startsWith('https://wordnik.test')) {
+        return Promise.resolve(new Response(JSON.stringify(answers.wordnik), { status: 200 }));
+      }
+      if (String(url).startsWith('https://mw.test')) {
+        return Promise.resolve(new Response(JSON.stringify(answers.merriamWebster), { status: 200 }));
+      }
+      // Wiktionary does not have the word either
+      return Promise.resolve(new Response('{}', { status: 404, statusText: 'Not Found' }));
+    }));
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
+  });
+
+  it('reports a Merriam-Webster entry that is only a cross-reference as not found', async () => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
+    vi.stubEnv('DICTIONARY_FALLBACK', 'wiktionary');
+    answers.merriamWebster = [{
+      meta: { id: 'ran', src: 'collegiate' },
+      hwi: { hw: 'ran' },
+      cxs: [{ cxl: 'past tense of', cxtis: [{ cxt: 'run' }] }],
+      shortdef: [],
+    }];
+    const { fetchWithFallback } = await import('#adapters');
+    const { isWordNotFound } = await import('#utils/adapter-utils');
+
+    const error = await catchError(fetchWithFallback('ran'));
+    expect(error.message).toContain('merriam-webster: Word "ran" not found in dictionary.');
+    expect(isWordNotFound(error)).toBe(true);
+  });
+
+  it('reports a Wordnik answer whose every definition lacks text as not found', async () => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'wordnik');
+    vi.stubEnv('DICTIONARY_FALLBACK', 'none');
+    answers.wordnik = [{ partOfSpeech: 'noun' }, { text: '  ', partOfSpeech: 'noun' }];
+    const { fetchWithFallback } = await import('#adapters');
+    const { WordNotFoundError } = await import('#utils/adapter-utils');
+
+    const error = await catchError(fetchWithFallback('test'));
+    expect(error).toBeInstanceOf(WordNotFoundError);
+    expect(error.message).toBe(NOT_FOUND);
   });
 });

@@ -2,7 +2,7 @@ import { merriamWebsterAdapter } from '#adapters/merriam-webster';
 import { wiktionaryAdapter } from '#adapters/wiktionary';
 import { wordnikAdapter } from '#adapters/wordnik';
 import type { DictionaryAdapter, DictionaryResponse, FetchOptions } from '#types';
-import { isCanonicalResponse, throwUnexpectedShape } from '#utils/adapter-utils';
+import { isCanonicalResponse, throwUnexpectedShape, throwWordNotFound } from '#utils/adapter-utils';
 import { logger } from '#utils/logger';
 import { getErrorMessage } from '#utils/text-utils';
 import { isValidDictionaryData } from '#utils/word-data-utils';
@@ -66,10 +66,17 @@ function parseFallbackChain(): string[] {
  * Fetches from one adapter and refuses a response that breaks the canonical
  * contract or has no usable definitions. Throwing keeps both on the same path
  * as any other adapter failure, so the chain moves on instead of returning a
- * malformed or empty result, and the fault stays in the final error.
+ * malformed or empty result, and the fault stays in the final error. A
+ * response with no definitions at all is the partner not having the word (a
+ * Merriam-Webster entry that is only a cross-reference, Wordnik senses with
+ * no text), not a changed API, so it is reported as not found before the
+ * guard, whose contract requires a definition, would call it a broken shape.
  */
 async function fetchUsable(adapter: DictionaryAdapter, word: string, options?: FetchOptions): Promise<DictionaryResponse> {
   const response = await adapter.fetchWordData(word, options);
+  if (Array.isArray(response.definitions) && response.definitions.length === 0) {
+    throwWordNotFound(word);
+  }
   if (!isCanonicalResponse(response, word)) {
     throwUnexpectedShape(adapter.name, word);
   }

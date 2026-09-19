@@ -310,7 +310,7 @@ Stored word files keep the looser `StoredDictionaryDefinition` shape, which `Wor
 
 ### Enforcement
 
-`isCanonicalResponse()` in `utils/adapter-utils.ts` checks every rule above, including the ones a type cannot express. `fetchWithFallback()` applies it once to every adapter's answer, before displayability. A response that breaks it is refused whole with an unexpected-shape error: the chain moves on, and the fault stays in the final `AggregateError`.
+`isCanonicalResponse()` in `utils/adapter-utils.ts` checks every rule above, including the ones a type cannot express. `fetchWithFallback()` applies it once to every adapter's answer, before displayability. A response that breaks it is refused whole with an unexpected-shape error: the chain moves on, and the fault stays in the final `AggregateError`. An answer with no definitions at all is read first, as the partner not having the word rather than a changed API: a Merriam-Webster entry that is only a cross-reference (`ran`, past tense of `run`, has an empty `shortdef`) is a `WordNotFoundError`, so when every adapter says the same, add-word refuses the word at warn.
 
 `tests/adapters/contract.spec.js` applies the same guard to fixtures. It enumerates the registry (`getAdapterNames()` in `adapters/index.ts`) and requires:
 
