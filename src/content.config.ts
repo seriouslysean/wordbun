@@ -1,6 +1,7 @@
 import { glob } from 'astro/loaders';
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
+import { isValidDate } from '#utils/date-utils';
 
 const dictionaryDefinitionSchema = z.looseObject({
   id: z.string().optional(),
@@ -26,8 +27,8 @@ export const collections = {
       base: __WORD_DATA_PATH__,
     }),
     schema: z.object({
-      word: z.string(),
-      date: z.string(),
+      word: z.string().refine(word => word.trim().length > 0, 'Word must not be empty'),
+      date: z.string().refine(isValidDate, 'Date must be a valid YYYYMMDD date'),
       adapter: z.string(),
       preserveCase: z.boolean().default(false),
       data: z.array(dictionaryDefinitionSchema).min(1),

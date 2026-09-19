@@ -58,4 +58,35 @@ test.describe('accessibility', () => {
 			expect(text?.trim() || ariaLabel).toBeTruthy();
 		}
 	});
+
+	test('page families expose one heading and one main landmark', async ({ page }) => {
+		const expectPageLandmarks = async () => {
+			await expect(page.locator('h1')).toHaveCount(1);
+			await expect(page.locator('main')).toHaveCount(1);
+		};
+		const visitLink = async (locator: ReturnType<typeof page.locator>) => {
+			await expect(locator).toHaveCount(1);
+			await locator.click();
+			await expectPageLandmarks();
+		};
+
+		await page.goto('/');
+		await expectPageLandmarks();
+
+		await visitLink(page.locator('footer a').filter({ hasText: 'Browse Words' }));
+
+		await visitLink(page.locator('footer a').filter({ hasText: 'Stats' }));
+		await visitLink(page.locator('main a[href^="/stats/"]').first());
+
+		await page.goto('/browse/year');
+		await expectPageLandmarks();
+		await visitLink(page.locator('main a[href^="/browse/"]').first());
+		await visitLink(page.locator('main a[href^="/browse/"]').first());
+
+		await page.goto('/');
+		await visitLink(page.locator('.past-words a[href^="/word/"]').first());
+
+		await page.goto('/404');
+		await expectPageLandmarks();
+	});
 });

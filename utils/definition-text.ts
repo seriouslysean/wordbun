@@ -1,6 +1,7 @@
 import { decodeHTML } from 'entities';
 
 import type { DefinitionSegment, DictionaryReference } from '#types';
+import { DEFAULT_WORDNIK_WEBSITE_URL } from '#constants/defaults';
 import { areValidReferences } from '#utils/reference-utils';
 
 /**
@@ -22,13 +23,11 @@ const TAGS = new RegExp(TAG.source, 'g');
 const INTERNAL_XREF_TARGET = /\burlencoded\s*=\s*(["'])(.*?)\1/i;
 const URL_PATH_SEGMENT = /^(?:[\w.~-]|%[\dA-Fa-f]{2})+$/;
 
-const WORDNIK_WEBSITE_URL = 'https://www.wordnik.com';
-
 // Read at call time rather than import time so the build, the CLI and tests
 // each see their own environment. Defaults like MERRIAM_WEBSTER_API_URL: the
 // Add Word workflow does not set it, and a fetched cross-reference needs it.
 const wordnikWordsUrl = (path: string): string =>
-  `${process.env.WORDNIK_WEBSITE_URL || WORDNIK_WEBSITE_URL}/words/${path}`;
+  `${process.env.WORDNIK_WEBSITE_URL || DEFAULT_WORDNIK_WEBSITE_URL}/words/${path}`;
 
 /**
  * The Wordnik page for a word, lowercased as Wordnik's own word URLs are.

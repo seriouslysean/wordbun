@@ -22,7 +22,7 @@ const wordEndingItems = [
 const { title, description } = getPageMetadata(Astro.url.pathname);
 ---
 <Layout title={title} description={description}>
-  <main class="word-endings">
+  <div class="word-endings">
     <Heading text={title} />
     <DescriptionText text={description} />
 
@@ -35,7 +35,7 @@ const { title, description } = getPageMetadata(Astro.url.pathname);
         }))} />
       </StatsSection>
     )}
-  </main>
+  </div>
 </Layout>
 
 <style>

@@ -11,7 +11,9 @@
     "title_starting_with": "{{count}} words starting with {{value}}",
     "title_with_length": "{{count}} words with {{value}} letters", 
     "title_from_context": "{{count}} words from {{value}}",
-    "title_with_part_of_speech": "{{count}} {{value}} words"
+    "title_with_part_of_speech_zero": "No {{value}} words",
+    "title_with_part_of_speech_one": "1 {{value}} word",
+    "title_with_part_of_speech_other": "{{count}} {{value}} words"
   },
   "nav": {
     "home": "Home",

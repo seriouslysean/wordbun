@@ -24,7 +24,7 @@ src/
   styles/                        # CSS files
   assets/                        # Static assets
 
-utils/                           # Pure Node.js utilities (13 files)
+utils/                           # Pure Node.js utilities (25 files)
   adapter-utils.ts               # Shared adapter helpers (POS, definition builders, canonical guard, HTTP)
   breadcrumb-utils.ts            # Breadcrumb navigation logic
   date-utils.ts                  # Date manipulation (YYYYMMDD format)
@@ -409,10 +409,12 @@ Two-tier system supporting root and subdirectory deployments:
 
 ```
 /                           # Homepage (current word)
-/words/{word}               # Individual word pages
-/{YYYYMMDD}/                # Date-based word access
+/word/                     # All words
+/word/{word}                # Individual word pages
 /browse/                    # Browse hub
-/browse/year/{year}         # Words by year
+/browse/year/               # Words by year index
+/browse/{year}              # Words by year
+/browse/{year}/{month}      # Words by month
 /browse/letter/{letter}     # Words by starting letter
 /browse/length/{n}          # Words by length
 /browse/part-of-speech/{p}  # Words by part of speech

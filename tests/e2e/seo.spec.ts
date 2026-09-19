@@ -39,4 +39,15 @@ test.describe('SEO build output', () => {
 		const response = await page.goto('/sitemap-index.xml');
 		expect(response?.status()).toBe(200);
 	});
+
+	test('favicon.ico serves an ICO image', async ({ request }) => {
+		const response = await request.get('/favicon.ico', { maxRedirects: 0 });
+		expect(response.status()).toBe(200);
+		expect(response.headers()['content-type']).toMatch(/image\/(x-icon|vnd\.microsoft\.icon)/);
+
+		const body = await response.body();
+		expect(body.readUInt16LE(0)).toBe(0);
+		expect(body.readUInt16LE(2)).toBe(1);
+		expect(body.readUInt16LE(4)).toBe(1);
+	});
 });
