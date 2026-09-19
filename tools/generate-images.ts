@@ -1,15 +1,14 @@
-import { parseArgs } from 'node:util';
-
 import { isEntryPoint } from '#tools/entry';
-import { showHelp } from '#tools/help-utils';
+import { parseToolArgs, showHelp } from '#tools/help-utils';
 import {
   findExistingWord,
   generateGenericShareImage,
   generateShareImage,
   getAllWords,
-  isImageCacheStale,
   markImageCacheCurrent,
+  readImageCache,
 } from '#tools/utils';
+import type { CardRender, GenerateImageOptions } from '#tools/utils';
 import { getAllPageMetadata } from '#utils/page-metadata-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 
@@ -32,7 +31,7 @@ Examples:
   npm run tool:generate-images                       # Generate all word and page images
   npm run tool:generate-images -- --words            # Generate all word images
   npm run tool:generate-images -- --generic          # Generate all generic page images
-  npm run tool:generate-images -- --word serendipity # Generate image for specific word
+  npm run tool:generate-images -- --word japan # Generate image for specific word
   npm run tool:generate-images -- --page /stats      # Generate image for stats page
 
 Environment Variables (for GitHub workflows):
@@ -52,6 +51,12 @@ interface BulkItem {
   label: string;
 }
 
+interface BulkResult {
+  failures: number;
+  /** Every card that rendered or was already current, for the marker */
+  rendered: CardRender[];
+}
+
 const CONCURRENCY_LIMIT = 10;
 
 /**
@@ -61,24 +66,24 @@ const CONCURRENCY_LIMIT = 10;
  */
 async function bulkGenerate<T extends BulkItem>(
   items: T[],
-  generate: (item: T) => Promise<boolean>,
+  generate: (item: T) => Promise<CardRender>,
   category: string,
-): Promise<number> {
+): Promise<BulkResult> {
   logger.info(`Starting ${category} generation`, { count: items.length });
 
-  const results: PromiseSettledResult<boolean>[] = [];
+  const results: PromiseSettledResult<CardRender>[] = [];
 
   for (let i = 0; i < items.length; i += CONCURRENCY_LIMIT) {
     const batch = items.slice(i, i + CONCURRENCY_LIMIT);
     const batchResults = await Promise.allSettled(
       batch.map(async (item) => {
-        const generated = await generate(item);
-        if (generated) {
+        const result = await generate(item);
+        if (result.generated) {
           logger.info(`Generated ${category} image`, { label: item.label });
         } else {
           logger.info(`Skipped ${category} image (unchanged)`, { label: item.label });
         }
-        return generated;
+        return result;
       }),
     );
     results.push(...batchResults);
@@ -89,32 +94,40 @@ async function bulkGenerate<T extends BulkItem>(
     logger.error(`Failed to generate ${category} image`, { error: r.reason?.message });
   });
 
-  const fulfilled = results.filter((r): r is PromiseFulfilledResult<boolean> => r.status === 'fulfilled');
-  const generatedCount = fulfilled.filter(r => r.value).length;
-  const skippedCount = fulfilled.filter(r => !r.value).length;
+  const rendered = results
+    .filter((r): r is PromiseFulfilledResult<CardRender> => r.status === 'fulfilled')
+    .map(r => r.value);
+  const generatedCount = rendered.filter(r => r.generated).length;
 
   logger.info(`${category} generation complete`, {
     total: items.length,
     generated: generatedCount,
-    skipped: skippedCount,
+    skipped: rendered.length - generatedCount,
     errors: failures.length,
   });
 
-  return failures.length;
+  return { failures: failures.length, rendered };
 }
 
 /**
  * Generates image for a specific word
  */
-async function generateSingleImage(word: string, regenerate: boolean): Promise<boolean> {
-  const wordData = findExistingWord(word);
+async function generateSingleImage(word: string, options: GenerateImageOptions): Promise<boolean> {
+  const { match: wordData, failures } = findExistingWord(word);
+  // The word may be in data the scan could not read, each part of which is
+  // already logged at error: that is the fault, not a missing word
+  if (!wordData && failures.length > 0) {
+    return false;
+  }
+  // A word that is not in the data is the operator's typo, refused at warn as
+  // add-word refuses its input: the CLI logger forwards only errors to Sentry
   if (!wordData) {
-    logger.error('Word not found in data files', { word });
+    logger.warn('Word not found in data files', { word });
     return false;
   }
 
   try {
-    const generated = await generateShareImage(wordData.word, wordData.date, { regenerate });
+    const { generated } = await generateShareImage(wordData.word, wordData.date, options);
     if (generated) {
       logger.info('Generated image for word', { word: wordData.word, date: wordData.date });
     } else {
@@ -130,17 +143,25 @@ async function generateSingleImage(word: string, regenerate: boolean): Promise<b
 /**
  * Generates image for a specific page path
  */
-async function generatePageImage(pagePath: string, regenerate: boolean): Promise<boolean> {
-  const allPages = getAllPageMetadata(getAllWords());
+async function generatePageImage(pagePath: string, options: GenerateImageOptions): Promise<boolean> {
+  const { words, failures } = getAllWords();
+  // The page list is built from the corpus, so a partial one could draw a
+  // wrong card. Each unreadable directory or file is already logged at error.
+  if (failures.length > 0) {
+    return false;
+  }
+
+  const allPages = getAllPageMetadata(words);
   const page = allPages.find(p => p.path === pagePath);
 
+  // An unknown page path is the operator's typo too
   if (!page) {
-    logger.error('Page not found in available pages', { pagePath });
+    logger.warn('Page not found in available pages', { pagePath });
     return false;
   }
 
   try {
-    const generated = await generateGenericShareImage(page.title, page.path, { regenerate });
+    const { generated } = await generateGenericShareImage(page.title, page.path, options);
     if (generated) {
       logger.info('Generated page image', { title: page.title, path: page.path });
     } else {
@@ -165,21 +186,21 @@ interface GenerateImagesOptions {
 async function main(options: GenerateImagesOptions): Promise<void> {
   logger.info('Generate images tool starting...');
 
-  // Settled once: every image in this run gets the same answer, so the first
-  // regenerated image cannot make the rest look current.
-  const stale = isImageCacheStale();
-  if (stale && !options.force) {
+  // Settled once: every image in this run is decided against the same
+  // snapshot, so the first regenerated image cannot make the rest look current.
+  const cache = readImageCache();
+  if (cache.stale && !options.force) {
     logger.info('Image settings differ from the last complete run, regenerating existing images');
   }
-  const regenerate = options.force || stale;
+  const renderOptions: GenerateImageOptions = { regenerate: options.force || cache.stale, cards: cache.cards };
 
   if (options.page) {
-    const success = await generatePageImage(options.page, regenerate);
+    const success = await generatePageImage(options.page, renderOptions);
     await exit(success ? 0 : 1);
   }
 
   if (options.word) {
-    const success = await generateSingleImage(options.word, regenerate);
+    const success = await generateSingleImage(options.word, renderOptions);
     await exit(success ? 0 : 1);
   }
 
@@ -187,24 +208,31 @@ async function main(options: GenerateImagesOptions): Promise<void> {
   const runBoth = !options.words && !options.generic;
   const coversWords = options.words || runBoth;
   const coversGeneric = options.generic || runBoth;
-  const failed = { count: 0 };
+  // Read once for both categories. Unreadable files are already logged; each
+  // one fails the run, since its card and the pages it feeds are missing.
+  const { words, failures: unreadable } = getAllWords();
+  const failed = { count: unreadable.length };
+  const rendered: CardRender[] = [];
 
   if (coversWords) {
-    const allWords = getAllWords();
-    failed.count += await bulkGenerate(
-      allWords.map(w => ({ label: `${w.word} (${w.date})`, word: w.word, date: w.date })),
-      (item) => generateShareImage(item.word, item.date, { regenerate }),
+    const result = await bulkGenerate(
+      words.map(w => ({ label: `${w.word} (${w.date})`, word: w.word, date: w.date })),
+      (item) => generateShareImage(item.word, item.date, renderOptions),
       'word',
     );
+    failed.count += result.failures;
+    rendered.push(...result.rendered);
   }
 
   if (coversGeneric) {
-    const pages = getAllPageMetadata(getAllWords());
-    failed.count += await bulkGenerate(
+    const pages = getAllPageMetadata(words);
+    const result = await bulkGenerate(
       pages.map(p => ({ label: `${p.title} (${p.path})`, title: p.title, path: p.path })),
-      (item) => generateGenericShareImage(item.title, item.path, { regenerate }),
+      (item) => generateGenericShareImage(item.title, item.path, renderOptions),
       'generic',
     );
+    failed.count += result.failures;
+    rendered.push(...result.rendered);
   }
 
   if (failed.count > 0) {
@@ -215,7 +243,7 @@ async function main(options: GenerateImagesOptions): Promise<void> {
   // Only a run that covered every word and every page certifies the corpus,
   // however that coverage was requested.
   if (coversWords && coversGeneric) {
-    markImageCacheCurrent();
+    markImageCacheCurrent(rendered);
   }
 
   await exit(0);
@@ -224,7 +252,7 @@ async function main(options: GenerateImagesOptions): Promise<void> {
 // Everything that reads argv lives behind the guard, so importing this module
 // runs no CLI code.
 if (isEntryPoint(import.meta.url)) {
-  const { values } = parseArgs({
+  const { values } = await parseToolArgs({
     args: process.argv.slice(2),
     options: {
       help: { type: 'boolean', short: 'h', default: false },

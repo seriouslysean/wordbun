@@ -28,7 +28,7 @@ const letterPatternItems = [
 const { title, description } = getPageMetadata(Astro.url.pathname);
 ---
 <Layout title={title} description={description}>
-  <main class="letter-patterns">
+  <div class="letter-patterns">
     <Heading text={title} />
     <DescriptionText text={description} />
 
@@ -41,7 +41,7 @@ const { title, description } = getPageMetadata(Astro.url.pathname);
         }))} />
       </StatsSection>
     )}
-  </main>
+  </div>
 </Layout>
 
 <style>

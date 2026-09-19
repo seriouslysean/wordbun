@@ -3,13 +3,13 @@ import path from 'node:path';
 
 import { paths } from '#config/paths';
 import { isEntryPoint } from '#tools/entry';
-import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
+import { COMMON_ENV_DOCS, parseToolArgs, showHelp } from '#tools/help-utils';
 import { createWordEntry, findExistingWord } from '#tools/utils';
 import type { WordData } from '#types';
 import { getTodayYYYYMMDD, isValidDate } from '#utils/date-utils';
+import { isWordNotFound } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
-import { flattenErrors } from '#utils/text-utils';
-import { parseWordData } from '#utils/word-validation';
+import { parseWordData } from '#utils/stored-word-validation';
 
 /**
  * Checks if a file exists for the given date and returns the existing word if found
@@ -59,14 +59,16 @@ interface AddWordOptions {
 export async function addWord(input: string, options: AddWordOptions = {}): Promise<void> {
   const { date, overwrite = false, preserveCase = false } = options;
   const word = input?.trim();
+  // Refusals of the operator's input log at warn: the CLI logger forwards
+  // only error-level calls to Sentry, and a typo is not an application fault
   try {
     if (!word) {
-      logger.error('Word is required', { providedInput: input });
+      logger.warn('Word is required', { providedInput: input });
       await exit(1);
     }
 
     if (date && !isValidDate(date)) {
-      logger.error('Invalid date format', { providedDate: date, expectedFormat: 'YYYYMMDD' });
+      logger.warn('Invalid date format', { providedDate: date, expectedFormat: 'YYYYMMDD' });
       await exit(1);
     }
 
@@ -75,7 +77,7 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
 
     // Validate that date is not in the future
     if (!isNotFutureDate(targetDate)) {
-      logger.error('Cannot add words for future dates', {
+      logger.warn('Cannot add words for future dates', {
         requestedDate: targetDate,
         currentDate: getTodayYYYYMMDD(),
       });
@@ -85,17 +87,18 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
     // Check if file already exists for the target date
     const existing = checkExistingWord(targetDate);
     if (existing && !overwrite) {
-      logger.error('Word already exists for this date', {
+      logger.warn('Word already exists for this date', {
         date: existing.date,
         existingWord: existing.word,
       });
       await exit(1);
     }
 
-    // Check if word already exists anywhere else in the system (always enforce global uniqueness)
-    const existingWordByName = findExistingWord(word);
+    // Check if word already exists anywhere else in the system (always enforce global uniqueness).
+    // A new site has no words yet, so an empty corpus is not a fault here.
+    const { match: existingWordByName } = findExistingWord(word, { allowEmpty: true });
     if (existingWordByName && existingWordByName.date !== targetDate) {
-      logger.error('Word already exists for different date', {
+      logger.warn('Word already exists for different date', {
         word: word,
         existingDate: existingWordByName.date,
         requestedDate: targetDate,
@@ -110,9 +113,8 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
     const errorMessage = getErrorMessage(error);
     // "Not found" only when every adapter said so; a rate limit or shape error
     // from one of them is a different problem and is reported as such
-    const isNotFound = flattenErrors(error).every(failure => getErrorMessage(failure).includes('not found in dictionary'));
-    if (isNotFound) {
-      logger.error('Word not found in dictionary', { word, errorMessage });
+    if (isWordNotFound(error)) {
+      logger.warn('Word not found in dictionary', { word, errorMessage });
     } else {
       logger.error('Failed to add word', { word, errorMessage });
     }
@@ -155,11 +157,8 @@ Requirements:
 ${COMMON_ENV_DOCS}
 `;
 
-// Parse command line arguments
-import { parseArgs } from 'node:util';
-
 if (isEntryPoint(import.meta.url)) {
-  const { values, positionals } = parseArgs({
+  const { values, positionals } = await parseToolArgs({
     args: process.argv.slice(2),
     options: {
       help: { type: 'boolean', short: 'h', default: false },
@@ -178,7 +177,7 @@ if (isEntryPoint(import.meta.url)) {
   const [word, date] = positionals;
 
   if (!word) {
-    logger.error('Word is required', { word });
+    logger.warn('Word is required', { word });
     showHelp(HELP_TEXT);
     await exit(1);
   } else {

@@ -1,16 +1,15 @@
 import fs from 'node:fs';
 import { setTimeout as delay } from 'node:timers/promises';
-import { parseArgs } from 'node:util';
 
 import { fetchWithFallback } from '#adapters';
 import { isEntryPoint } from '#tools/entry';
-import { COMMON_ENV_DOCS,showHelp } from '#tools/help-utils';
+import { COMMON_ENV_DOCS, parseToolArgs, showHelp } from '#tools/help-utils';
 import { buildWordData, getWordFiles, primaryPartOfSpeech, tryFetchRelations } from '#tools/utils';
 import type { WordEnrichment } from '#types';
+import { isRateLimited } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
-import { flattenErrors } from '#utils/text-utils';
 import { isRecord } from '#utils/type-guards';
-import { isValidDictionaryData, isWordEnrichment } from '#utils/word-validation';
+import { isWordEnrichment } from '#utils/stored-word-validation';
 
 interface StoredEntry {
   preserveCase: boolean;
@@ -55,14 +54,16 @@ export const DEFAULTS = {
 const RATE_LIMIT_BACKOFF_MS = 30000;
 
 /**
- * Parses a whole-number CLI option. Throws on anything else (NaN, fractions,
- * trailing junk, values below `min`) so a typo cannot become a zero-size batch
- * or a NaN delay.
+ * Parses a whole-number CLI option. Anything else (NaN, fractions, trailing
+ * junk, values below `min`) exits 1, so a typo cannot become a zero-size batch
+ * or a NaN delay. The refusal logs at warn, as add-word refuses its input: a
+ * typo is not a fault, and the CLI logger forwards only errors to Sentry.
  */
-function parseCount(option: string, raw: string, min: number): number {
+async function parseCount(option: string, raw: string, min: number): Promise<number> {
   const value = Number(raw);
   if (!/^\d+$/.test(raw) || value < min) {
-    throw new Error(`Invalid numeric option --${option}: expected a whole number of at least ${min}, got "${raw}"`);
+    logger.warn('Invalid numeric option', { option: `--${option}`, expected: `a whole number of at least ${min}`, got: raw });
+    return exit(1);
   }
   return value;
 }
@@ -84,13 +85,6 @@ export async function regenerateWordFile(word: string, date: string, originalPat
     }
 
     const { response, adapterName } = await fetchWithFallback(word);
-    const data = response.definitions;
-
-    if (!isValidDictionaryData(data)) {
-      logger.error('Invalid word data received from adapter', { word, adapter: adapterName });
-      return false;
-    }
-
     const relations = await tryFetchRelations(word, primaryPartOfSpeech(response.definitions));
     const { preserveCase, enrichment: storedEnrichment } = readStoredEntry(originalPath);
     const wordData = buildWordData({
@@ -110,15 +104,7 @@ export async function regenerateWordFile(word: string, date: string, originalPat
     const errorMessage = getErrorMessage(error);
 
     // A rate limit from any adapter in the chain is worth backing off for
-    const isRateLimit = flattenErrors(error).some((failure) => {
-      const message = getErrorMessage(failure);
-      return message.includes('Rate limit') ||
-        message.includes('rate limit') ||
-        message.includes('429') ||
-        (failure instanceof Object && 'status' in failure && failure.status === 429);
-    });
-
-    if (isRateLimit && retryCount < maxRetries) {
+    if (isRateLimited(error) && retryCount < maxRetries) {
       // Exponential backoff: 2^retryCount * 30 seconds
       const backoffDelay = Math.pow(2, retryCount) * RATE_LIMIT_BACKOFF_MS;
       logger.info('Rate limited, retrying with backoff', {
@@ -149,8 +135,10 @@ export async function regenerateWordFile(word: string, date: string, originalPat
  */
 async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
   try {
-    const wordsToRegenerate = getWordFiles();
-    logger.info('Found word files to process', { count: wordsToRegenerate.length });
+    // Unreadable files are already logged; each counts as a failure, so a
+    // run that could not see every word never reports success.
+    const { files: wordsToRegenerate, failures: unreadable } = getWordFiles();
+    logger.info('Found word files to process', { count: wordsToRegenerate.length, unreadable: unreadable.length });
 
     if (options.dryRun) {
       logger.info('DRY RUN MODE - Words that would be regenerated:');
@@ -158,7 +146,7 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
         logger.info('Word entry', { index: index + 1, word: item.word, date: item.date, path: item.path });
       });
       logger.info('Use --force to actually regenerate these words');
-      return 0;
+      return unreadable.length;
     }
 
     if (!options.force) {
@@ -202,12 +190,12 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
     }
 
     const successCount = outcomes.filter(Boolean).length;
-    const failureCount = outcomes.length - successCount;
+    const failureCount = outcomes.length - successCount + unreadable.length;
 
     logger.info('Regeneration complete', {
       success: successCount,
       failed: failureCount,
-      total: outcomes.length,
+      total: outcomes.length + unreadable.length,
     });
 
     return failureCount;
@@ -252,7 +240,7 @@ ${COMMON_ENV_DOCS}
 `;
 
 if (isEntryPoint(import.meta.url)) {
-  const { values } = parseArgs({
+  const { values } = await parseToolArgs({
     args: process.argv.slice(2),
     options: {
       help: { type: 'boolean', short: 'h', default: false },
@@ -271,13 +259,13 @@ if (isEntryPoint(import.meta.url)) {
   }
 
   const run = async (): Promise<void> => {
-    // Validation throws before any word is touched; the catch below reports it.
+    // The options are validated before any word is touched.
     const failed = await regenerateAllWords({
       dryRun: !!values['dry-run'],
       force: !!values.force,
-      timeout: parseCount('timeout', values.timeout, 0),
-      batchSize: parseCount('batch-size', values['batch-size'], 1),
-      batchTimeout: parseCount('batch-timeout', values['batch-timeout'], 0),
+      timeout: await parseCount('timeout', values.timeout, 0),
+      batchSize: await parseCount('batch-size', values['batch-size'], 1),
+      batchTimeout: await parseCount('batch-timeout', values['batch-timeout'], 0),
     });
 
     if (failed > 0) {

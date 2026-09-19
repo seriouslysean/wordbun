@@ -12,7 +12,7 @@ import { isEntryPoint } from '#tools/entry';
 import { showHelp } from '#tools/help-utils';
 import { isValidDate } from '#utils/date-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
-import { parseWordData } from '#utils/word-validation';
+import { parseWordData } from '#utils/stored-word-validation';
 
 const ENGINE_ROOT = path.join(import.meta.dirname, '..');
 const TEMPLATES = path.join(import.meta.dirname, 'templates', 'site');

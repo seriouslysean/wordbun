@@ -42,22 +42,41 @@ const inputElement = document.getElementById('site-search-input');
 const input = inputElement instanceof HTMLInputElement ? inputElement : null;
 const results = document.getElementById('site-search-results');
 
-const cache: { data: WordIndexEntry[] | null } = { data: null };
+const cache: { data: WordIndexEntry[] | null; request: Promise<WordIndexEntry[]> | null } = {
+  data: null,
+  request: null,
+};
 
 // Progressive enhancement: reveal the icon only when JS can drive it.
 if (toggle) {
   toggle.hidden = false;
 }
 
-async function loadWords(): Promise<WordIndexEntry[]> {
+function loadWords(): Promise<WordIndexEntry[]> {
   if (cache.data) {
-    return cache.data;
+    return Promise.resolve(cache.data);
   }
-  const response = await fetch(getUrl('/words.json'));
-  // A body that is not a word index is treated like a failed fetch: no words
-  const data: unknown = response.ok ? await response.json() : [];
-  cache.data = isWordIndex(data) ? data : [];
-  return cache.data;
+  if (cache.request) {
+    return cache.request;
+  }
+
+  cache.request = fetch(getUrl('/words.json'))
+    .then(async response => {
+      if (!response.ok) {
+        throw new Error(`Word index request failed: ${response.status}`);
+      }
+      const data: unknown = await response.json();
+      if (!isWordIndex(data)) {
+        throw new Error('Word index response has an invalid shape');
+      }
+      cache.data = data;
+      return data;
+    })
+    .catch(() => [])
+    .finally(() => {
+      cache.request = null;
+    });
+  return cache.request;
 }
 
 function closePanel(): void {
@@ -96,6 +115,9 @@ async function onInput(): Promise<void> {
     return;
   }
   const words = await loadWords();
+  if (input.value.trim().toLowerCase() !== query) {
+    return;
+  }
   // Starts-with match, sorted alphabetically so results read predictably as you type.
   const matches = words
     .filter(entry => entry.word.toLowerCase().startsWith(query))

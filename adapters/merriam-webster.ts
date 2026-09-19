@@ -10,24 +10,25 @@ import type {
   MWSenseItem,
   MWVisTuple,
 } from '#types';
+import type { BasePartOfSpeech } from '#constants/parts-of-speech';
 import {
   adapterFetch,
+  buildDefinition,
   buildDictionaryResponse,
-  normalizePOS,
   parseJsonResponse,
   throwOnHttpError,
   throwUnexpectedShape,
   throwWordNotFound,
-  transformToWordData,
-  transformWordData,
+  WordNotFoundError,
 } from '#utils/adapter-utils';
 import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
 
 /**
  * Maps MW functional-label strings to elementary POS types.
- * Values not in this map AND not already a base POS -> undefined (no POS stored).
+ * A value not in this map and not already a base POS (e.g. "biographical
+ * name") is kept as the definition's `label` instead of a part of speech.
  */
-const POS_MAP: Record<string, string> = {
+const POS_MAP = {
   'auxiliary verb': 'verb',
   'intransitive verb': 'verb',
   'transitive verb': 'verb',
@@ -43,7 +44,7 @@ const POS_MAP: Record<string, string> = {
   'adjective suffix': 'adjective',
   'definite article': 'article',
   'indefinite article': 'article',
-};
+} satisfies Readonly<Record<string, BasePartOfSpeech>>;
 
 export const CONFIG: MWConfig = {
   BASE_URL: process.env.MERRIAM_WEBSTER_API_URL || 'https://dictionaryapi.com/api/v3/references',
@@ -266,14 +267,19 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
 
     const data = await parseJsonResponse(response, 'Merriam-Webster');
 
-    if (!Array.isArray(data) || data.length === 0) {
+    // Every answer, suggestions included, is an array: anything else means the
+    // API changed, which is a fault to report, not a misspelling
+    if (!Array.isArray(data)) {
+      throwUnexpectedShape('Merriam-Webster', word);
+    }
+    if (data.length === 0) {
       throwWordNotFound(word);
     }
 
     // String array = suggestions, not entries
     if (isStringArray(data)) {
       const suggestions = data.slice(0, 5).join(', ');
-      throw new Error(`Word "${word}" not found. Did you mean: ${suggestions}`);
+      throw new WordNotFoundError(`Word "${word}" not found. Did you mean: ${suggestions}`);
     }
 
     // Filter to configured dictionary source only. Entries from other sources
@@ -281,9 +287,16 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
     const dictionary = CONFIG.DICTIONARY;
     const entries = data.filter(entry => isRecord(entry) && isRecord(entry.meta) && entry.meta.src === dictionary);
     if (entries.length === 0) {
-      throw new Error(`Word "${word}" not found in ${getDictionaryLabel()}.`);
+      throw new WordNotFoundError(`Word "${word}" not found in ${getDictionaryLabel()}.`);
     }
     if (!isEntryArray(entries)) {
+      throwUnexpectedShape('Merriam-Webster', word);
+    }
+    // The API documents shortdef as a top-level member of the entry, at its
+    // end, and marks it nowhere as optional; an entry that is only a
+    // cross-reference still carries it, empty. With it on no entry the field
+    // has moved or been renamed, which is not the word being missing.
+    if (entries.every(entry => entry.shortdef === undefined)) {
       throwUnexpectedShape('Merriam-Webster', word);
     }
 
@@ -292,19 +305,18 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
     const definitions = entries.flatMap(entry => {
       // Strip homograph suffix from meta.id (e.g., "speed:1" -> "speed")
       const id = entry.meta.id.replace(/:\d+$/, '');
-      const partOfSpeech = entry.fl ? normalizePOS(entry.fl, POS_MAP) : undefined;
-      const entryExamples = extractExamples(entry);
+      const examples = extractExamples(entry);
 
-      return (entry.shortdef ?? []).map(text => ({
+      return (entry.shortdef ?? []).map(text => buildDefinition({
         id,
-        partOfSpeech,
+        partOfSpeech: entry.fl,
         // Normalize colon spacing
         text: text.replaceAll(/ +: +/g, ': '),
         attributionText: attribution,
         sourceDictionary: dictionary,
         sourceUrl,
-        examples: entryExamples.length > 0 ? entryExamples : undefined,
-      }));
+        examples,
+      }, POS_MAP));
     });
 
     // Capture per-headword data from the first matching entry (zero extra calls).
@@ -318,17 +330,5 @@ export const merriamWebsterAdapter: DictionaryAdapter = {
     };
 
     return buildDictionaryResponse(word, definitions, 'Merriam-Webster', attribution, sourceUrl, headword);
-  },
-
-  transformToWordData(response: DictionaryResponse, date: string) {
-    return transformToWordData('merriam-webster', response, date);
-  },
-
-  transformWordData(wordData) {
-    return transformWordData(wordData, 'from Merriam-Webster');
-  },
-
-  isValidResponse(response: unknown): boolean {
-    return isEntryArray(response);
   },
 };
