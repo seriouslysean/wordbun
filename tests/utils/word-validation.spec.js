@@ -20,7 +20,11 @@ describe('word-validation', () => {
         preserveCase: true,
         rawData: { anything: 1 },
         enrichment: { synonyms: ['exam'], pronunciation: 'test', audio: 'https://example.com/t.mp3', etymology: 'Latin' },
-        data: [{ id: 'test', text: ['a', 'test'], examples: ['x'], synonyms: [], antonyms: [], sourceUrl: '' }],
+        data: [
+          { id: 'test', text: ['a', 'test'], examples: ['x'], synonyms: [], antonyms: [], sourceUrl: '' },
+          { text: 'x', label: 'affix' },
+          { text: 'a rest', references: [{ start: 2, end: 6, url: 'https://www.wordnik.com/words/rest' }] },
+        ],
       })).toBe(true);
     });
 
@@ -48,8 +52,16 @@ describe('word-validation', () => {
       expect(isWordData(withDefinition('a test'))).toBe(false);
       expect(isWordData(withDefinition({ id: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ partOfSpeech: 1 }))).toBe(false);
+      expect(isWordData(withDefinition({ label: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ text: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ text: ['a', 1] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', references: 'rest' }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: '2', end: 6, url: 'https://example.com' }] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 6.5, url: 'https://example.com' }] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 6 }] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 6, url: 'javascript:alert(1)' }] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: 'a rest', references: [{ start: 2, end: 9, url: 'https://example.com' }] }))).toBe(false);
+      expect(isWordData(withDefinition({ text: ['a', 'rest'], references: [{ start: 2, end: 6, url: 'https://example.com' }] }))).toBe(true);
       expect(isWordData(withDefinition({ attributionText: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ sourceDictionary: 1 }))).toBe(false);
       expect(isWordData(withDefinition({ sourceUrl: 1 }))).toBe(false);

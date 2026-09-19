@@ -12,7 +12,6 @@ import {
   getCurrentWord,
   getPastWords,
   getWordByDate,
-  getWordDetails,
   getWordsByLength,
   getWordsByMonth,
   groupWordsByLength,
@@ -34,6 +33,7 @@ import {
   findValidDefinition,
   getDisplayableDefinitions,
   isValidDictionaryData,
+  getWordDetails,
   getWordSenses,
   getWordsByPartOfSpeech as getWordsByPartOfSpeechPure,
   groupWordsByPartOfSpeech as groupWordsByPartOfSpeechPure,
@@ -202,44 +202,49 @@ describe('word-data-utils', () => {
 
   describe('getWordDetails', () => {
     it('handles missing word data', () => {
-      const result = getWordDetails(null);
-      expect(result).toEqual({ partOfSpeech: '', definition: '', meta: null });
+      expect(getWordDetails(null)).toEqual({ partOfSpeech: '', definition: '', meta: null });
+      expect(getWordDetails({ word: 'test', date: '20250101', adapter: 'wordnik', data: [] }))
+        .toEqual({ partOfSpeech: '', definition: '', meta: null });
     });
 
-    it('dispatches to the correct adapter based on wordData.adapter field', () => {
-      const wordnikWord = {
-        word: 'test',
-        date: '20250101',
-        adapter: 'wordnik',
-        data: [{ text: 'A wordnik def', partOfSpeech: 'noun', attributionText: 'from Wordnik' }],
-      };
-      const result = getWordDetails(wordnikWord);
-      expect(result.definition).toBe('A wordnik def');
-      expect(result.partOfSpeech).toBe('noun');
-    });
-
-    it('dispatches to merriam-webster adapter when adapter field says so', () => {
-      const mwWord = {
+    it('reads the first displayable definition and its source from the stored record', () => {
+      const word = {
         word: 'test',
         date: '20250101',
         adapter: 'merriam-webster',
-        data: [{ text: 'An MW def', partOfSpeech: 'noun', attributionText: 'from Merriam-Webster' }],
+        data: [
+          { text: 'No part of speech', sourceUrl: 'https://example.com/other' },
+          {
+            text: 'An MW def',
+            partOfSpeech: 'transitive verb',
+            attributionText: "from Merriam-Webster's Collegiate Dictionary",
+            sourceDictionary: 'collegiate',
+            sourceUrl: 'https://www.merriam-webster.com/dictionary/test',
+          },
+        ],
       };
-      const result = getWordDetails(mwWord);
-      expect(result.definition).toBe('An MW def');
-      expect(result.meta.attributionText).toContain('Merriam-Webster');
+
+      expect(getWordDetails(word)).toEqual({
+        partOfSpeech: 'verb',
+        definition: 'An MW def',
+        meta: {
+          attributionText: "from Merriam-Webster's Collegiate Dictionary",
+          sourceDictionary: 'collegiate',
+          sourceUrl: 'https://www.merriam-webster.com/dictionary/test',
+        },
+      });
     });
 
-    it('dispatches to wiktionary adapter when adapter field says so', () => {
-      const wiktionaryWord = {
-        word: 'test',
-        date: '20250101',
-        adapter: 'wiktionary',
-        data: [{ text: 'A wiktionary def', partOfSpeech: 'noun', attributionText: 'from Wiktionary' }],
-      };
-      const result = getWordDetails(wiktionaryWord);
-      expect(result.definition).toBe('A wiktionary def');
-      expect(result.meta.attributionText).toContain('Wiktionary');
+    it('needs no adapter: a record from any source, or none, reads the same way', () => {
+      const data = [{ text: 'A taxonomic <xref>order</xref>', partOfSpeech: 'noun' }];
+
+      for (const adapter of ['wordnik', 'wiktionary', 'static']) {
+        expect(getWordDetails({ word: 'test', date: '', adapter, data })).toEqual({
+          partOfSpeech: 'noun',
+          definition: 'A taxonomic order',
+          meta: { attributionText: undefined, sourceDictionary: undefined, sourceUrl: undefined },
+        });
+      }
     });
   });
 
@@ -463,6 +468,13 @@ describe('word-data-utils', () => {
         { text: 'Another without' },
       ];
       expect(findValidDefinition(definitions)).toBeNull();
+    });
+
+    it('returns the text a page shows, with markup read and no outer whitespace', () => {
+      const definitions = [
+        { text: ' A taxonomic <xref>order</xref> &amp; <ant>class</ant> ', partOfSpeech: 'noun' },
+      ];
+      expect(findValidDefinition(definitions)).toEqual({ text: 'A taxonomic order & class', partOfSpeech: 'noun' });
     });
 
     it('skips empty text values', () => {
@@ -737,6 +749,10 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       expect(isValidDictionaryData([{ text: 'A definition with text only' }])).toBe(false);
     });
 
+    it('refuses entries classified only by a label, which is not a part of speech', () => {
+      expect(isValidDictionaryData([{ label: 'biographical name', text: 'American seismologist' }])).toBe(false);
+    });
+
     it('refuses entries having only partOfSpeech', () => {
       expect(isValidDictionaryData([{ partOfSpeech: 'noun' }])).toBe(false);
     });
@@ -863,9 +879,32 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
     it('returns every valid headword sense and excludes compound entries', () => {
       const senses = getWordSenses(reading);
       expect(senses).toEqual([
-        { partOfSpeech: 'noun', text: 'the act of reading', examples: [] },
-        { partOfSpeech: 'verb', text: 'to read aloud', examples: [] },
+        { partOfSpeech: 'noun', segments: [{ type: 'text', text: 'the act of reading' }], examples: [] },
+        { partOfSpeech: 'verb', segments: [{ type: 'text', text: 'to read aloud' }], examples: [] },
       ]);
+    });
+
+    it('shows a stored cross-reference as a link, whether written as ranges or as Wordnik markup', () => {
+      const word = {
+        word: 'amblypygi',
+        date: '20230106',
+        adapter: 'wordnik',
+        data: [
+          { partOfSpeech: 'noun', text: 'A taxonomic <xref>order</xref> of arachnids.' },
+          {
+            partOfSpeech: 'noun',
+            text: 'A taxonomic order of arachnids.',
+            references: [{ start: 12, end: 17, url: 'https://www.wordnik.com/words/order' }],
+          },
+        ],
+      };
+      const segments = [
+        { type: 'text', text: 'A taxonomic ' },
+        { type: 'reference', text: 'order', url: 'https://www.wordnik.com/words/order' },
+        { type: 'text', text: ' of arachnids.' },
+      ];
+
+      expect(getWordSenses(word).map(sense => sense.segments)).toEqual([segments, segments]);
     });
 
     it('falls back to the single best definition when the id filter matches nothing', () => {
@@ -875,7 +914,7 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
         adapter: 'wordnik',
         data: [{ id: 'unrelated', partOfSpeech: 'noun', text: 'a definition' }],
       };
-      expect(getWordSenses(word)).toEqual([{ partOfSpeech: 'noun', text: 'a definition', examples: [] }]);
+      expect(getWordSenses(word)).toEqual([{ partOfSpeech: 'noun', segments: [{ type: 'text', text: 'a definition' }], examples: [] }]);
     });
 
     it('returns an empty array for missing or invalid data', () => {

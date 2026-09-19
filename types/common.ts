@@ -3,6 +3,8 @@
  * Consolidated from multiple files to reduce duplication
  */
 
+import type { BasePartOfSpeech } from '#constants/parts-of-speech';
+
 // === SHARED META STRUCTURES ===
 
 /**
@@ -71,13 +73,79 @@ export interface RateLimit {
 // === DICTIONARY TYPES ===
 
 /**
- * Common dictionary definition structure
- * Used by all adapters for consistent data representation
+ * A cross-reference inside a definition: the characters of its text from
+ * `start` up to, not including, `end` (JavaScript string offsets) link to
+ * `url`, an absolute http(s) URL.
  */
-export interface DictionaryDefinition extends SourceMeta {
+export interface DictionaryReference {
+  start: number;
+  end: number;
+  url: string;
+}
+
+/**
+ * The fields of a canonical definition other than its classification. Every
+ * string is nonblank, every array nonempty and every URL absolute http(s); an
+ * adapter omits a field it has no value for. `text` is stable under the
+ * definition markup parser: partner tags and encoded characters it would
+ * transform are refused, though ordinary text may contain `<`. A
+ * cross-reference is one of `references`, which are in order, do not overlap,
+ * and each cover nonblank text. The type cannot say so, so
+ * isCanonicalResponse in utils/adapter-utils.ts checks it at fetch time.
+ */
+interface DictionaryDefinitionFields {
+  text: string;
+  references?: DictionaryReference[];
+
+  id?: string;
+  attributionText?: string;
+  sourceDictionary?: string;
+  sourceUrl?: string;
+
+  examples?: string[];
+  synonyms?: string[];
+  antonyms?: string[];
+}
+
+/**
+ * How a definition is classified: a part of speech from the vocabulary, or
+ * none. `label` never sits beside a part of speech.
+ */
+export type DictionaryClassification =
+  | {
+      partOfSpeech: BasePartOfSpeech;
+      label?: never;
+    }
+  | {
+      // Both absent means the partner supplied no classification.
+      partOfSpeech?: never;
+      // Present only when the partner supplied an unmappable term.
+      label?: string;
+    };
+
+/**
+ * The canonical definition every adapter returns: the partner's vocabulary
+ * translated into ours. Stored records keep the looser
+ * StoredDictionaryDefinition shape until they are normalized.
+ */
+export type DictionaryDefinition = DictionaryDefinitionFields & DictionaryClassification;
+
+/**
+ * A definition as stored in a word file and read by the site. Looser than
+ * DictionaryDefinition because records written before the canonical contract
+ * may carry any part-of-speech string, text fragments, empty arrays, no text,
+ * or Wordnik's cross-reference markup inside the text instead of
+ * `references`. Every canonical definition is also a stored one.
+ */
+export interface StoredDictionaryDefinition {
   id?: string;
   partOfSpeech?: string;
+  label?: string;
   text?: string | string[];
+  references?: DictionaryReference[];
+  attributionText?: string;
+  sourceDictionary?: string;
+  sourceUrl?: string;
   examples?: string[];
   synonyms?: string[];
   antonyms?: string[];

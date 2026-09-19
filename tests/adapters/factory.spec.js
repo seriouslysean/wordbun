@@ -2,7 +2,7 @@ import {
  beforeEach, describe, expect, it, vi,
 } from 'vitest';
 
-import { getAdapter, getAdapterByName } from '#adapters';
+import { getAdapter, getAdapterByName, getAdapterNames } from '#adapters';
 
 const mockLogger = vi.hoisted(() => ({
   info: vi.fn(),
@@ -29,9 +29,6 @@ describe('adapter factory', () => {
       expect(adapter).toBeDefined();
       expect(adapter.name).toBe('wordnik');
       expect(typeof adapter.fetchWordData).toBe('function');
-      expect(typeof adapter.transformToWordData).toBe('function');
-      expect(typeof adapter.transformWordData).toBe('function');
-      expect(typeof adapter.isValidResponse).toBe('function');
     });
 
     it('returns wordnik adapter when explicitly configured', () => {
@@ -127,57 +124,14 @@ describe('adapter factory', () => {
   });
 
   describe('adapter interface compliance', () => {
-    it('returned adapter implements DictionaryAdapter interface', () => {
-      const adapter = getAdapter();
+    // Rendering reads stored data, never an adapter, so an adapter is only
+    // its name and the fetch.
+    it.each(getAdapterNames())('%s has a name and fetches, and nothing else', (name) => {
+      const adapter = getAdapterByName(name);
 
-      expect(adapter).toHaveProperty('name');
-      expect(adapter).toHaveProperty('fetchWordData');
-      expect(adapter).toHaveProperty('transformToWordData');
-      expect(adapter).toHaveProperty('transformWordData');
-      expect(adapter).toHaveProperty('isValidResponse');
-
+      expect(Object.keys(adapter).toSorted()).toEqual(['fetchWordData', 'name']);
+      expect(adapter.name).toBe(name);
       expect(typeof adapter.fetchWordData).toBe('function');
-      expect(typeof adapter.transformToWordData).toBe('function');
-      expect(typeof adapter.transformWordData).toBe('function');
-      expect(typeof adapter.isValidResponse).toBe('function');
-
-      expect(typeof adapter.name).toBe('string');
-    });
-
-    it('merriam-webster adapter implements DictionaryAdapter interface', () => {
-      vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
-
-      const adapter = getAdapter();
-
-      expect(adapter).toHaveProperty('name');
-      expect(adapter).toHaveProperty('fetchWordData');
-      expect(adapter).toHaveProperty('transformToWordData');
-      expect(adapter).toHaveProperty('transformWordData');
-      expect(adapter).toHaveProperty('isValidResponse');
-
-      expect(typeof adapter.fetchWordData).toBe('function');
-      expect(typeof adapter.transformToWordData).toBe('function');
-      expect(typeof adapter.transformWordData).toBe('function');
-      expect(typeof adapter.isValidResponse).toBe('function');
-
-      expect(typeof adapter.name).toBe('string');
-    });
-
-    it('wiktionary adapter implements DictionaryAdapter interface', () => {
-      const adapter = getAdapterByName('wiktionary');
-
-      expect(adapter).toHaveProperty('name');
-      expect(adapter).toHaveProperty('fetchWordData');
-      expect(adapter).toHaveProperty('transformToWordData');
-      expect(adapter).toHaveProperty('transformWordData');
-      expect(adapter).toHaveProperty('isValidResponse');
-
-      expect(typeof adapter.fetchWordData).toBe('function');
-      expect(typeof adapter.transformToWordData).toBe('function');
-      expect(typeof adapter.transformWordData).toBe('function');
-      expect(typeof adapter.isValidResponse).toBe('function');
-
-      expect(typeof adapter.name).toBe('string');
     });
   });
 });

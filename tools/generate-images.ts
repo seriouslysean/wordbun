@@ -1,7 +1,5 @@
-import { parseArgs } from 'node:util';
-
 import { isEntryPoint } from '#tools/entry';
-import { showHelp } from '#tools/help-utils';
+import { parseToolArgs, showHelp } from '#tools/help-utils';
 import {
   findExistingWord,
   generateGenericShareImage,
@@ -115,7 +113,12 @@ async function bulkGenerate<T extends BulkItem>(
  * Generates image for a specific word
  */
 async function generateSingleImage(word: string, options: GenerateImageOptions): Promise<boolean> {
-  const wordData = findExistingWord(word);
+  const { match: wordData, failures } = findExistingWord(word);
+  // The word may be in data the scan could not read, each part of which is
+  // already logged at error: that is the fault, not a missing word
+  if (!wordData && failures.length > 0) {
+    return false;
+  }
   // A word that is not in the data is the operator's typo, refused at warn as
   // add-word refuses its input: the CLI logger forwards only errors to Sentry
   if (!wordData) {
@@ -141,7 +144,14 @@ async function generateSingleImage(word: string, options: GenerateImageOptions):
  * Generates image for a specific page path
  */
 async function generatePageImage(pagePath: string, options: GenerateImageOptions): Promise<boolean> {
-  const allPages = getAllPageMetadata(getAllWords().words);
+  const { words, failures } = getAllWords();
+  // The page list is built from the corpus, so a partial one could draw a
+  // wrong card. Each unreadable directory or file is already logged at error.
+  if (failures.length > 0) {
+    return false;
+  }
+
+  const allPages = getAllPageMetadata(words);
   const page = allPages.find(p => p.path === pagePath);
 
   // An unknown page path is the operator's typo too
@@ -242,7 +252,7 @@ async function main(options: GenerateImagesOptions): Promise<void> {
 // Everything that reads argv lives behind the guard, so importing this module
 // runs no CLI code.
 if (isEntryPoint(import.meta.url)) {
-  const { values } = parseArgs({
+  const { values } = await parseToolArgs({
     args: process.argv.slice(2),
     options: {
       help: { type: 'boolean', short: 'h', default: false },

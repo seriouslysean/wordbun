@@ -45,6 +45,16 @@ export const slugify = (str: string): string => {
 export const collapseWhitespace = (text: string): string =>
   text.replaceAll(/\s+/g, ' ').trim();
 
+/**
+ * Serializes a value as JSON for a `<script type="application/ld+json">`
+ * element, which Astro cannot escape without corrupting the JSON. Every `<`
+ * is written as the JSON escape `\u003c`, so no string in the value, such as
+ * definition text holding `</script>`, can end the element; parsing the
+ * result gives back the same value.
+ */
+export const serializeJsonLd = (value: object | null): string =>
+  JSON.stringify(value).replaceAll('<', String.raw`\u003c`);
+
 // Re-export pattern recognition functions from consolidated module
 export {
   isStartEndSame,

@@ -1,8 +1,13 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import {
  beforeEach,describe, expect, it, vi,
 } from 'vitest';
 
 globalThis.fetch = vi.fn();
+
+const FIXTURES_DIR = path.join(import.meta.dirname, 'fixtures', 'wordnik');
+const loadFixture = name => JSON.parse(fs.readFileSync(path.join(FIXTURES_DIR, `${name}.json`), 'utf-8'));
 
 const STATUS_TEXT = { 404: 'Not Found', 429: 'Too Many Requests' };
 const mockResponse = (status, data = []) => ({
@@ -25,95 +30,6 @@ describe('wordnik adapter', () => {
     vi.stubEnv('WORDNIK_API_URL', 'https://api.wordnik.com/v4');
   });
 
-  describe('processCrossReferences', () => {
-    it('converts xref tags to wordnik links', async () => {
-      const { processCrossReferences } = await import('#adapters/wordnik');
-      const input = 'This is an <xref>example</xref> of usage.';
-      const expected = 'This is an <a href="https://www.wordnik.com/words/example" target="_blank" rel="noopener noreferrer" class="xref-link">example</a> of usage.';
-
-      expect(processCrossReferences(input)).toBe(expected);
-    });
-
-    it('handles multiple xref tags', async () => {
-      const { processCrossReferences } = await import('#adapters/wordnik');
-      const input = 'See <xref>example</xref> and <xref>test</xref> words.';
-      const expected = 'See <a href="https://www.wordnik.com/words/example" target="_blank" rel="noopener noreferrer" class="xref-link">example</a> and <a href="https://www.wordnik.com/words/test" target="_blank" rel="noopener noreferrer" class="xref-link">test</a> words.';
-
-      expect(processCrossReferences(input)).toBe(expected);
-    });
-
-    it('handles text without xref tags', async () => {
-      const { processCrossReferences } = await import('#adapters/wordnik');
-      const input = 'Plain text without references.';
-      expect(processCrossReferences(input)).toBe(input);
-    });
-
-    it('handles empty or null input', async () => {
-      const { processCrossReferences } = await import('#adapters/wordnik');
-      expect(processCrossReferences('')).toBe('');
-      expect(processCrossReferences(null)).toBe(null);
-      expect(processCrossReferences(undefined)).toBe(undefined);
-    });
-  });
-
-  describe('transformWordData', () => {
-    it('handles valid word data', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      const result = wordnikAdapter.transformWordData({
-        data: [{ text: 'A test definition', partOfSpeech: 'noun' }],
-      });
-      expect(result.definition).toContain('A test definition');
-      expect(result.partOfSpeech).toBe('noun');
-    });
-
-    it('handles missing word data', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      expect(() => wordnikAdapter.transformWordData(null)).not.toThrow();
-      expect(() => wordnikAdapter.transformWordData(undefined)).not.toThrow();
-    });
-
-    it('handles missing data gracefully', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      expect(wordnikAdapter.transformWordData(null)).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-
-    it('handles empty data arrays', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      expect(wordnikAdapter.transformWordData({ data: [] })).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-  });
-
-  describe('processWordnikHTML', () => {
-    it('handles basic HTML sanitization', async () => {
-      const { processWordnikHTML } = await import('#adapters/wordnik');
-      const result = processWordnikHTML('<p>This is <strong>bold</strong> text.</p>');
-      expect(result).toContain('bold');
-      expect(typeof result).toBe('string');
-    });
-
-    it('handles cross-references when preserveXrefs is true', async () => {
-      const { processWordnikHTML } = await import('#adapters/wordnik');
-      const result = processWordnikHTML('See <xref>example</xref> for details.', { preserveXrefs: true });
-      expect(result).toContain('href="https://www.wordnik.com/words/example"');
-      expect(result).toContain('class="xref-link"');
-    });
-
-    it('removes xrefs when preserveXrefs is false', async () => {
-      const { processWordnikHTML } = await import('#adapters/wordnik');
-      const result = processWordnikHTML('See <xref>example</xref> for details.', { preserveXrefs: false });
-      expect(result).not.toContain('<xref>');
-      expect(result).not.toContain('</xref>');
-      expect(result).toContain('example');
-    });
-
-    it('handles empty input', async () => {
-      const { processWordnikHTML } = await import('#adapters/wordnik');
-      expect(processWordnikHTML('')).toBe('');
-      expect(processWordnikHTML(null)).toBe(null);
-      expect(processWordnikHTML(undefined)).toBe(undefined);
-    });
-  });
-
   describe('CONFIG', () => {
     it('exports configuration constants', async () => {
       const { CONFIG } = await import('#adapters/wordnik');
@@ -128,40 +44,172 @@ describe('wordnik adapter', () => {
       vi.stubEnv('WORDNIK_API_KEY', 'test-key');
     });
 
-    it('passes through base POS unchanged', async () => {
+    // Every value of the partOfSpeech filter in Wordnik's API spec
+    // (https://developer.wordnik.com/api-docs/swagger.json; "posessive" is its
+    // spelling), then the spaced labels its source dictionaries put in
+    // responses: AHD's "transitive verb", GCIDE's "noun plural", Wiktionary's
+    // "proper noun". Verb forms and name types stay labels.
+    it.each([
+      ['noun', { partOfSpeech: 'noun' }],
+      ['adjective', { partOfSpeech: 'adjective' }],
+      ['verb', { partOfSpeech: 'verb' }],
+      ['adverb', { partOfSpeech: 'adverb' }],
+      ['interjection', { partOfSpeech: 'interjection' }],
+      ['pronoun', { partOfSpeech: 'pronoun' }],
+      ['preposition', { partOfSpeech: 'preposition' }],
+      ['abbreviation', { partOfSpeech: 'abbreviation' }],
+      ['affix', { label: 'affix' }],
+      ['article', { partOfSpeech: 'article' }],
+      ['auxiliary-verb', { partOfSpeech: 'verb' }],
+      ['conjunction', { partOfSpeech: 'conjunction' }],
+      ['definite-article', { partOfSpeech: 'article' }],
+      ['family-name', { label: 'family-name' }],
+      ['given-name', { label: 'given-name' }],
+      ['idiom', { label: 'idiom' }],
+      ['imperative', { label: 'imperative' }],
+      ['noun-plural', { partOfSpeech: 'noun' }],
+      ['noun-posessive', { partOfSpeech: 'noun' }],
+      ['past-participle', { label: 'past-participle' }],
+      ['phrasal-prefix', { label: 'phrasal-prefix' }],
+      ['proper-noun', { partOfSpeech: 'noun' }],
+      ['proper-noun-plural', { partOfSpeech: 'noun' }],
+      ['proper-noun-posessive', { partOfSpeech: 'noun' }],
+      ['suffix', { label: 'suffix' }],
+      ['verb-intransitive', { partOfSpeech: 'verb' }],
+      ['verb-transitive', { partOfSpeech: 'verb' }],
+      ['intransitive verb', { partOfSpeech: 'verb' }],
+      ['transitive verb', { partOfSpeech: 'verb' }],
+      ['phrasal verb', { partOfSpeech: 'verb' }],
+      ['proper noun', { partOfSpeech: 'noun' }],
+      ['noun plural', { partOfSpeech: 'noun' }],
+      ['auxiliary verb', { partOfSpeech: 'verb' }],
+      ['definite article.', { partOfSpeech: 'article' }],
+      ['initialism', { partOfSpeech: 'abbreviation' }],
+    ])('translates %s', async (raw, classification) => {
       const { wordnikAdapter } = await import('#adapters/wordnik');
-      const defs = [{ id: '1', text: 'A test', partOfSpeech: 'noun', attributionText: 'test' }];
-      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ text: 'A sense', partOfSpeech: raw }]));
 
-      const result = await wordnikAdapter.fetchWordData('test');
-      expect(result.definitions[0].partOfSpeech).toBe('noun');
+      const { definitions: [definition] } = await wordnikAdapter.fetchWordData('test');
+      expect({ partOfSpeech: definition.partOfSpeech, label: definition.label }).toEqual(classification);
     });
 
-    it('normalizes hyphenated verb variants', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      const defs = [{ id: '1', text: 'To do', partOfSpeech: 'auxiliary-verb', attributionText: 'test' }];
-      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
-
-      const result = await wordnikAdapter.fetchWordData('have');
-      expect(result.definitions[0].partOfSpeech).toBe('verb');
-    });
-
-    it('normalizes noun variants', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      const defs = [{ id: '1', text: 'More than one', partOfSpeech: 'noun-plural', attributionText: 'test' }];
-      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
-
-      const result = await wordnikAdapter.fetchWordData('indices');
-      expect(result.definitions[0].partOfSpeech).toBe('noun');
-    });
-
-    it('returns undefined for unmappable POS', async () => {
+    it('keeps an unmappable POS, as Wordnik gave it, as the label', async () => {
       const { wordnikAdapter } = await import('#adapters/wordnik');
       const defs = [{ id: '1', text: 'An affix', partOfSpeech: 'affix', attributionText: 'test' }];
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
 
       const result = await wordnikAdapter.fetchWordData('un');
-      expect(result.definitions[0].partOfSpeech).toBeUndefined();
+      expect(result.definitions).toStrictEqual([{ id: '1', label: 'affix', text: 'An affix', attributionText: 'test' }]);
+    });
+  });
+
+  describe('translation to the canonical definition', () => {
+    beforeEach(() => {
+      vi.stubEnv('WORDNIK_API_KEY', 'test-key');
+    });
+
+    it('translates the constructed break response', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, loadFixture('break')));
+      const ahd = 'from The American Heritage® Dictionary of the English Language, 5th Edition.';
+      const sourceUrl = 'https://www.wordnik.com/words/break';
+
+      const result = await wordnikAdapter.fetchWordData('break');
+      expect(result).toStrictEqual({
+        word: 'break',
+        definitions: [
+          {
+            partOfSpeech: 'verb',
+            text: 'To cause to separate into pieces suddenly or violently.',
+            attributionText: ahd,
+            sourceDictionary: 'ahd-5',
+            sourceUrl,
+            examples: ['The plate broke when it hit the floor.'],
+            synonyms: ['shatter', 'smash'],
+            antonyms: ['mend'],
+          },
+          {
+            partOfSpeech: 'noun',
+            text: 'An interruption in continuity. A pause from work or activity.',
+            attributionText: ahd,
+            sourceDictionary: 'ahd-5',
+            sourceUrl,
+            synonyms: ['pause'],
+          },
+          {
+            label: 'idiom',
+            text: 'break even: To finish with neither a gain nor a loss.',
+            attributionText: ahd,
+            sourceDictionary: 'ahd-5',
+            sourceUrl,
+          },
+          {
+            partOfSpeech: 'noun',
+            text: 'A short rest period.',
+            references: [{ start: 8, end: 12, url: 'https://www.wordnik.com/words/rest' }],
+            attributionText: 'from Wiktionary, Creative Commons Attribution/Share-Alike License.',
+            sourceDictionary: 'wiktionary',
+            sourceUrl,
+          },
+        ],
+        meta: { source: 'Wordnik', attribution: ahd, url: sourceUrl },
+        headword: { pronunciation: 'brāk' },
+      });
+    });
+
+    it('reads cross-references out of the text as ranges of it', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, loadFixture('amblypygi')));
+
+      const { definitions: [definition] } = await wordnikAdapter.fetchWordData('Amblypygi');
+      expect(definition.text).toBe('A taxonomic order within the class Arachnida — the tailless whip scorpions/whip spiders.');
+      expect(definition.references).toStrictEqual([
+        { start: 12, end: 17, url: 'https://www.wordnik.com/words/order' },
+        { start: 29, end: 34, url: 'https://www.wordnik.com/words/class' },
+        { start: 35, end: 44, url: 'https://www.wordnik.com/words/arachnida' },
+      ]);
+    });
+
+    it('omits references from text that has none', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, VALID_DEFINITIONS));
+
+      const { definitions: [definition] } = await wordnikAdapter.fetchWordData('test');
+      expect(definition).not.toHaveProperty('references');
+    });
+
+    it('joins text fragments into one string', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      const defs = [{ text: ['A taxonomic order', 'of arachnids.'], partOfSpeech: 'noun' }];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
+
+      const result = await wordnikAdapter.fetchWordData('amblypygi');
+      expect(result.definitions[0].text).toBe('A taxonomic order of arachnids.');
+    });
+
+    it('skips a definition that has no text', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      const defs = [{ partOfSpeech: 'noun' }, { text: '  ', partOfSpeech: 'noun' }, { text: [], partOfSpeech: 'noun' }, { text: 'Kept', partOfSpeech: 'noun' }];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
+
+      const result = await wordnikAdapter.fetchWordData('test');
+      expect(result.definitions).toStrictEqual([{ partOfSpeech: 'noun', text: 'Kept' }]);
+    });
+
+    it('omits the empty lists and URLs Wordnik sends', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      const defs = [{
+        text: 'A test', partOfSpeech: 'noun', attributionText: '', wordnikUrl: '', attributionUrl: '',
+        exampleUses: [], relatedWords: [], textProns: [], citations: [], labels: [], notes: [],
+      }];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, defs));
+
+      const result = await wordnikAdapter.fetchWordData('test');
+      expect(result).toStrictEqual({
+        word: 'test',
+        definitions: [{ partOfSpeech: 'noun', text: 'A test' }],
+        meta: { source: 'Wordnik' },
+      });
     });
   });
 
@@ -292,17 +340,9 @@ describe('wordnik adapter', () => {
       expect(isWordnikDefinitions([{ relatedWords: ['luck'] }])).toBe(false);
       expect(isWordnikDefinitions([{ relatedWords: [{ words: 'luck' }] }])).toBe(false);
       expect(isWordnikDefinitions([{ relatedWords: [{ words: [1] }] }])).toBe(false);
+      expect(isWordnikDefinitions([{ relatedWords: [{ relationshipType: 1, words: ['luck'] }] }])).toBe(false);
       expect(isWordnikDefinitions([{ textProns: ['pron'] }])).toBe(false);
       expect(isWordnikDefinitions([{ textProns: [{ raw: 1 }] }])).toBe(false);
-    });
-  });
-
-  describe('isValidResponse', () => {
-    it('requires a non-empty array of definitions', async () => {
-      const { wordnikAdapter } = await import('#adapters/wordnik');
-      expect(wordnikAdapter.isValidResponse(VALID_DEFINITIONS)).toBe(true);
-      expect(wordnikAdapter.isValidResponse([])).toBe(false);
-      expect(wordnikAdapter.isValidResponse({ message: 'truthy non-array' })).toBe(false);
     });
   });
 });

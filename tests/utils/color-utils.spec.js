@@ -5,8 +5,12 @@ import { resolveHexColor } from '#utils/color-utils';
 const FALLBACK = '#9a3412';
 
 describe('resolveHexColor', () => {
-  it.each(['#abc', '#abcd', '#9a3412', '#9A3412', '#9a341280'])('accepts %s', (color) => {
+  it.each(['#abc', '#abcd', '#9a3412', '#9a341280'])('accepts %s', (color) => {
     expect(resolveHexColor('COLOR_PRIMARY', color, FALLBACK)).toBe(color);
+  });
+
+  it('accepts uppercase digits and returns them in lowercase', () => {
+    expect(resolveHexColor('COLOR_PRIMARY', '#9A3412', FALLBACK)).toBe('#9a3412');
   });
 
   it.each([

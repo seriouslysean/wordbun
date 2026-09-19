@@ -173,18 +173,17 @@ describe('merriam-webster adapter', () => {
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, loadFixture('pbj')));
 
       const result = await merriamWebsterAdapter.fetchWordData('pb&j');
-      expect(result.definitions).toEqual([{
+      expect(result.definitions).toStrictEqual([{
         id: 'PB+J',
         partOfSpeech: 'abbreviation',
         text: 'peanut butter and jelly',
         attributionText: "from Merriam-Webster's Collegiate Dictionary",
         sourceDictionary: 'collegiate',
         sourceUrl: 'https://www.merriam-webster.com/dictionary/pb%26j',
-        examples: undefined,
       }]);
     });
 
-    it('returns undefined for unmappable POS', async () => {
+    it('keeps an unmappable functional label as the label, with no part of speech', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
       const entry = [{
         meta: { id: 'richter', uuid: '1', src: 'collegiate', section: 'biog', stems: [], offensive: false },
@@ -196,7 +195,8 @@ describe('merriam-webster adapter', () => {
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, entry));
 
       const result = await merriamWebsterAdapter.fetchWordData('richter');
-      expect(result.definitions[0].partOfSpeech).toBeUndefined();
+      expect(result.definitions[0]).not.toHaveProperty('partOfSpeech');
+      expect(result.definitions[0].label).toBe('biographical name');
     });
   });
 
@@ -258,9 +258,7 @@ describe('merriam-webster adapter', () => {
       globalThis.fetch.mockResolvedValueOnce(mockResponse(200, loadFixture('learned')));
 
       const result = await merriamWebsterAdapter.fetchWordData('learned');
-      expect(result.headword?.pronunciation).toBe('ˈlər-nəd');
-      expect(result.headword?.audio).toBeUndefined();
-      expect(result.headword?.etymology).toBeUndefined();
+      expect(result.headword).toStrictEqual({ pronunciation: 'ˈlər-nəd' });
     });
 
     it('omits the headword entirely when no capture fields exist', async () => {
@@ -369,12 +367,37 @@ describe('merriam-webster adapter', () => {
       expect(error.message).toBe('Word "test" not found in Collegiate Dictionary.');
     });
 
-    it('yields no definitions for an entry without shortdef', async () => {
+    it('drops a blank short definition and keeps the rest of the entry', async () => {
       const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ meta: { id: 'test', src: 'collegiate' } }]));
+      const { isCanonicalResponse } = await import('#utils/adapter-utils');
+      const entry = { meta: { id: 'test', src: 'collegiate' }, fl: 'noun', shortdef: ['', 'a real test', '  '] };
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [entry]));
 
       const result = await merriamWebsterAdapter.fetchWordData('test');
-      expect(result.definitions).toEqual([]);
+      expect(result.definitions.map(definition => definition.text)).toEqual(['a real test']);
+      expect(isCanonicalResponse(result, 'test')).toBe(true);
+    });
+
+    it('yields no definitions for an entry without shortdef beside one with it', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      const entries = [
+        { meta: { id: 'test', src: 'collegiate' } },
+        { meta: { id: 'test:2', src: 'collegiate' }, fl: 'verb', shortdef: ['to try'] },
+      ];
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, entries));
+
+      const result = await merriamWebsterAdapter.fetchWordData('test');
+      expect(result.definitions.map(definition => definition.text)).toEqual(['to try']);
+    });
+
+    it('reports an answer in which no entry has shortdef as an unexpected shape', async () => {
+      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
+      const { WordNotFoundError } = await import('#utils/adapter-utils');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, [{ meta: { id: 'test', src: 'collegiate' } }]));
+
+      const error = await merriamWebsterAdapter.fetchWordData('test').catch(e => e);
+      expect(error).not.toBeInstanceOf(WordNotFoundError);
+      expect(error.message).toBe('Merriam-Webster returned an unexpected response shape for "test"');
     });
 
     it('ignores an etymology whose first element is not text', async () => {
@@ -466,36 +489,6 @@ describe('merriam-webster adapter', () => {
     });
   });
 
-  describe('transformWordData', () => {
-    it('transforms valid word data', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      const result = merriamWebsterAdapter.transformWordData({
-        data: [{ text: 'a definition', partOfSpeech: 'noun', attributionText: 'from Merriam-Webster', sourceUrl: 'https://merriam-webster.com' }],
-      });
-      expect(result.definition).toBe('a definition');
-      expect(result.partOfSpeech).toBe('noun');
-      expect(result.meta.attributionText).toContain('Merriam-Webster');
-    });
-
-    it('handles null input', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      expect(merriamWebsterAdapter.transformWordData(null)).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-
-    it('handles empty data array', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      expect(merriamWebsterAdapter.transformWordData({ data: [] })).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-
-    it('uses default attribution when missing', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      const result = merriamWebsterAdapter.transformWordData({
-        data: [{ text: 'a definition', partOfSpeech: 'noun' }],
-      });
-      expect(result.meta.attributionText).toBe('from Merriam-Webster');
-    });
-  });
-
   describe('isMWEntry', () => {
     const recordedFixtures = ['hot-dog', 'learned', 'ludicrous', 'richter-scale', 'serendipity', 'speed', 'test'];
 
@@ -571,38 +564,6 @@ describe('merriam-webster adapter', () => {
       expect(isMWEntry(withSseq([[['sense', { dt: [['vis', [{ t: 1 }]]] }]]]))).toBe(false);
       expect(isMWEntry(withSseq([[['sense', { sdsense: 'also' }]]]))).toBe(false);
       expect(isMWEntry(withSseq([[['sense', { sdsense: { dt: 'text' } }]]]))).toBe(false);
-    });
-  });
-
-  describe('isValidResponse', () => {
-    it('returns true for valid entry arrays', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      const fixture = loadFixture('serendipity');
-      expect(merriamWebsterAdapter.isValidResponse(fixture)).toBe(true);
-    });
-
-    it('returns false when an element is not an entry', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      expect(merriamWebsterAdapter.isValidResponse([null])).toBe(false);
-      expect(merriamWebsterAdapter.isValidResponse([...loadFixture('serendipity'), null])).toBe(false);
-    });
-
-    it('returns false for string suggestion arrays', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      const fixture = loadFixture('not-found');
-      expect(merriamWebsterAdapter.isValidResponse(fixture)).toBe(false);
-    });
-
-    it('returns false for empty arrays', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      expect(merriamWebsterAdapter.isValidResponse([])).toBe(false);
-    });
-
-    it('returns false for non-arrays', async () => {
-      const { merriamWebsterAdapter } = await import('#adapters/merriam-webster');
-      expect(merriamWebsterAdapter.isValidResponse(null)).toBe(false);
-      expect(merriamWebsterAdapter.isValidResponse(undefined)).toBe(false);
-      expect(merriamWebsterAdapter.isValidResponse('string')).toBe(false);
     });
   });
 

@@ -6,6 +6,11 @@ const dictionaryDefinitionSchema = z.looseObject({
   id: z.string().optional(),
   partOfSpeech: z.string().optional(),
   text: z.union([z.string(), z.array(z.string())]).optional(),
+  references: z.array(z.object({
+    start: z.number().int(),
+    end: z.number().int(),
+    url: z.string(),
+  })).optional(),
   attributionText: z.string().optional(),
   sourceDictionary: z.string().optional(),
   sourceUrl: z.string().optional(),

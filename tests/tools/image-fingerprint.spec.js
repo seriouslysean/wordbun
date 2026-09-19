@@ -7,7 +7,7 @@
  */
 
 import sharp from 'sharp';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { spawnTool } from '#tests/helpers/spawn.js';
 import { computeSettingsHash, getImageSettings } from '#tools/utils';
@@ -55,6 +55,17 @@ describe('computeSettingsHash', () => {
     const { probes } = getImageSettings(RENDERER);
 
     expect(probes.some(svg => /fill="url\(#wordGradient\)" transform="scale\(0\.\d+\)"/.test(svg))).toBe(true);
+  });
+
+  it('does not depend on the case of a color setting', () => {
+    vi.stubEnv('COLOR_PRIMARY', '#9A3412');
+    const upper = computeSettingsHash(RENDERER);
+    vi.stubEnv('COLOR_PRIMARY', '#9a3412');
+    const lower = computeSettingsHash(RENDERER);
+    vi.unstubAllEnvs();
+
+    // The same color draws the same pixels, so it must not re-render every card
+    expect(upper).toBe(lower);
   });
 
   it('defaults to the installed renderer', () => {

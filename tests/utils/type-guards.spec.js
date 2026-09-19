@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
+import {
+  isHttpUrl, isNonblankString, isOptional, isRecord, isString, isStringArray,
+} from '#utils/type-guards';
 
 describe('type-guards', () => {
   describe('isRecord', () => {
@@ -26,6 +28,20 @@ describe('type-guards', () => {
     });
   });
 
+  describe('isNonblankString', () => {
+    it('accepts a string with visible characters', () => {
+      expect(isNonblankString('a')).toBe(true);
+      expect(isNonblankString(' a ')).toBe(true);
+    });
+
+    it('rejects empty and whitespace-only strings and non-strings', () => {
+      expect(isNonblankString('')).toBe(false);
+      expect(isNonblankString(' \t\n')).toBe(false);
+      expect(isNonblankString(['a'])).toBe(false);
+      expect(isNonblankString(undefined)).toBe(false);
+    });
+  });
+
   describe('isStringArray', () => {
     it('accepts empty and all-string arrays', () => {
       expect(isStringArray([])).toBe(true);
@@ -36,6 +52,21 @@ describe('type-guards', () => {
       expect(isStringArray(['a', 1])).toBe(false);
       expect(isStringArray(['a', null])).toBe(false);
       expect(isStringArray('a')).toBe(false);
+    });
+  });
+
+  describe('isHttpUrl', () => {
+    it('accepts absolute http and https URLs', () => {
+      expect(isHttpUrl('https://www.wordnik.com/words/order')).toBe(true);
+      expect(isHttpUrl('http://example.com')).toBe(true);
+    });
+
+    it('rejects relative URLs, other schemes and non-strings', () => {
+      expect(isHttpUrl('/words/order')).toBe(false);
+      expect(isHttpUrl('www.wordnik.com/words/order')).toBe(false);
+      expect(isHttpUrl('javascript:alert(1)')).toBe(false);
+      expect(isHttpUrl('')).toBe(false);
+      expect(isHttpUrl(undefined)).toBe(false);
     });
   });
 

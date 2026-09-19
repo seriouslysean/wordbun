@@ -5,6 +5,9 @@ const originalFetch = globalThis.fetch;
 import {
   ADAPTER_FETCH_TIMEOUT_MS,
   adapterFetch,
+  buildDefinition,
+  classifyPartOfSpeech,
+  isCanonicalResponse,
   isRateLimited,
   isWordNotFound,
   normalizePOS,
@@ -14,14 +17,41 @@ import {
   throwUnexpectedShape,
   throwWordNotFound,
   buildDictionaryResponse,
-  transformToWordData,
-  transformWordData,
   WordNotFoundError,
 } from '#utils/adapter-utils';
 
 const TEST_POS_MAP = {
   'transitive verb': 'verb',
   'proper noun': 'noun',
+};
+
+// Every field of the contract, each holding a valid value. Each malformed
+// response below changes exactly one thing about it.
+const CANONICAL = {
+  word: 'test',
+  definitions: [{
+    id: 'test',
+    partOfSpeech: 'noun',
+    text: 'A procedure for critical evaluation',
+    references: [{ start: 16, end: 24, url: 'https://example.com/critical' }],
+    attributionText: 'from Test',
+    sourceDictionary: 'test',
+    sourceUrl: 'https://example.com/test',
+    examples: ['a test of skill'],
+    synonyms: ['trial'],
+    antonyms: ['certainty'],
+  }],
+  meta: { source: 'Test', attribution: 'from Test', url: 'https://example.com/test' },
+  headword: { pronunciation: 'test', audio: 'https://example.com/test.mp3', etymology: 'Latin testum' },
+};
+const [CANONICAL_DEFINITION] = CANONICAL.definitions;
+const withResponse = changes => ({ ...CANONICAL, ...changes });
+const withDefinition = changes => ({ ...CANONICAL, definitions: [{ ...CANONICAL_DEFINITION, ...changes }] });
+const withMeta = changes => ({ ...CANONICAL, meta: { ...CANONICAL.meta, ...changes } });
+const withHeadword = changes => ({ ...CANONICAL, headword: { ...CANONICAL.headword, ...changes } });
+const withoutDefinitionField = (field) => {
+  const { [field]: _removed, ...rest } = CANONICAL_DEFINITION;
+  return { ...CANONICAL, definitions: [rest] };
 };
 
 describe('adapter-utils', () => {
@@ -93,6 +123,11 @@ describe('adapter-utils', () => {
       expect(normalizePOS('VERB', TEST_POS_MAP)).toBe('verb');
     });
 
+    it('ignores trailing punctuation, as some dictionaries end labels with a period', () => {
+      expect(normalizePOS('noun.', TEST_POS_MAP)).toBe('noun');
+      expect(normalizePOS('transitive verb.', TEST_POS_MAP)).toBe('verb');
+    });
+
     it('maps known variants via the provided map', () => {
       expect(normalizePOS('transitive verb', TEST_POS_MAP)).toBe('verb');
       expect(normalizePOS('proper noun', TEST_POS_MAP)).toBe('noun');
@@ -106,6 +141,91 @@ describe('adapter-utils', () => {
     it('keeps abbreviation, a label in the vocabulary', () => {
       expect(normalizePOS('abbreviation', TEST_POS_MAP)).toBe('abbreviation');
     });
+
+    it('ignores keys the map inherits from Object.prototype', () => {
+      expect(normalizePOS('constructor', TEST_POS_MAP)).toBeUndefined();
+      expect(normalizePOS('toString', TEST_POS_MAP)).toBeUndefined();
+    });
+  });
+
+  describe('classifyPartOfSpeech', () => {
+    it('classifies a base or mapped term as a part of speech', () => {
+      expect(classifyPartOfSpeech('Noun', TEST_POS_MAP)).toStrictEqual({ partOfSpeech: 'noun' });
+      expect(classifyPartOfSpeech('transitive verb', TEST_POS_MAP)).toStrictEqual({ partOfSpeech: 'verb' });
+    });
+
+    it('keeps an unmappable term, as supplied, as the label', () => {
+      expect(classifyPartOfSpeech('Biographical Name', TEST_POS_MAP)).toStrictEqual({ label: 'Biographical Name' });
+    });
+
+    it.each([undefined, '', '  '])('classifies nothing for %j', (raw) => {
+      expect(classifyPartOfSpeech(raw, TEST_POS_MAP)).toStrictEqual({});
+    });
+  });
+
+  describe('buildDefinition', () => {
+    it('keeps every supplied value, in the order stored records use', () => {
+      const definition = buildDefinition({
+        antonyms: ['unfortunate'],
+        synonyms: ['luck'],
+        examples: ['a happy find'],
+        sourceUrl: 'https://example.com/serendipity',
+        sourceDictionary: 'test',
+        attributionText: 'from Test',
+        references: [{ start: 5, end: 12, url: 'https://example.com/fortune' }],
+        text: 'Good fortune',
+        partOfSpeech: 'noun',
+        id: 'serendipity',
+      }, TEST_POS_MAP);
+
+      expect(definition).toStrictEqual({
+        id: 'serendipity',
+        partOfSpeech: 'noun',
+        text: 'Good fortune',
+        references: [{ start: 5, end: 12, url: 'https://example.com/fortune' }],
+        attributionText: 'from Test',
+        sourceDictionary: 'test',
+        sourceUrl: 'https://example.com/serendipity',
+        examples: ['a happy find'],
+        synonyms: ['luck'],
+        antonyms: ['unfortunate'],
+      });
+      expect(Object.keys(definition)).toEqual([
+        'id', 'partOfSpeech', 'text', 'references', 'attributionText', 'sourceDictionary', 'sourceUrl',
+        'examples', 'synonyms', 'antonyms',
+      ]);
+    });
+
+    it('omits missing, blank and empty optional values', () => {
+      const definition = buildDefinition({
+        text: 'Good fortune',
+        id: '',
+        attributionText: '  ',
+        sourceDictionary: undefined,
+        sourceUrl: '',
+        references: [],
+        examples: [],
+        synonyms: [],
+        antonyms: undefined,
+      }, TEST_POS_MAP);
+
+      expect(definition).toStrictEqual({ text: 'Good fortune' });
+    });
+
+    it('drops blank entries from a list, and the list when none are left', () => {
+      const definition = buildDefinition({
+        text: 'Good fortune',
+        examples: [' ', 'a happy find', ''],
+        synonyms: [''],
+      }, TEST_POS_MAP);
+
+      expect(definition).toStrictEqual({ text: 'Good fortune', examples: ['a happy find'] });
+    });
+
+    it('carries an unmappable part of speech as the label', () => {
+      expect(buildDefinition({ text: 'An American seismologist', partOfSpeech: 'biographical name' }, TEST_POS_MAP))
+        .toStrictEqual({ label: 'biographical name', text: 'An American seismologist' });
+    });
   });
 
   describe('buildDictionaryResponse', () => {
@@ -114,83 +234,106 @@ describe('adapter-utils', () => {
 
       expect(response.word).toBe(word);
     });
+
+    it('omits a blank attribution and URL from the meta', () => {
+      expect(buildDictionaryResponse('test', [], 'Test', '', undefined).meta).toStrictEqual({ source: 'Test' });
+    });
+
+    it('drops a definition whose text is blank, keeping the others in order', () => {
+      const definitions = [{ text: '' }, { text: 'A trial', partOfSpeech: 'noun' }, { text: ' \n' }, { text: 'An exam' }];
+
+      expect(buildDictionaryResponse('test', definitions, 'Test', undefined, undefined).definitions)
+        .toStrictEqual([{ text: 'A trial', partOfSpeech: 'noun' }, { text: 'An exam' }]);
+    });
+
+    it('keeps only the headword fields that have a value', () => {
+      const response = buildDictionaryResponse('test', [], 'Test', 'from Test', 'https://example.com', {
+        pronunciation: 'test', audio: undefined, etymology: ' ',
+      });
+
+      expect(response.headword).toStrictEqual({ pronunciation: 'test' });
+    });
+
+    it('omits a headword with nothing in it', () => {
+      const response = buildDictionaryResponse('test', [], 'Test', 'from Test', 'https://example.com', { pronunciation: '' });
+
+      expect(response).not.toHaveProperty('headword');
+    });
   });
 
-  describe('transformToWordData', () => {
-    it('produces correct WordData structure', () => {
-      const response = {
-        word: 'test',
-        definitions: [{ text: 'a test', partOfSpeech: 'noun' }],
-        meta: { source: 'Test', attribution: 'test', url: '' },
-      };
-
-      const result = transformToWordData('test-adapter', response, '20250101');
-
-      expect(result).toEqual({
-        word: 'test',
-        date: '20250101',
-        adapter: 'test-adapter',
-        data: response.definitions,
-        rawData: response,
-      });
-    });
-  });
-
-  describe('transformWordData', () => {
-    it('extracts the first valid definition', () => {
-      const wordData = {
-        data: [
-          { text: 'a definition', partOfSpeech: 'noun', attributionText: 'from Test', sourceUrl: 'https://example.com' },
-        ],
-      };
-
-      const result = transformWordData(wordData, 'default attribution');
-
-      expect(result.definition).toBe('a definition');
-      expect(result.partOfSpeech).toBe('noun');
-      expect(result.meta.attributionText).toBe('from Test');
+  describe('isCanonicalResponse', () => {
+    it('accepts a response carrying every field of the contract', () => {
+      expect(isCanonicalResponse(CANONICAL, 'test')).toBe(true);
     });
 
-    it('returns empty result for null input', () => {
-      expect(transformWordData(null, 'default')).toEqual({
-        partOfSpeech: '', definition: '', meta: null,
-      });
+    it('accepts the minimal response: the word, one definition with text, and a source', () => {
+      expect(isCanonicalResponse({ word: 'test', definitions: [{ text: 'A trial' }], meta: { source: 'Test' } }, 'test')).toBe(true);
     });
 
-    it('returns empty result for empty data array', () => {
-      expect(transformWordData({ data: [] }, 'default')).toEqual({
-        partOfSpeech: '', definition: '', meta: null,
-      });
+    it('accepts a label in place of a part of speech', () => {
+      expect(isCanonicalResponse(withDefinition({ partOfSpeech: undefined, label: 'biographical name' }), 'test')).toBe(true);
     });
 
-    it('uses default attribution when definition has none', () => {
-      const wordData = {
-        data: [{ text: 'a definition', partOfSpeech: 'noun' }],
-      };
-
-      const result = transformWordData(wordData, 'from Fallback');
-
-      expect(result.meta.attributionText).toBe('from Fallback');
+    it('accepts text with a bracket that is not a tag', () => {
+      expect(isCanonicalResponse(withDefinition({ text: 'Below range (<20 mg/dL) at critical levels' }), 'test')).toBe(true);
     });
 
-    it('applies processText hook when provided', () => {
-      const wordData = {
-        data: [{ text: 'raw text', partOfSpeech: 'noun' }],
-      };
-
-      const result = transformWordData(wordData, 'default', text => text.toUpperCase());
-
-      expect(result.definition).toBe('RAW TEXT');
+    it('treats a field whose value is undefined as absent, as JSON does', () => {
+      expect(isCanonicalResponse(withDefinition({ examples: undefined, wordnikUrl: undefined }), 'test')).toBe(true);
     });
 
-    it('skips processText hook when not provided', () => {
-      const wordData = {
-        data: [{ text: 'raw text', partOfSpeech: 'noun' }],
-      };
-
-      const result = transformWordData(wordData, 'default');
-
-      expect(result.definition).toBe('raw text');
+    it.each([
+      // Envelope
+      ['a response that is not an object', []],
+      ['a key outside the envelope', withResponse({ rawData: {} })],
+      ['a word other than the one requested', withResponse({ word: 'Test' })],
+      ['definitions that are not a list', withResponse({ definitions: CANONICAL_DEFINITION })],
+      ['an empty definitions list', withResponse({ definitions: [] })],
+      ['a missing meta', withResponse({ meta: undefined })],
+      ['a key outside the meta', withMeta({ sourceUrl: 'https://example.com/test' })],
+      ['a blank meta source', withMeta({ source: ' ' })],
+      ['a blank meta attribution', withMeta({ attribution: '' })],
+      ['a meta URL that is not absolute http(s)', withMeta({ url: '/test' })],
+      ['an empty headword', withResponse({ headword: {} })],
+      ['a key outside the headword', withHeadword({ phonetic: 'test' })],
+      ['a blank headword pronunciation', withHeadword({ pronunciation: '' })],
+      ['a blank headword etymology', withHeadword({ etymology: ' ' })],
+      ['a headword audio URL that is not absolute http(s)', withHeadword({ audio: 'test.mp3' })],
+      // Definitions
+      ['a definition that is not an object', withResponse({ definitions: ['A trial'] })],
+      ['a key outside the definition', withDefinition({ wordnikUrl: 'https://example.com/test' })],
+      ['a definition without text', withoutDefinitionField('text')],
+      ['blank text', withDefinition({ text: '  ' })],
+      ['markup left in the text', withDefinition({ text: 'A procedure for <xref>critical</xref> evaluation', references: undefined })],
+      ['an unknown tag left in the text', withDefinition({ text: 'A procedure for <i>critical</i> evaluation' })],
+      ['encoded text that the markup parser would change', withDefinition({ text: '&lt;b&gt;critical&lt;/b&gt;' })],
+      ['an empty references list', withDefinition({ references: [] })],
+      ['references that are not a list', withDefinition({ references: { start: 16, end: 24, url: 'https://example.com/critical' } })],
+      ['a reference past the end of the text', withDefinition({ references: [{ start: 30, end: 40, url: 'https://example.com/critical' }] })],
+      ['a reference over blank text', withDefinition({ references: [{ start: 15, end: 16, url: 'https://example.com/critical' }] })],
+      ['overlapping references', withDefinition({ references: [
+        { start: 16, end: 24, url: 'https://example.com/critical' },
+        { start: 20, end: 35, url: 'https://example.com/evaluation' },
+      ] })],
+      ['a reference URL that is not http(s)', withDefinition({ references: [{ start: 16, end: 24, url: 'javascript:alert(1)' }] })],
+      ['text given as fragments', withDefinition({ text: ['A procedure', 'for critical evaluation'] })],
+      ['a part of speech outside the vocabulary', withDefinition({ partOfSpeech: 'transitive verb' })],
+      ['a label beside a part of speech', withDefinition({ label: 'noun' })],
+      ['a blank label', withDefinition({ partOfSpeech: undefined, label: '' })],
+      ['a blank id', withDefinition({ id: '' })],
+      ['a blank attribution', withDefinition({ attributionText: ' ' })],
+      ['a blank source dictionary', withDefinition({ sourceDictionary: '' })],
+      ['an empty examples list', withDefinition({ examples: [] })],
+      ['an empty synonyms list', withDefinition({ synonyms: [] })],
+      ['an empty antonyms list', withDefinition({ antonyms: [] })],
+      ['a blank entry in a list', withDefinition({ synonyms: ['trial', ''] })],
+      ['a list entry that is not a string', withDefinition({ examples: [1] })],
+      ['a relative source URL', withDefinition({ sourceUrl: 'www.example.com/test' })],
+      ['a source URL that is not http(s)', withDefinition({ sourceUrl: 'javascript:alert(1)' })],
+      ['a blank source URL', withDefinition({ sourceUrl: '' })],
+      ['one bad definition among good ones', withResponse({ definitions: [CANONICAL_DEFINITION, { text: '' }] })],
+    ])('rejects %s', (_rule, response) => {
+      expect(isCanonicalResponse(response, 'test')).toBe(false);
     });
   });
 

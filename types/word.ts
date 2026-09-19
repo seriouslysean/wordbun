@@ -2,7 +2,7 @@
  * Word data types - Our internal data structures
  */
 
-import type { DictionaryDefinition, SourceMeta } from '#types';
+import type { SourceMeta, StoredDictionaryDefinition } from '#types';
 
 // Our processed word data after transformation
 export interface WordProcessedData {
@@ -29,10 +29,18 @@ export interface WordEnrichment {
   etymology?: string;
 }
 
+/**
+ * One run of a definition as a page shows it: plain text, or the text of a
+ * cross-reference and where it links. Never markup; see toDefinitionSegments.
+ */
+export type DefinitionSegment =
+  | { type: 'text'; text: string }
+  | { type: 'reference'; text: string; url: string };
+
 /** A single displayable sense of a word (one slide in the senses slider). */
 export interface WordSense {
   partOfSpeech: string;
-  text: string;
+  segments: DefinitionSegment[];
   // Up to MAX_SENSE_EXAMPLES example sentences for this sense (may be empty).
   examples: string[];
 }
@@ -44,7 +52,7 @@ export interface WordData {
   date: string;
   // Which dictionary adapter was used
   adapter: string;
-  data: DictionaryDefinition[];
+  data: StoredDictionaryDefinition[];
   // Optional word-level enrichment (WordNet relations + adapter headword capture)
   enrichment?: WordEnrichment;
   // Optionally store the raw API response for debugging or migration

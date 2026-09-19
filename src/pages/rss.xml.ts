@@ -1,6 +1,7 @@
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_LOCALE } from 'astro:env/client';
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
+import { escapeText } from 'entities';
 import { getWordsFromCollection } from '#astro-utils/word-data-utils';
 import { extractWordDefinition } from '#astro-utils/word-data-utils';
 import { getFullUrl, getWordUrl } from '#astro-utils/url-utils';
@@ -28,11 +29,8 @@ export async function GET(context: APIContext) {
         throw new Error(`Invalid date format for word ${word.word}: ${word.date}`);
       }
 
-      // Strip HTML tags from definition for clean RSS
-      const cleanDefinition = definition.replaceAll(/<[^>]*>/g, '');
-
-      // Simple format: (part of speech) definition
-      const description = `(${partOfSpeech}) ${cleanDefinition}`;
+      // Simple format: (part of speech) definition, already plain text
+      const description = escapeText(`(${partOfSpeech}) ${definition}`);
 
       return {
         title: word.word,

@@ -1,13 +1,11 @@
 import crypto from 'node:crypto';
 
-import { getAdapterByName } from '#adapters';
 import type {
   WordAdjacentResult,
   WordData,
   WordGroupByLengthResult,
   WordGroupByPartOfSpeechResult,
   WordGroupByYearResult,
-  WordProcessedData,
 } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { HOMEPAGE_PREVIOUS_WORDS, MAX_PAST_WORDS_DISPLAY } from '#constants/text-patterns';
@@ -32,6 +30,7 @@ import {
   groupWordsByPartOfSpeech as groupWordsByPartOfSpeechPure,
 } from '#utils/word-data-utils';
 import { getErrorMessage } from '#utils/text-utils';
+import { isWordData } from '#utils/word-validation';
 import {
   getLetterStats,
   getWordStats,
@@ -58,6 +57,9 @@ export async function getWordsFromCollection(): Promise<WordData[]> {
         ...entry.data,
         date: extractedDate || entry.data.date,
       };
+      if (!isWordData(wordData)) {
+        throw new Error(`Invalid word data for "${entry.data.word}" in ${entry.id}`);
+      }
       return wordData;
     })
     .toSorted((a, b) => b.date.localeCompare(a.date));
@@ -96,7 +98,7 @@ async function getAllWords(): Promise<WordData[]> {
       logger.info('Loaded words successfully', { count: wordCache.value.length });
     } catch (error) {
       logger.error('Failed to load words', { error: getErrorMessage(error) });
-      wordCache.value = [];
+      throw error;
     }
   }
   return wordCache.value;
@@ -174,35 +176,6 @@ export const antiStreakStats = getAntiStreakStats(allWords);
  * Pre-computed milestone words from the loaded collection
  */
 export const milestoneWords = getChronologicalMilestones(allWords);
-
-/**
- * Processes raw word data into a standardized format for display.
- * Extracts part of speech, definition, and metadata using the current adapter.
- *
- * @param wordData - Raw word data containing dictionary definitions
- * @returns Processed word data with standardized fields for UI consumption
- */
-export function getProcessedWord(wordData: WordData): WordProcessedData {
-  try {
-    const adapter = getAdapterByName(wordData.adapter);
-    const result = adapter.transformWordData(wordData);
-    return {
-      ...result,
-      partOfSpeech: result.partOfSpeech ? normalizeToBasePOS(result.partOfSpeech) : '',
-    };
-  } catch {
-    // Fallback for mock/synthetic words (e.g. 404 page) with no real adapter
-    const validDef = findValidDefinition(wordData.data);
-    if (!validDef) {
-      return { partOfSpeech: '', definition: '', meta: null };
-    }
-    return {
-      partOfSpeech: normalizeToBasePOS(validDef.partOfSpeech),
-      definition: validDef.text,
-      meta: null,
-    };
-  }
-}
 
 /**
  * Retrieves the current word that should be displayed based on today's date.
@@ -291,22 +264,6 @@ export const getAdjacentWords = (date: string, words: WordData[] = allWords): Wo
     nextWord: words[currentIndex - 1] || null,
   };
 };
-
-/**
- * Safely extracts and processes word details from raw word data.
- * Handles cases where word data might be incomplete or malformed.
- *
- * @param word - Raw word data containing dictionary definitions
- * @returns Processed word details with safe defaults for missing data
- */
-export const getWordDetails = (word: WordData): WordProcessedData => {
-  if (!word?.data) {
-    return { partOfSpeech: '', definition: '', meta: null };
-  }
-
-  return getProcessedWord(word);
-};
-
 
 /**
  * Retrieves all words that occurred within a specific month of a given year.
@@ -455,5 +412,3 @@ export const groupWordsByPartOfSpeech = (words: WordData[]): WordGroupByPartOfSp
 export const getWordsByPartOfSpeech = (partOfSpeech: string, words: WordData[] = allWords): WordData[] => {
   return getWordsByPartOfSpeechPure(partOfSpeech, words);
 };
-
-

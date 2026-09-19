@@ -5,7 +5,8 @@
 
 /**
  * The part-of-speech vocabulary. Adapters normalize raw POS values to these at
- * fetch time. Unknown/unmappable POS becomes undefined (no POS stored).
+ * fetch time. An unmappable POS is kept as the definition's `label`, never as
+ * its part of speech.
  *
  * Every value is an elementary grammatical category except `abbreviation`,
  * which is a lexical label: Merriam-Webster reports it in the same functional
