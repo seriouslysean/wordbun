@@ -1,9 +1,10 @@
 import type {
-  DictionaryClassification, DictionaryDefinition, DictionaryResponse, WordData, WordProcessedData,
+  DictionaryClassification, DictionaryDefinition, DictionaryReference, DictionaryResponse, WordData, WordProcessedData,
 } from '#types';
 import { type BasePartOfSpeech, isBasePartOfSpeech } from '#constants/parts-of-speech';
+import { areValidReferences, hasMarkup } from '#utils/definition-text';
 import { flattenErrors, getErrorMessage } from '#utils/text-utils';
-import { isNonblankString, isOptional, isRecord, isString } from '#utils/type-guards';
+import { isHttpUrl, isNonblankString, isOptional, isRecord, isString } from '#utils/type-guards';
 import { findValidDefinition } from '#utils/word-data-utils';
 
 /**
@@ -154,12 +155,13 @@ export function classifyPartOfSpeech(
 }
 
 /**
- * A definition as an adapter has read it from its partner: the text, the raw
- * part-of-speech term, and whatever optional values the partner supplied,
- * which may be missing, blank or empty.
+ * A definition as an adapter has read it from its partner: the plain text,
+ * the raw part-of-speech term, and whatever optional values the partner
+ * supplied, which may be missing, blank or empty.
  */
 export interface DefinitionSource {
   text: string;
+  references?: DictionaryReference[];
   partOfSpeech?: string;
   id?: string;
   attributionText?: string;
@@ -183,7 +185,7 @@ export function buildDefinition(
   source: DefinitionSource,
   posMap: Readonly<Record<string, BasePartOfSpeech>>,
 ): DictionaryDefinition {
-  const { text, partOfSpeech, id, attributionText, sourceDictionary, sourceUrl } = source;
+  const { text, references = [], partOfSpeech, id, attributionText, sourceDictionary, sourceUrl } = source;
   const examples = nonblankEntries(source.examples);
   const synonyms = nonblankEntries(source.synonyms);
   const antonyms = nonblankEntries(source.antonyms);
@@ -191,6 +193,7 @@ export function buildDefinition(
     ...(isNonblankString(id) ? { id } : {}),
     ...classifyPartOfSpeech(partOfSpeech, posMap),
     text,
+    ...(references.length > 0 ? { references } : {}),
     ...(isNonblankString(attributionText) ? { attributionText } : {}),
     ...(isNonblankString(sourceDictionary) ? { sourceDictionary } : {}),
     ...(isNonblankString(sourceUrl) ? { sourceUrl } : {}),
@@ -240,7 +243,7 @@ const RESPONSE_KEYS: ReadonlySet<string> = new Set(['word', 'definitions', 'meta
 const META_KEYS: ReadonlySet<string> = new Set(['source', 'attribution', 'url']);
 const HEADWORD_KEYS: ReadonlySet<string> = new Set(['pronunciation', 'audio', 'etymology']);
 const DEFINITION_KEYS: ReadonlySet<string> = new Set([
-  'id', 'partOfSpeech', 'label', 'text', 'attributionText', 'sourceDictionary', 'sourceUrl',
+  'id', 'partOfSpeech', 'label', 'text', 'references', 'attributionText', 'sourceDictionary', 'sourceUrl',
   'examples', 'synonyms', 'antonyms',
 ]);
 
@@ -251,24 +254,27 @@ const DEFINITION_KEYS: ReadonlySet<string> = new Set([
 const hasOnlyKeys = (value: Record<string, unknown>, keys: ReadonlySet<string>): boolean =>
   Object.entries(value).every(([key, field]) => field === undefined || keys.has(key));
 
-const isHttpUrl = (value: unknown): value is string => {
-  if (!isString(value) || !URL.canParse(value)) {
-    return false;
-  }
-  const { protocol } = new URL(value);
-  return protocol === 'https:' || protocol === 'http:';
-};
-
 const isNonblankStringList = (value: unknown): value is string[] =>
   Array.isArray(value) && value.length > 0 && value.every(isNonblankString);
 
 const isVocabularyPartOfSpeech = (value: unknown): value is BasePartOfSpeech =>
   isString(value) && isBasePartOfSpeech(value);
 
+/**
+ * True for nonblank plain text whose cross-references, when it has any, are a
+ * nonempty list that fits it. Markup left in the text is an adapter that did
+ * not translate its partner's formatting.
+ */
+const isCanonicalText = (text: unknown, references: unknown): boolean =>
+  isNonblankString(text)
+  && !hasMarkup(text)
+  && isOptional(references, (list): list is DictionaryReference[] =>
+    Array.isArray(list) && list.length > 0 && areValidReferences(text, list));
+
 const isCanonicalDefinition = (value: unknown): value is DictionaryDefinition =>
   isRecord(value)
   && hasOnlyKeys(value, DEFINITION_KEYS)
-  && isNonblankString(value.text)
+  && isCanonicalText(value.text, value.references)
   && isOptional(value.partOfSpeech, isVocabularyPartOfSpeech)
   && isOptional(value.label, isNonblankString)
   && (value.partOfSpeech === undefined || value.label === undefined)
@@ -302,7 +308,7 @@ const isCanonicalHeadword = (value: unknown): value is NonNullable<DictionaryRes
  * fetchWithFallback applies it once to every adapter's answer, before asking
  * whether any definition is displayable, and refuses the whole response on
  * any violation: dropping only the offending definition would hide a partner
- * API that changed. Markup inside text is not judged here.
+ * API that changed.
  */
 export const isCanonicalResponse = (value: unknown, word: string): value is DictionaryResponse =>
   isRecord(value)

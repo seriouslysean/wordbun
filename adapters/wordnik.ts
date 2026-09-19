@@ -1,5 +1,3 @@
-import { decodeHTML } from 'entities';
-
 import type {
   DictionaryAdapter,
   DictionaryResponse,
@@ -18,6 +16,7 @@ import {
   transformToWordData,
   transformWordData,
 } from '#utils/adapter-utils';
+import { parseDefinitionMarkup } from '#utils/definition-text';
 import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guards';
 
 /**
@@ -161,20 +160,27 @@ export const wordnikAdapter: DictionaryAdapter = {
       `${baseUrl}/word.json/${encodeURIComponent(queryWord)}/definitions?limit=${limit}&includeRelated=false&useCanonical=false&includeTags=false&api_key=${apiKey}`;
 
     const data = await fetchDefinitions(word, buildUrl);
-    const definitions = data.map(def => buildDefinition({
-      id: def.id,
-      partOfSpeech: def.partOfSpeech,
+    const definitions = data.map(def => {
       // Wordnik occasionally splits text into fragments; the contract has one
       // string. Its Definition model declares text optional: a definition
       // without any is well-formed, and buildDictionaryResponse drops it.
-      text: Array.isArray(def.text) ? def.text.join(' ') : def.text ?? '',
-      attributionText: def.attributionText,
-      sourceDictionary: def.sourceDictionary,
-      sourceUrl: def.wordnikUrl || def.attributionUrl,
-      examples: def.exampleUses?.flatMap(example => (example.text ? [example.text] : [])),
-      synonyms: relatedWordsOfType(def, 'synonym'),
-      antonyms: relatedWordsOfType(def, 'antonym'),
-    }, POS_MAP));
+      const markup = Array.isArray(def.text) ? def.text.join(' ') : def.text ?? '';
+      // Wordnik marks cross-references up inside the text; the contract has
+      // plain text and the references as ranges of it
+      const { text, references } = parseDefinitionMarkup(markup);
+      return buildDefinition({
+        id: def.id,
+        partOfSpeech: def.partOfSpeech,
+        text,
+        references,
+        attributionText: def.attributionText,
+        sourceDictionary: def.sourceDictionary,
+        sourceUrl: def.wordnikUrl || def.attributionUrl,
+        examples: def.exampleUses?.flatMap(example => (example.text ? [example.text] : [])),
+        synonyms: relatedWordsOfType(def, 'synonym'),
+        antonyms: relatedWordsOfType(def, 'antonym'),
+      }, POS_MAP);
+    });
     const headword = { pronunciation: data[0]?.textProns?.[0]?.raw };
     return buildDictionaryResponse(
       word,
@@ -191,7 +197,7 @@ export const wordnikAdapter: DictionaryAdapter = {
   },
 
   transformWordData(wordData) {
-    return transformWordData(wordData, 'from Wordnik', processCrossReferences);
+    return transformWordData(wordData, 'from Wordnik');
   },
 
   /**
@@ -203,56 +209,3 @@ export const wordnikAdapter: DictionaryAdapter = {
     return isWordnikDefinitions(response) && response.length > 0;
   },
 };
-
-/**
- * Generates a Wordnik website URL for a given word
- * @param word - The word to create a URL for
- * @returns The complete Wordnik URL for the word
- * @throws Error if WORDNIK_WEBSITE_URL environment variable is not set
- */
-export function generateWordnikWordUrl(word: string): string {
-  const baseUrl = process.env.WORDNIK_WEBSITE_URL;
-  if (!baseUrl) {
-    throw new Error('WORDNIK_WEBSITE_URL environment variable is required');
-  }
-  return `${baseUrl}/words/${encodeURIComponent(word.toLowerCase())}`;
-}
-
-/**
- * Processes cross-reference tags in Wordnik text and converts them to clickable links
- * @param text - The text containing <xref> tags
- * @returns Text with <xref> tags converted to anchor links
- */
-export function processCrossReferences(text: string): string {
-  if (!text || typeof text !== 'string') {
-    return text;
-  }
-
-  return text.replaceAll(/<xref[^>]*>(.*?)<\/xref>/g, (_match, word) => {
-    const cleanWord = word.trim();
-    const wordnikUrl = generateWordnikWordUrl(cleanWord);
-    return `<a href="${wordnikUrl}" target="_blank" rel="noopener noreferrer" class="xref-link">${cleanWord}</a>`;
-  });
-}
-
-/**
- * Processes HTML content with Wordnik-specific formatting, handling cross-references and HTML entities
- * @param htmlString - The HTML string to process
- * @param options - Processing options (preserveXrefs: whether to convert xref tags to links)
- * @returns Processed HTML string with cross-references and entities handled
- */
-export function processWordnikHTML(
-  htmlString: string,
-  options: { preserveXrefs?: boolean } = {},
-): string {
-  if (typeof htmlString !== 'string') {
-    return htmlString;
-  }
-
-  const { preserveXrefs = true } = options;
-  const xrefProcessed = preserveXrefs
-    ? processCrossReferences(htmlString)
-    : htmlString.replaceAll(/<xref[^>]*>(.*?)<\/xref>/g, '$1');
-
-  return decodeHTML(xrefProcessed);
-}

@@ -30,37 +30,6 @@ describe('wordnik adapter', () => {
     vi.stubEnv('WORDNIK_API_URL', 'https://api.wordnik.com/v4');
   });
 
-  describe('processCrossReferences', () => {
-    it('converts xref tags to wordnik links', async () => {
-      const { processCrossReferences } = await import('#adapters/wordnik');
-      const input = 'This is an <xref>example</xref> of usage.';
-      const expected = 'This is an <a href="https://www.wordnik.com/words/example" target="_blank" rel="noopener noreferrer" class="xref-link">example</a> of usage.';
-
-      expect(processCrossReferences(input)).toBe(expected);
-    });
-
-    it('handles multiple xref tags', async () => {
-      const { processCrossReferences } = await import('#adapters/wordnik');
-      const input = 'See <xref>example</xref> and <xref>test</xref> words.';
-      const expected = 'See <a href="https://www.wordnik.com/words/example" target="_blank" rel="noopener noreferrer" class="xref-link">example</a> and <a href="https://www.wordnik.com/words/test" target="_blank" rel="noopener noreferrer" class="xref-link">test</a> words.';
-
-      expect(processCrossReferences(input)).toBe(expected);
-    });
-
-    it('handles text without xref tags', async () => {
-      const { processCrossReferences } = await import('#adapters/wordnik');
-      const input = 'Plain text without references.';
-      expect(processCrossReferences(input)).toBe(input);
-    });
-
-    it('handles empty or null input', async () => {
-      const { processCrossReferences } = await import('#adapters/wordnik');
-      expect(processCrossReferences('')).toBe('');
-      expect(processCrossReferences(null)).toBe(null);
-      expect(processCrossReferences(undefined)).toBe(undefined);
-    });
-  });
-
   describe('transformWordData', () => {
     it('handles valid word data', async () => {
       const { wordnikAdapter } = await import('#adapters/wordnik');
@@ -85,37 +54,6 @@ describe('wordnik adapter', () => {
     it('handles empty data arrays', async () => {
       const { wordnikAdapter } = await import('#adapters/wordnik');
       expect(wordnikAdapter.transformWordData({ data: [] })).toEqual({ partOfSpeech: '', definition: '', meta: null });
-    });
-  });
-
-  describe('processWordnikHTML', () => {
-    it('handles basic HTML sanitization', async () => {
-      const { processWordnikHTML } = await import('#adapters/wordnik');
-      const result = processWordnikHTML('<p>This is <strong>bold</strong> text.</p>');
-      expect(result).toContain('bold');
-      expect(typeof result).toBe('string');
-    });
-
-    it('handles cross-references when preserveXrefs is true', async () => {
-      const { processWordnikHTML } = await import('#adapters/wordnik');
-      const result = processWordnikHTML('See <xref>example</xref> for details.', { preserveXrefs: true });
-      expect(result).toContain('href="https://www.wordnik.com/words/example"');
-      expect(result).toContain('class="xref-link"');
-    });
-
-    it('removes xrefs when preserveXrefs is false', async () => {
-      const { processWordnikHTML } = await import('#adapters/wordnik');
-      const result = processWordnikHTML('See <xref>example</xref> for details.', { preserveXrefs: false });
-      expect(result).not.toContain('<xref>');
-      expect(result).not.toContain('</xref>');
-      expect(result).toContain('example');
-    });
-
-    it('handles empty input', async () => {
-      const { processWordnikHTML } = await import('#adapters/wordnik');
-      expect(processWordnikHTML('')).toBe('');
-      expect(processWordnikHTML(null)).toBe(null);
-      expect(processWordnikHTML(undefined)).toBe(undefined);
     });
   });
 
@@ -234,7 +172,8 @@ describe('wordnik adapter', () => {
           },
           {
             partOfSpeech: 'noun',
-            text: 'A short <xref>rest</xref> period.',
+            text: 'A short rest period.',
+            references: [{ start: 8, end: 12, url: 'https://www.wordnik.com/words/rest' }],
             attributionText: 'from Wiktionary, Creative Commons Attribution/Share-Alike License.',
             sourceDictionary: 'wiktionary',
             sourceUrl,
@@ -243,6 +182,27 @@ describe('wordnik adapter', () => {
         meta: { source: 'Wordnik', attribution: ahd, url: sourceUrl },
         headword: { pronunciation: 'brāk' },
       });
+    });
+
+    it('reads cross-references out of the text as ranges of it', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, loadFixture('amblypygi')));
+
+      const { definitions: [definition] } = await wordnikAdapter.fetchWordData('Amblypygi');
+      expect(definition.text).toBe('A taxonomic order within the class Arachnida — the tailless whip scorpions/whip spiders.');
+      expect(definition.references).toStrictEqual([
+        { start: 12, end: 17, url: 'https://www.wordnik.com/words/order' },
+        { start: 29, end: 34, url: 'https://www.wordnik.com/words/class' },
+        { start: 35, end: 44, url: 'https://www.wordnik.com/words/arachnida' },
+      ]);
+    });
+
+    it('omits references from text that has none', async () => {
+      const { wordnikAdapter } = await import('#adapters/wordnik');
+      globalThis.fetch.mockResolvedValueOnce(mockResponse(200, VALID_DEFINITIONS));
+
+      const { definitions: [definition] } = await wordnikAdapter.fetchWordData('test');
+      expect(definition).not.toHaveProperty('references');
     });
 
     it('joins text fragments into one string', async () => {

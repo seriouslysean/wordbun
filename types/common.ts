@@ -73,13 +73,27 @@ export interface RateLimit {
 // === DICTIONARY TYPES ===
 
 /**
+ * A cross-reference inside a definition: the characters of its text from
+ * `start` up to, not including, `end` (JavaScript string offsets) link to
+ * `url`, an absolute http(s) URL.
+ */
+export interface DictionaryReference {
+  start: number;
+  end: number;
+  url: string;
+}
+
+/**
  * The fields of a canonical definition other than its classification. Every
- * string is nonblank, every array nonempty and `sourceUrl` an absolute http(s)
- * URL; an adapter omits a field it has no value for. The type cannot say so,
- * so isCanonicalResponse in utils/adapter-utils.ts checks it at fetch time.
+ * string is nonblank, every array nonempty and every URL absolute http(s); an
+ * adapter omits a field it has no value for. `text` is plain text with no
+ * markup: a cross-reference is one of `references`, which are in order, do
+ * not overlap, and each cover nonblank text. The type cannot say so, so
+ * isCanonicalResponse in utils/adapter-utils.ts checks it at fetch time.
  */
 interface DictionaryDefinitionFields {
   text: string;
+  references?: DictionaryReference[];
 
   id?: string;
   attributionText?: string;
@@ -117,14 +131,16 @@ export type DictionaryDefinition = DictionaryDefinitionFields & DictionaryClassi
 /**
  * A definition as stored in a word file and read by the site. Looser than
  * DictionaryDefinition because records written before the canonical contract
- * may carry any part-of-speech string, text fragments, empty arrays or no
- * text. Every canonical definition is also a stored one.
+ * may carry any part-of-speech string, text fragments, empty arrays, no text,
+ * or Wordnik's cross-reference markup inside the text instead of
+ * `references`. Every canonical definition is also a stored one.
  */
 export interface StoredDictionaryDefinition {
   id?: string;
   partOfSpeech?: string;
   label?: string;
   text?: string | string[];
+  references?: DictionaryReference[];
   attributionText?: string;
   sourceDictionary?: string;
   sourceUrl?: string;

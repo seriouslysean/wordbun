@@ -35,6 +35,7 @@ const CANONICAL = {
     id: 'test',
     partOfSpeech: 'noun',
     text: 'A procedure for critical evaluation',
+    references: [{ start: 16, end: 24, url: 'https://example.com/critical' }],
     attributionText: 'from Test',
     sourceDictionary: 'test',
     sourceUrl: 'https://example.com/test',
@@ -173,6 +174,7 @@ describe('adapter-utils', () => {
         sourceUrl: 'https://example.com/serendipity',
         sourceDictionary: 'test',
         attributionText: 'from Test',
+        references: [{ start: 5, end: 12, url: 'https://example.com/fortune' }],
         text: 'Good fortune',
         partOfSpeech: 'noun',
         id: 'serendipity',
@@ -182,6 +184,7 @@ describe('adapter-utils', () => {
         id: 'serendipity',
         partOfSpeech: 'noun',
         text: 'Good fortune',
+        references: [{ start: 5, end: 12, url: 'https://example.com/fortune' }],
         attributionText: 'from Test',
         sourceDictionary: 'test',
         sourceUrl: 'https://example.com/serendipity',
@@ -190,7 +193,8 @@ describe('adapter-utils', () => {
         antonyms: ['unfortunate'],
       });
       expect(Object.keys(definition)).toEqual([
-        'id', 'partOfSpeech', 'text', 'attributionText', 'sourceDictionary', 'sourceUrl', 'examples', 'synonyms', 'antonyms',
+        'id', 'partOfSpeech', 'text', 'references', 'attributionText', 'sourceDictionary', 'sourceUrl',
+        'examples', 'synonyms', 'antonyms',
       ]);
     });
 
@@ -201,6 +205,7 @@ describe('adapter-utils', () => {
         attributionText: '  ',
         sourceDictionary: undefined,
         sourceUrl: '',
+        references: [],
         examples: [],
         synonyms: [],
         antonyms: undefined,
@@ -271,8 +276,8 @@ describe('adapter-utils', () => {
       expect(isCanonicalResponse(withDefinition({ partOfSpeech: undefined, label: 'biographical name' }), 'test')).toBe(true);
     });
 
-    it('accepts markup inside text, which the contract does not judge yet', () => {
-      expect(isCanonicalResponse(withDefinition({ text: 'A <xref>trial</xref>' }), 'test')).toBe(true);
+    it('accepts text with a bracket that is not a tag', () => {
+      expect(isCanonicalResponse(withDefinition({ text: 'Below range (<20 mg/dL) at critical levels' }), 'test')).toBe(true);
     });
 
     it('treats a field whose value is undefined as absent, as JSON does', () => {
@@ -301,6 +306,17 @@ describe('adapter-utils', () => {
       ['a key outside the definition', withDefinition({ wordnikUrl: 'https://example.com/test' })],
       ['a definition without text', withoutDefinitionField('text')],
       ['blank text', withDefinition({ text: '  ' })],
+      ['markup left in the text', withDefinition({ text: 'A procedure for <xref>critical</xref> evaluation', references: undefined })],
+      ['an unknown tag left in the text', withDefinition({ text: 'A procedure for <i>critical</i> evaluation' })],
+      ['an empty references list', withDefinition({ references: [] })],
+      ['references that are not a list', withDefinition({ references: { start: 16, end: 24, url: 'https://example.com/critical' } })],
+      ['a reference past the end of the text', withDefinition({ references: [{ start: 30, end: 40, url: 'https://example.com/critical' }] })],
+      ['a reference over blank text', withDefinition({ references: [{ start: 15, end: 16, url: 'https://example.com/critical' }] })],
+      ['overlapping references', withDefinition({ references: [
+        { start: 16, end: 24, url: 'https://example.com/critical' },
+        { start: 20, end: 35, url: 'https://example.com/evaluation' },
+      ] })],
+      ['a reference URL that is not http(s)', withDefinition({ references: [{ start: 16, end: 24, url: 'javascript:alert(1)' }] })],
       ['text given as fragments', withDefinition({ text: ['A procedure', 'for critical evaluation'] })],
       ['a part of speech outside the vocabulary', withDefinition({ partOfSpeech: 'transitive verb' })],
       ['a label beside a part of speech', withDefinition({ label: 'noun' })],

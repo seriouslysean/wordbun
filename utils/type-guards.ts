@@ -21,6 +21,17 @@ export const isStringArray = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every(isString);
 
 /**
+ * True for an absolute http or https URL.
+ */
+export const isHttpUrl = (value: unknown): value is string => {
+  if (!isString(value) || !URL.canParse(value)) {
+    return false;
+  }
+  const { protocol } = new URL(value);
+  return protocol === 'https:' || protocol === 'http:';
+};
+
+/**
  * True when the value is absent or satisfies the guard. JSON has no
  * `undefined`, so an optional field is either missing or must be well-formed.
  */
