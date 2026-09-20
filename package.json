@@ -50,7 +50,7 @@
     "@playwright/test": "^1.63.0",
     "@sentry/astro": "^10.75.0",
     "@sentry/node": "^10.75.0",
-    "@types/node": "^26.6.1",
+    "@types/node": "^26.6.2",
     "@vitest/coverage-v8": "^5.0.1",
     "cmu-pronouncing-dictionary": "3.0.0",
     "lefthook": "^2.1.14",
