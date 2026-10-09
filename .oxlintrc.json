@@ -35,6 +35,12 @@
         "no-await-in-loop": "off",
         "no-inline-comments": "error"
       }
+    },
+    {
+      "files": ["tests/**"],
+      "rules": {
+        "unicorn/consistent-function-scoping": "off"
+      }
     }
   ]
 }

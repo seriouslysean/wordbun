@@ -25,6 +25,8 @@ const ENGINE_REF = /^(v[0-9]+\.[0-9]+\.[0-9]+|[0-9a-f]{40})$/;
 // placeholder where the release goes
 const REF_PLACEHOLDER = '@vX.Y.Z';
 
+const template = (name: string) => fs.readFileSync(path.join(TEMPLATES, name), 'utf-8');
+
 const HELP_TEXT = `
 Create Site Tool
 
@@ -76,7 +78,6 @@ export const createSite = ({ directory, engineRef, seedFile }: CreateSiteOptions
     throw new Error(`${directory} must not exist or be an empty directory`);
   }
 
-  const template = (name: string) => fs.readFileSync(path.join(TEMPLATES, name), 'utf-8');
   const pin = (name: string) => template(name).replaceAll(REF_PLACEHOLDER, `@${engineRef}`);
   const files: [string, string | Buffer][] = [
     ['.github/workflows/deploy.yml', pin('deploy.yml')],
