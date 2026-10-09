@@ -66,12 +66,3 @@ Color Customization:
   COLOR_PRIMARY_LIGHT       Light primary color (default: #c2410c)
   COLOR_PRIMARY_DARK        Dark primary color (default: #7c2d12)
 `;
-
-/**
- * Standard usage patterns for consistency
- */
-export const USAGE_PATTERNS = {
-  toolLocal: 'npm run tool:local tools/<tool-name>.ts',
-  toolDirect: 'npm run tool:<tool-name>',
-  helpFlag: '-h, --help',
-} as const;

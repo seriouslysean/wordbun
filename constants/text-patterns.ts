@@ -73,12 +73,3 @@ export const TEXT_PATTERNS = {
   STARTS_WITH_VOWEL: /^[aeiou]/i,
   ENDS_WITH_VOWEL: /[aeiou]$/i,
 } as const;
-
-export type TextPattern = keyof typeof TEXT_PATTERNS;
-
-/**
- * Test a word against a specific pattern
- */
-export const matchesPattern = (word: string, pattern: TextPattern): boolean => {
-  return TEXT_PATTERNS[pattern].test(word);
-};

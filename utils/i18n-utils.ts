@@ -1,8 +1,6 @@
 import translations from '#locales/en.json' with { type: 'json' };
 import { isRecord } from '#utils/type-guards';
 
-export const defaultLang = 'en';
-
 /**
  * Simple translation function for basic key lookups
  * @param key - Translation key (e.g., 'nav.home')
