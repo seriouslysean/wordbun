@@ -360,6 +360,39 @@ describe('sync-upstream.sh', { timeout: 90000 }, () => {
       expect(isMerging()).toBe(true);
     });
 
+    // lefthook's pre-commit job runs `oxlint --fix` with stage_fixed, so a
+    // hook that rewrites and stages a file is this repository's own setup
+    it('fails when a commit hook changes the merge after the gates passed', async () => {
+      diverge();
+      release({ 'src/engine.ts': 'export const version = 2;\n' });
+      write(ctx.site, '.git/hooks/pre-commit', '#!/usr/bin/env bash\necho fixed >> README.md\ngit add README.md\n');
+      fs.chmodSync(path.join(ctx.site, '.git/hooks/pre-commit'), 0o755);
+      const main = git(ctx.site, 'rev-parse', 'main');
+
+      const result = await sync();
+
+      expect(result.code).toBe(1);
+      expect(result.output).toContain('commit hook changed');
+      expect(result.output).not.toContain('after every gate passed');
+      expect(git(ctx.site, 'rev-parse', 'main')).toBe(main);
+    });
+
+    it('explains a merge commit that a commit hook refuses', async () => {
+      diverge();
+      release({ 'src/engine.ts': 'export const version = 2;\n' });
+      write(ctx.site, '.git/hooks/pre-commit', '#!/usr/bin/env bash\nexit 1\n');
+      fs.chmodSync(path.join(ctx.site, '.git/hooks/pre-commit'), 0o755);
+      const main = git(ctx.site, 'rev-parse', 'main');
+
+      const result = await sync();
+
+      expect(result.code).toBe(1);
+      expect(result.output).toContain('could not be committed');
+      expect(result.output).toContain('git merge --abort');
+      expect(git(ctx.site, 'rev-parse', 'HEAD')).toBe(main);
+      expect(isMerging()).toBe(true);
+    });
+
     it('skips only E2E with --skip-e2e', async () => {
       diverge();
       release({ 'src/engine.ts': 'export const version = 2;\n' });
