@@ -1,10 +1,11 @@
 ---
 name: pr
 description: Opens a GitHub pull request for the current branch - validates, pushes, and fills the repository's PR template from the whole branch diff. Use only when the user explicitly asks to open or create a pull request.
-# Claude Code only. Pushing and opening a PR are visible to others, so the user
-# decides when: disable-model-invocation keeps the skill out of Claude's own
-# reach (agents/openai.yaml does the same for Codex). argument-hint shows in
-# the / menu; allowed-tools pre-approves these commands while the skill runs.
+# Pushing and opening a PR are visible to others, so the user decides when:
+# disable-model-invocation (Claude Code only) keeps the skill out of Claude's
+# own reach, and agents/openai.yaml does the same for Codex. argument-hint is
+# Claude Code only. allowed-tools is experimental in the Agent Skills spec;
+# the Bash(...) rules are Claude Code's syntax.
 disable-model-invocation: true
 argument-hint: "[optional base branch, defaults to main]"
 allowed-tools: Bash(npm run lint:*) Bash(npm run lint:fix:*) Bash(npm run typecheck:*) Bash(npm test:*) Bash(npx vitest run:*) Bash(npm run build:*) Bash(SOURCE_DIR=demo npm run build:*) Bash(npm run test:e2e:*) Bash(npx playwright test:*) Bash(git status:*) Bash(git branch --show-current) Bash(git diff:*) Bash(git log:*) Bash(git push:*) Bash(gh pr create:*)
@@ -39,12 +40,11 @@ Claude Code replaces each command below with its output when the skill loads; in
 
 5. **Push** the branch if the remote does not have these commits: `git push -u origin <branch>`.
 
-6. **Create the PR**, passing the body explicitly. `--fill` and `--fill-first` take the title and body from commit messages, so the template would be skipped:
+6. **Create the PR**, passing the body from a file. Write the filled-in template to a file outside the repository with the file-writing tool, then:
    ```sh
-   gh pr create --base <base> --title "type: short imperative title" --body-file - <<'EOF'
-   <the filled-in template>
-   EOF
+   gh pr create --base <base> --title "type: short imperative title" --body-file <path>
    ```
+   `--fill` and `--fill-first` take the title and body from commit messages, so the template would be skipped. A body passed inline or through a heredoc becomes part of the command line, where the safety hook blocks any line that quotes a destructive command.
 
 ## Guidelines
 

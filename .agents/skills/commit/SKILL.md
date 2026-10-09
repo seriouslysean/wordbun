@@ -1,7 +1,8 @@
 ---
 name: commit
-description: Commits the current changes the way this repository expects - quality gates first, files staged by name, a Conventional Commits message that explains why. Use when the user asks to commit, or when finished work needs committing before a pull request.
-# Claude Code only: argument-hint shows in the / menu, allowed-tools pre-approves these commands while the skill runs
+description: Commits the current changes the way this repository expects - quality gates first, files staged by name, a Conventional Commits message that explains why. Use when the user asks to commit.
+# argument-hint is Claude Code only. allowed-tools is experimental in the
+# Agent Skills spec; the Bash(...) rules are Claude Code's syntax.
 argument-hint: "[optional commit message hint]"
 allowed-tools: Bash(npm run lint:*) Bash(npm run lint:fix:*) Bash(npm run typecheck:*) Bash(npm test:*) Bash(npx vitest run:*) Bash(npm run build:*) Bash(SOURCE_DIR=demo npm run build:*) Bash(npm run test:e2e:*) Bash(npx playwright test:*) Bash(git status:*) Bash(git diff:*) Bash(git add:*) Bash(git commit:*) Bash(git log:*)
 ---
@@ -29,4 +30,4 @@ Claude Code replaces each command below with its output when the skill loads; in
    - Body, after a blank line, when the reason is not obvious from the subject: why the change was needed, not a list of what changed
    - Hint from the user for the message, if any: $ARGUMENTS
 
-5. **Commit and check.** `git commit`, then `git status` to confirm the tree is as expected. The pre-commit hook (lefthook) fixes lint and runs the tests related to the staged files; if it fails, fix the cause and commit again. `--no-verify` skips the one check that runs on every commit, so leave it off.
+5. **Commit and check.** `git commit`, then `git status` to confirm the tree is as expected. The pre-commit hook (lefthook) fixes lint and runs the tests related to the staged files; if it fails, fix the cause and commit again. `--no-verify` skips the one check that runs on every commit, so leave it off. When the message quotes a command the safety hook blocks (a forced push, a hard reset), write it to a file outside the repository with the file-writing tool and use `git commit -F <file>`: the hook reads the whole command line, message included.

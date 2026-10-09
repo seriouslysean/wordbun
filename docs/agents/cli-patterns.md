@@ -41,17 +41,12 @@ gh api .../pulls/58/files  # Use: git diff main...HEAD --stat
 ### Creating PRs and issues
 
 ```sh
-# Use heredocs for multi-line bodies
-gh pr create --title "Title" --body "$(cat <<'EOF'
-Body content here
-EOF
-)"
-
-# A PR body follows .github/pull_request_template.md, passed explicitly:
-# --fill and --fill-first take the body from commit messages and skip it
-gh pr create --title "Title" --body-file - <<'EOF'
-Filled-in template here
-EOF
+# A PR body follows .github/pull_request_template.md, written to a file
+# outside the repository and passed by path. --fill and --fill-first take the
+# body from commit messages and skip the template; an inline or heredoc body
+# becomes part of the command line, where the destructive-command hook blocks
+# any line that quotes a command it guards against
+gh pr create --title "Title" --body-file /path/to/body.md
 ```
 
 ## Git
