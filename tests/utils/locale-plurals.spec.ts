@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 
-// tests/setup.ts swaps the locale for a small fixture; these are the strings
-// the site ships.
-vi.unmock('#locales/en.json');
-
 import { tp } from '#utils/i18n-utils';
+
+// tests/setup.ts swaps the locale for a small fixture; these are the strings
+// the site ships. Vitest hoists the call above the imports.
+vi.unmock('#locales/en.json');
 
 describe('shipped locale plurals', () => {
   it.each([
