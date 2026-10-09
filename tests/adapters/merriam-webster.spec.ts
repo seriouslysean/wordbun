@@ -171,6 +171,45 @@ describe('merriam-webster adapter', () => {
       expect(examples.length).toBeGreaterThanOrEqual(2);
     });
 
+    // The structure of the MW JSON reference's `pseq` example, "tab"
+    // (dictionaryapi.com/products/json, 2.10.10): a `bs` followed by two
+    // senses. 2.10.9 places `bs` "in an sseq or pseq array". The reference's
+    // senses carry only text; each is given a `vis` here, which `dt` allows,
+    // so every level has an example to find.
+    it('reads the binding substitute inside a parenthesized sense sequence', async () => {
+      const { extractExamples, isMWEntry } = await import('#adapters/merriam-webster');
+      const entry: unknown = {
+        meta: { id: 'tab:1', src: 'collegiate' },
+        fl: 'noun',
+        def: [{
+          sseq: [[
+            ['pseq', [
+              ['bs', {
+                sense: {
+                  sn: '1 a',
+                  dt: [['text', '{bc}a short projecting device: such as'], ['vis', [{ t: 'pull the {wi}tab{/wi}' }]]],
+                },
+              }],
+              ['sense', {
+                sn: '(1)',
+                dt: [['text', '{bc}a small flap or loop by which something may be grasped or pulled'], ['vis', [{ t: 'a zipper {wi}tab{/wi}' }]]],
+              }],
+              ['sense', {
+                sn: '(2)',
+                dt: [['text', '{bc}a projection from a card used as an aid in filing'], ['vis', [{ t: 'a file {wi}tab{/wi}' }]]],
+              }],
+            ]],
+          ]],
+        }],
+        shortdef: ['a short projecting device'],
+      };
+      if (!isMWEntry(entry)) {
+        throw new Error('The tab entry is not a valid MW entry');
+      }
+
+      expect(extractExamples(entry)).toEqual(['pull the tab', 'a zipper tab', 'a file tab']);
+    });
+
     it('extracts examples with cross-reference markup', async () => {
       const { extractExamples, isMWEntry } = await import('#adapters/merriam-webster');
       const fixture = loadFixture('ludicrous');
