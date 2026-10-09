@@ -137,7 +137,7 @@ Arguments:
   date    Date in YYYYMMDD format (optional, defaults to today)
 
 Options:
-  -o, --overwrite       Overwrite existing word if it exists
+  -o, --overwrite       Replace the word already stored for the date
   -p, --preserve-case   Preserve original capitalization (default: converts to lowercase)
   -h, --help            Show this help message
 
@@ -151,7 +151,13 @@ Examples:
 Requirements:
   - Word must exist in dictionary
   - Date must be today or in the past (YYYYMMDD format)
-  - Tool prevents duplicate words unless --overwrite is used
+  - A date holds one word: a date that already has one is refused unless
+    --overwrite is used, which replaces it
+  - A word is stored once: one already stored on another date is refused,
+    with or without --overwrite
+  - A word needs a URL slug (ASCII letters, digits, underscores and hyphens):
+    one with none is refused, and so is one whose slug a different word on
+    another date has ("can't" beside "cant"), with or without --overwrite
 ${COMMON_ENV_DOCS}
 `;
 
