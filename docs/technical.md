@@ -598,7 +598,7 @@ The browser side has the mirror-image rule. Bundled `<script>` blocks import a f
 
 **Warnings fail.** `options.denyWarnings` makes a warning exit non-zero, and `options.reportUnusedDisableDirectives` reports a disable comment that no longer suppresses anything. A rule's level (`warn` or `error`) only labels the report.
 
-**Plugins.** `plugins` replaces oxlint's default set, so it lists the defaults (`typescript`, `unicorn`, `oxc`; the ESLint core rules are always on) and four more: `import`, `promise`, `node`, `vitest`. The `correctness` category reports as errors and `suspicious` and `perf` as warnings, for every listed plugin; `rules` then pins individual rules.
+**Plugins.** `plugins` replaces oxlint's default set, so it lists the defaults (`typescript`, `unicorn`, `oxc`; the ESLint core rules are always on) and four more: `import`, `promise`, `node`, `vitest`. The `correctness` category reports as errors and `suspicious` and `perf` as warnings, for every listed plugin; `rules` then pins individual rules. The `vitest` rules act on specs that import from `vitest`; the Playwright specs in `tests/e2e/` are outside them (a `test.only` there went unreported), and `forbidOnly` in `playwright.config.ts` covers that case in CI.
 
 **Where rules differ.** `overrides` turns `no-await-in-loop` off in `adapters/`, `tools/` and `tests/` (sequential by design), applies `node/no-process-env` to `src/` only (it reads its environment through `astro:env/client`; CLI tools read `process.env`), and turns `unicorn/consistent-function-scoping` off in `tests/` (helpers sit in the describe block that uses them).
 
