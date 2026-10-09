@@ -128,10 +128,10 @@ All environment variables are validated in `astro.config.ts` (single source of t
 
 | Variable | Purpose |
 |----------|---------|
-| `SITE_URL` | Canonical URL (e.g., `https://example.com`) |
-| `SITE_TITLE` | Site name |
+| `SITE_URL` | The site's origin (e.g., `https://example.com`); the build refuses a value that is not a URL |
+| `SITE_TITLE` | Site name, as readers and crawlers see it: page titles, `og:site_name`, JSON-LD names, the feed title and the manifest `name` |
 | `SITE_DESCRIPTION` | Site description for SEO |
-| `SITE_ID` | Unique site identifier |
+| `SITE_ID` | Machine identifier: the site tag on log events and the optional `public/ascii-{SITE_ID}.txt`. Never rendered to a reader |
 
 ### Data & Dictionary
 
@@ -145,7 +145,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 | `MERRIAM_WEBSTER_DICTIONARY` | `collegiate` | MW dictionary edition |
 | `WORDNIK_API_KEY` | — | Wordnik API key |
 | `WORDNIK_API_URL` | `https://api.wordnik.com/v4` | Wordnik API endpoint |
-| `WORDNIK_WEBSITE_URL` | `https://www.wordnik.com` | Wordnik website that cross-references link to, when a Wordnik definition is fetched or a stored one rendered; the default also applies to the CLI tools |
+| `WORDNIK_WEBSITE_URL` | `https://www.wordnik.com` | Wordnik website that cross-references and the footer's Wordnik link point to, when a Wordnik definition is fetched or a stored one rendered; the default also applies to the CLI tools, and the build refuses a value that is not a URL |
 
 ### Deployment
 
@@ -162,6 +162,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 | `SITE_AUTHOR_URL` | `''` | Author website URL |
 | `SITE_ATTRIBUTION_MESSAGE` | `''` | Custom attribution text |
 | `SITE_KEYWORDS` | `''` | SEO keywords (comma-separated) |
+| `SITE_SHORT_NAME` | — | Manifest `short_name`: the home-screen label for when `SITE_TITLE` is too long to fit under an icon. Unset leaves the member out and the launcher shortens `name` itself |
 
 ### humans.txt
 
@@ -426,6 +427,12 @@ Two-tier system supporting root and subdirectory deployments:
 | `getFullUrl(path)` | Absolute URL for SEO | `getFullUrl('/word/hello')` -> `https://example.com/blog/word/hello` |
 
 `getFullUrl()` uses `getUrl()` internally to ensure BASE_PATH consistency.
+
+The site root is the one URL that keeps a trailing slash: `getUrl('/')` is `/blog/` and `getFullUrl('/')` is `https://example.com/blog/`. Under a base path the root is a directory, which a static host serves only at its slash URL (GitHub Pages answers `/blog` with a 301 to `/blog/`), and `@astrojs/sitemap` names it the same way. The canonical link, `og:url`, the JSON-LD `WebSite` and breadcrumb URLs, the feed's channel link and the manifest `start_url` and `scope` all come from these two helpers, so they agree. The manifest scope needs the slash for a second reason: a scope is matched as a string prefix, so `/blog` would also claim `/blogroll`.
+
+`SITE_URL` is the origin alone; a subdirectory belongs in `BASE_PATH` (Astro's [GitHub Pages guide](https://docs.astro.build/en/guides/deploy/github/) sets `site` and `base` the same way). URLs are resolved against the origin, so a `SITE_URL` that repeats the base path does not double it.
+
+**Known limit, open decision.** Every other page is linked without a trailing slash (`trailingSlash: 'never'`) while `build.format` is left at its default, `directory`, which writes `stats/index.html`. Astro leaves trailing slashes on prerendered pages to the host, and GitHub Pages answers `/stats` with a 301 to `/stats/`, so canonical URLs, sitemap entries and internal links to non-root pages each cost a redirect there. Astro's [`build.format` reference](https://docs.astro.build/en/reference/configuration-reference/#buildformat) pairs `directory` with `trailingSlash: 'always'` and `file` with `'never'`; this project runs neither pair. Either pairing changes every page URL or output path, so it is not decided here.
 
 ### Route Structure
 

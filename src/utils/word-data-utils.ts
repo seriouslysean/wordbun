@@ -8,7 +8,7 @@ import type {
   WordGroupByYearResult,
 } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
-import { HOMEPAGE_PREVIOUS_WORDS, MAX_PAST_WORDS_DISPLAY } from '#constants/text-patterns';
+import { HOMEPAGE_PREVIOUS_WORDS } from '#constants/text-patterns';
 import { getTodayYYYYMMDD } from '#utils/date-utils';
 import {
   findCurrentWord,
@@ -20,6 +20,7 @@ import {
   getAvailableLetters,
   getAvailablePartsOfSpeech,
   findValidDefinition,
+  getAdjacentWords as getAdjacentWordsPure,
   getWordsByLength as getWordsByLengthPure,
   getWordsByLetter as getWordsByLetterPure,
   getWordsByPartOfSpeech as getWordsByPartOfSpeechPure,
@@ -204,38 +205,6 @@ export const getHomepageWords = (words: WordData[] = allWords): { currentWord: W
 };
 
 /**
- * Retrieves up to 5 words that occurred before the specified date.
- * Useful for showing recent word history or navigation context.
- *
- * @param currentDate - Reference date in YYYYMMDD format to find words before
- * @param [words=allWords] - Array of word data to search through
- * @returns Array of up to 5 word entries that occurred before the given date
- */
-export const getPastWords = (currentDate: string, words: WordData[] = allWords): WordData[] => {
-  if (!currentDate) {
-    return [];
-  }
-  return words
-    .filter(word => word.date < currentDate)
-    .slice(0, MAX_PAST_WORDS_DISPLAY);
-};
-
-/**
- * Finds and returns the word data for a specific date.
- * Returns null if no word exists for the given date or if date is invalid.
- *
- * @param date - Date to search for in YYYYMMDD format
- * @param [words=allWords] - Array of word data to search through
- * @returns Word data for the specified date, or null if not found
- */
-export const getWordByDate = (date: string, words: WordData[] = allWords): WordData | null => {
-  if (!date) {
-    return null;
-  }
-  return words.find(word => word.date === date) || null;
-};
-
-/**
  * Gets the previous and next words relative to the given date for navigation purposes.
  * Previous word has an earlier date, next word has a later date.
  *
@@ -243,46 +212,8 @@ export const getWordByDate = (date: string, words: WordData[] = allWords): WordD
  * @param [words=allWords] - Array of word data to search through
  * @returns Object containing previousWord and nextWord, or null if not found
  */
-export const getAdjacentWords = (date: string, words: WordData[] = allWords): WordAdjacentResult => {
-  if (!date) {
-    return {
-      previousWord: null,
-      nextWord: null,
-    };
-  }
-  const currentIndex = words.findIndex(word => word.date === date);
-
-  if (currentIndex === -1) {
-    return {
-      previousWord: null,
-      nextWord: null,
-    };
-  }
-
-  return {
-    previousWord: words[currentIndex + 1] || null,
-    nextWord: words[currentIndex - 1] || null,
-  };
-};
-
-/**
- * Retrieves all words that occurred within a specific month of a given year.
- * Useful for generating monthly archives.
- *
- * @param year - Year to filter by (YYYY format)
- * @param month - Month to filter by (MM format)
- * @param [words=allWords] - Array of word data to search through
- * @returns Array of word data entries from the specified month and year
- */
-export const getWordsByMonth = (
-  year: string,
-  month: string,
-  words: WordData[] = allWords,
-): WordData[] => {
-  const monthStr = month.padStart(2, '0');
-  return words.filter(word => word.date.startsWith(`${year}${monthStr}`));
-};
-
+export const getAdjacentWords = (date: string, words: WordData[] = allWords): WordAdjacentResult =>
+  getAdjacentWordsPure(date, words);
 
 /**
  * Groups words by month within a specific year.

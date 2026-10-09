@@ -55,6 +55,17 @@ describe('generateLlmsTxt', () => {
     expect(output).toContain('](https://test.com/demo/word)');
   });
 
+  it('does not double a base path that SITE_URL repeats', () => {
+    mockEnv.BASE_PATH = '/demo';
+    mockEnv.SITE_URL = 'https://test.com/demo';
+
+    const output = generateLlmsTxt(words);
+
+    expect(output).toContain('](https://test.com/demo/word/word1)');
+    expect(output).not.toContain('/demo/demo/');
+    expect(generateRobotsTxt('https://test.com/demo')).toContain('Sitemap: https://test.com/demo/sitemap-index.xml');
+  });
+
   it('returns null when required site data is missing', () => {
     mockEnv.SITE_TITLE = '';
 

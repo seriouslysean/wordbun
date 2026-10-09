@@ -62,6 +62,23 @@ test.describe('SEO build output', () => {
 		expect(response?.status()).toBe(200);
 	});
 
+	test('the linked web app manifest parses and its icon is served', async ({ page, request }) => {
+		await page.goto('/');
+		const href = await page.locator('link[rel="manifest"]').getAttribute('href');
+		if (href === null) {
+			throw new Error('manifest link has no href');
+		}
+		const response = await request.get(new URL(href, page.url()).href);
+		expect(response.status()).toBe(200);
+
+		const manifest = await response.json();
+		expect(manifest.name).toBeTruthy();
+		const startResponse = await request.get(new URL(manifest.start_url, page.url()).href, { maxRedirects: 0 });
+		expect(startResponse.status()).toBe(200);
+		const iconResponse = await request.get(new URL(manifest.icons[0].src, page.url()).href);
+		expect(iconResponse.status()).toBe(200);
+	});
+
 	test('favicon.ico serves an ICO image', async ({ request }) => {
 		const response = await request.get('/favicon.ico', { maxRedirects: 0 });
 		expect(response.status()).toBe(200);

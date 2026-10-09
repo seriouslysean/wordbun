@@ -1,5 +1,6 @@
 import type {
-  DefinitionSegment, DictionaryDefinition, WordData, WordEnrichment, WordGrouping, WordProcessedData, WordSense,
+  DefinitionSegment, DictionaryDefinition, WordAdjacentResult, WordData, WordEnrichment, WordGrouping, WordProcessedData,
+  WordSense,
 } from '#types';
 import type { BasePartOfSpeech } from '#constants/parts-of-speech';
 import { BASE_PARTS_OF_SPEECH, isBasePartOfSpeech } from '#constants/parts-of-speech';
@@ -23,6 +24,24 @@ export const findCurrentWord = (words: WordData[], today: string): WordData | nu
  */
 export const getPreviousWords = (words: WordData[], currentWord: WordData | null, count: number): WordData[] =>
   currentWord ? words.filter(word => word.date < currentWord.date).slice(0, count) : [];
+
+/**
+ * The words either side of a date, for previous/next navigation.
+ * @param date - Date in YYYYMMDD format
+ * @param words - Words sorted newest first
+ * @returns The older word as previousWord and the newer as nextWord; both null when no word has that date
+ */
+export const getAdjacentWords = (date: string, words: WordData[]): WordAdjacentResult => {
+  const currentIndex = date ? words.findIndex(word => word.date === date) : -1;
+  if (currentIndex === -1) {
+    return { previousWord: null, nextWord: null };
+  }
+
+  return {
+    previousWord: words[currentIndex + 1] ?? null,
+    nextWord: words[currentIndex - 1] ?? null,
+  };
+};
 
 /**
  * Get words from a specific year
