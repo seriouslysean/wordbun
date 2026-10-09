@@ -9,7 +9,7 @@ import type { WordEnrichment } from '#types';
 import { isRateLimited } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { isRecord } from '#utils/type-guards';
-import { isWordEnrichment } from '#utils/stored-word-validation';
+import { isWordEnrichment, parseWordData } from '#utils/stored-word-validation';
 
 interface StoredEntry {
   preserveCase: boolean;
@@ -74,7 +74,7 @@ async function parseCount(option: string, raw: string, min: number): Promise<num
  * @param date - Date in YYYYMMDD format
  * @param originalPath - Original file path
  * @param retryCount - Current retry attempt (for exponential backoff)
- * @returns True if successful, false otherwise
+ * @returns True if a valid record was written, false otherwise
  */
 export async function regenerateWordFile(word: string, date: string, originalPath: string, retryCount: number = 0): Promise<boolean> {
   const maxRetries = 3;
@@ -98,7 +98,11 @@ export async function regenerateWordFile(word: string, date: string, originalPat
       storedEnrichment,
     });
 
-    fs.writeFileSync(originalPath, JSON.stringify(wordData, null, 4));
+    // Held to the guard every reader applies, so a record the site could not
+    // build is refused here and the file it would replace is left as it was
+    const contents = JSON.stringify(wordData, null, 4);
+    parseWordData(contents, originalPath);
+    fs.writeFileSync(originalPath, contents);
     return true;
   } catch (error) {
     const errorMessage = getErrorMessage(error);

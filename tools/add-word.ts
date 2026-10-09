@@ -1,34 +1,10 @@
-import fs from 'node:fs';
-import path from 'node:path';
-
-import { paths } from '#config/paths';
 import { isEntryPoint } from '#tools/entry';
 import { COMMON_ENV_DOCS, parseToolArgs, showHelp } from '#tools/help-utils';
-import { createWordEntry, findExistingWord, findSlugCollision } from '#tools/utils';
-import type { WordData } from '#types';
+import { createWordEntry, findSlugCollision, findWordInFiles, getWordFiles } from '#tools/utils';
 import { getTodayYYYYMMDD, isValidDate } from '#utils/date-utils';
 import { isWordNotFound } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
-import { parseWordData } from '#utils/stored-word-validation';
 import { slugify } from '#utils/text-utils';
-
-/**
- * Checks if a file exists for the given date and returns the existing word if found
- * @param date - Date in YYYYMMDD format
- * @returns Existing word data if found, null otherwise
- */
-const checkExistingWord = (date: string): WordData | null => {
-  const year = date.slice(0, 4);
-  const filePath = path.join(paths.words, year, `${date}.json`);
-  if (fs.existsSync(filePath)) {
-    try {
-      return parseWordData(fs.readFileSync(filePath, 'utf-8'), filePath);
-    } catch (error) {
-      logger.error('Failed to read existing word file', { filePath, error: getErrorMessage(error) });
-    }
-  }
-  return null;
-};
 
 /**
  * Validates that a date is not in the future
@@ -39,8 +15,6 @@ const isNotFutureDate = (date: string): boolean => {
   const today = getTodayYYYYMMDD();
   return today ? date <= today : false;
 };
-
-
 
 
 interface AddWordOptions {
@@ -95,8 +69,14 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
       await exit(1);
     }
 
-    // Check if file already exists for the target date
-    const existing = checkExistingWord(targetDate);
+    // One scan answers the date, word and slug checks and the write below, so
+    // a file that cannot be read is reported once. A new site has no words
+    // yet, so an empty corpus is not a fault here.
+    const scan = getWordFiles({ allowEmpty: true });
+
+    // A date is held by whichever file stores it: the site builds every
+    // .json file below the words directory, not only <year>/<date>.json
+    const existing = scan.files.find(file => file.date === targetDate);
     if (existing && !overwrite) {
       logger.warn('Word already exists for this date', {
         date: existing.date,
@@ -105,9 +85,8 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
       await exit(1);
     }
 
-    // Check if word already exists anywhere else in the system (always enforce global uniqueness).
-    // A new site has no words yet, so an empty corpus is not a fault here.
-    const { match: existingWordByName } = findExistingWord(word, { allowEmpty: true });
+    // Check if word already exists anywhere else in the system (always enforce global uniqueness)
+    const { match: existingWordByName } = findWordInFiles(word, scan);
     if (existingWordByName && existingWordByName.date !== targetDate) {
       logger.warn('Word already exists for different date', {
         word: word,
@@ -119,7 +98,7 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
 
     // A different word with the same slug ("can't" beside "cant") would claim
     // the same page, and only one of the two could be built.
-    const slugCollision = findSlugCollision(word, targetDate);
+    const slugCollision = findSlugCollision(word, targetDate, scan.files);
     if (slugCollision) {
       logger.warn('Word shares its URL slug with a different word', {
         word,
@@ -131,7 +110,7 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
     }
 
     // Use shared word creation logic
-    await createWordEntry(word, { date: targetDate, overwrite, preserveCase });
+    await createWordEntry(word, { date: targetDate, overwrite, preserveCase, files: scan.files });
 
   } catch (error) {
     const errorMessage = getErrorMessage(error);
@@ -158,7 +137,7 @@ Arguments:
   date    Date in YYYYMMDD format (optional, defaults to today)
 
 Options:
-  -o, --overwrite       Overwrite existing word if it exists
+  -o, --overwrite       Replace the word already stored for the date
   -p, --preserve-case   Preserve original capitalization (default: converts to lowercase)
   -h, --help            Show this help message
 
@@ -172,7 +151,13 @@ Examples:
 Requirements:
   - Word must exist in dictionary
   - Date must be today or in the past (YYYYMMDD format)
-  - Tool prevents duplicate words unless --overwrite is used
+  - A date holds one word: a date that already has one is refused unless
+    --overwrite is used, which replaces it
+  - A word is stored once: one already stored on another date is refused,
+    with or without --overwrite
+  - A word needs a URL slug (ASCII letters, digits, underscores and hyphens):
+    one with none is refused, and so is one whose slug a different word on
+    another date has ("can't" beside "cant"), with or without --overwrite
 ${COMMON_ENV_DOCS}
 `;
 

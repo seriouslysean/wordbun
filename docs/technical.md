@@ -24,13 +24,13 @@ src/
   styles/                        # CSS files
   assets/                        # Static assets
 
-utils/                           # Pure Node.js utilities (28 files)
+utils/                           # Pure Node.js utilities (29 files)
   adapter-utils.ts               # Shared adapter helpers (POS, definition builders, canonical guard, HTTP)
   breadcrumb-utils.ts            # Breadcrumb navigation logic
   date-utils.ts                  # Date manipulation (YYYYMMDD format)
   definition-markup.ts          # Definition tag recognition and strict legacy validation
   definition-text.ts             # Definition markup parser, cross-reference checks, definition segments
-  i18n-utils.ts                  # Translation helpers (t(), tp())
+  i18n-utils.ts                  # Translation helpers (t(), tp()), og:locale form of a locale
   logger-core.ts                 # Logger factory (SentryBridge + output filter)
   logger.ts                      # CLI logger wrapper (@sentry/node)
   sentry-options.ts              # Sentry options pinned to SDK 10 behaviour (all three inits)
@@ -130,7 +130,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 | Variable | Purpose |
 |----------|---------|
 | `SITE_URL` | The site's origin (e.g., `https://example.com`); the build refuses a value that is not a URL |
-| `SITE_TITLE` | Site name, as readers and crawlers see it: page titles, `og:site_name`, JSON-LD names, the feed title and the manifest `name` |
+| `SITE_TITLE` | Site name, as readers and crawlers see it: page titles, `og:site_name`, JSON-LD names, the feed title, the manifest `name` and the suffix of a word page's meta description (`word: definition \| SITE_TITLE`, from `getMetaDescription()` in `src/utils/seo-utils.ts`) |
 | `SITE_DESCRIPTION` | Site description for SEO |
 | `SITE_ID` | Machine identifier: the site tag on log events and the optional `public/ascii-{SITE_ID}.txt`. Never rendered to a reader |
 
@@ -153,7 +153,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 | Variable | Default | Purpose |
 |----------|---------|---------|
 | `BASE_PATH` | `/` | Subdirectory for deployment |
-| `SITE_LOCALE` | `en-US` | Locale for i18n |
+| `SITE_LOCALE` | `en-US` | BCP 47 locale: `<html lang>`, the feed and manifest language, and `og:locale` as `language_REGION` (`en_US`), left out when the locale names no region |
 
 ### Site Metadata
 
@@ -266,7 +266,7 @@ export const collections = {
 };
 ```
 
-The CLI tools read the same files. `listWordFilePaths()` in `tools/word-file-paths.ts` applies the loader's rule (every `.json` file at any depth under the words directory, no file or directory whose name starts with a dot, symbolic links followed), and `getWordFiles()` (add-word, generate-images, regenerate-all-words) and normalize-word-data both list the corpus through it, so the tools agree with each other and with the build on which files hold a word. One difference is deliberate: the loader lists a directory that a link also points to under both paths, and the tools list it once, under the path that sorts first, so no word is processed twice. A directory that cannot be listed is a failure, not an empty one. add-word writes `{year}/{YYYYMMDD}.json`; a word file placed anywhere else under the words directory is still built and still read.
+The CLI tools read the same files. `listWordFilePaths()` in `tools/word-file-paths.ts` applies the loader's rule (every `.json` file at any depth under the words directory, no file or directory whose name starts with a dot, symbolic links followed), and `getWordFiles()` (add-word, generate-images, regenerate-all-words) and normalize-word-data both list the corpus through it, so the tools agree with each other and with the build on which files hold a word. Each word's date is the one its record stores, as the build reads it, never the file name: `getWordFiles()` reports a file with no valid `date` as a failure, and regenerate-all-words holds the record it is about to write to `isWordData` and refuses an invalid one, leaving the file as it was. One difference is deliberate: the loader lists a directory that a link also points to under both paths, and the tools list it once, under the path that sorts first, so no word is processed twice. A directory that cannot be listed is a failure, not an empty one. add-word writes `{year}/{YYYYMMDD}.json`; a word file placed anywhere else under the words directory is still built and still read. add-word scans the corpus once and answers its date, word and slug checks from that scan: a date is taken when any file stores it, and `--overwrite` replaces that file where it is.
 
 ### Computed Derivatives
 
@@ -638,7 +638,7 @@ The browser side has the mirror-image rule. Bundled `<script>` blocks import a f
 
 ## Linting
 
-[oxlint](https://oxc.rs/docs/guide/usage/linter) is the only linter; `.oxlintrc.json` is its whole configuration. `npm run lint`, the Lint workflow and the lefthook pre-commit job all read it, so a rule or option set there applies to all three.
+[oxlint](https://oxc.rs/docs/guide/usage/linter) is the only linter of the code; `.oxlintrc.json` is its whole configuration. `npm run lint`, the `lint` job of the Lint workflow and the lefthook pre-commit job all read it, so a rule or option set there applies to all three. The workflow files have a linter of their own: the Lint workflow's second job runs actionlint on `.github/workflows/` in CI only (see CI Workflows under Testing); `npm run lint` and lefthook do not run it.
 
 **Warnings fail.** `options.denyWarnings` makes a warning exit non-zero, and `options.reportUnusedDisableDirectives` reports a disable comment that no longer suppresses anything. A rule's level (`warn` or `error`) only labels the report.
 
@@ -746,7 +746,7 @@ The workflow files are the reference for their steps; this is what each one is f
 
 **Environment.** Build, Site Deploy and Site Add Word all run the `.github/actions/setup-env` composite action, which copies repository variables and explicitly supplied secrets into the job by name. Each runs `npm ci` before it, so no dependency's install script has the secrets in its environment, and Site Add Word checks out the site only after `npm ci` too, so no install script can read the credentials that checkout keeps, which can push to the site. Build and Site Deploy receive only the seven values Astro may need while building: `GA_ENABLED`, `GA_MEASUREMENT_ID`, `SENTRY_ENABLED`, `SENTRY_DSN`, `SENTRY_ORG`, `SENTRY_PROJECT` and `SENTRY_AUTH_TOKEN`. Build passes the five Sentry values only when the event is a push, which for Build is a push to main: a pull request's build gets them blank, so Sentry is off (`astro.config.ts` adds the integration only when `SENTRY_ENABLED` is `true` and `SENTRY_DSN` is set), nothing is uploaded with the auth token, and the build is tagged `development`. Site Add Word receives only `WORDNIK_API_KEY`, `MERRIAM_WEBSTER_API_KEY`, `SENTRY_ENABLED` and `SENTRY_DSN`; its Node logger does not use the other build credentials. The reusable workflows declare those named secrets as optional, so omitted settings remain blank, and cannot receive an arbitrary repository secret. Site Deploy's build job has no environment, so a value stored only on the `github-pages` environment does not reach the build.
 
-**Install scripts.** `allowScripts` in `package.json` records which dependencies may run an install script, the field `npm approve-scripts` and `npm deny-scripts` maintain (`npm help approve-scripts`). npm 11.17 still runs every script and only warns about one with no entry; it says a later release will block those. Two are approved at the version reviewed, so a new version of either has to be approved again with `npm approve-scripts <name>`: `wordpos`, whose script writes the `fast-index.*.json` files into `wordnet-db` that the WordNet adapter cannot load without, and `lefthook`, whose script runs `lefthook install` outside CI, as this package's own `prepare` script also does. `@sentry/cli` is approved by name, at any version: its script returns at once when its platform package is installed, as `npm ci` installs it, and otherwise downloads the binary from Sentry's CDN. It is not denied because with npm 11.17 a denied package also loses its `node_modules/.bin` link, which `npm help deny-scripts` does not mention. `fsevents` is denied by name: the registry lists it with a `node-gyp rebuild` install script, but the package ships the built binary and no `binding.gyp` to rebuild. A site repository has no `package.json`, so this is the engine's only.
+**Install scripts.** `allowScripts` in `package.json` records which dependencies may run an install script, the field `npm approve-scripts` and `npm deny-scripts` maintain (`npm help approve-scripts`). npm 11.17 still runs every script and only warns about one with no entry; it says a later release will block those. Two are approved at the version reviewed, so a new version of either has to be approved again with `npm approve-scripts <name>`: `wordpos`, whose script writes the `fast-index.*.json` files into `wordnet-db` that the WordNet adapter cannot load without, and `lefthook`, whose script runs `lefthook install` outside CI, as this package's own `prepare` script also does. `fsevents` is denied by name: the registry lists it with a `node-gyp rebuild` install script, but the package ships the built binary and no `binding.gyp` to rebuild. A site repository has no `package.json`, so this is the engine's only.
 
 `VAR_NAMES` is read only from repository variables; the action's named secret inputs are read only from secrets in the calling workflow. API keys (`*_API_KEY`), `GA_*` and `SENTRY_*` are secrets and everything else is a variable. `tests/architecture/env-transport.spec.ts` fails when a variable in the `astro.config.ts` env schema is not covered or when a name is in the wrong category, while `tests/tools/site-workflows.spec.ts` fixes the exact secret scope of each operation. `SENTRY_ENVIRONMENT` is supplied by neither repository store: the action sets it from its `sentry-environment` input, which defaults to `production`, and only Build passes one, `development` for a pull request. The action also sets `TZ` from the `SITE_TZ` repository variable (default `America/New_York`), so "today" is the same date when a word is added and when the site is built. Every value is written to `$GITHUB_ENV` in the multiline `NAME<<delimiter` form with a random delimiter per value, so a value that spans lines stays one variable instead of failing the step or setting others. Before it writes a secret, the action masks each non-blank line of its value with `::add-mask::`. Short values are masked too, so with `GA_ENABLED` set to `true` every `true` in the rest of the job's log reads `***`. Variables are never masked.
 

@@ -71,9 +71,9 @@ branches. Notable in the coverage table as of v3.25.0:
 
 - Done: the Wordnik logo in `Footer.astro` renders through `<Image>` from
   `astro:assets`.
-- Astro type-safe environment variables API: `SOURCE_DIR` is in the schema
-  and read through `astro:env/client`. `WORDNIK_WEBSITE_URL` still has a
-  default in `astro.config.ts` but no schema entry.
+- Astro type-safe environment variables API: `SOURCE_DIR` and
+  `WORDNIK_WEBSITE_URL` are in the schema and read through
+  `astro:env/client`.
 - See Tier 1 "Astro Best Practices" in [features.md](features.md).
 
 ## Local Development Notes

@@ -79,9 +79,10 @@ remains), the dead `word-facts__*`, `word-endings__*` and `letter-patterns__*`
 rules (those pages use `<StatsSection>`), and the `1025px` media queries (one
 breakpoint, `768px`). Still open: `.words__section` and `.browse__*` without a
 parent block, the undefined `--spacing-xl` in `WordList.astro`, the hex
-fallbacks in `BarChart.astro`, the unreferenced `--color-black`, and hardcoded
-`1.1rem`/`0.875rem` literals (now in `Footer.astro`, `StatsMilestonePage.astro`,
-`HeaderSearch.astro`, `BarChartRow.astro`). The plan is kept as written.
+fallbacks in `BarChart.astro`, and hardcoded `1.1rem`/`0.875rem` literals (now
+in `Footer.astro`, `StatsMilestonePage.astro`, `HeaderSearch.astro`,
+`BarChartRow.astro`). The unreferenced `--color-black` (step 6) has since been
+deleted. The plan is kept as written.
 
 Plan from a planning pass. The two are entangled: most "BEM violations" are
 dead CSS left behind because stats umbrella pages duplicate what
@@ -335,8 +336,9 @@ adapters/logger/stats-math changes.
 
 ### Astro Best Practices (responsive images + complete astro:env) — PARTIAL
 
-**Status at v3.25.0.** The Footer logo renders through `<Image>`. Still open:
-`WORDNIK_WEBSITE_URL` has a default in `astro.config.ts` and no schema entry.
+**Status at v3.25.0.** The Footer logo renders through `<Image>`, and
+`WORDNIK_WEBSITE_URL` is in the `astro:env` schema in `astro.config.ts`, read
+by `Footer.astro` through `astro:env/client` (step 1).
 `src/pages/favicon.ico.ts` no longer exists, and step 6 refers to speculation
 rules that Astro's prefetch has replaced.
 
