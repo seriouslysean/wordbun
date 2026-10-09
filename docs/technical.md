@@ -427,6 +427,12 @@ Two-tier system supporting root and subdirectory deployments:
 
 `getFullUrl()` uses `getUrl()` internally to ensure BASE_PATH consistency.
 
+The site root is the one URL that keeps a trailing slash: `getUrl('/')` is `/blog/` and `getFullUrl('/')` is `https://example.com/blog/`. Under a base path the root is a directory, which a static host serves only at its slash URL (GitHub Pages answers `/blog` with a 301 to `/blog/`), and `@astrojs/sitemap` names it the same way. The canonical link, `og:url`, the JSON-LD `WebSite` and breadcrumb URLs, the feed's channel link and the manifest `start_url` and `scope` all come from these two helpers, so they agree. The manifest scope needs the slash for a second reason: a scope is matched as a string prefix, so `/blog` would also claim `/blogroll`.
+
+`SITE_URL` is the origin alone; a subdirectory belongs in `BASE_PATH` (Astro's [GitHub Pages guide](https://docs.astro.build/en/guides/deploy/github/) sets `site` and `base` the same way). URLs are resolved against the origin, so a `SITE_URL` that repeats the base path does not double it.
+
+**Known limit, open decision.** Every other page is linked without a trailing slash (`trailingSlash: 'never'`) while `build.format` is left at its default, `directory`, which writes `stats/index.html`. Astro leaves trailing slashes on prerendered pages to the host, and GitHub Pages answers `/stats` with a 301 to `/stats/`, so canonical URLs, sitemap entries and internal links to non-root pages each cost a redirect there. Astro's [`build.format` reference](https://docs.astro.build/en/reference/configuration-reference/#buildformat) pairs `directory` with `trailingSlash: 'always'` and `file` with `'never'`; this project runs neither pair. Either pairing changes every page URL or output path, so it is not decided here.
+
 ### Route Structure
 
 ```

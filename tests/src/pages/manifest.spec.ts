@@ -20,6 +20,15 @@ describe('web app manifest', () => {
     expect(JSON.stringify(manifest)).not.toContain(mockEnv.SITE_ID);
   });
 
+  it('starts and scopes the app at the site root, with its slash under a base path', async () => {
+    expect(await getManifest()).toMatchObject({ start_url: '/', scope: '/' });
+
+    mockEnv.BASE_PATH = '/vocab';
+
+    // Scope is matched as a string prefix: '/vocab' would also claim '/vocabulary'
+    expect(await getManifest()).toMatchObject({ start_url: '/vocab/', scope: '/vocab/' });
+  });
+
   it('uses SITE_SHORT_NAME as the short name', async () => {
     mockEnv.SITE_SHORT_NAME = 'Test';
 
