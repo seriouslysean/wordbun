@@ -13,6 +13,14 @@
   ],
   "author": "Sean Kennedy <sean@codeserious.com>",
   "license": "MIT",
+  "homepage": "https://github.com/seriouslysean/occasional-wotd#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seriouslysean/occasional-wotd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seriouslysean/occasional-wotd/issues"
+  },
   "engines": {
     "node": ">=26.0.0"
   },
