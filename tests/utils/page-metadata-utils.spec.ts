@@ -93,6 +93,22 @@ describe('page-metadata-utils', () => {
     expect(getPageMetadata('/word', customWords).secondaryText).toBe('2 Mock Items');
   });
 
+  it('computes a dataset\'s stats once however many stats pages are looked up', () => {
+    vi.mocked(getLetterStats).mockClear();
+    const lookup = createPageMetadataLookup(mockWords);
+
+    lookup('/stats/palindromes');
+    lookup('/stats/double-letters');
+    lookup('/stats/most-common-letter');
+
+    expect(vi.mocked(getLetterStats)).toHaveBeenCalledTimes(1);
+
+    vi.mocked(getLetterStats).mockClear();
+    getAllPageMetadata(mockWords);
+
+    expect(vi.mocked(getLetterStats)).toHaveBeenCalledTimes(1);
+  });
+
   describe('getPageMetadata', () => {
     it('titles the most common letter page with the letter the page lists', () => {
       // 'i' has the most occurrences; 'a' is in the most words, and the page

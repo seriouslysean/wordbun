@@ -224,7 +224,7 @@ describe('Architecture: utils/ boundary enforcement', () => {
 
     // Each wrapper is one call to the utils/ function of the same name. Any
     // logic of its own, however it is spelled, leaves it without a delegate.
-    for (const fnName of ['getWordsByLength', 'getWordsByLetter', 'getWordsByPartOfSpeech']) {
+    for (const fnName of ['getWordsByLength', 'getWordsByLetter', 'getWordsByPartOfSpeech', 'getAdjacentWords']) {
       const pure = getImportedLocalName(source, '#utils/word-data-utils', fnName);
 
       expect({ fnName, imported: pure !== undefined }).toEqual({ fnName, imported: true });
