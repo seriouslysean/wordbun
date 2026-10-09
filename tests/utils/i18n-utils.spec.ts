@@ -17,16 +17,17 @@ describe('i18n-utils', () => {
     });
 
     it('supports variable interpolation', () => {
-      expect(t('stats.days', { count: 5 })).toBe('5 Days');
-      expect(t('stats.days', { count: 1 })).toBe('1 Days');
       expect(t('words.length_words', { length: 7 })).toBe('7-Letter Words');
       expect(t('words.words_starting_with', { letter: 'A' })).toBe('Words Starting with A');
+      expect(t('browse.summary_letters', { letterCount: 26 })).toBe('26 Letters (A-Z)');
     });
 
     it('handles multiple variable interpolation', () => {
-      expect(t('browse.summary_years', { totalWords: 100, yearCount: 3 })).toBe('100 Words Across 3 Years');
-      expect(t('browse.summary_lengths', { lengthCount: 10 })).toBe('10 Different Lengths');
-      expect(t('browse.summary_letters', { letterCount: 26 })).toBe('26 Letters (A-Z)');
+      expect(t('common.title_with_part_of_speech_other', { count: 3, value: 'noun' })).toBe('3 noun words');
+    });
+
+    it('does not choose a plural form: that is tp', () => {
+      expect(() => t('stats.days', { count: 1 })).toThrow('Translation missing for key: stats.days');
     });
 
     it('supports basic interpolation with multiple variables', () => {
@@ -43,19 +44,19 @@ describe('i18n-utils', () => {
     });
 
     it('throws when required variables are missing', () => {
-      expect(() => t('stats.days')).toThrow("Translation key 'stats.days' requires variables but none were provided");
-      expect(() => t('stats.days', {})).toThrow("Missing required variable 'count' for translation key: stats.days");
+      expect(() => t('words.length_words')).toThrow("Translation key 'words.length_words' requires variables but none were provided");
+      expect(() => t('words.length_words', {})).toThrow("Missing required variable 'length' for translation key: words.length_words");
     });
 
     it('throws when interpolation values are null or undefined', () => {
       // @ts-expect-error undefined is a deliberate invalid runtime input.
-      expect(() => t('stats.days', { count: undefined })).toThrow("Variable 'count' is undefined or null for translation key: stats.days");
+      expect(() => t('words.length_words', { length: undefined })).toThrow("Variable 'length' is undefined or null for translation key: words.length_words");
       // @ts-expect-error null is a deliberate invalid runtime input.
-      expect(() => t('stats.days', { count: null })).toThrow("Variable 'count' is undefined or null for translation key: stats.days");
+      expect(() => t('words.length_words', { length: null })).toThrow("Variable 'length' is undefined or null for translation key: words.length_words");
     });
 
     it('allows zero and empty string values', () => {
-      expect(t('stats.days', { count: 0 })).toBe('0 Days');
+      expect(t('words.length_words', { length: 0 })).toBe('0-Letter Words');
       expect(t('common.words_other', { count: 0 })).toBe('0 Words');
     });
   });
@@ -74,6 +75,12 @@ describe('i18n-utils', () => {
       expect(tp('common.words', 10)).toBe('10 Words');
       expect(tp('common.words', 100)).toBe('100 Words');
       expect(tp('common.words', 999)).toBe('999 Words');
+    });
+
+    it('gives a day count its own form for zero, one and many', () => {
+      expect(tp('stats.days', 0)).toBe('0 Days');
+      expect(tp('stats.days', 1)).toBe('1 Day');
+      expect(tp('stats.days', 5)).toBe('5 Days');
     });
 
     it('pluralizes part-of-speech titles', () => {
