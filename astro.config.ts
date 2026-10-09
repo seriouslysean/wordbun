@@ -118,6 +118,7 @@ export default defineConfig({
       SITE_TITLE: envField.string({ context: 'client', access: 'public', default: defaults.SITE_TITLE }),
       SITE_DESCRIPTION: envField.string({ context: 'client', access: 'public', default: defaults.SITE_DESCRIPTION }),
       SITE_ID: envField.string({ context: 'client', access: 'public', default: defaults.SITE_ID }),
+      SITE_SHORT_NAME: envField.string({ context: 'client', access: 'public', optional: true }),
       SITE_URL: envField.string({ context: 'client', access: 'public', default: defaults.SITE_URL }),
       SITE_LOCALE: envField.string({ context: 'client', access: 'public', default: 'en-US' }),
       SITE_KEYWORDS: envField.string({ context: 'client', access: 'public', default: '' }),

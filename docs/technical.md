@@ -128,9 +128,9 @@ All environment variables are validated in `astro.config.ts` (single source of t
 | Variable | Purpose |
 |----------|---------|
 | `SITE_URL` | Canonical URL (e.g., `https://example.com`) |
-| `SITE_TITLE` | Site name |
+| `SITE_TITLE` | Site name, as readers and crawlers see it: page titles, `og:site_name`, JSON-LD names, the feed title and the manifest `name` |
 | `SITE_DESCRIPTION` | Site description for SEO |
-| `SITE_ID` | Unique site identifier |
+| `SITE_ID` | Machine identifier: the site tag on log events and the optional `public/ascii-{SITE_ID}.txt`. Never rendered to a reader |
 
 ### Data & Dictionary
 
@@ -161,6 +161,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 | `SITE_AUTHOR_URL` | `''` | Author website URL |
 | `SITE_ATTRIBUTION_MESSAGE` | `''` | Custom attribution text |
 | `SITE_KEYWORDS` | `''` | SEO keywords (comma-separated) |
+| `SITE_SHORT_NAME` | — | Manifest `short_name`: the home-screen label for when `SITE_TITLE` is too long to fit under an icon. Unset leaves the member out and the launcher shortens `name` itself |
 
 ### humans.txt
 

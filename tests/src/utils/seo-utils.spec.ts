@@ -16,6 +16,11 @@ describe('seo-utils', () => {
       expect(seoConfig).toHaveProperty('keywords');
     });
 
+    it('names the site by its title, not its machine identifier', () => {
+      expect(seoConfig.siteName).toBe('Test Site');
+      expect(seoConfig.siteName).not.toBe(mockEnv.SITE_ID);
+    });
+
     it('has array of keywords', () => {
       expect(Array.isArray(seoConfig.keywords)).toBe(true);
     });

@@ -1,0 +1,28 @@
+import { afterEach, describe, expect, it } from 'vitest';
+import { GET } from '#pages/manifest.json.ts';
+
+// The endpoint takes Astro's APIContext and reads none of it
+const getManifest = async (): Promise<Record<string, unknown>> => {
+  const response = await Reflect.apply(GET, undefined, [{}]);
+  return response.json();
+};
+
+describe('web app manifest', () => {
+  afterEach(() => {
+    mockEnv.SITE_SHORT_NAME = undefined;
+  });
+
+  it('names the app by the site title and leaves short_name out when none is set', async () => {
+    const manifest = await getManifest();
+
+    expect(manifest.name).toBe('Test Site');
+    expect(manifest).not.toHaveProperty('short_name');
+    expect(JSON.stringify(manifest)).not.toContain(mockEnv.SITE_ID);
+  });
+
+  it('uses SITE_SHORT_NAME as the short name', async () => {
+    mockEnv.SITE_SHORT_NAME = 'Test';
+
+    expect((await getManifest()).short_name).toBe('Test');
+  });
+});
