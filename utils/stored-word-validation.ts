@@ -2,6 +2,7 @@ import type { DictionaryDefinition, WordData, WordEnrichment } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { isValidDate } from '#utils/date-utils';
 import { areValidReferences } from '#utils/reference-utils';
+import { getErrorMessage } from '#utils/text-utils';
 import {
   isHttpUrl, isNonblankString, isOptional, isRecord, isString, isStringArray,
 } from '#utils/type-guards';
@@ -93,13 +94,22 @@ const describeRefusal = (value: unknown): string => {
   return '';
 };
 
+// JSON.parse reports a position in the text, never the file it came from
+const parseJson = (json: string, filePath: string): unknown => {
+  try {
+    return JSON.parse(json);
+  } catch (cause) {
+    throw new SyntaxError(`Invalid JSON in ${filePath}: ${getErrorMessage(cause)}`, { cause });
+  }
+};
+
 /**
  * Parses the contents of a stored word file. Throws on invalid JSON or on a
  * shape that is not WordData, naming the file so a log-and-skip caller says
  * which one to fix.
  */
 export function parseWordData(json: string, filePath: string): WordData {
-  const parsed: unknown = JSON.parse(json);
+  const parsed = parseJson(json, filePath);
   if (!isWordData(parsed)) {
     throw new Error(`Invalid word data in ${filePath}${describeRefusal(parsed)}`);
   }

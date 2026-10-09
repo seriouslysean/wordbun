@@ -121,8 +121,12 @@ describe('word-validation', () => {
       expect(() => parseWordData(JSON.stringify({ ...VALID_WORD, ...field }), 'words/2024/20240230.json')).toThrow(message);
     });
 
-    it('throws on invalid JSON', () => {
-      expect(() => parseWordData('{not json', 'words/2025/20250101.json')).toThrow(SyntaxError);
+    it('names the file when the JSON is invalid, and keeps the parser\'s error as the cause', () => {
+      const parse = () => parseWordData('{not json', 'words/2025/20250101.json');
+
+      expect(parse).toThrow(SyntaxError);
+      expect(parse).toThrow(/^Invalid JSON in words\/2025\/20250101\.json: \S/);
+      expect(parse).toThrow(expect.objectContaining({ cause: expect.any(SyntaxError) }));
     });
   });
 
