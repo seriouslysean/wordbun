@@ -27,7 +27,9 @@ afterEach(() => {
   fs.rmSync(ctx.tempDir, { recursive: true, force: true });
 });
 
-describe('a command line a tool cannot parse', () => {
+// One subprocess a test, allowed spawnTool's 10 s: Vitest's 5 s default ends
+// the test before a slow spawn on a loaded machine can finish
+describe('a command line a tool cannot parse', { timeout: 15000 }, () => {
   it.each([
     ['add-word', ['alpha', '--batchsize=5'], '--batchsize'],
     ['generate-images', ['--batchsize=5'], '--batchsize'],

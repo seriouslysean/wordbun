@@ -172,7 +172,15 @@ const runStep = (
   proc.stdout.on('data', (data: Buffer | string) => chunks.push(data.toString()));
   proc.stderr.on('data', (data: Buffer | string) => chunks.push(data.toString()));
   proc.on('error', reject);
-  proc.on('close', code => resolve({ code, output: chunks.join(''), outputs: fs.readFileSync(output, 'utf-8') }));
+  // A step that outlives its test finds the directory already removed: that
+  // fails this step's promise, not whichever test is running by then
+  proc.on('close', (code) => {
+    try {
+      resolve({ code, output: chunks.join(''), outputs: fs.readFileSync(output, 'utf-8') });
+    } catch (error) {
+      reject(error);
+    }
+  });
   return promise;
 };
 
@@ -248,7 +256,9 @@ afterEach(() => {
   fs.rmSync(ctx.dir, { recursive: true, force: true });
 });
 
-describe('site workflows', { timeout: 20000 }, () => {
+// A test here runs up to a dozen bash, git and node processes in turn; they
+// take about 2.5 s on an idle machine and several times that on a loaded one
+describe('site workflows', { timeout: 60000 }, () => {
   describe.each([
     ['site-deploy.yml', 'deploy.yml', BUILD_SECRETS],
     ['site-add-word.yml', 'add-word.yml', ADD_WORD_SECRETS],
@@ -286,7 +296,6 @@ describe('site workflows', { timeout: 20000 }, () => {
     expect(nestedObject(buildSetup, 'with', 'Build setup-env step')).toEqual({
       'vars-json': '${{ toJSON(vars) }}',
       ...actionSecretBindings(BUILD_SECRETS),
-      'github-sha': '${{ github.sha }}',
     });
 
     for (const [file, jobName, expected] of [

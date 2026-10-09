@@ -51,7 +51,7 @@ export function showHelp(helpText: string): void {
 export const COMMON_ENV_DOCS = `
 Common Environment Variables:
   SOURCE_DIR                 Data source subdirectory (unset = root paths)
-  DICTIONARY_ADAPTER         Dictionary API to use (default: wordnik)
+  DICTIONARY_ADAPTER         Dictionary API to use (required)
   DICTIONARY_FALLBACK        Fallback chain, comma-separated (default: wiktionary, none: disabled)
   WORDNIK_API_KEY           API key for Wordnik dictionary
   MERRIAM_WEBSTER_API_KEY   API key for Merriam-Webster dictionary

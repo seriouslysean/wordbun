@@ -147,7 +147,7 @@ const wordSchemaData = word ? (() => {
 	<main class="content" id="main-content">
 	  <slot />
 	</main>
-	<SiteBreadcrumbs />
+	<SiteBreadcrumbs word={word?.word} />
 	<Footer />
   </body>
 </html>

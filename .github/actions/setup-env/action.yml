@@ -40,12 +40,6 @@ inputs:
     description: 'Wordnik API key'
     required: false
     default: ''
-  # Unused: a step cannot overwrite GITHUB_SHA, so the action no longer
-  # writes it. Declared still because the build workflow passes it.
-  github-sha:
-    description: 'GitHub SHA for the build'
-    required: false
-    default: ''
 runs:
   using: 'composite'
   steps:

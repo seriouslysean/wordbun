@@ -42,6 +42,5 @@ jobs:
           sentry-enabled: ${{ secrets.SENTRY_ENABLED }}
           sentry-org: ${{ secrets.SENTRY_ORG }}
           sentry-project: ${{ secrets.SENTRY_PROJECT }}
-          github-sha: ${{ github.sha }}
 
       - run: npm run build

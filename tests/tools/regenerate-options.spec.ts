@@ -36,7 +36,9 @@ afterEach(() => {
   fs.rmSync(ctx.tempDir, { recursive: true, force: true });
 });
 
-describe('regenerate-all-words options', () => {
+// One subprocess a test, allowed spawnTool's 10 s: Vitest's 5 s default ends
+// the test before a slow spawn on a loaded machine can finish
+describe('regenerate-all-words options', { timeout: 15000 }, () => {
   it.each([
     ['--batch-size=0', 'batch-size'],
     ['--batch-size=abc', 'batch-size'],
@@ -80,5 +82,8 @@ describe('regenerate-all-words options', () => {
     expect(stdout).toContain(`--batch-size <num>         Words per batch (default: ${DEFAULTS.batchSize})`);
     expect(stdout).toContain(`--batch-timeout <ms>       Pause between batches (default: ${DEFAULTS.batchTimeout})`);
     expect(stdout).not.toMatch(/word-field|date-field|rate-limit-timeout/);
+    // regenerateWordFile refuses to run without it, so the help says so, once
+    expect(stdout.split('\n').filter(line => line.includes('DICTIONARY_ADAPTER')))
+      .toEqual([expect.stringMatching(/DICTIONARY_ADAPTER\s+Dictionary API to use \(required\)$/)]);
   });
 });

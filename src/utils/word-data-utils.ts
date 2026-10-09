@@ -9,7 +9,7 @@ import type {
 } from '#types';
 import { isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { HOMEPAGE_PREVIOUS_WORDS, MAX_PAST_WORDS_DISPLAY } from '#constants/text-patterns';
-import { getMonthSlugFromDate, getTodayYYYYMMDD } from '#utils/date-utils';
+import { getTodayYYYYMMDD } from '#utils/date-utils';
 import {
   findCurrentWord,
   getPreviousWords,
@@ -23,6 +23,7 @@ import {
   getWordsByLength as getWordsByLengthPure,
   getWordsByLetter as getWordsByLetterPure,
   getWordsByPartOfSpeech as getWordsByPartOfSpeechPure,
+  groupWordsByMonth as groupWordsByMonthPure,
   groupWordsByYear as groupWordsByYearPure,
   groupWordsByLength as groupWordsByLengthPure,
   groupWordsByLetter as groupWordsByLetterPure,
@@ -292,10 +293,7 @@ export const getWordsByMonth = (
  * @returns Object with month slugs as keys and word arrays as values
  */
 export const groupWordsByMonth = (year: string, words: WordData[] = allWords): { [monthSlug: string]: WordData[] } => {
-  const groups = Object.groupBy(
-    words.filter(word => word.date.startsWith(year)),
-    word => getMonthSlugFromDate(word.date),
-  );
+  const groups = groupWordsByMonthPure(year, words);
   return Object.fromEntries(
     Object.entries(groups).map(([key, value]) => [key, value ?? []]),
   );

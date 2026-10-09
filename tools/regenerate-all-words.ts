@@ -228,7 +228,6 @@ Examples:
   npm run tool:regenerate-all-words -- --timeout 2000 --batch-size 3 --force
 
 Environment Variables (for GitHub workflows):
-  DICTIONARY_ADAPTER         Dictionary API to use (required)
   WORDNIK_API_KEY           API key for dictionary access (required)
   SOURCE_DIR                Data source subdirectory (unset = root paths)
 

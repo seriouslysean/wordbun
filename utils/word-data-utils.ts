@@ -4,6 +4,7 @@ import type {
 import type { BasePartOfSpeech } from '#constants/parts-of-speech';
 import { BASE_PARTS_OF_SPEECH, isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { MAX_SENSE_EXAMPLES } from '#constants/text-patterns';
+import { getMonthSlugFromDate } from '#utils/date-utils';
 import { toDefinitionSegments } from '#utils/definition-text';
 import { slugify } from '#utils/text-utils';
 
@@ -232,6 +233,12 @@ export const groupWordsByLetter = (words: WordData[]): WordGrouping<string> =>
  */
 export const groupWordsByYear = (words: WordData[]): WordGrouping<string> =>
   Object.groupBy(words, word => word.date.slice(0, 4));
+
+/**
+ * Group one year's words by month slug ("january") in a single pass.
+ */
+export const groupWordsByMonth = (year: string, words: WordData[]): WordGrouping<string> =>
+  Object.groupBy(getWordsByYear(year, words), word => getMonthSlugFromDate(word.date));
 
 /**
  * Group words by every part of speech they are displayed under. A

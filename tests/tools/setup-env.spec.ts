@@ -172,7 +172,9 @@ const parse = (stdout: string): Event[] => {
   return events;
 };
 
-describe('setup-env action', () => {
+// The step runs jq once per variable: half a second on an idle machine, and
+// past Vitest's 5 s default on a loaded one
+describe('setup-env action', { timeout: 30000 }, () => {
   const SECRETS: Record<string, string> = {
     WORDNIK_API_KEY: 'wordnik-key-123',
     MERRIAM_WEBSTER_API_KEY: 'first line\n\n  \nsecond line\r\nthird line',
