@@ -61,6 +61,7 @@
     "@types/node": "^26.6.4",
     "@vitest/coverage-v8": "^5.0.3",
     "cmu-pronouncing-dictionary": "3.0.0",
+    "js-yaml": "^5.4.3",
     "lefthook": "^2.2.1",
     "lightningcss": "^1.33.0",
     "opentype.js": "^2.0.0",
