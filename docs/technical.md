@@ -24,7 +24,7 @@ src/
   styles/                        # CSS files
   assets/                        # Static assets
 
-utils/                           # Pure Node.js utilities (25 files)
+utils/                           # Pure Node.js utilities (28 files)
   adapter-utils.ts               # Shared adapter helpers (POS, definition builders, canonical guard, HTTP)
   breadcrumb-utils.ts            # Breadcrumb navigation logic
   date-utils.ts                  # Date manipulation (YYYYMMDD format)
@@ -137,7 +137,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 | Variable | Default | Purpose |
 |----------|---------|---------|
 | `SOURCE_DIR` | `''` | Data source subdirectory (unset = root paths) |
-| `DICTIONARY_ADAPTER` | `wordnik` | Primary dictionary API (`merriam-webster`, `wordnik`, `wiktionary`) |
+| `DICTIONARY_ADAPTER` | — | Primary dictionary API (`merriam-webster`, `wordnik`, `wiktionary`); no default, `add-word` and `regenerate-all-words` refuse to run without it |
 | `DICTIONARY_FALLBACK` | `wiktionary` | Fallback chain, comma-separated (e.g. `wordnik,wiktionary`); empty means the default Wiktionary fallback, `none` (any case) disables it |
 | `MERRIAM_WEBSTER_API_KEY` | — | Merriam-Webster API key |
 | `MERRIAM_WEBSTER_API_URL` | `https://dictionaryapi.com/api/v3/references` | MW API endpoint |
@@ -208,7 +208,7 @@ Opt-in via environment variables. Setting `COLOR_DARK_BACKGROUND` activates dark
 | `COLOR_DARK_TEXT_LIGHT` | `--color-text-light` | light value |
 | `COLOR_DARK_BORDER` | `--color-border` | light value |
 
-When enabled, `Layout.astro` emits a `@media (prefers-color-scheme: dark)` block with the configured overrides and a dark-variant `<meta name="theme-color">`. No JavaScript required — respects the user's system preference. When no dark vars are set, the site is light-only with no dark mode CSS emitted.
+When enabled, the `/theme.css` endpoint (`src/pages/theme.css.ts`) emits a `@media (prefers-color-scheme: dark)` block with the configured overrides, and `Layout.astro` adds a dark-variant `<meta name="theme-color">`. No JavaScript required — respects the user's system preference. When no dark vars are set, the site is light-only with no dark mode CSS emitted.
 
 ### Environment Access
 
@@ -421,8 +421,8 @@ Two-tier system supporting root and subdirectory deployments:
 
 | Function | Purpose | Example (`BASE_PATH="/blog"`) |
 |----------|---------|-------------------------------|
-| `getUrl(path)` | Relative URL with BASE_PATH | `getUrl('/words/hello')` -> `/blog/words/hello` |
-| `getFullUrl(path)` | Absolute URL for SEO | `getFullUrl('/words/hello')` -> `https://example.com/blog/words/hello` |
+| `getUrl(path)` | Relative URL with BASE_PATH | `getUrl('/word/hello')` -> `/blog/word/hello` |
+| `getFullUrl(path)` | Absolute URL for SEO | `getFullUrl('/word/hello')` -> `https://example.com/blog/word/hello` |
 
 `getFullUrl()` uses `getUrl()` internally to ensure BASE_PATH consistency.
 
@@ -430,16 +430,16 @@ Two-tier system supporting root and subdirectory deployments:
 
 ```
 /                           # Homepage (current word)
-/word/                     # All words
+/word                       # All words
 /word/{word}                # Individual word pages
-/browse/                    # Browse hub
-/browse/year/               # Words by year index
+/browse                     # Browse hub
+/browse/year                # Words by year index
 /browse/{year}              # Words by year
 /browse/{year}/{month}      # Words by month
 /browse/letter/{letter}     # Words by starting letter
 /browse/length/{n}          # Words by length
 /browse/part-of-speech/{p}  # Words by part of speech
-/stats/                     # Statistics hub
+/stats                      # Statistics hub
 /stats/{category}           # Individual stat pages
 ```
 
@@ -560,11 +560,13 @@ Vitest thresholds: lines 80%, functions 80%, branches 85%, statements 80%.
 
 Excluded from Vitest coverage: build-time utilities (`static-file-utils.ts`, `static-paths-utils.ts`), pages, CLI tools (tested via integration), content config.
 
-E2E tests run against the built site via `npm run test:e2e` (requires `npm run build` first). Playwright starts its own foreground `astro preview --ignore-lock` on port 4517 (`PORT` in `playwright.config.ts`, `reuseExistingServer: false`), so the run always serves the current `dist/` and never reuses a server on Astro's default 4321. They verify build assembly — that the pipeline correctly assembled components into working pages — not logic (which unit and component tests cover). Three spec files organized by concern:
+E2E tests run against the built site via `npm run test:e2e` (requires `npm run build` first). Playwright starts its own foreground `astro preview --ignore-lock` on port 4517 (`PORT` in `playwright.config.ts`, `reuseExistingServer: false`), so the run always serves the current `dist/` and never reuses a server on Astro's default 4321. They verify build assembly — that the pipeline correctly assembled components into working pages — not logic (which unit and component tests cover). Five spec files organized by concern:
 
 - **`navigation.spec.ts`** — User journeys: discover a word and navigate between words, browse by year, footer section links, 404 handling
 - **`seo.spec.ts`** — Build output wiring: meta tags present (description, canonical, OpenGraph, Twitter), JSON-LD parseable, RSS and sitemap discoverable
-- **`accessibility.spec.ts`** — Structural a11y: skip-to-content keyboard flow, document language and viewport, image alt text, link accessible text
+- **`accessibility.spec.ts`** — Structural a11y: skip-to-content keyboard flow, document language and viewport, image alt text, link accessible text, heading outline and named nav landmarks
+- **`search.spec.ts`** — Header search: opens from the icon, filters by starts-with, navigates to a result
+- **`stats.spec.ts`** — `/stats` visualizations: heatmap and connections graph present and navigable, no horizontal scroll
 
 E2E always runs in demo mode — the CI workflow skips `setup-env` and explicitly sets `SOURCE_DIR=demo` (no `BASE_PATH`) so production env vars don't break test selectors. All test URLs omit trailing slashes (`trailingSlash: 'never'`).
 
