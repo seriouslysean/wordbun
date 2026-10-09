@@ -493,6 +493,7 @@ The `isLogContext` type guard from `#types` validates the context argument befor
 All statistics computed at build time from `allWords`:
 
 - **Letter patterns**: Palindromes, double/triple letters, alphabetical sequences, same start/end
+- **All consonants**: a word with at least one consonant and no vowel (a, e, i, o, u). Only a vowel disqualifies it, so punctuation does not: `pb&j` and `tsk-tsk` count, and `42`, which has no consonant, does not
 - **Word endings**: Common suffixes (-ed, -ing, -ly, -ness, -ful, -less)
 - **Letter analysis**: Most/least common letters (ranked by the number of words containing the letter, case-insensitive, not by total occurrences; `getLetterStats` is the single definition for the stat, its page, and its metadata), vowel/consonant ratios
 - **Streaks**: Current and longest consecutive word streaks

@@ -180,6 +180,19 @@ describe('word-stats-utils', () => {
     });
   });
 
+  describe('the all-consonants stat and punctuation', () => {
+    it('lists a word whose letters are all consonants, punctuation or not', () => {
+      const words = [
+        makeWord('pb&j', '20240101'),
+        makeWord('tsk-tsk', '20240102'),
+        makeWord('rhythm', '20240103'),
+        makeWord('catch-22', '20240104'),
+      ];
+
+      expect(getPatternStats(words).allConsonants.map(w => w.word)).toEqual(['pb&j', 'tsk-tsk', 'rhythm']);
+    });
+  });
+
   describe('areConsecutiveDays', () => {
     it('identifies consecutive dates', () => {
       expect(areConsecutiveDays('20240101', '20240102')).toBe(true);
