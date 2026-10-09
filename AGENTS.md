@@ -227,7 +227,7 @@ npm run build                      # 4. Full build (catches runtime errors)
 npm run test:e2e                   # 5. E2E tests against built site
 ```
 
-All must pass: 0 lint errors, 0 TypeScript errors, 0 Astro warnings, all tests green with coverage met (80% across lines/functions/statements, 85% branches), build succeeds without `.env`, E2E tests pass.
+All must pass: 0 lint errors or warnings (`options.denyWarnings` in `.oxlintrc.json` makes a warning fail), 0 TypeScript errors, 0 Astro warnings, all tests green with coverage met (80% across lines/functions/statements, 85% branches), build succeeds without `.env`, E2E tests pass.
 
 ## Conventions
 
