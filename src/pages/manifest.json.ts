@@ -1,4 +1,4 @@
-import { SITE_TITLE, SITE_ID, SITE_DESCRIPTION, COLOR_PRIMARY_DARK } from 'astro:env/client';
+import { SITE_TITLE, SITE_ID, SITE_DESCRIPTION, SITE_LOCALE, COLOR_PRIMARY_DARK } from 'astro:env/client';
 import type { APIRoute } from 'astro';
 
 import { seoConfig } from '#astro-utils/seo-utils';
@@ -16,7 +16,7 @@ export const GET: APIRoute = async () => {
     theme_color: COLOR_PRIMARY_DARK,
     orientation: "portrait-primary",
     categories: seoConfig.keywords,
-    lang: "en-US",
+    lang: SITE_LOCALE,
     icons: [
       {
         src: getUrl('/favicon.svg'),
