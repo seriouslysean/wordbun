@@ -6,10 +6,9 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseArgs } from 'node:util';
 
 import { isEntryPoint } from '#tools/entry';
-import { showHelp } from '#tools/help-utils';
+import { parseToolArgs, showHelp } from '#tools/help-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { parseWordData } from '#utils/stored-word-validation';
 import { slugify } from '#utils/text-utils';
@@ -101,34 +100,37 @@ export const createSite = ({ directory, engineRef, seedFile }: CreateSiteOptions
 };
 
 if (isEntryPoint(import.meta.url)) {
-  try {
-    const { values, positionals } = parseArgs({
-      args: process.argv.slice(2),
-      options: {
-        help: { type: 'boolean', short: 'h', default: false },
-        'engine-ref': { type: 'string' },
-        'seed-file': { type: 'string' },
-      },
-      allowPositionals: true,
-      strict: true,
-    });
+  const { values, positionals } = await parseToolArgs({
+    args: process.argv.slice(2),
+    options: {
+      help: { type: 'boolean', short: 'h', default: false },
+      'engine-ref': { type: 'string' },
+      'seed-file': { type: 'string' },
+    },
+    allowPositionals: true,
+    strict: true,
+  });
 
-    if (values.help) {
-      showHelp(HELP_TEXT);
-      process.exit(0);
-    }
+  if (values.help) {
+    showHelp(HELP_TEXT);
+    process.exit(0);
+  }
 
-    const [directory] = positionals;
-    const engineRef = values['engine-ref'];
-    const seedFile = values['seed-file'];
-    if (positionals.length !== 1 || !directory || !engineRef || !seedFile) {
-      throw new Error('Pass one directory, --engine-ref and --seed-file (see --help)');
-    }
-
-    const files = createSite({ directory, engineRef, seedFile });
-    logger.info('Site created', { directory: path.resolve(directory), engineRef, files });
-  } catch (error) {
-    logger.error('Create site failed', { error: getErrorMessage(error) });
+  const [directory] = positionals;
+  const engineRef = values['engine-ref'];
+  const seedFile = values['seed-file'];
+  // A missing or extra argument is the operator's input, refused at warn as
+  // parseToolArgs refuses a command line it cannot parse
+  if (positionals.length !== 1 || !directory || !engineRef || !seedFile) {
+    logger.warn('Pass one directory, --engine-ref and --seed-file', { help: 'Run with --help to list the options' });
     await exit(1);
+  } else {
+    try {
+      const files = createSite({ directory, engineRef, seedFile });
+      logger.info('Site created', { directory: path.resolve(directory), engineRef, files });
+    } catch (error) {
+      logger.error('Create site failed', { error: getErrorMessage(error) });
+      await exit(1);
+    }
   }
 }
