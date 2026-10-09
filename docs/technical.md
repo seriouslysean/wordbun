@@ -592,6 +592,20 @@ CLI tools broke when Node.js-side code imported Astro-only modules (`#astro-util
 
 The browser side has the mirror-image rule. Bundled `<script>` blocks import a few modules from `utils/` and `src/utils/`, and Vite ships whatever those import as values, so one re-export can put dictionary code in every page's JavaScript. `tests/architecture/client-imports.spec.ts` follows the value imports those scripts reach through `utils/`, `types/`, `constants/` and `src/utils/`, and fails on any edge (`module -> specifier`) missing from its explicit list of today's edges, so a new import fails even between modules already listed; a listed edge that is no longer reached must be removed. `import type` is always allowed.
 
+## Linting
+
+[oxlint](https://oxc.rs/docs/guide/usage/linter) is the only linter; `.oxlintrc.json` is its whole configuration. `npm run lint`, the Lint workflow and the lefthook pre-commit job all read it, so a rule or option set there applies to all three.
+
+**Warnings fail.** `options.denyWarnings` makes a warning exit non-zero, and `options.reportUnusedDisableDirectives` reports a disable comment that no longer suppresses anything. A rule's level (`warn` or `error`) only labels the report.
+
+**Plugins.** `plugins` replaces oxlint's default set, so it lists the defaults (`typescript`, `unicorn`, `oxc`; the ESLint core rules are always on) and four more: `import`, `promise`, `node`, `vitest`. The `correctness` category reports as errors and `suspicious` and `perf` as warnings, for every listed plugin; `rules` then pins individual rules.
+
+**Where rules differ.** `overrides` turns `no-await-in-loop` off in `adapters/`, `tools/` and `tests/` (sequential by design), applies `node/no-process-env` to `src/` only (it reads its environment through `astro:env/client`; CLI tools read `process.env`), and turns `unicorn/consistent-function-scoping` off in `tests/` (helpers sit in the describe block that uses them).
+
+**`.astro` files.** oxlint lints a `.astro` file's frontmatter and its `<script>` blocks, `is:inline` included. It does not lint expressions in the template: the [compatibility page](https://oxc.rs/compatibility.html) lists Astro under "No template linting yet". `<style>` blocks are not linted either; there is no CSS linter.
+
+**Not enabled.** Type-aware rules (`no-floating-promises`, `switch-exhaustiveness-check` and the rest) need `oxlint-tsgolint` and [TypeScript 7](https://oxc.rs/docs/guide/usage/linter/type-aware); this repository is on TypeScript 6. There is no formatter: `.editorconfig` is the only formatting rule, and nothing checks it.
+
 ## Utility Architecture
 
 ### Two-Layer Separation
