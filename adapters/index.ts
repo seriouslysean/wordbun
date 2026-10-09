@@ -27,7 +27,9 @@ export function getAdapterNames(): readonly string[] {
  * records without their adapter.
  */
 export function getAdapterByName(name: string): DictionaryAdapter {
-  const adapter = ADAPTER_REGISTRY[name.toLowerCase()];
+  const key = name.toLowerCase();
+  // Own keys only: "constructor" must not read Object.prototype
+  const adapter = Object.hasOwn(ADAPTER_REGISTRY, key) ? ADAPTER_REGISTRY[key] : undefined;
   if (!adapter) {
     throw new Error(`Unknown adapter: ${name}`);
   }

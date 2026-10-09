@@ -38,10 +38,38 @@ const getImportSpecifiers = (content: string): string[] => {
       && node.arguments[0] && ts.isStringLiteralLike(node.arguments[0])) {
       specifiers.push(node.arguments[0].text);
     }
+    if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)
+      && ts.isStringLiteralLike(node.moduleReference.expression)) {
+      specifiers.push(node.moduleReference.expression.text);
+    }
     ts.forEachChild(node, visit);
   };
   visit(source);
   return specifiers;
+};
+
+// A Vite `define` constant, by the naming astro.config.ts gives them all
+const VITE_DEFINE = /^__[A-Z][A-Z_]*__$/;
+
+/**
+ * The Vite-only globals a file reads: `import.meta.env` and `define`
+ * constants such as `__VERSION__`. Plain Node.js has neither.
+ */
+const getViteGlobalUses = (content: string): string[] => {
+  const source = ts.createSourceFile('boundary-scan.ts', content, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const uses: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isPropertyAccessExpression(node) && ts.isMetaProperty(node.expression)
+      && node.expression.keywordToken === ts.SyntaxKind.ImportKeyword && node.name.text === 'env') {
+      uses.push('import.meta.env');
+    }
+    if (ts.isIdentifier(node) && VITE_DEFINE.test(node.text)) {
+      uses.push(node.text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return uses;
 };
 
 describe('Architecture: utils/ boundary enforcement', () => {
@@ -72,6 +100,7 @@ describe('Architecture: utils/ boundary enforcement', () => {
       "import '#constants/setup';",
       "const module = import('astro:content', { with: { type: 'json' } });",
       "// import('@sentry/astro')",
+      "import legacy = require('@sentry/astro');",
     ].join('\n');
 
     expect(getImportSpecifiers(source)).toEqual([
@@ -79,7 +108,46 @@ describe('Architecture: utils/ boundary enforcement', () => {
       '#types',
       '#constants/setup',
       'astro:content',
+      '@sentry/astro',
     ]);
+  });
+
+  it('Node.js-side code must not import by relative path', () => {
+    // A relative specifier is no alias, so the checks on aliases never see
+    // it: '../src/utils/logger' reaches Astro-only code from utils/
+    for (const dir of NODE_SIDE_DIRS) {
+      for (const filePath of getTypeScriptFiles(dir)) {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        const label = path.relative(process.cwd(), filePath);
+        const relative = getImportSpecifiers(content).filter(specifier => /^\.\.?(?:\/|$)/.test(specifier));
+
+        expect({ [label]: relative }).toEqual({ [label]: [] });
+      }
+    }
+  });
+
+  it('Node.js-side code must not read Vite-only globals', () => {
+    for (const dir of NODE_SIDE_DIRS) {
+      // Declaration files only type the globals for src/
+      for (const filePath of getTypeScriptFiles(dir).filter(file => !file.endsWith('.d.ts'))) {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        const label = path.relative(process.cwd(), filePath);
+
+        expect({ [label]: getViteGlobalUses(content) }).toEqual({ [label]: [] });
+      }
+    }
+  });
+
+  it('finds every Vite-only global a file reads', () => {
+    const source = [
+      'const mode = import.meta.env.MODE;',
+      'const version = __VERSION__;',
+      'const here = import.meta.dirname;',
+      '// __RELEASE__ and import.meta.env in a comment',
+      'const dir = __dirname;',
+    ].join('\n');
+
+    expect(getViteGlobalUses(source)).toEqual(['import.meta.env', '__VERSION__']);
   });
 
   it('src/utils/word-data-utils.ts must import filtering functions from utils/', () => {

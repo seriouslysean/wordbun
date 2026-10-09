@@ -69,8 +69,16 @@ export function stripMarkup(text: string): string {
     // Smart quotes
     .replaceAll('{ldquo}', '\u201c')
     .replaceAll('{rdquo}', '\u201d')
-    // Cross-references and links: extract the word (first pipe segment)
-    .replaceAll(/\{(?:sx|a_link|d_link|dxt)\|([^|}]*)[^}]*\}/g, '$1')
+    // Cross-reference groups: the API docs show an em dash before each, and
+    // "more at" after the dash of {ma}
+    .replaceAll('{ma}', '— more at ')
+    .replaceAll(/\{dx(?:_ety)?\}/g, '— ')
+    // Cross-references and links: keep the link text (first pipe segment)
+    // without the homograph number some carry ("help:1"), as for meta.id
+    .replaceAll(
+      /\{(?:sx|a_link|d_link|i_link|et_link|mat|dxt)\|([^|}]*)[^}]*\}/g,
+      (_, linkText: string) => linkText.replace(/:\d+$/, ''),
+    )
     // Any remaining tags
     .replaceAll(/\{[^}]*\}/g, '');
 }

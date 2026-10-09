@@ -121,6 +121,11 @@ describe('adapter factory', () => {
     it('throws for unknown adapter name', () => {
       expect(() => getAdapterByName('unknown')).toThrow('Unknown adapter: unknown');
     });
+
+    it('throws for a name that is only a key of Object.prototype', () => {
+      expect(() => getAdapterByName('constructor')).toThrow('Unknown adapter: constructor');
+      expect(() => getAdapterByName('__proto__')).toThrow('Unknown adapter: __proto__');
+    });
   });
 
   describe('adapter interface compliance', () => {

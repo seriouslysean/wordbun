@@ -81,6 +81,31 @@ describe('merriam-webster adapter', () => {
       expect(stripMarkup('{dxt|test|test:1|1}')).toBe('test');
     });
 
+    it('keeps the link text of etymology and italic links', async () => {
+      const { stripMarkup } = await import('#adapters/merriam-webster');
+      expect(stripMarkup('from {it}shrewe{/it} + {et_link|-ed|-ed:1}')).toBe('from shrewe + -ed');
+      expect(stripMarkup('see {i_link|stanza|stanza}')).toBe('see stanza');
+    });
+
+    it('writes a "more at" cross-reference as the dictionary displays it', async () => {
+      const { stripMarkup } = await import('#adapters/merriam-webster');
+      expect(stripMarkup('from {it}placēre{/it} to please {ma}{mat|please|}{/ma}'))
+        .toBe('from placēre to please — more at please');
+      expect(stripMarkup('to turn {ma}{mat|annual|}, {mat|worth|worth:4}{/ma}'))
+        .toBe('to turn — more at annual, worth');
+    });
+
+    it('puts a dash before a directional cross-reference', async () => {
+      const { stripMarkup } = await import('#adapters/merriam-webster');
+      expect(stripMarkup('{dx_ety}see {dxt|help:1||}{/dx_ety}')).toBe('— see help');
+    });
+
+    it('drops the homograph number from link text', async () => {
+      const { stripMarkup } = await import('#adapters/merriam-webster');
+      expect(stripMarkup('{et_link|-ed:1|-ed:1}')).toBe('-ed');
+      expect(stripMarkup('{sx|cheer:1||}')).toBe('cheer');
+    });
+
     it('strips remaining unknown tags', async () => {
       const { stripMarkup } = await import('#adapters/merriam-webster');
       expect(stripMarkup('{unknown}content')).toBe('content');
