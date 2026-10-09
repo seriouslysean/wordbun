@@ -53,6 +53,7 @@ tools/                           # CLI tools (Node.js only, no Astro deps)
   sync-upstream.sh               # Merge upstream into a fork, gated (tool:sync)
   templates/site/                # Callers, Dependabot, README and .gitignore that create-site writes
   utils.ts                       # Shared tool utilities
+  word-file-paths.ts             # Which files are word files: the content loader's rule
 
 adapters/                        # Dictionary API adapters
   index.ts                       # Adapter registry + fallback chain
@@ -262,6 +263,8 @@ export const collections = {
   })
 };
 ```
+
+The CLI tools read the same files. `listWordFilePaths()` in `tools/word-file-paths.ts` applies the loader's rule (every `.json` file at any depth under the words directory, no file or directory whose name starts with a dot, symbolic links followed), and `getWordFiles()` (add-word, generate-images, regenerate-all-words) and normalize-word-data both list the corpus through it, so the tools agree with each other and with the build on which files hold a word. One difference is deliberate: the loader lists a directory that a link also points to under both paths, and the tools list it once, under the path that sorts first, so no word is processed twice. A directory that cannot be listed is a failure, not an empty one. add-word writes `{year}/{YYYYMMDD}.json`; a word file placed anywhere else under the words directory is still built and still read.
 
 ### Computed Derivatives
 
