@@ -8,7 +8,7 @@ description: Opens a GitHub pull request for the current branch - validates, pus
 # the Bash(...) rules are Claude Code's syntax.
 disable-model-invocation: true
 argument-hint: "[optional base branch, defaults to main]"
-allowed-tools: Bash(npm run lint:*) Bash(npm run lint:fix:*) Bash(npm run typecheck:*) Bash(npm test:*) Bash(npx vitest run:*) Bash(npm run build:*) Bash(SOURCE_DIR=demo npm run build:*) Bash(npm run test:e2e:*) Bash(npx playwright test:*) Bash(git status:*) Bash(git branch --show-current) Bash(git diff:*) Bash(git log:*) Bash(git push:*) Bash(gh pr create:*)
+allowed-tools: Bash(npm run lint:*) Bash(npm run typecheck:*) Bash(npm test:*) Bash(npm run build:*) Bash(git status:*) Bash(git branch --show-current) Bash(git diff:*) Bash(git log:*) Bash(git push:*) Bash(gh pr create:*)
 ---
 
 Open a pull request for the current branch.

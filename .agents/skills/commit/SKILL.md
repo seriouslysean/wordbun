@@ -4,7 +4,7 @@ description: Commits the current changes the way this repository expects - quali
 # argument-hint is Claude Code only. allowed-tools is experimental in the
 # Agent Skills spec; the Bash(...) rules are Claude Code's syntax.
 argument-hint: "[optional commit message hint]"
-allowed-tools: Bash(npm run lint:*) Bash(npm run lint:fix:*) Bash(npm run typecheck:*) Bash(npm test:*) Bash(npx vitest run:*) Bash(npm run build:*) Bash(SOURCE_DIR=demo npm run build:*) Bash(npm run test:e2e:*) Bash(npx playwright test:*) Bash(git status:*) Bash(git diff:*) Bash(git add:*) Bash(git commit:*) Bash(git log:*)
+allowed-tools: Bash(npm run lint:*) Bash(npm run lint:fix:*) Bash(npm run typecheck:*) Bash(npm test:*) Bash(npx vitest run:*) Bash(npm run build:*) Bash(git status:*) Bash(git diff:*) Bash(git add:*) Bash(git commit:*) Bash(git log:*)
 ---
 
 Commit the current changes following this repository's conventions (Contributing via Git in `AGENTS.md`).

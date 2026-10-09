@@ -2,7 +2,7 @@
 name: validate
 description: Runs this repository's five quality gates in order (lint, typecheck, unit tests with coverage, build, E2E) and diagnoses the first failure. Use after changing code, before committing or opening a pull request, or when asked whether the project is healthy.
 # allowed-tools is experimental in the Agent Skills spec; the Bash(...) rules are Claude Code's syntax
-allowed-tools: Bash(npm run lint:*) Bash(npm run lint:fix:*) Bash(npm run typecheck:*) Bash(npm test:*) Bash(npx vitest run:*) Bash(npm run build:*) Bash(SOURCE_DIR=demo npm run build:*) Bash(npm run test:e2e:*) Bash(npx playwright test:*)
+allowed-tools: Bash(npm run lint:*) Bash(npm run lint:fix:*) Bash(npm run typecheck:*) Bash(npm test:*) Bash(npx vitest run:*) Bash(npm run build:*) Bash(npm run test:e2e:*) Bash(npx playwright test:*)
 ---
 
 Run the quality gates and report which passed. The gates, their order and what counts as passing are defined in the Quality Gates section of `AGENTS.md` at the repository root; this skill adds how to read a failure.
