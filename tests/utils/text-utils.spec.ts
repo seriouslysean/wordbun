@@ -162,6 +162,13 @@ describe('text-utils', () => {
       expect(hasDoubleLetters('cat')).toBe(false);
       expect(hasDoubleLetters('dog')).toBe(false);
     });
+    it('matches a letter repeated in the other case', () => {
+      expect(hasDoubleLetters('Aardvark')).toBe(true);
+    });
+    it('does not count repeated digits or punctuation as letters', () => {
+      expect(hasDoubleLetters('catch-22')).toBe(false);
+      expect(hasDoubleLetters('hush--money')).toBe(false);
+    });
   });
 
   describe('hasTripleLetters', () => {
@@ -180,6 +187,12 @@ describe('text-utils', () => {
       expect(hasTripleLetters('committee')).toBe(false);
       expect(hasTripleLetters('letter')).toBe(false);
       expect(hasTripleLetters('cat')).toBe(false);
+    });
+    it('matches a letter repeated in the other case', () => {
+      expect(hasTripleLetters('Zzz')).toBe(true);
+    });
+    it('does not count repeated digits as letters', () => {
+      expect(hasTripleLetters('1000')).toBe(false);
     });
   });
 
@@ -217,6 +230,11 @@ describe('text-utils', () => {
     it('returns false when no sequence exists', () => {
       expect(hasAlphabeticalSequence('abd')).toBe(false);
     });
+
+    it('does not count consecutive digits or other characters as letters', () => {
+      expect(hasAlphabeticalSequence('route 789')).toBe(false);
+      expect(hasAlphabeticalSequence('yz{')).toBe(false);
+    });
   });
 
   describe('getWordEndings', () => {
@@ -253,6 +271,13 @@ describe('text-utils', () => {
     it('returns false for words with vowels', () => {
       expect(isAllConsonants('hello')).toBe(false);
       expect(isAllConsonants('bcda')).toBe(false);
+    });
+    it('returns false for a word with no letters', () => {
+      expect(isAllConsonants('42')).toBe(false);
+      expect(isAllConsonants('24/7')).toBe(false);
+    });
+    it('keeps a consonant-only word that carries punctuation', () => {
+      expect(isAllConsonants('pb&j')).toBe(true);
     });
   });
 });
