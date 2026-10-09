@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { getSocialImageUrl, getStaticPages } from '#astro-utils/image-utils';
 
 vi.mock('#astro-utils/page-metadata', () => ({
   getAllPageMetadata: vi.fn(() => [
@@ -7,8 +8,6 @@ vi.mock('#astro-utils/page-metadata', () => ({
     { pathname: '/stats', title: 'Stats' },
   ]),
 }));
-
-import { getSocialImageUrl, getStaticPages } from '#astro-utils/image-utils';
 
 describe('image-utils', () => {
   describe('getSocialImageUrl', () => {

@@ -1,8 +1,9 @@
 import {
   afterEach, beforeEach, describe, expect, it, vi,
 } from 'vitest';
+import { config, logger } from '#astro-utils/logger';
 
-// Mock @sentry/astro before importing the logger
+// Vitest hoists vi.mock above the imports, so the logger loads this mock
 vi.mock('@sentry/astro', () => ({
   captureException: vi.fn(),
   captureMessage: vi.fn(),
@@ -15,8 +16,6 @@ vi.mock('@sentry/astro', () => ({
     return scope;
   }),
 }));
-
-import { config, logger } from '#astro-utils/logger';
 
 const createConsoleSpy = () => ({
   debug: vi.spyOn(console, 'debug').mockImplementation(() => {}),

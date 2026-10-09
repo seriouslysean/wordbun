@@ -1,5 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { WordData } from '#types';
+import {
+  generateHealthTxt,
+  generateHumansTxt,
+  generateLlmsTxt,
+  generateRobotsTxt,
+  getStaticFileContent,
+} from '#astro-utils/static-file-utils';
 
 vi.mock('#utils/i18n-utils', () => ({
   t: (key: string, values: Record<string, unknown> = {}) =>
@@ -9,14 +16,6 @@ vi.mock('#utils/i18n-utils', () => ({
       .replaceAll(/\{\{(\w+)\}\}/g, (_match, name: string) =>
         String(values[name] ?? (name === 'count' ? count : name))),
 }));
-
-import {
-  generateHealthTxt,
-  generateHumansTxt,
-  generateLlmsTxt,
-  generateRobotsTxt,
-  getStaticFileContent,
-} from '#astro-utils/static-file-utils';
 
 const originalEnv = {
   SITE_TITLE: mockEnv.SITE_TITLE,

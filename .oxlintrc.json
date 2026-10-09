@@ -32,6 +32,7 @@
     "unicorn/prefer-array-flat-map": "warn",
     "unicorn/prefer-object-from-entries": "warn",
     "import/no-cycle": "error",
+    "import/first": "error",
     "import/no-duplicates": "error",
     "import/no-relative-parent-imports": "error",
     "import/default": "off",

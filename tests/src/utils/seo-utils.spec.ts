@@ -1,10 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
+import { seoConfig, getMetaDescription, generateSeoMetadata } from '#astro-utils/seo-utils';
 
 vi.mock('#astro-utils/url-utils', () => ({
   getFullUrl: vi.fn((path) => `https://test.com${path}`),
 }));
-
-import { seoConfig, getMetaDescription, generateSeoMetadata } from '#astro-utils/seo-utils';
 
 describe('seo-utils', () => {
   describe('seoConfig', () => {

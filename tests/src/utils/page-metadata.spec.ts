@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { getAllPageMetadata, getPageMetadata } from '#astro-utils/page-metadata';
 
 const ctx = vi.hoisted(() => {
   const words = [
@@ -38,8 +39,6 @@ vi.mock('#utils/page-metadata-utils', () => ({
   getAllPageMetadata: ctx.getAll.mockImplementation((words: Array<{ word: string }>) =>
     words.map(word => ({ path: `/word/${word.word}` }))),
 }));
-
-import { getAllPageMetadata, getPageMetadata } from '#astro-utils/page-metadata';
 
 describe('src/utils/page-metadata', () => {
   describe('getPageMetadata', () => {

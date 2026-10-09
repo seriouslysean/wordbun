@@ -1,9 +1,6 @@
 import {
  beforeEach, describe, expect, it,
 } from 'vitest';
-
-declare const mockEnv: Record<string, string | boolean | undefined>;
-
 import {
   getBasePath,
   getPathname,
@@ -22,6 +19,8 @@ import {
   getStatUrl,
 } from '#astro-utils/url-utils';
 import { isPathUnderBase } from '#utils/url-utils';
+
+declare const mockEnv: Record<string, string | boolean | undefined>;
 
 describe('utils', () => {
   describe('slugify', () => {

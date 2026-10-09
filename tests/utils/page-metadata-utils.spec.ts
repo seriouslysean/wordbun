@@ -6,6 +6,14 @@ import {
   vi,
 } from 'vitest';
 import type { WordData } from '#types';
+import {
+  createPageMetadataLookup,
+  getAllPageMetadata,
+  getDefinition,
+  getPageMetadata,
+  getPageTitle,
+} from '#utils/page-metadata-utils';
+import { getLetterStats } from '#utils/word-stats-utils';
 
 declare const mockEnv: Record<string, string | boolean | undefined>;
 
@@ -47,15 +55,6 @@ vi.mock('#utils/i18n-utils', () => ({
   }),
   tp: vi.fn((baseKey, count) => `${count} Mock Items`)
 }));
-
-import {
-  createPageMetadataLookup,
-  getAllPageMetadata,
-  getDefinition,
-  getPageMetadata,
-  getPageTitle,
-} from '#utils/page-metadata-utils';
-import { getLetterStats } from '#utils/word-stats-utils';
 
 // Clean up mock after this test file to prevent leakage to other tests
 afterAll(() => {

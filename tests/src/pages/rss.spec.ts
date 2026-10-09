@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { GET } from '#pages/rss.xml.ts';
 
 const ctx = vi.hoisted(() => ({
   words: [{
@@ -19,8 +20,6 @@ const ctx = vi.hoisted(() => ({
 vi.mock('astro:content', () => ({
   getCollection: vi.fn(() => Promise.resolve(ctx.words)),
 }));
-
-import { GET } from '#pages/rss.xml.ts';
 
 describe('RSS feed', () => {
   it('HTML-escapes definition text before the RSS serializer XML-escapes it', async () => {

@@ -1,4 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import {
+  STRUCTURED_DATA_TYPE,
+  getWebsiteSchemaData,
+  getWordSchemaData,
+  getCollectionSchemaData,
+  getBreadcrumbSchema,
+} from '#astro-utils/schema-utils';
 
 const { seoConfig } = vi.hoisted(() => ({
   seoConfig: {
@@ -14,14 +21,6 @@ vi.mock('#astro-utils/seo-utils', () => ({ seoConfig }));
 vi.mock('#astro-utils/url-utils', () => ({
   getFullUrl: vi.fn((path) => `https://test.com${path}`),
 }));
-
-import {
-  STRUCTURED_DATA_TYPE,
-  getWebsiteSchemaData,
-  getWordSchemaData,
-  getCollectionSchemaData,
-  getBreadcrumbSchema,
-} from '#astro-utils/schema-utils';
 
 describe('schema-utils', () => {
   afterEach(() => {
