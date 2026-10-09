@@ -413,7 +413,7 @@ The target must not exist or must be empty. `--engine-ref` must be a release tag
 
 ### `regenerate-all-words.ts`
 
-Batch refresh of word data from the dictionary API. Supports dry-run mode and rate limiting. A word file it cannot read (not JSON, or no `word` string) counts as a failure, in a dry run too, so the exit code says whether every stored word was covered. `--force` re-sources every word through the configured adapter chain (the `adapter` field follows); pronunciation audio and etymology come only from Merriam-Webster, so run it via `tool:local` with `MERRIAM_WEBSTER_API_KEY` in `.env` to backfill them.
+Batch refresh of word data from the dictionary API. Supports dry-run mode and rate limiting. A word file it cannot read (not JSON, or no `word` string) counts as a failure, in a dry run too, so the exit code says whether every stored word was covered. Run without `--force` or `--dry-run` it only asks for `--force` and exits 0, unless the words directory is missing or a file in it cannot be read: that exits 1 before the confirmation, which would otherwise count only the words it could see. `--force` re-sources every word through the configured adapter chain (the `adapter` field follows); pronunciation audio and etymology come only from Merriam-Webster, so run it via `tool:local` with `MERRIAM_WEBSTER_API_KEY` in `.env` to backfill them.
 
 ## URL System
 

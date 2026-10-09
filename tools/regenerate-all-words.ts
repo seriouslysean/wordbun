@@ -149,6 +149,13 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
       return unreadable.length;
     }
 
+    // Nothing to confirm when the corpus could not be read: asking to
+    // confirm zero words, exit 0, would pass a missing words directory off as
+    // a run that only needs --force. Each unreadable path is already logged.
+    if (!options.force && unreadable.length > 0) {
+      return unreadable.length;
+    }
+
     if (!options.force) {
       logger.info('CONFIRMATION REQUIRED', { wordCount: wordsToRegenerate.length });
       logger.info('This will overwrite existing word files.');

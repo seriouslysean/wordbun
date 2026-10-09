@@ -119,6 +119,36 @@ describe('regenerate-all-words bulk run', () => {
     expect(code).toBe(1);
   }, 35000);
 
+  // --timeout only keeps the tool from printing its help, as it does with no argument
+  it.each([
+    ['is missing', () => {}, 'Word directory does not exist'],
+    ['holds a file that is not JSON', () => writeWordFiles({ '20240101.json': STORED_WORD, '20240102.json': '{ "word": ' }), '20240102.json'],
+  ])('fails without --force, before asking to confirm, when the words directory %s', async (_, setUp, reported) => {
+    setUp();
+
+    const { stdout, stderr, code } = await spawnTool(
+      [path.join(TOOLS_DIR, 'regenerate-all-words.ts'), '--timeout', '1'],
+      { env: { SOURCE_DIR: '' }, cwd: ctx.tempDir, timeout: 30000 },
+    );
+
+    expect(code).toBe(1);
+    expect(stderr).toContain(reported);
+    expect(stderr).toContain('Regeneration finished with failures');
+    expect(stdout).not.toContain('CONFIRMATION REQUIRED');
+  }, 35000);
+
+  it('asks to confirm, exit 0, when every word file was read', async () => {
+    writeWordFiles({ '20240101.json': STORED_WORD });
+
+    const { stdout, code } = await spawnTool(
+      [path.join(TOOLS_DIR, 'regenerate-all-words.ts'), '--timeout', '1'],
+      { env: { SOURCE_DIR: '' }, cwd: ctx.tempDir, timeout: 30000 },
+    );
+
+    expect(code).toBe(0);
+    expect(stdout).toMatch(/CONFIRMATION REQUIRED.*wordCount: 1/s);
+  }, 35000);
+
   it('fails a dry run that could not read every word file', async () => {
     writeWordFiles({ '20240101.json': STORED_WORD, '20240102.json': '{ "word": ' });
 
