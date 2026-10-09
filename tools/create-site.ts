@@ -10,7 +10,6 @@ import { parseArgs } from 'node:util';
 
 import { isEntryPoint } from '#tools/entry';
 import { showHelp } from '#tools/help-utils';
-import { isValidDate } from '#utils/date-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { parseWordData } from '#utils/stored-word-validation';
 import { slugify } from '#utils/text-utils';
@@ -71,9 +70,6 @@ export const createSite = ({ directory, engineRef, seedFile }: CreateSiteOptions
 
   const seed = fs.readFileSync(seedFile);
   const { word, date } = parseWordData(seed.toString('utf-8'), seedFile);
-  if (!isValidDate(date)) {
-    throw new Error(`Invalid word data in ${seedFile}: date must be YYYYMMDD, not ${date}`);
-  }
 
   // The seed's page is /word/<slug>; with no slug it would be /word/ itself
   if (!slugify(word)) {
