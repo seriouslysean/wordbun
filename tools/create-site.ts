@@ -13,6 +13,7 @@ import { showHelp } from '#tools/help-utils';
 import { isValidDate } from '#utils/date-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { parseWordData } from '#utils/stored-word-validation';
+import { slugify } from '#utils/text-utils';
 
 const ENGINE_ROOT = path.join(import.meta.dirname, '..');
 const TEMPLATES = path.join(import.meta.dirname, 'templates', 'site');
@@ -69,9 +70,14 @@ export const createSite = ({ directory, engineRef, seedFile }: CreateSiteOptions
   }
 
   const seed = fs.readFileSync(seedFile);
-  const { date } = parseWordData(seed.toString('utf-8'), seedFile);
+  const { word, date } = parseWordData(seed.toString('utf-8'), seedFile);
   if (!isValidDate(date)) {
     throw new Error(`Invalid word data in ${seedFile}: date must be YYYYMMDD, not ${date}`);
+  }
+
+  // The seed's page is /word/<slug>; with no slug it would be /word/ itself
+  if (!slugify(word)) {
+    throw new Error(`Invalid word data in ${seedFile}: "${word}" has no URL slug (no ASCII letter, digit, underscore or hyphen)`);
   }
 
   if (fs.existsSync(directory) && (!fs.statSync(directory).isDirectory() || fs.readdirSync(directory).length > 0)) {

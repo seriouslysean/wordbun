@@ -4,12 +4,13 @@ import path from 'node:path';
 import { paths } from '#config/paths';
 import { isEntryPoint } from '#tools/entry';
 import { COMMON_ENV_DOCS, parseToolArgs, showHelp } from '#tools/help-utils';
-import { createWordEntry, findExistingWord } from '#tools/utils';
+import { createWordEntry, findExistingWord, findSlugCollision } from '#tools/utils';
 import type { WordData } from '#types';
 import { getTodayYYYYMMDD, isValidDate } from '#utils/date-utils';
 import { isWordNotFound } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { parseWordData } from '#utils/stored-word-validation';
+import { slugify } from '#utils/text-utils';
 
 /**
  * Checks if a file exists for the given date and returns the existing word if found
@@ -67,6 +68,16 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
       await exit(1);
     }
 
+    // The word page lives at /word/<slug>. A word with no slug ("&", "日本")
+    // would be written to /word/ itself.
+    if (!slugify(word)) {
+      logger.warn('Word has no URL slug', {
+        word,
+        reason: 'A slug keeps only ASCII letters, digits, underscores and hyphens, and this word has none',
+      });
+      await exit(1);
+    }
+
     if (date && !isValidDate(date)) {
       logger.warn('Invalid date format', { providedDate: date, expectedFormat: 'YYYYMMDD' });
       await exit(1);
@@ -102,6 +113,19 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
         word: word,
         existingDate: existingWordByName.date,
         requestedDate: targetDate,
+      });
+      await exit(1);
+    }
+
+    // A different word with the same slug ("can't" beside "cant") would claim
+    // the same page, and only one of the two could be built.
+    const slugCollision = findSlugCollision(word, targetDate);
+    if (slugCollision) {
+      logger.warn('Word shares its URL slug with a different word', {
+        word,
+        slug: slugify(word),
+        existingWord: slugCollision.word,
+        existingDate: slugCollision.date,
       });
       await exit(1);
     }

@@ -13,7 +13,7 @@ import { resolveHexColor } from '#utils/color-utils';
 import { formatDate, isValidDate } from '#utils/date-utils';
 import { getSocialCardPath, SOCIAL_DIR } from '#utils/image-path-utils';
 import { getErrorMessage, logger } from '#utils/logger';
-import { collapseWhitespace } from '#utils/text-utils';
+import { collapseWhitespace, slugify } from '#utils/text-utils';
 import { isRecord, isString } from '#utils/type-guards';
 import { findValidDefinition, mergeEnrichment } from '#utils/word-data-utils';
 import { parseWordData } from '#utils/stored-word-validation';
@@ -210,6 +210,20 @@ export function findExistingWord(word: string, options: WordFileScanOptions = {}
   }
 
   return { match: null, failures: [...failures, ...parseFailures] };
+}
+
+/**
+ * Finds a stored word, on any other date, whose page URL the given word would
+ * share. The word page's path is slugify(word), which keeps only ASCII
+ * letters, digits, underscores and hyphens, so "can't" and "cant" are one
+ * page: the build would write both to /word/cant. Only the headword of each
+ * file is read, as in getWordFiles; the word on `date` itself is left out,
+ * since --overwrite replaces it.
+ */
+export function findSlugCollision(word: string, date: string): WordFileInfo | undefined {
+  const slug = slugify(word);
+  return getWordFiles({ allowEmpty: true }).files
+    .find(file => file.date !== date && slugify(file.word) === slug);
 }
 
 interface WordCorpus {

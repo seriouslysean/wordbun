@@ -163,6 +163,7 @@ describe('create-site', { timeout: 20000 }, () => {
     ['a date that is not YYYYMMDD', SEED.replace('20260918', '2026-09-18'), 'date must be YYYYMMDD'],
     ['a date that is not a real day', SEED.replace('20260918', '20260231'), 'date must be YYYYMMDD'],
     ['a date that climbs out of the site', SEED.replace('20260918', '../../x'), 'date must be YYYYMMDD'],
+    ['a word with no URL slug', SEED.replace('"word": "café & crème"', '"word": "&"'), 'has no URL slug'],
   ])('refuses %s as the seed before writing', async (_, content, message) => {
     write('bad.json', content);
 
