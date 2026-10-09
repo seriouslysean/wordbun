@@ -186,20 +186,15 @@ describe('Architecture: utils/ boundary enforcement', () => {
     };
 
     // Check that src/utils versions are thin wrappers, not duplicates
-    for (const [fnName, utilsImpl] of Object.entries(utilsFunctions)) {
-      if (!utilsImpl) {
-        continue;
-      }
+    // The filtering logic of each utils/ implementation that appears verbatim in src/utils
+    const duplicated = Object.entries(utilsFunctions)
+      .filter(([, utilsImpl]) => {
+        const filterLogic = utilsImpl.match(/words\.filter\([\s\S]*?\)/)?.[0];
+        return filterLogic !== undefined && srcContent.includes(filterLogic);
+      })
+      .map(([fnName]) => fnName);
 
-      // Extract the filtering logic from utils/ implementation
-      const filterLogic = utilsImpl.match(/words\.filter\([\s\S]*?\)/)?.[0];
-
-      if (filterLogic) {
-        // Check if this exact filtering logic appears in src/utils (would be duplication)
-        const isDuplicated = srcContent.includes(filterLogic);
-        expect({ fnName, isDuplicated }).toEqual({ fnName, isDuplicated: false });
-      }
-    }
+    expect(duplicated).toEqual([]);
   });
 
   it('Node.js-side code can only import from allowed alias paths', () => {

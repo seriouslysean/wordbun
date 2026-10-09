@@ -33,6 +33,9 @@ const DEMO_ENV = { SOURCE_DIR: 'demo' };
 
 describe('CLI Tools: Import & Execution', () => {
 
+  // Passes when every import resolves: a failure is the throw, so there is
+  // nothing to assert on
+  // oxlint-disable-next-line vitest/expect-expect
   it('tools can be imported without astro: protocol errors', async () => {
     // Mock process.exit to prevent tools from exiting during import
     // Tools have top-level code that may call process.exit()
@@ -136,6 +139,9 @@ describe('CLI Tools: Import & Execution', () => {
     }
   });
 
+  // Passes when every import resolves: a failure is the throw, so there is
+  // nothing to assert on
+  // oxlint-disable-next-line vitest/expect-expect
   it('shared utils used by tools have no astro dependencies', async () => {
     // Test the utils that tools commonly import
     const sharedUtils = [

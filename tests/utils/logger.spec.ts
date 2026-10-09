@@ -56,25 +56,19 @@ describe('logger', () => {
     it('preserves console.debug signature', () => {
       logger.debug('test message', { context: 'data' });
 
-      if (config.isDev) {
-        expect(ctx.consoleSpy.debug).toHaveBeenCalledWith('test message', { context: 'data' });
-      }
+      expect(ctx.consoleSpy.debug).toHaveBeenCalledWith('test message', { context: 'data' });
     });
 
     it('preserves console.info signature', () => {
       logger.info('test message', { context: 'data' });
 
-      if (config.isDev) {
-        expect(ctx.consoleSpy.info).toHaveBeenCalledWith('test message', { context: 'data' });
-      }
+      expect(ctx.consoleSpy.info).toHaveBeenCalledWith('test message', { context: 'data' });
     });
 
     it('preserves console.warn signature', () => {
       logger.warn('test warning', { context: 'data' });
 
-      if (config.isDev) {
-        expect(ctx.consoleSpy.warn).toHaveBeenCalledWith('test warning', { context: 'data' });
-      }
+      expect(ctx.consoleSpy.warn).toHaveBeenCalledWith('test warning', { context: 'data' });
     });
 
     it('always logs errors to console', () => {
@@ -85,17 +79,15 @@ describe('logger', () => {
 
   describe('development mode behavior', () => {
     it('logs all levels in development', () => {
-      if (config.isDev) {
-        logger.debug('debug message');
-        logger.info('info message');
-        logger.warn('warn message');
-        logger.error('error message');
+      logger.debug('debug message');
+      logger.info('info message');
+      logger.warn('warn message');
+      logger.error('error message');
 
-        expect(ctx.consoleSpy.debug).toHaveBeenCalled();
-        expect(ctx.consoleSpy.info).toHaveBeenCalled();
-        expect(ctx.consoleSpy.warn).toHaveBeenCalled();
-        expect(ctx.consoleSpy.error).toHaveBeenCalled();
-      }
+      expect(ctx.consoleSpy.debug).toHaveBeenCalled();
+      expect(ctx.consoleSpy.info).toHaveBeenCalled();
+      expect(ctx.consoleSpy.warn).toHaveBeenCalled();
+      expect(ctx.consoleSpy.error).toHaveBeenCalled();
     });
   });
 

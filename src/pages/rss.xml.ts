@@ -1,8 +1,7 @@
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_LOCALE } from 'astro:env/client';
 import rss from '@astrojs/rss';
 import { escapeText } from 'entities';
-import { allWords } from '#astro-utils/word-data-utils';
-import { extractWordDefinition } from '#astro-utils/word-data-utils';
+import { allWords, extractWordDefinition } from '#astro-utils/word-data-utils';
 import { getFullUrl, getWordUrl } from '#astro-utils/url-utils';
 import { YYYYMMDDToDate } from '#utils/date-utils';
 import { RSS_FEED_WORD_COUNT } from '#constants/text-patterns';

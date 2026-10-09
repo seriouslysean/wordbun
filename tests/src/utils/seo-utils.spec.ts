@@ -171,9 +171,7 @@ describe('seo-utils', () => {
       expect(metadata.keywords).toContain('custom1');
       expect(metadata.keywords).toContain('custom2');
       seoConfig.keywords.forEach(keyword => {
-        if (keyword) {
-          expect(metadata.keywords).toContain(keyword);
-        }
+        expect(metadata.keywords).toContain(keyword);
       });
     });
 

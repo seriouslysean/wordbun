@@ -21,6 +21,7 @@ import {
   getWordsByLetter,
   groupWordsByPartOfSpeech,
   getWordsByPartOfSpeech,
+  extractWordDefinition,
 } from '#astro-utils/word-data-utils';
 import {
   getAvailableLengths,
@@ -42,9 +43,6 @@ import {
   findCurrentWord,
   getPreviousWords,
 } from '#utils/word-data-utils';
-import {
-  extractWordDefinition,
-} from '#astro-utils/word-data-utils';
 import type { DictionaryDefinition, WordData } from '#types';
 
 const makeWord = (word: string, date: string, data: DictionaryDefinition[] = []): WordData => ({
