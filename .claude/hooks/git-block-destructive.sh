@@ -43,10 +43,12 @@ has() {
     [[ $segment =~ $1 ]]
 }
 
-# `git`, any global options (-C <path>, -c <key=value>, --no-pager, ...), then
-# the subcommand, so `git -C . push` is read as a push
+# `git`, then the subcommand as a word anywhere after it. Global options and
+# their values (-C <path>, --git-dir <dir>, -c <key=value>) are not parsed:
+# a quoted or substituted value cannot be told from a word once the line is
+# split, so anything may sit between the two.
 git_sub() {
-    has "(^|[^[:alnum:]_-])git([[:space:]]+(-[Cc][[:space:]]+[^[:space:]]+|--?[[:alnum:]-]+(=[^[:space:]]*)?))*[[:space:]]+$1([^[:alnum:]_-]|\$)"
+    has "(^|[^[:alnum:]_-])git[[:space:]]+(.*[[:space:]])?$1([^[:alnum:]_-]|\$)"
 }
 
 # A short option cluster holding the letter (-f, -fd, -xfd) or the long option
@@ -57,18 +59,17 @@ flag() {
 # A pathspec naming the whole tree
 ALL_FILES='[[:space:]]\./?([[:space:]]|$)'
 
-# Each command of a compound line is judged on its own, so one command's
-# arguments (a --force-with-lease, a `.`) cannot excuse or condemn another.
-# Substitutions and subshells are split too, so `$(git clean -f)` is seen.
-segments=$command
-# shellcheck disable=SC2016 # the separators are literal text, not expansions
-for separator in '&&' '||' ';' '|' '&' '$(' '`' '(' ')'; do
-    segments=${segments//"$separator"/$'\n'}
-done
+judge() {
+    segment=$1
 
-while IFS= read -r segment; do
     # Quoting does not change what runs: git "reset" --hard, git checkout -- "."
     segment=${segment//[\"\']/}
+
+    # The directory given to -C is not a pathspec: drop it, attached or not,
+    # so `git -C . checkout main` is not read as `git checkout .`
+    while [[ $segment =~ ^(.*[[:space:]])-C[[:space:]]*[^[:space:]]+(.*)$ ]]; do
+        segment="${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
+    done
 
     # rm with recursive and force (-rf, -fr, -r -f, --recursive --force, mixed),
     # read from rm's own arguments so `grep -rf rm` is not taken for one
@@ -85,7 +86,8 @@ while IFS= read -r segment; do
         block "git reset --hard discards all uncommitted changes permanently — use git stash to preserve them"
     fi
 
-    if git_sub clean && flag f force; then
+    # A dry run (-n, --dry-run) deletes nothing, whatever else is passed
+    if git_sub clean && flag f force && ! flag n dry-run; then
         block "git clean -f permanently deletes untracked files — list them with git clean -n first"
     fi
 
@@ -102,6 +104,40 @@ while IFS= read -r segment; do
     if git_sub restore && has "$ALL_FILES"; then
         block "git restore . discards changes across all files — be specific about which files to restore"
     fi
-done <<< "$segments"
+}
+
+# Runs judge on each line of its argument. The lines are peeled off with
+# parameter expansion: a here-string needs a temporary file, and when that
+# cannot be created the loop body never runs and nothing would be judged.
+judge_lines() {
+    local rest=$1
+    while [[ -n $rest ]]; do
+        judge "${rest%%$'\n'*}"
+        [[ $rest == *$'\n'* ]] || break
+        rest=${rest#*$'\n'}
+    done
+}
+
+# A backslash at the end of a line continues the command on the next one
+command=${command//\\$'\n'/ }
+
+# Each command of a compound line is judged on its own, so one command's
+# arguments (a --force-with-lease, a `.`) cannot excuse or condemn another.
+# A redirect ends the arguments it follows: `git reset --hard>log`.
+commands=$command
+for separator in '&&' '||' ';' '|' '&' '<' '>'; do
+    commands=${commands//"$separator"/$'\n'}
+done
+judge_lines "$commands"
+
+# Substitutions and subshells are split too, so `$(git clean -f)` is seen.
+# This is a second pass, not a replacement: splitting the outer command at a
+# substitution would hide `git -C "$(pwd)" reset --hard` from the first.
+inner=$commands
+# shellcheck disable=SC2016 # the separators are literal text, not expansions
+for separator in '$(' '`' '(' ')'; do
+    inner=${inner//"$separator"/$'\n'}
+done
+judge_lines "$inner"
 
 exit 0

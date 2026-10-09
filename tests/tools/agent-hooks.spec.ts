@@ -97,6 +97,16 @@ describe('git-block-destructive.sh', () => {
     'if true; then git reset --hard; fi',
     'echo "$(git clean -f)"',
     'git status\ngit reset --hard',
+    'git push \\\n  --force origin main',
+    'rm -r \\\n -f build',
+    'git reset \\\n  --hard',
+    'git reset --hard>/dev/null',
+    'git push origin main --force<<<""',
+    'git -C. reset --hard',
+    'git -C "/tmp/my repo" reset --hard',
+    'git -C "/tmp/my repo" push -f',
+    'git -C "$(git rev-parse --show-toplevel)" reset --hard',
+    'git --git-dir .git --work-tree . reset --hard',
   ])('blocks %j', (command) => {
     expect(run(command)).toBe(2);
   });
@@ -117,6 +127,11 @@ describe('git-block-destructive.sh', () => {
     'git restore a.ts && ls .',
     'git add .',
     'git diff main...HEAD -- .',
+    'git -C . checkout -b feature',
+    'git -C . checkout main',
+    'git -C . restore src/a.ts',
+    'git clean -nfd',
+    'git clean --dry-run -fd',
   ])('allows %j', (command) => {
     expect(run(command)).toBe(0);
   });
