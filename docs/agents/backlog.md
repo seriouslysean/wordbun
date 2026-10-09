@@ -48,23 +48,24 @@ the `HUMANS_*` variables and `SITE_KEYWORDS` are now in `docs/technical.md`.
 ## Test Coverage
 
 Five layers: unit, component, architecture, CLI integration, E2E. `npm test`
-prints the current test count and coverage; at v3.25.0 that was 1267 tests in
-73 files with 91.7% of statements and 87.7% of branches covered.
+prints the current test count and coverage; neither is repeated here, where it
+would go stale.
 
 ### Remaining Gaps
 
 The gaps listed here before are closed: `static-file-utils.ts` and
 `static-paths-utils.ts` have specs in `tests/src/utils/`, and
 `utils/word-stats-utils.ts` and `utils/word-data-utils.ts` are above 95% of
-branches. What the v3.25.0 coverage table still shows:
+branches. Notable in the coverage table as of v3.25.0:
 
 - `src/utils/url-utils.ts` at 34% of functions: the single-expression URL
   helpers that the Architecture & Code Quality entry in
   [features.md](features.md) proposes deleting.
-- `src/utils/static-paths-utils.ts` at 67% of branches.
+- `src/utils/static-paths-utils.ts` at 67% of branches and
+  `src/utils/static-file-utils.ts` at 78% of lines.
 - `tools/` at 68% of lines. Three entry points are excluded because they run
-  in spawned processes (`vitest.config.ts` names them); `tools/utils.ts` is
-  not excluded and sits at 76%.
+  in spawned processes (`vitest.config.ts` names them). Of those counted,
+  `tools/create-site.ts` sits at 19% of lines and `tools/utils.ts` at 76%.
 
 ## Migration Opportunities
 
@@ -104,7 +105,7 @@ branches. What the v3.25.0 coverage table still shows:
 ## Adapter Pipeline Health
 
 Last verified by a full `tool:regenerate-all-words --force` pass when the demo
-set held 46 words (it holds 105 at v3.25.0; the pass has not been repeated):
+set held 46 words (it has since grown; the pass has not been repeated):
 45/46 succeeded; "Amblypygi" (a spider order) is not in
 Merriam-Webster, Wordnik, or Wiktionary so the fallback chain exhausted
 cleanly and preserved the original file. Adapter chain is healthy.
