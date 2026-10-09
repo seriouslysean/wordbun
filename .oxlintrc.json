@@ -13,6 +13,7 @@
   "rules": {
     "curly": "error",
     "no-nested-ternary": "error",
+    "no-inline-comments": "error",
     "no-map-spread": "off",
     "prefer-const": "error",
     "no-var": "error",
@@ -29,15 +30,14 @@
     "unicorn/prefer-array-flat-map": "warn",
     "unicorn/prefer-object-from-entries": "warn",
     "no-underscore-dangle": ["warn", {
-      "allow": ["__dirname", "__filename", "__VERSION__", "__RELEASE__", "__TIMESTAMP__", "__WORD_DATA_PATH__"]
+      "allow": ["__VERSION__", "__RELEASE__", "__TIMESTAMP__", "__WORD_DATA_PATH__"]
     }]
   },
   "overrides": [
     {
       "files": ["adapters/**", "tools/**", "tests/**"],
       "rules": {
-        "no-await-in-loop": "off",
-        "no-inline-comments": "error"
+        "no-await-in-loop": "off"
       }
     },
     {
