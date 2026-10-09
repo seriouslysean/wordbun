@@ -436,8 +436,11 @@ Two-tier system supporting root and subdirectory deployments:
 /browse/year                # Words by year index
 /browse/{year}              # Words by year
 /browse/{year}/{month}      # Words by month
+/browse/letter              # Words by starting letter index
 /browse/letter/{letter}     # Words by starting letter
+/browse/length              # Words by length index
 /browse/length/{n}          # Words by length
+/browse/part-of-speech      # Words by part of speech index
 /browse/part-of-speech/{p}  # Words by part of speech
 /stats                      # Statistics hub
 /stats/{category}           # Individual stat pages

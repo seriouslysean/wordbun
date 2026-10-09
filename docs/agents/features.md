@@ -268,7 +268,7 @@ files with divergent semantics:
 
 **Consolidation strategy.** Pure `utils/` becomes the single owner. Pure
 functions gain alphabetical key sort, per-bucket `localeCompare` sort,
-alphabetic-only filter for letter, and `normalizeToBasePOS` filtering for
+alphabetic-only filter for letter, and `isBasePartOfSpeech` filtering for
 POS. Wrapper functions become thin delegators. Rationale: callers already
 expect sorted output for templates; the pure version is not used outside
 the wrapper today, so tightening it has no external consumer.
