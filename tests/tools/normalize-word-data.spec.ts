@@ -30,7 +30,9 @@ const run = (...args: string[]) => spawnTool([TOOL, ...args], {
   env: { SOURCE_DIR: '', CI: 'true' },
 });
 
-describe('normalize-word-data CLI', () => {
+// Up to three subprocesses a test, each allowed spawnTool's 10 s: Vitest's 5 s
+// default ends the test before a slow spawn on a loaded machine can finish
+describe('normalize-word-data CLI', { timeout: 35000 }, () => {
   it('previews without writing, writes once, then reports an unchanged corpus', async () => {
     const original = fs.readFileSync(ctx.file, 'utf8');
     const preview = await run('--dry-run');
