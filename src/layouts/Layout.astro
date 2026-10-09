@@ -11,13 +11,24 @@ import Header from '#components/Header.astro';
 import SiteBreadcrumbs from '#components/SiteBreadcrumbs.astro';
 import StructuredData from '#components/StructuredData.astro';
 import { getSocialImageUrl } from '#astro-utils/image-utils';
-import { STRUCTURED_DATA_TYPE } from '#astro-utils/schema-utils';
+import { STRUCTURED_DATA_TYPE, type StructuredDataType } from '#astro-utils/schema-utils';
 import { getMetaDescription, seoConfig } from '#astro-utils/seo-utils';
 import { getAsciiArt } from '#astro-utils/static-file-utils';
 import { getFullUrl,getUrl } from '#astro-utils/url-utils';
 import { extractWordDefinition } from '#astro-utils/word-data-utils';
 import { t } from '#utils/i18n-utils';
 import { formatPageTitle } from '#utils/page-title-utils';
+import type { WordData } from '#types';
+
+interface Props {
+  title?: string;
+  word?: WordData;
+  description?: string;
+  structuredDataType?: StructuredDataType;
+  noindex?: boolean;
+  nofollow?: boolean;
+  itemCount?: number;
+}
 
 const { title, word, description, structuredDataType, noindex, nofollow, itemCount } = Astro.props;
 
@@ -33,6 +44,9 @@ const socialImageUrl = getSocialImageUrl({
 });
 
 const finalTitle = formatPageTitle(title, word, seoConfig.defaultTitle, seoConfig.siteName);
+
+// Open Graph locales are language_TERRITORY (en_US), not BCP 47 (en-US)
+const ogLocale = seoConfig.locale.replace('-', '_');
 
 // Get ASCII art for HTML comment
 const asciiArt = getAsciiArt();
@@ -69,8 +83,10 @@ const wordSchemaData = word ? (() => {
 
 		<title>{finalTitle}</title>
 		<meta name="description" content={metaDescription} />
-		<meta name="keywords" content={seoConfig.keywords.join(', ')} />
-		<meta name="author" content={seoConfig.author} />
+		{seoConfig.keywords.length > 0 && (
+			<meta name="keywords" content={seoConfig.keywords.join(', ')} />
+		)}
+		{seoConfig.author && <meta name="author" content={seoConfig.author} />}
 		{noindex || nofollow ? (
 			<meta name="robots" content={[noindex && 'noindex', nofollow && 'nofollow'].filter(Boolean).join(', ')} />
 		) : null}
@@ -100,16 +116,13 @@ const wordSchemaData = word ? (() => {
 
 		<link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={getUrl('/rss.xml')} />
 
-		<meta property="og:locale" content={seoConfig.locale} />
-		<meta http-equiv="content-language" content={seoConfig.locale.split('-')[0]} />
-
 		<meta property="og:title" content={finalTitle} />
 		<meta property="og:description" content={metaDescription} />
 		<meta property="og:type" content={ogType} />
 		<meta property="og:url" content={currentUrl} />
 		<meta property="og:image" content={socialImageUrl} />
 		<meta property="og:site_name" content={seoConfig.siteName} />
-		<meta property="og:locale" content={seoConfig.locale} />
+		<meta property="og:locale" content={ogLocale} />
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={finalTitle} />
