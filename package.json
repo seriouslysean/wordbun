@@ -2,6 +2,7 @@
   "name": "occasional-wotd",
   "type": "module",
   "version": "3.25.0",
+  "private": true,
   "description": "Template for creating an occasional word of the day site",
   "keywords": [
     "word-of-the-day",
