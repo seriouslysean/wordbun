@@ -683,7 +683,7 @@ The thin-wrapper delegation pattern avoids logic duplication. See AGENTS.md for 
 
 ### GitHub Actions
 
-Jobs use the explicit `ubuntu-26.04` runner image. Jobs that execute project code install the Node version `.nvmrc` names, the engine checkout's in the reusable workflows. External actions track their current stable major tags, which receive compatible patch updates. TypeScript stays on 6.x while `@astrojs/check` requires TypeScript 5 or 6.
+Jobs use the explicit `ubuntu-26.04` runner image. Jobs that execute project code install the Node version `.nvmrc` names, the engine checkout's in the reusable workflows. External actions track their current stable major tags, which receive compatible patch updates. Every job that runs steps sets `timeout-minutes`, so a hung step is cancelled in minutes and not at GitHub's [360-minute default](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idtimeout-minutes): 10 for Lint, Typecheck, Test and Build, 30 for E2E, and 15 for each job of Site Deploy and Site Add Word, whose deploy job has to outlast the 10 minutes `actions/deploy-pages` waits for a deployment. A job that calls a reusable workflow [cannot set one](https://docs.github.com/en/actions/reference/workflows-and-actions/reusable-workflows#supported-keywords-for-jobs-that-call-a-reusable-workflow), so Deploy, Add Word and a site repository's two callers take the timeouts of the workflows they call, at the release they pin. TypeScript stays on 6.x while `@astrojs/check` requires TypeScript 5 or 6.
 
 The workflow files are the reference for their steps; this is what each one is for.
 

@@ -330,6 +330,22 @@ describe('site workflows', { timeout: 60000 }, () => {
     }
   });
 
+  // Without one a hung step holds a runner for GitHub's 360-minute default.
+  // A job that calls a reusable workflow cannot set a timeout, so its limit
+  // is the called workflow's, which is in this list.
+  it('sets a timeout on every job that runs steps', () => {
+    const untimed = fs.readdirSync(path.join(ROOT, '.github/workflows'))
+      .filter(file => file.endsWith('.yml'))
+      .flatMap(file => Object.entries(workflowJobs(workflow(file))).map(([name, job]) => ({
+        id: `${file} ${name}`,
+        job: objectValue(job, `${file} ${name} job`),
+      })))
+      .filter(({ job }) => !('uses' in job) && typeof job['timeout-minutes'] !== 'number')
+      .map(({ id }) => id);
+
+    expect(untimed).toEqual([]);
+  });
+
   // The engine checkout is a uses: step, so no script runs: its with: values
   // are evaluated as GitHub would evaluate them. The context holds only the
   // job's own workflow identity, so a value that reads an input, a step

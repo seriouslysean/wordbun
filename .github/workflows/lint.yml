@@ -16,6 +16,7 @@ concurrency:
 jobs:
   lint:
     runs-on: ubuntu-26.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
         with:
@@ -36,6 +37,7 @@ jobs:
   # nothing from npm, so it needs no Node.
   actionlint:
     runs-on: ubuntu-26.04
+    timeout-minutes: 10
     env:
       ACTIONLINT_VERSION: 1.7.12
       # The digest GitHub records for the release's linux_amd64 archive
