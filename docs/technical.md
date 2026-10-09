@@ -606,6 +606,8 @@ The browser side has the mirror-image rule. Bundled `<script>` blocks import a f
 
 **`.astro` files.** oxlint lints a `.astro` file's frontmatter and its `<script>` blocks, `is:inline` included. It does not lint expressions in the template: the [compatibility page](https://oxc.rs/compatibility.html) lists Astro under "No template linting yet". `<style>` blocks are not linted either; there is no CSS linter.
 
+**In the editor.** `.vscode/extensions.json` recommends the oxc extension and `.vscode/settings.json` sets `editor.codeActionsOnSave` to run `source.fixAll.oxc` on every save, the setting oxc's [editor setup](https://oxc.rs/docs/guide/usage/linter/editors.html) gives for fix-on-save. Which fixes that applies is the extension's `oxc.fixKind`, which this repository leaves unset; the extension's [README](https://github.com/oxc-project/oxc-vscode#readme) marks `safe_fix` as the default, the same fixes `npm run lint:fix` applies. That default is taken from the README and was not exercised in an editor here.
+
 **Not enabled.** Type-aware rules (`no-floating-promises`, `switch-exhaustiveness-check` and the rest) need `oxlint-tsgolint` and [TypeScript 7](https://oxc.rs/docs/guide/usage/linter/type-aware); this repository is on TypeScript 6. There is no formatter: `.editorconfig` is the only formatting rule, and nothing checks it.
 
 ## Utility Architecture
