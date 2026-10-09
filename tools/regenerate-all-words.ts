@@ -234,10 +234,6 @@ Examples:
   npm run tool:regenerate-all-words -- --dry-run
   npm run tool:regenerate-all-words -- --timeout 2000 --batch-size 3 --force
 
-Environment Variables (for GitHub workflows):
-  WORDNIK_API_KEY           API key for dictionary access (required)
-  SOURCE_DIR                Data source subdirectory (unset = root paths)
-
 Note:
   Rate-limited lookups retry up to 3 times, waiting ${RATE_LIMIT_BACKOFF_MS / 1000}s and doubling each time.
   This tool will overwrite existing word files with fresh dictionary data.

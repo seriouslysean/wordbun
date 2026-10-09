@@ -46,15 +46,18 @@ export function showHelp(helpText: string): void {
 }
 
 /**
- * Common environment variable documentation
+ * Environment variable documentation for the tools that fetch from a
+ * dictionary (add-word, regenerate-all-words). It is the one place their help
+ * names each variable: an adapter's key is required only when that adapter is
+ * in the chain, and Wiktionary takes none.
  */
 export const COMMON_ENV_DOCS = `
 Common Environment Variables:
   SOURCE_DIR                 Data source subdirectory (unset = root paths)
   DICTIONARY_ADAPTER         Dictionary API to use (required)
   DICTIONARY_FALLBACK        Fallback chain, comma-separated (default: wiktionary, none: disabled)
-  WORDNIK_API_KEY           API key for Wordnik dictionary
-  MERRIAM_WEBSTER_API_KEY   API key for Merriam-Webster dictionary
+  WORDNIK_API_KEY            Wordnik API key (required when wordnik is the adapter or a fallback)
+  MERRIAM_WEBSTER_API_KEY    Merriam-Webster API key (required when merriam-webster is the adapter or a fallback)
   SITE_TITLE                Site title for generated content
   SITE_URL                  Canonical site URL
 

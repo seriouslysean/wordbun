@@ -169,10 +169,6 @@ Examples:
   npm run tool:add-word -- "Japan" --preserve-case
   npm run tool:add-word -- "PB&J" "20250101" --preserve-case
 
-Environment Variables (for GitHub workflows):
-  WORDNIK_API_KEY           API key for dictionary access (required)
-  SOURCE_DIR                Data source subdirectory (unset = root paths)
-
 Requirements:
   - Word must exist in dictionary
   - Date must be today or in the past (YYYYMMDD format)

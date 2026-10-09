@@ -113,6 +113,11 @@ describe('CLI Tools: Import & Execution', () => {
     // createWordEntry refuses to run without it, so the help says so, once
     expect(stdout.split('\n').filter(line => line.includes('DICTIONARY_ADAPTER')))
       .toEqual([expect.stringMatching(/DICTIONARY_ADAPTER\s+Dictionary API to use \(required\)$/)]);
+    // Each variable is documented once, and a key is asked for only where its adapter is used
+    const documented = stdout.split('\n').flatMap(line => line.match(/^ {2}([A-Z][A-Z_]+) /)?.[1] ?? []);
+    expect(documented).toEqual([...new Set(documented)]);
+    expect(stdout).toMatch(/WORDNIK_API_KEY\s+Wordnik API key \(required when wordnik is the adapter or a fallback\)/);
+    expect(stdout).toMatch(/MERRIAM_WEBSTER_API_KEY\s+Merriam-Webster API key \(required when merriam-webster is the adapter or a fallback\)/);
     expect(stderr).not.toContain('astro:');
   }, 15000);
 
