@@ -125,7 +125,8 @@ interface WordFileScanOptions {
 
 /**
  * Lists the word files in the data directory, newest first: the files
- * listWordFilePaths finds, which are the ones the site builds from. Anything
+ * listWordFilePaths finds, which are the ones the site builds from, each with
+ * the word and the date its record stores. Anything
  * that cannot be read is logged and reported in `failures` instead of
  * silently left out: a bulk tool counts it, so a partial corpus cannot pass
  * for a complete one. Single-word lookups may ignore it.
@@ -140,13 +141,18 @@ export const getWordFiles = ({ allowEmpty = false }: WordFileScanOptions = {}): 
   });
   const files = listing.files.flatMap(filePath => {
     try {
-      // Only the headword is read here, so a file regenerate-all-words can
-      // still repair (any other field missing) stays listed.
+      // Only the headword and the date are read here, so a file
+      // regenerate-all-words can still repair (any other field missing) stays
+      // listed. The date is the stored one, as the site builds it: the loader
+      // takes any .json file, so the file name need not be a date at all.
       const data: unknown = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
       if (!isRecord(data) || !isString(data.word)) {
         throw new Error('Word file has no "word" string');
       }
-      return [{ word: data.word, date: path.basename(filePath, '.json'), path: filePath }];
+      if (!isString(data.date) || !isValidDate(data.date)) {
+        throw new Error('Word file has no valid YYYYMMDD "date"');
+      }
+      return [{ word: data.word, date: data.date, path: filePath }];
     } catch (error) {
       logger.error('Failed to read word file', { file: path.basename(filePath), error: getErrorMessage(error) });
       failures.push(filePath);

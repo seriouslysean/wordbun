@@ -89,8 +89,8 @@ describe('regenerate-all-words bulk run', () => {
     // temp tree has no tools/fonts: a non-image tool must not load image fonts.
     const yearDir = path.join(ctx.tempDir, 'data', 'words', '2024');
     fs.mkdirSync(yearDir, { recursive: true });
-    fs.writeFileSync(path.join(yearDir, '20240101.json'), JSON.stringify({ word: 'alpha' }));
-    fs.writeFileSync(path.join(yearDir, '20240102.json'), JSON.stringify({ word: 'beta' }));
+    fs.writeFileSync(path.join(yearDir, '20240101.json'), JSON.stringify({ word: 'alpha', date: '20240101' }));
+    fs.writeFileSync(path.join(yearDir, '20240102.json'), JSON.stringify({ word: 'beta', date: '20240102' }));
 
     // No adapter configured: every word fails before any network call.
     const { stdout, stderr, code } = await spawnTool(

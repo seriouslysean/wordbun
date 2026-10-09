@@ -29,7 +29,7 @@ beforeEach(() => {
   ctx.tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'wotd-regen-options-'));
   const yearDir = path.join(ctx.tempDir, 'data', 'words', '2024');
   fs.mkdirSync(yearDir, { recursive: true });
-  fs.writeFileSync(path.join(yearDir, '20240101.json'), JSON.stringify({ word: 'alpha' }));
+  fs.writeFileSync(path.join(yearDir, '20240101.json'), JSON.stringify({ word: 'alpha', date: '20240101' }));
 });
 
 afterEach(() => {

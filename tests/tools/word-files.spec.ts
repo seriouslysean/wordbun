@@ -55,6 +55,30 @@ describe('getWordFiles', () => {
     });
     expect(ctx.logger.error).not.toHaveBeenCalled();
   });
+
+  // The loader builds any .json file, whatever its name, on the date it
+  // stores. regenerate-all-words writes the entry's date back into the file.
+  it('dates an entry by the stored record, never by the file name', async () => {
+    const filePath = path.join(wordsDir(), 'alpha.json');
+    fs.mkdirSync(wordsDir(), { recursive: true });
+    fs.writeFileSync(filePath, JSON.stringify({ ...STORED, date: '20240101' }));
+    const { getWordFiles } = await import('#tools/utils');
+
+    expect(getWordFiles()).toEqual({ files: [{ word: 'alpha', date: '20240101', path: filePath }], failures: [] });
+  });
+
+  it.each([
+    ['no date', { word: 'alpha' }],
+    ['a date that is no calendar day', { ...STORED, date: '20250230' }],
+  ])('reports a file with %s as a failure, since nothing else can date it', async (_, stored) => {
+    const filePath = path.join(wordsDir(), '2025', '20250701.json');
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, JSON.stringify(stored));
+    const { getWordFiles } = await import('#tools/utils');
+
+    expect(getWordFiles()).toEqual({ files: [], failures: [filePath] });
+    expect(ctx.logger.error).toHaveBeenCalledExactlyOnceWith('Failed to read word file', expect.objectContaining({ file: '20250701.json' }));
+  });
 });
 
 // One rule for every tool: the files the content collection's loader in
@@ -127,7 +151,7 @@ describe('findExistingWord with malformed stored data', () => {
     const yearDir = path.join(wordsDir(), '2025');
     const filePath = path.join(yearDir, '20250701.json');
     fs.mkdirSync(yearDir, { recursive: true });
-    fs.writeFileSync(filePath, JSON.stringify({ word: 'alpha' }));
+    fs.writeFileSync(filePath, JSON.stringify({ word: 'alpha', date: '20250701' }));
     const { findExistingWord } = await import('#tools/utils');
 
     expect(findExistingWord('beta')).toEqual({ match: null, failures: [filePath] });
@@ -140,7 +164,7 @@ describe('findExistingWord with malformed stored data', () => {
     const malformedPath = path.join(yearDir, '20250702.json');
     const validPath = path.join(yearDir, '20250701.json');
     fs.mkdirSync(yearDir, { recursive: true });
-    fs.writeFileSync(malformedPath, JSON.stringify({ word: 'alpha' }));
+    fs.writeFileSync(malformedPath, JSON.stringify({ word: 'alpha', date: '20250702' }));
     fs.writeFileSync(validPath, JSON.stringify({ ...STORED, word: 'beta', date: '20250701' }));
     const { findExistingWord } = await import('#tools/utils');
 
