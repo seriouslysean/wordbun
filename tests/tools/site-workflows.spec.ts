@@ -293,18 +293,57 @@ describe('site workflows', { timeout: 60000 }, () => {
     if (buildSetup === undefined) {
       throw new Error('build.yml has no setup-env step');
     }
+    // Build runs for a pull request and for a push, both to main only, so
+    // github.event_name == 'push' is a push to main. Only that build gets a
+    // Sentry secret or the production tag: a pull request's build has Sentry
+    // off, uploads nothing with the auth token and reports nothing.
+    const build = workflow('build.yml');
+    expect(nestedObject(build, 'on', 'Build trigger')).toEqual({
+      pull_request: { branches: ['main'] },
+      push: { branches: ['main'] },
+    });
+    const onPush = (value: string, otherwise: string): string =>
+      `\${{ github.event_name == 'push' && ${value} || '${otherwise}' }}`;
     expect(nestedObject(buildSetup, 'with', 'Build setup-env step')).toEqual({
       'vars-json': '${{ toJSON(vars) }}',
-      ...actionSecretBindings(BUILD_SECRETS),
+      ...Object.fromEntries(Object.entries(BUILD_SECRETS).map(([name, input]) => [
+        input,
+        name.startsWith('SENTRY_') ? onPush(`secrets.${name}`, '') : `\${{ secrets.${name} }}`,
+      ])),
+      'sentry-environment': onPush("'production'", 'development'),
     });
 
-    for (const [file, jobName, expected] of [
+    // Nothing else in Build reads a secret, so none reaches a pull request
+    // build by another route
+    const bindings = Object.values(nestedObject(buildSetup, 'with', 'Build setup-env step'));
+    const text = fs.readFileSync(path.join(ROOT, '.github/workflows/build.yml'), 'utf-8');
+    expect(text.match(/secrets\.[A-Z_]+/g)?.toSorted()).toEqual(
+      bindings.flatMap(binding => String(binding).match(/secrets\.[A-Z_]+/g) ?? []).toSorted(),
+    );
+
+    for(const [file, jobName, expected] of [
       ['deploy.yml', 'deploy', BUILD_SECRETS],
       ['add-word.yml', 'add-word', ADD_WORD_SECRETS],
     ] as const) {
       const job = nestedObject(workflowJobs(workflow(file)), jobName, `${file} jobs`);
       expect(nestedObject(job, 'secrets', `${file} ${jobName} job`)).toEqual(repositorySecretBindings(expected));
     }
+  });
+
+  // Without one a hung step holds a runner for GitHub's 360-minute default.
+  // A job that calls a reusable workflow cannot set a timeout, so its limit
+  // is the called workflow's, which is in this list.
+  it('sets a timeout on every job that runs steps', () => {
+    const untimed = fs.readdirSync(path.join(ROOT, '.github/workflows'))
+      .filter(file => file.endsWith('.yml'))
+      .flatMap(file => Object.entries(workflowJobs(workflow(file))).map(([name, job]) => ({
+        id: `${file} ${name}`,
+        job: objectValue(job, `${file} ${name} job`),
+      })))
+      .filter(({ job }) => !('uses' in job) && typeof job['timeout-minutes'] !== 'number')
+      .map(({ id }) => id);
+
+    expect(untimed).toEqual([]);
   });
 
   // The engine checkout is a uses: step, so no script runs: its with: values
