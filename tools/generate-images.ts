@@ -194,12 +194,13 @@ async function main(options: GenerateImagesOptions): Promise<void> {
   }
   const renderOptions: GenerateImageOptions = { regenerate: options.force || cache.stale, cards: cache.cards };
 
-  if (options.page) {
+  // An empty value still names one card: `--word ""` is not a full run
+  if (options.page !== undefined) {
     const success = await generatePageImage(options.page, renderOptions);
     await exit(success ? 0 : 1);
   }
 
-  if (options.word) {
+  if (options.word !== undefined) {
     const success = await generateSingleImage(options.word, renderOptions);
     await exit(success ? 0 : 1);
   }
