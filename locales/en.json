@@ -16,6 +16,9 @@
     "title_with_part_of_speech_other": "{{count}} {{value}} words"
   },
   "nav": {
+    "main_label": "Main",
+    "footer_label": "Footer",
+    "word_label": "Adjacent words",
     "home": "Home",
     "browse_words": "Browse Words",
     "stats": "Stats",
