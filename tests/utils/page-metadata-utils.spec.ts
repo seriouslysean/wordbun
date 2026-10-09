@@ -28,7 +28,6 @@ vi.mock('#utils/i18n-utils', () => ({
       'words.heading': 'Mock Words Heading',
       'words.description': 'Mock words description',
       'words.length_words': `${params.length || 'X'}-Letter Words`,
-      'words.length_words_description': `Words containing exactly ${params.length || 'X'} letters.`,
       'words.letter_words_description': `Words starting with the letter ${params.letter || 'X'}.`,
       'words.part_of_speech_words_description': `Words that function as ${params.partOfSpeech || 'unknown'}s in sentences.`,
       'words.by_length_heading': 'Mock words.by_length_heading',
@@ -46,7 +45,9 @@ vi.mock('#utils/i18n-utils', () => ({
     };
     return mockTranslations[key] || `Mock ${key}`;
   }),
-  tp: vi.fn((baseKey, count) => `${count} Mock Items`)
+  tp: vi.fn((baseKey, count) => (baseKey === 'words.length_words_description'
+    ? `Words containing exactly ${count} letters.`
+    : `${count} Mock Items`))
 }));
 
 import {

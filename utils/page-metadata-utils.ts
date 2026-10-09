@@ -554,7 +554,7 @@ function getPageMetadataForMap(
     const wordsOfLength = getWordsByLength(length, words);
     return {
       title: t('words.length_words', { length }),
-      description: t('words.length_words_description', { length }),
+      description: tp('words.length_words_description', length),
       category: 'pages' as const,
       secondaryText: tp('common.words', wordsOfLength.length),
     };
