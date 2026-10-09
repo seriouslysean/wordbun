@@ -14,8 +14,10 @@ test.describe('SEO build output', () => {
 		await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /.+/);
 		await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', /.+/);
 		const imageUrl = await page.locator('meta[property="og:image"]').getAttribute('content');
-		expect(imageUrl).toBeTruthy();
-		const imagePath = new URL(imageUrl!, page.url()).pathname;
+		if (!imageUrl) {
+			throw new Error('og:image has no content');
+		}
+		const imagePath = new URL(imageUrl, page.url()).pathname;
 		const imageResponse = await request.get(new URL(imagePath, page.url()).href);
 		expect(imageResponse.status()).toBe(200);
 		expect(imageResponse.headers()['content-type']).toMatch(/^image\//);
@@ -35,7 +37,10 @@ test.describe('SEO build output', () => {
 		expect(count).toBeGreaterThan(0);
 
 		const content = await jsonLd.first().textContent();
-		const data = JSON.parse(content!);
+		if (content === null) {
+			throw new Error('JSON-LD script has no text');
+		}
+		const data = JSON.parse(content);
 		expect(data['@context']).toBe('https://schema.org');
 	});
 
@@ -44,7 +49,10 @@ test.describe('SEO build output', () => {
 		const feed = page.locator('link[type="application/rss+xml"]');
 		await expect(feed).toHaveAttribute('href', /rss\.xml/);
 		const feedHref = await feed.getAttribute('href');
-		const feedPath = new URL(feedHref!, page.url()).pathname;
+		if (feedHref === null) {
+			throw new Error('RSS link has no href');
+		}
+		const feedPath = new URL(feedHref, page.url()).pathname;
 		const feedResponse = await request.get(new URL(feedPath, page.url()).href);
 		expect(feedResponse.status()).toBe(200);
 		expect(feedResponse.headers()['content-type']).toMatch(/(?:rss\+xml|application\/xml|text\/xml)/);
