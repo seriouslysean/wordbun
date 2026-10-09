@@ -107,6 +107,9 @@ describe('CLI Tools: Import & Execution', () => {
     expect(code).toBe(0);
     expect(stdout).toContain('Add Word Tool');
     expect(stdout).toContain('Usage:');
+    // createWordEntry refuses to run without it, so the help says so, once
+    expect(stdout.split('\n').filter(line => line.includes('DICTIONARY_ADAPTER')))
+      .toEqual([expect.stringMatching(/DICTIONARY_ADAPTER\s+Dictionary API to use \(required\)$/)]);
     expect(stderr).not.toContain('astro:');
   }, 15000);
 

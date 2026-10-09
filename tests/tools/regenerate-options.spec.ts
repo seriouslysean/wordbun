@@ -82,5 +82,8 @@ describe('regenerate-all-words options', { timeout: 15000 }, () => {
     expect(stdout).toContain(`--batch-size <num>         Words per batch (default: ${DEFAULTS.batchSize})`);
     expect(stdout).toContain(`--batch-timeout <ms>       Pause between batches (default: ${DEFAULTS.batchTimeout})`);
     expect(stdout).not.toMatch(/word-field|date-field|rate-limit-timeout/);
+    // regenerateWordFile refuses to run without it, so the help says so, once
+    expect(stdout.split('\n').filter(line => line.includes('DICTIONARY_ADAPTER')))
+      .toEqual([expect.stringMatching(/DICTIONARY_ADAPTER\s+Dictionary API to use \(required\)$/)]);
   });
 });

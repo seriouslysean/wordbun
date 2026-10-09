@@ -146,7 +146,6 @@ Examples:
   npm run tool:add-word -- "PB&J" "20250101" --preserve-case
 
 Environment Variables (for GitHub workflows):
-  DICTIONARY_ADAPTER         Dictionary API to use (required)
   WORDNIK_API_KEY           API key for dictionary access (required)
   SOURCE_DIR                Data source subdirectory (unset = root paths)
 
