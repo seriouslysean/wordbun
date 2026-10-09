@@ -501,6 +501,7 @@ function getPageMetadataForMap(
   path: string,
   words: WordData[],
   pageMetadata?: Record<string, PageMeta>,
+  currentWord?: WordData | null,
 ): PageMetadataResult {
   if (!path) {
     throw new Error('getPageMetadata: path is required');
@@ -606,7 +607,8 @@ function getPageMetadataForMap(
       return {
         ...metadata,
         title: metadata.title,
-        description: metadata.description('example'),
+        // Without a current word the layout falls back to the site description
+        description: currentWord ? metadata.description(currentWord.word) : '',
         category: metadata.category,
         secondaryText: typeof metadata.secondaryText === 'function'
           ? metadata.secondaryText(words.length)
@@ -640,8 +642,8 @@ function getPageMetadataForMap(
   }
 }
 
-export function getPageMetadata(path: string, words: WordData[] = []): PageMetadataResult {
-  return getPageMetadataForMap(path, words);
+export function getPageMetadata(path: string, words: WordData[] = [], currentWord?: WordData | null): PageMetadataResult {
+  return getPageMetadataForMap(path, words, undefined, currentWord);
 }
 
 /**
@@ -650,7 +652,8 @@ export function getPageMetadata(path: string, words: WordData[] = []): PageMetad
  */
 export function createPageMetadataLookup(words: WordData[]) {
   const pageMetadata = createPageMetadata(words);
-  return (path: string): PageMetadataResult => getPageMetadataForMap(path, words, pageMetadata);
+  return (path: string, currentWord?: WordData | null): PageMetadataResult =>
+    getPageMetadataForMap(path, words, pageMetadata, currentWord);
 }
 
 /**
