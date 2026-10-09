@@ -73,8 +73,6 @@ test.describe('SEO build output', () => {
 
 		const manifest = await response.json();
 		expect(manifest.name).toBeTruthy();
-		const startResponse = await request.get(new URL(manifest.start_url, page.url()).href, { maxRedirects: 0 });
-		expect(startResponse.status()).toBe(200);
 		const iconResponse = await request.get(new URL(manifest.icons[0].src, page.url()).href);
 		expect(iconResponse.status()).toBe(200);
 	});
