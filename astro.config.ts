@@ -194,11 +194,9 @@ export default defineConfig({
   },
   integrations: [
     ...(sentryEnabled ? [sentry({
-      sourceMapsUploadOptions: {
-        project: process.env.SENTRY_PROJECT,
-        org: process.env.SENTRY_ORG,
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-      },
+      project: process.env.SENTRY_PROJECT,
+      org: process.env.SENTRY_ORG,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
     })] : []),
     sitemap({
       filter: (page) => !page.endsWith('.txt'),

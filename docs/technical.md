@@ -33,6 +33,7 @@ utils/                           # Pure Node.js utilities (28 files)
   i18n-utils.ts                  # Translation helpers (t(), tp())
   logger-core.ts                 # Logger factory (SentryBridge + output filter)
   logger.ts                      # CLI logger wrapper (@sentry/node)
+  sentry-options.ts              # Sentry options pinned to SDK 10 behaviour (all three inits)
   page-metadata-utils.ts         # Page title/description generation
   text-pattern-utils.ts          # Pattern detection (palindromes, double letters, etc.)
   text-utils.ts                  # slugify(), syllable counting, re-exports
@@ -458,6 +459,33 @@ Three Sentry contexts, each with its own SDK:
 | Server | `@sentry/astro` | `sentry.server.config.js` | Tracing disabled (static site) |
 | CLI | `@sentry/node` | Lazy init in `utils/logger.ts` | Only initializes on first error |
 
+The `sentry()` integration in `astro.config.ts` takes build-time options only (`org`, `project`, `authToken`, read from `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`); runtime options live in the two config files. The release the build injects and uploads source maps under is `SENTRY_RELEASE`, which `astro.config.ts` sets to the same string as `__RELEASE__` when the environment does not.
+
+### Pinned Defaults
+
+SDK 11 collects more than SDK 10 unless told otherwise, so every default it changed is set explicitly. `utils/sentry-options.ts` is the one definition; `sentry.config.shared.js` and `utils/logger.ts` spread it into each `init`. Sources: the SDK's [migration guide](https://github.com/getsentry/sentry-javascript/blob/11.6.0/MIGRATION.md) and [changelog](https://github.com/getsentry/sentry-javascript/blob/11.6.0/CHANGELOG.md).
+
+| Option | Pinned value | SDK 11 default | Where |
+|--------|--------------|----------------|-------|
+| `dataCollection.userInfo` | `false` | `true`: Sentry infers the visitor's IP address | all |
+| `dataCollection.cookies`, `httpBodies` | `false`, `[]` | collected | all |
+| `dataCollection.httpHeaders`, `urlQueryParams` | deny `forwarded`, `-ip`, `remote-`, `via`, `-user` | everything | all |
+| `dataCollection.genAI`, `graphQL`, `databaseQueryData`, `queues` | off | on | all |
+| `dataCollection.frameContextLines` | `7` | `5` | all |
+| `attachStacktrace` | `false` | `true` | all |
+| `traceLifecycle` | `'static'` (transactions) | `'stream'` | all |
+| `Dedupe` integration | removed (`withoutDedupe`) | added to the Node defaults in 11.2 | server, CLI |
+| `browserSessionIntegration` `lifecycle` | `'route'` | `'page'` | browser |
+| `browserTracingIntegration` `instrumentBfcacheRestore` | `false` | `true`: a navigation span per back/forward-cache restore | browser |
+| `browserTracingIntegration` `webVitals` | `softNavigations: false`, `bfcacheNavigations: false` | both `true` (span streaming only) | browser |
+| `userTimingIntegration` | added | `performance.mark()` spans dropped from browser tracing | browser |
+
+`traceLifecycle: 'static'` is a compatibility mode the SDK plans to remove in a later major; moving to span streaming then is a behaviour change (the `site` scope tag does not reach streamed spans) and needs its own decision.
+
+Session Replay is unchanged: error-only (`replaysOnErrorSampleRate: 1`, `replaysSessionSampleRate: 0`), with text, inputs and media unmasked. A replay of a session that hit an error therefore includes what the visitor typed into the search box.
+
+Not configurable in SDK 11, so different from SDK 10: a browser session with an uncaught error is recorded as `unhandled`, not `crashed`; span operations, names and attributes follow the new conventions (`browser.DNS` is `browser.dns`, `paint` is `browser.paint`, `sentry.source` is `sentry.segment.name.source`); the SDK no longer makes its own `sentry-tracing-init` mark, so the pageload transaction has one span fewer; the CLI's outgoing requests, which already carried `sentry-trace` and `baggage` headers, now state the not-sampled decision in them (`sentry-trace` ends in `-0`, `baggage` gains `sentry-sampled=false`).
+
 ### Logger Architecture
 
 All loggers share a factory in `utils/logger-core.ts` that creates a `Proxy` over `console`. The factory accepts a `SentryBridge` interface and an optional output filter. Each environment provides its own bridge (wiring to the correct SDK) and filter.
@@ -632,6 +660,7 @@ See [AGENTS.md - The Boundary](../AGENTS.md#the-boundary) for the principle and 
 | `i18n-utils.ts` | `t()` translation, `tp()` pluralization |
 | `logger-core.ts` | Logger factory (SentryBridge, output filter) |
 | `logger.ts` | CLI logger wrapper with @sentry/node |
+| `sentry-options.ts` | Sentry options pinned to SDK 10 behaviour, shared by the browser, server and CLI inits |
 | `page-metadata-utils.ts` | Page titles and descriptions (cached) |
 | `text-pattern-utils.ts` | Palindrome, double/triple letter detection |
 | `text-utils.ts` | `slugify()`, syllable counting |
