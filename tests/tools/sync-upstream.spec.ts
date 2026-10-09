@@ -168,7 +168,9 @@ beforeAll(() => {
   git(ctx.site, 'remote', 'set-url', 'origin', '../origin.git');
   git(ctx.site, 'remote', 'add', 'upstream', '../upstream.git');
   git(ctx.site, 'fetch', '--quiet', 'upstream');
-});
+  // A dozen git processes: the default 10s hook timeout has failed the whole
+  // file on a busy machine, where the cases themselves are given 90s
+}, 90000);
 
 afterAll(() => {
   fs.rmSync(template.dir, { recursive: true, force: true });
