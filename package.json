@@ -90,5 +90,11 @@
     "#tools/*": "./tools/*.ts",
     "#locales/*": "./locales/*",
     "#tests/*": "./tests/*"
+  },
+  "allowScripts": {
+    "lefthook@2.2.1": true,
+    "wordpos@2.1.0": true,
+    "fsevents": false,
+    "@sentry/cli": true
   }
 }
