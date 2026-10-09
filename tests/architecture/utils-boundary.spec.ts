@@ -12,7 +12,6 @@ import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 import ts from 'typescript';
 
-const UTILS_DIR = path.join(process.cwd(), 'utils');
 const SRC_UTILS_DIR = path.join(process.cwd(), 'src', 'utils');
 const NODE_SIDE_DIRS = ['utils', 'adapters', 'tools', 'constants', 'config', 'types'].map(
   dir => path.join(process.cwd(), dir),
@@ -70,6 +69,55 @@ const getViteGlobalUses = (content: string): string[] => {
   };
   visit(source);
   return uses;
+};
+
+const parseSource = (content: string): ts.SourceFile =>
+  ts.createSourceFile('boundary-scan.ts', content, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+
+/**
+ * The local name a module's named export is imported under (`pure` for
+ * `import { name as pure }`), or undefined when the file does not import it.
+ */
+const getImportedLocalName = (source: ts.SourceFile, moduleName: string, importedName: string): string | undefined =>
+  source.statements
+    .filter(ts.isImportDeclaration)
+    .filter(statement => ts.isStringLiteralLike(statement.moduleSpecifier) && statement.moduleSpecifier.text === moduleName)
+    .flatMap(statement => {
+      const bindings = statement.importClause?.namedBindings;
+      return bindings && ts.isNamedImports(bindings) ? [...bindings.elements] : [];
+    })
+    .find(element => (element.propertyName ?? element.name).text === importedName)
+    ?.name.text;
+
+/**
+ * The function a thin wrapper hands its work to: the callee of the one call
+ * that is the whole body of the exported arrow function `exportName`.
+ * Undefined when there is no such export or its body is anything else, so a
+ * wrapper that filters, sorts or branches for itself has no delegate.
+ */
+const getDelegate = (source: ts.SourceFile, exportName: string): string | undefined => {
+  const wrapper = source.statements
+    .filter(ts.isVariableStatement)
+    .filter(statement => statement.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword))
+    .flatMap(statement => [...statement.declarationList.declarations])
+    .find(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === exportName)
+    ?.initializer;
+  if (!wrapper || !ts.isArrowFunction(wrapper)) {
+    return undefined;
+  }
+
+  const getReturned = (body: ts.ConciseBody): ts.Expression | undefined => {
+    if (!ts.isBlock(body)) {
+      return body;
+    }
+    const [only, ...rest] = body.statements;
+    return only && rest.length === 0 && ts.isReturnStatement(only) ? only.expression : undefined;
+  };
+
+  const returned = getReturned(wrapper.body);
+  return returned && ts.isCallExpression(returned) && ts.isIdentifier(returned.expression)
+    ? returned.expression.text
+    : undefined;
 };
 
 describe('Architecture: utils/ boundary enforcement', () => {
@@ -172,29 +220,39 @@ describe('Architecture: utils/ boundary enforcement', () => {
   });
 
   it('src/utils/word-data-utils.ts must not duplicate filtering logic', () => {
-    const srcFile = path.join(SRC_UTILS_DIR, 'word-data-utils.ts');
-    const utilsFile = path.join(UTILS_DIR, 'word-data-utils.ts');
+    const source = parseSource(fs.readFileSync(path.join(SRC_UTILS_DIR, 'word-data-utils.ts'), 'utf-8'));
 
-    const srcContent = fs.readFileSync(srcFile, 'utf-8');
-    const utilsContent = fs.readFileSync(utilsFile, 'utf-8');
+    // Each wrapper is one call to the utils/ function of the same name. Any
+    // logic of its own, however it is spelled, leaves it without a delegate.
+    for (const fnName of ['getWordsByLength', 'getWordsByLetter', 'getWordsByPartOfSpeech']) {
+      const pure = getImportedLocalName(source, '#utils/word-data-utils', fnName);
 
-    // Extract function implementations from utils/ for comparison
-    const utilsFunctions = {
-      getWordsByLength: /export const getWordsByLength[\s\S]*?^};/m.exec(utilsContent)?.[0] || '',
-      getWordsByLetter: /export const getWordsByLetter[\s\S]*?^};/m.exec(utilsContent)?.[0] || '',
-      getWordsByPartOfSpeech: /export const getWordsByPartOfSpeech[\s\S]*?^};/m.exec(utilsContent)?.[0] || '',
-    };
+      expect({ fnName, imported: pure !== undefined }).toEqual({ fnName, imported: true });
+      expect({ fnName, delegatesTo: getDelegate(source, fnName) }).toEqual({ fnName, delegatesTo: pure });
+    }
+  });
 
-    // Check that src/utils versions are thin wrappers, not duplicates
-    // The filtering logic of each utils/ implementation that appears verbatim in src/utils
-    const duplicated = Object.entries(utilsFunctions)
-      .filter(([, utilsImpl]) => {
-        const filterLogic = utilsImpl.match(/words\.filter\([\s\S]*?\)/)?.[0];
-        return filterLogic !== undefined && srcContent.includes(filterLogic);
-      })
-      .map(([fnName]) => fnName);
+  it('finds a delegate only for a wrapper that is one call', () => {
+    const source = parseSource([
+      "import { thin as thinPure, block as blockPure, plain } from '#utils/example';",
+      "import { other } from '#utils/other';",
+      'export const thin = (n: number, words = all) => thinPure(n, words);',
+      'export const block = (n: number, words = all) => {',
+      '  return blockPure(n, words);',
+      '};',
+      'export const copied = (n: number, words = all) => words.filter(w => w.word.length === n);',
+      'export const extra = (n: number, words = all) => {',
+      '  const kept = words.filter(Boolean);',
+      '  return plain(n, kept);',
+      '};',
+      'const hidden = (n: number) => plain(n);',
+    ].join('\n'));
 
-    expect(duplicated).toEqual([]);
+    expect(getImportedLocalName(source, '#utils/example', 'thin')).toBe('thinPure');
+    expect(getImportedLocalName(source, '#utils/example', 'plain')).toBe('plain');
+    expect(getImportedLocalName(source, '#utils/example', 'other')).toBeUndefined();
+    expect(['thin', 'block', 'copied', 'extra', 'hidden', 'missing'].map(name => getDelegate(source, name)))
+      .toEqual(['thinPure', 'blockPure', undefined, undefined, undefined, undefined]);
   });
 
   it('Node.js-side code can only import from allowed alias paths', () => {
