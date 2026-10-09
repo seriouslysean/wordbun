@@ -2,6 +2,7 @@
 import { buildActivityCalendar } from '#utils/calendar-utils';
 import { formatDate } from '#utils/date-utils';
 import { t, tp } from '#utils/i18n-utils';
+import { getUrl } from '#astro-utils/url-utils';
 
 interface HeatmapEntry {
   date: string;
@@ -35,7 +36,7 @@ const calendars = buildActivityCalendar(entries.map(entry => entry.date)).toReve
             return entry
               ? (
                 <a
-                  href={entry.url}
+                  href={getUrl(entry.url)}
                   class="heatmap__cell heatmap__cell--active"
                   aria-label={`${formatDate(entry.date)}, ${entry.word}`}
                 >
