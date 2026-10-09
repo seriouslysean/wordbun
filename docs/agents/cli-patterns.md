@@ -47,8 +47,11 @@ Body content here
 EOF
 )"
 
-# Use --fill-first with PR templates to avoid duplicating the template
-gh pr create --title "Title" --fill-first
+# A PR body follows .github/pull_request_template.md, passed explicitly:
+# --fill and --fill-first take the body from commit messages and skip it
+gh pr create --title "Title" --body-file - <<'EOF'
+Filled-in template here
+EOF
 ```
 
 ## Git
@@ -92,7 +95,7 @@ gh api repos/OWNER/REPO/actions/runs --jq '.workflow_runs[:3] | .[].conclusion'
 
 ```sh
 # Run quality gates in sequence, stop on first failure
-npm run lint && npm run typecheck && npm test && npm run build
+npm run lint && npm run typecheck && npm test && npm run build && npm run test:e2e
 
 # Run a specific test file (faster than full suite during iteration)
 npx vitest run tests/utils/date-utils.spec.ts
