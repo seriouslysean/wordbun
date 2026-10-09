@@ -296,7 +296,6 @@ describe('site workflows', { timeout: 60000 }, () => {
     expect(nestedObject(buildSetup, 'with', 'Build setup-env step')).toEqual({
       'vars-json': '${{ toJSON(vars) }}',
       ...actionSecretBindings(BUILD_SECRETS),
-      'github-sha': '${{ github.sha }}',
     });
 
     for (const [file, jobName, expected] of [
