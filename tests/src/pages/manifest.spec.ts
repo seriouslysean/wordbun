@@ -29,6 +29,15 @@ describe('web app manifest', () => {
     expect(await getManifest()).toMatchObject({ start_url: '/vocab/', scope: '/vocab/' });
   });
 
+  it('offers the favicon as a plain icon and claims no store categories', async () => {
+    const manifest = await getManifest();
+
+    expect(manifest.icons).toEqual([
+      { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
+    ]);
+    expect(manifest).not.toHaveProperty('categories');
+  });
+
   it('uses SITE_SHORT_NAME as the short name', async () => {
     mockEnv.SITE_SHORT_NAME = 'Test';
 

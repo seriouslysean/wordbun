@@ -1,7 +1,6 @@
 import { SITE_TITLE, SITE_SHORT_NAME, SITE_DESCRIPTION, SITE_LOCALE, COLOR_PRIMARY_DARK } from 'astro:env/client';
 import type { APIRoute } from 'astro';
 
-import { seoConfig } from '#astro-utils/seo-utils';
 import { getUrl } from '#astro-utils/url-utils';
 
 export const GET: APIRoute = async () => {
@@ -16,14 +15,14 @@ export const GET: APIRoute = async () => {
     background_color: COLOR_PRIMARY_DARK,
     theme_color: COLOR_PRIMARY_DARK,
     orientation: "portrait-primary",
-    categories: seoConfig.keywords,
     lang: SITE_LOCALE,
     icons: [
       {
         src: getUrl('/favicon.svg'),
         sizes: "any",
         type: "image/svg+xml",
-        purpose: "any maskable"
+        // The favicon has no safe zone, so it is not offered for masking
+        purpose: "any"
       }
     ]
   };
