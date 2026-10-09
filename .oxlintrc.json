@@ -12,6 +12,7 @@
   },
   "rules": {
     "curly": "error",
+    "eqeqeq": ["error", "always", { "null": "ignore" }],
     "no-nested-ternary": "error",
     "no-inline-comments": "error",
     "no-map-spread": "off",
