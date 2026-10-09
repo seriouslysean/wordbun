@@ -34,6 +34,7 @@ export interface MockEnvironment {
   SENTRY_DSN: string | undefined;
   BASE_PATH: string | undefined;
   SOURCE_DIR: string;
+  WORDNIK_WEBSITE_URL: string;
 }
 
 export interface MockCollectionEntry {
@@ -80,6 +81,7 @@ export const mockEnv: MockEnvironment = {
   SENTRY_DSN: undefined,
   BASE_PATH: '/',
   SOURCE_DIR: '',
+  WORDNIK_WEBSITE_URL: 'https://www.wordnik.com',
 };
 
 vi.mock('astro:env/client', () => mockEnv);

@@ -127,7 +127,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 
 | Variable | Purpose |
 |----------|---------|
-| `SITE_URL` | Canonical URL (e.g., `https://example.com`) |
+| `SITE_URL` | The site's origin (e.g., `https://example.com`); the build refuses a value that is not a URL |
 | `SITE_TITLE` | Site name, as readers and crawlers see it: page titles, `og:site_name`, JSON-LD names, the feed title and the manifest `name` |
 | `SITE_DESCRIPTION` | Site description for SEO |
 | `SITE_ID` | Machine identifier: the site tag on log events and the optional `public/ascii-{SITE_ID}.txt`. Never rendered to a reader |
@@ -144,7 +144,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 | `MERRIAM_WEBSTER_DICTIONARY` | `collegiate` | MW dictionary edition |
 | `WORDNIK_API_KEY` | — | Wordnik API key |
 | `WORDNIK_API_URL` | `https://api.wordnik.com/v4` | Wordnik API endpoint |
-| `WORDNIK_WEBSITE_URL` | `https://www.wordnik.com` | Wordnik website that cross-references link to, when a Wordnik definition is fetched or a stored one rendered; the default also applies to the CLI tools |
+| `WORDNIK_WEBSITE_URL` | `https://www.wordnik.com` | Wordnik website that cross-references and the footer's Wordnik link point to, when a Wordnik definition is fetched or a stored one rendered; the default also applies to the CLI tools, and the build refuses a value that is not a URL |
 
 ### Deployment
 
