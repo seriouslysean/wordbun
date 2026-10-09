@@ -91,9 +91,11 @@ const getImportedLocalName = (source: ts.SourceFile, moduleName: string, importe
 
 /**
  * The function a thin wrapper hands its work to: the callee of the one call
- * that is the whole body of the exported arrow function `exportName`.
- * Undefined when there is no such export or its body is anything else, so a
- * wrapper that filters, sorts or branches for itself has no delegate.
+ * that is the whole body of the exported arrow function `exportName`, with
+ * nothing but bare names for arguments. Undefined when there is no such
+ * export, its body is anything else or an argument is an expression, so a
+ * wrapper that filters, sorts or branches for itself, in its body or in what
+ * it passes on, has no delegate.
  */
 const getDelegate = (source: ts.SourceFile, exportName: string): string | undefined => {
   const wrapper = source.statements
@@ -114,8 +116,11 @@ const getDelegate = (source: ts.SourceFile, exportName: string): string | undefi
     return only && rest.length === 0 && ts.isReturnStatement(only) ? only.expression : undefined;
   };
 
+  // Every argument is a bare name, handed over as it is: an argument that is
+  // itself an expression (words.filter(...)) is logic of the wrapper's own
   const returned = getReturned(wrapper.body);
   return returned && ts.isCallExpression(returned) && ts.isIdentifier(returned.expression)
+    && returned.arguments.every(ts.isIdentifier)
     ? returned.expression.text
     : undefined;
 };
@@ -246,13 +251,14 @@ describe('Architecture: utils/ boundary enforcement', () => {
       '  return plain(n, kept);',
       '};',
       'const hidden = (n: number) => plain(n);',
+      'export const prefiltered = (n: number, words = all) => plain(n, words.filter(w => w.word.length === n));',
     ].join('\n'));
 
     expect(getImportedLocalName(source, '#utils/example', 'thin')).toBe('thinPure');
     expect(getImportedLocalName(source, '#utils/example', 'plain')).toBe('plain');
     expect(getImportedLocalName(source, '#utils/example', 'other')).toBeUndefined();
-    expect(['thin', 'block', 'copied', 'extra', 'hidden', 'missing'].map(name => getDelegate(source, name)))
-      .toEqual(['thinPure', 'blockPure', undefined, undefined, undefined, undefined]);
+    expect(['thin', 'block', 'copied', 'extra', 'hidden', 'missing', 'prefiltered'].map(name => getDelegate(source, name)))
+      .toEqual(['thinPure', 'blockPure', undefined, undefined, undefined, undefined, undefined]);
   });
 
   it('Node.js-side code can only import from allowed alias paths', () => {
