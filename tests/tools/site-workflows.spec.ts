@@ -293,12 +293,35 @@ describe('site workflows', { timeout: 60000 }, () => {
     if (buildSetup === undefined) {
       throw new Error('build.yml has no setup-env step');
     }
+    // Build runs for a pull request and for a push, both to main only, so
+    // github.event_name == 'push' is a push to main. Only that build gets a
+    // Sentry secret or the production tag: a pull request's build has Sentry
+    // off, uploads nothing with the auth token and reports nothing.
+    const build = workflow('build.yml');
+    expect(nestedObject(build, 'on', 'Build trigger')).toEqual({
+      pull_request: { branches: ['main'] },
+      push: { branches: ['main'] },
+    });
+    const onPush = (value: string, otherwise: string): string =>
+      `\${{ github.event_name == 'push' && ${value} || '${otherwise}' }}`;
     expect(nestedObject(buildSetup, 'with', 'Build setup-env step')).toEqual({
       'vars-json': '${{ toJSON(vars) }}',
-      ...actionSecretBindings(BUILD_SECRETS),
+      ...Object.fromEntries(Object.entries(BUILD_SECRETS).map(([name, input]) => [
+        input,
+        name.startsWith('SENTRY_') ? onPush(`secrets.${name}`, '') : `\${{ secrets.${name} }}`,
+      ])),
+      'sentry-environment': onPush("'production'", 'development'),
     });
 
-    for (const [file, jobName, expected] of [
+    // Nothing else in Build reads a secret, so none reaches a pull request
+    // build by another route
+    const bindings = Object.values(nestedObject(buildSetup, 'with', 'Build setup-env step'));
+    const text = fs.readFileSync(path.join(ROOT, '.github/workflows/build.yml'), 'utf-8');
+    expect(text.match(/secrets\.[A-Z_]+/g)?.toSorted()).toEqual(
+      bindings.flatMap(binding => String(binding).match(/secrets\.[A-Z_]+/g) ?? []).toSorted(),
+    );
+
+    for(const [file, jobName, expected] of [
       ['deploy.yml', 'deploy', BUILD_SECRETS],
       ['add-word.yml', 'add-word', ADD_WORD_SECRETS],
     ] as const) {
