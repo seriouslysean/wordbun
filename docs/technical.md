@@ -153,7 +153,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 | Variable | Default | Purpose |
 |----------|---------|---------|
 | `BASE_PATH` | `/` | Subdirectory for deployment |
-| `SITE_LOCALE` | `en-US` | Locale for i18n |
+| `SITE_LOCALE` | `en-US` | BCP 47 locale: `<html lang>`, the feed and manifest language, and `og:locale` as `language_REGION` (`en_US`), left out when the locale names no region |
 
 ### Site Metadata
 

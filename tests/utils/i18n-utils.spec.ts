@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { t, tp } from '#utils/i18n-utils';
+import { getOpenGraphLocale, t, tp } from '#utils/i18n-utils';
 
 describe('i18n-utils', () => {
   describe('t', () => {
@@ -129,6 +129,27 @@ describe('i18n-utils', () => {
       expect(tp('stats.least_common_letter', 0)).toBe('Least Common Letter (No Words)');
       expect(tp('stats.least_common_letter', 1)).toBe('Least Common Letter (1 Word)');
       expect(tp('stats.least_common_letter', 25)).toBe('Least Common Letter (25 Words)');
+    });
+  });
+
+  // ogp.me: og:locale is language_TERRITORY and optional, defaulting to en_US
+  describe('getOpenGraphLocale', () => {
+    it.each([
+      ['en-US', 'en_US'],
+      ['pt-br', 'pt_BR'],
+      // The script is no part of the format: replacing the first hyphen gave zh_Hant-TW
+      ['zh-Hant-TW', 'zh_TW'],
+    ])('gives %s as %s', (locale, expected) => {
+      expect(getOpenGraphLocale(locale)).toBe(expected);
+    });
+
+    it.each([
+      ['a language with no region', 'en'],
+      ['a language and script with no region', 'zh-Hant'],
+      ['a tag that is not BCP 47', 'en_US'],
+      ['an empty tag', ''],
+    ])('gives nothing for %s, so the tag is left out', (_, locale) => {
+      expect(getOpenGraphLocale(locale)).toBeUndefined();
     });
   });
 });

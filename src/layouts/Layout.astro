@@ -16,7 +16,7 @@ import { getMetaDescription, seoConfig } from '#astro-utils/seo-utils';
 import { getAsciiArt } from '#astro-utils/static-file-utils';
 import { getFullUrl,getUrl } from '#astro-utils/url-utils';
 import { extractWordDefinition } from '#astro-utils/word-data-utils';
-import { t } from '#utils/i18n-utils';
+import { getOpenGraphLocale, t } from '#utils/i18n-utils';
 import { formatPageTitle } from '#utils/page-title-utils';
 import type { WordData } from '#types';
 
@@ -45,8 +45,9 @@ const socialImageUrl = getSocialImageUrl({
 
 const finalTitle = formatPageTitle(title, word, seoConfig.defaultTitle, seoConfig.siteName);
 
-// Open Graph locales are language_TERRITORY (en_US), not BCP 47 (en-US)
-const ogLocale = seoConfig.locale.replace('-', '_');
+// Open Graph locales are language_TERRITORY (en_US), not BCP 47 (en-US);
+// undefined when the locale names no region, and the tag is left out
+const ogLocale = getOpenGraphLocale(seoConfig.locale);
 
 // Get ASCII art for HTML comment
 const asciiArt = getAsciiArt();
@@ -113,7 +114,7 @@ const wordSchemaData = word ? (() => {
 		<meta property="og:url" content={currentUrl} />
 		<meta property="og:image" content={socialImageUrl} />
 		<meta property="og:site_name" content={seoConfig.siteName} />
-		<meta property="og:locale" content={ogLocale} />
+		{ogLocale && <meta property="og:locale" content={ogLocale} />}
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={finalTitle} />
