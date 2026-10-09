@@ -34,6 +34,9 @@ const socialImageUrl = getSocialImageUrl({
 
 const finalTitle = formatPageTitle(title, word, seoConfig.defaultTitle, seoConfig.siteName);
 
+// Open Graph locales are language_TERRITORY (en_US), not BCP 47 (en-US)
+const ogLocale = seoConfig.locale.replace('-', '_');
+
 // Get ASCII art for HTML comment
 const asciiArt = getAsciiArt();
 const asciiComment = asciiArt ? `<!--
@@ -69,8 +72,10 @@ const wordSchemaData = word ? (() => {
 
 		<title>{finalTitle}</title>
 		<meta name="description" content={metaDescription} />
-		<meta name="keywords" content={seoConfig.keywords.join(', ')} />
-		<meta name="author" content={seoConfig.author} />
+		{seoConfig.keywords.length > 0 && (
+			<meta name="keywords" content={seoConfig.keywords.join(', ')} />
+		)}
+		{seoConfig.author && <meta name="author" content={seoConfig.author} />}
 		{noindex || nofollow ? (
 			<meta name="robots" content={[noindex && 'noindex', nofollow && 'nofollow'].filter(Boolean).join(', ')} />
 		) : null}
@@ -100,16 +105,13 @@ const wordSchemaData = word ? (() => {
 
 		<link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={getUrl('/rss.xml')} />
 
-		<meta property="og:locale" content={seoConfig.locale} />
-		<meta http-equiv="content-language" content={seoConfig.locale.split('-')[0]} />
-
 		<meta property="og:title" content={finalTitle} />
 		<meta property="og:description" content={metaDescription} />
 		<meta property="og:type" content={ogType} />
 		<meta property="og:url" content={currentUrl} />
 		<meta property="og:image" content={socialImageUrl} />
 		<meta property="og:site_name" content={seoConfig.siteName} />
-		<meta property="og:locale" content={seoConfig.locale} />
+		<meta property="og:locale" content={ogLocale} />
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={finalTitle} />

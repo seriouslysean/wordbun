@@ -1,6 +1,6 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('#astro-utils/seo-utils', () => ({
+const { seoConfig } = vi.hoisted(() => ({
   seoConfig: {
     siteName: 'Test Site',
     defaultDescription: 'Test description',
@@ -8,6 +8,8 @@ vi.mock('#astro-utils/seo-utils', () => ({
     locale: 'en-US',
   },
 }));
+
+vi.mock('#astro-utils/seo-utils', () => ({ seoConfig }));
 
 vi.mock('#astro-utils/url-utils', () => ({
   getFullUrl: vi.fn((path) => `https://test.com${path}`),
@@ -22,6 +24,10 @@ import {
 } from '#astro-utils/schema-utils';
 
 describe('schema-utils', () => {
+  afterEach(() => {
+    seoConfig.author = 'Test Author';
+  });
+
   describe('STRUCTURED_DATA_TYPE', () => {
     it('exports schema type constants', () => {
       expect(STRUCTURED_DATA_TYPE.WORD_SINGLE).toBe('WORD_SINGLE');
@@ -49,6 +55,12 @@ describe('schema-utils', () => {
       }
       expect(schema.author['@type']).toBe('Person');
       expect(schema.author.name).toBe('Test Author');
+    });
+
+    it('omits the author when no site author is configured', () => {
+      seoConfig.author = '';
+
+      expect(getWebsiteSchemaData()).not.toHaveProperty('author');
     });
 
     it('includes educational audience', () => {
