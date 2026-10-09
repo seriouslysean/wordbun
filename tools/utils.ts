@@ -8,12 +8,13 @@ import { fetchWithFallback } from '#adapters';
 import { getWordRelations } from '#adapters/wordnet';
 import type { WordRelations } from '#adapters/wordnet';
 import { paths } from '#config/paths';
+import { listWordFilePaths } from '#tools/word-file-paths';
 import type { CreateWordEntryResult, DictionaryResponse, WordData, WordEnrichment } from '#types';
 import { resolveHexColor } from '#utils/color-utils';
 import { formatDate, isValidDate } from '#utils/date-utils';
 import { getSocialCardPath, SOCIAL_DIR } from '#utils/image-path-utils';
 import { getErrorMessage, logger } from '#utils/logger';
-import { collapseWhitespace } from '#utils/text-utils';
+import { collapseWhitespace, slugify } from '#utils/text-utils';
 import { isRecord, isString } from '#utils/type-guards';
 import { findValidDefinition, mergeEnrichment } from '#utils/word-data-utils';
 import { parseWordData } from '#utils/stored-word-validation';
@@ -123,50 +124,40 @@ interface WordFileScanOptions {
 }
 
 /**
- * Lists the word files in the data directory, newest first. Anything that
- * cannot be read is logged and reported in `failures` instead of silently
- * left out: a bulk tool counts it, so a partial corpus cannot pass for a
- * complete one. Single-word lookups may ignore it.
+ * Lists the word files in the data directory, newest first: the files
+ * listWordFilePaths finds, which are the ones the site builds from. Anything
+ * that cannot be read is logged and reported in `failures` instead of
+ * silently left out: a bulk tool counts it, so a partial corpus cannot pass
+ * for a complete one. Single-word lookups may ignore it.
  */
 export const getWordFiles = ({ allowEmpty = false }: WordFileScanOptions = {}): WordFileScan => {
   const exists = fs.existsSync(paths.words);
-  const years = exists ? fs.readdirSync(paths.words).filter(dir => /^\d{4}$/.test(dir)) : [];
+  const listing = exists ? listWordFilePaths(paths.words) : { files: [], unreadable: [] };
 
-  const failures: string[] = [];
-  const files = years.flatMap(year => {
+  const failures = listing.unreadable.map(({ path: directory, error }) => {
+    logger.error('Failed to read words directory', { directory, error });
+    return directory;
+  });
+  const files = listing.files.flatMap(filePath => {
     try {
-      const yearDir = path.join(paths.words, year);
-      // Dotfiles are not word files: macOS writes an AppleDouble file
-      // (._20250701.json) beside each file copied to a non-Apple volume.
-      const jsonFiles = fs.readdirSync(yearDir)
-        .filter(file => file.endsWith('.json') && !file.startsWith('.'));
-
-      return jsonFiles.flatMap(file => {
-        try {
-          const filePath = path.join(yearDir, file);
-          // Only the headword is read here, so a file regenerate-all-words can
-          // still repair (any other field missing) stays listed.
-          const data: unknown = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-          if (!isRecord(data) || !isString(data.word)) {
-            throw new Error('Word file has no "word" string');
-          }
-          return [{ word: data.word, date: file.replace('.json', ''), path: filePath }];
-        } catch (error) {
-          logger.error('Failed to read word file', { file, error: getErrorMessage(error) });
-          failures.push(path.join(yearDir, file));
-          return [];
-        }
-      });
+      // Only the headword is read here, so a file regenerate-all-words can
+      // still repair (any other field missing) stays listed.
+      const data: unknown = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      if (!isRecord(data) || !isString(data.word)) {
+        throw new Error('Word file has no "word" string');
+      }
+      return [{ word: data.word, date: path.basename(filePath, '.json'), path: filePath }];
     } catch (error) {
-      logger.error('Failed to read year directory', { year, error: getErrorMessage(error) });
-      failures.push(path.join(paths.words, year));
+      logger.error('Failed to read word file', { file: path.basename(filePath), error: getErrorMessage(error) });
+      failures.push(filePath);
       return [];
     }
   });
 
   // No word file and nothing unreadable to account for it: the directory is
-  // missing, has no year in it, or has years with no file in them, which a
-  // failed first add-word leaves (it makes the year directory before fetching)
+  // missing or holds no word file, as when it has only empty year directories,
+  // which a failed first add-word leaves (it makes the year directory before
+  // fetching)
   if (files.length === 0 && failures.length === 0 && !allowEmpty) {
     logger.error(exists ? 'No word files found' : 'Word directory does not exist', { path: paths.words });
     return { files: [], failures: [paths.words] };
@@ -210,6 +201,20 @@ export function findExistingWord(word: string, options: WordFileScanOptions = {}
   }
 
   return { match: null, failures: [...failures, ...parseFailures] };
+}
+
+/**
+ * Finds a stored word, on any other date, whose page URL the given word would
+ * share. The word page's path is slugify(word), which keeps only ASCII
+ * letters, digits, underscores and hyphens, so "can't" and "cant" are one
+ * page: the build would write both to /word/cant. Only the headword of each
+ * file is read, as in getWordFiles; the word on `date` itself is left out,
+ * since --overwrite replaces it.
+ */
+export function findSlugCollision(word: string, date: string): WordFileInfo | undefined {
+  const slug = slugify(word);
+  return getWordFiles({ allowEmpty: true }).files
+    .find(file => file.date !== date && slugify(file.word) === slug);
 }
 
 interface WordCorpus {

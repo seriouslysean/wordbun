@@ -57,6 +57,71 @@ describe('getWordFiles', () => {
   });
 });
 
+// One rule for every tool: the files the content collection's loader in
+// src/content.config.ts builds from (`**/*.json` under the words directory)
+describe('the files that count as word files', () => {
+  const write = (relativePath: string, word: string): string => {
+    const filePath = path.join(wordsDir(), relativePath);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, JSON.stringify({ ...STORED, word, date: path.basename(relativePath, '.json') }));
+    return filePath;
+  };
+
+  it('are every .json file at any depth, without dotfiles or dot directories', async () => {
+    const built = [
+      write('2025/20250701.json', 'alpha'),
+      write('20250702.json', 'at the top'),
+      write('drafts/20250703.json', 'outside a year'),
+      write('2025/q3/20250704.json', 'nested'),
+    ];
+    write('2025/._20250701.json', 'AppleDouble');
+    write('.trash/20250705.json', 'in a dot directory');
+    write('2025/20250706.json.bak', 'not .json');
+    write('2025/20250707.JSON', 'not lower case');
+    const { listWordFilePaths } = await import('#tools/word-file-paths');
+    const { getWordFiles } = await import('#tools/utils');
+
+    expect(listWordFilePaths(wordsDir())).toEqual({ files: built.toSorted(), unreadable: [] });
+    expect(getWordFiles().files.map(file => file.path).toSorted()).toEqual(built.toSorted());
+    expect(getWordFiles().files.map(file => file.date)).toEqual(['20250704', '20250703', '20250702', '20250701']);
+  });
+
+  // The loader would list 2025 under both names. A tool that did would
+  // regenerate or draw each of its words twice.
+  it('follow a linked directory, and list one reached twice under the path that sorts first', async () => {
+    const real = write('2025/20250701.json', 'alpha');
+    fs.symlinkSync(path.join(wordsDir(), '2025'), path.join(wordsDir(), '2024'));
+    fs.symlinkSync(path.join(wordsDir(), '2025'), path.join(wordsDir(), 'linked'));
+    fs.symlinkSync(wordsDir(), path.join(wordsDir(), '2025', 'loop'));
+    fs.symlinkSync(path.join(wordsDir(), 'gone'), path.join(wordsDir(), 'broken.json'));
+    const { listWordFilePaths } = await import('#tools/word-file-paths');
+
+    expect(listWordFilePaths(wordsDir())).toEqual({
+      files: [path.join(wordsDir(), '2024', path.basename(real))],
+      unreadable: [],
+    });
+  });
+
+  // Root reads everything, so the mode bits cannot make a directory unreadable for it
+  it.skipIf(process.getuid?.() === 0)('report a directory that cannot be listed as a failure', async () => {
+    write('2025/20250701.json', 'alpha');
+    const locked = path.join(wordsDir(), '2024');
+    write('2024/20240701.json', 'beta');
+    fs.chmodSync(locked, 0o000);
+    const { getWordFiles } = await import('#tools/utils');
+
+    try {
+      const scan = getWordFiles();
+
+      expect(scan.files.map(file => file.word)).toEqual(['alpha']);
+      expect(scan.failures).toEqual([locked]);
+      expect(ctx.logger.error).toHaveBeenCalledExactlyOnceWith('Failed to read words directory', expect.objectContaining({ directory: locked }));
+    } finally {
+      fs.chmodSync(locked, 0o700);
+    }
+  });
+});
+
 describe('findExistingWord with malformed stored data', () => {
   it('reports a file whose headword is readable but whose record is invalid', async () => {
     const yearDir = path.join(wordsDir(), '2025');

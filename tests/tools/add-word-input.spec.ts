@@ -68,6 +68,9 @@ describe('add-word input errors', () => {
     ['a future date', 'beta', { date: '29991231' }, 'Cannot add words for future dates'],
     ['a date that already has a word', 'beta', { date: '20240101' }, 'Word already exists for this date'],
     ['a word already used on another date', 'alpha', { date: '20240102' }, 'Word already exists for different date'],
+    ['a word of symbols only, whose page would be /word/', '&', { date: '20240102' }, 'Word has no URL slug'],
+    ['a word in a script the slug drops whole', '日本', { date: '20240102' }, 'Word has no URL slug'],
+    ['a different word with the slug of a stored one', "al'pha", { date: '20240102' }, 'Word shares its URL slug with a different word'],
   ])('refuses %s without reporting an error', async (_, input, options, message) => {
     const code = await runAddWord(input, options);
 

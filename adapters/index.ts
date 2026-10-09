@@ -37,10 +37,15 @@ export function getAdapterByName(name: string): DictionaryAdapter {
 }
 
 /**
- * Gets the configured primary dictionary adapter based on DICTIONARY_ADAPTER env var.
+ * Gets the configured primary dictionary adapter based on DICTIONARY_ADAPTER
+ * env var. There is no default: which dictionary a site's words come from is
+ * the site's decision.
  */
 export function getAdapter(): DictionaryAdapter {
-  const name = process.env.DICTIONARY_ADAPTER || 'wordnik';
+  const name = process.env.DICTIONARY_ADAPTER;
+  if (!name) {
+    throw new Error('DICTIONARY_ADAPTER environment variable is required');
+  }
   logger.info('Using dictionary adapter', { adapter: name });
   return getAdapterByName(name);
 }

@@ -117,24 +117,23 @@ export function extractExamples(entry: MWEntry): string[] {
     }
   };
 
+  // One walker for both levels: a parenthesized sense sequence holds the
+  // same items an sseq does, a binding substitute included (MW JSON
+  // reference, 2.10.9 `bs` and 2.10.10 `pseq`)
+  const collectFromItem = (senseItem: MWSenseItem): void => {
+    const [type, data] = senseItem;
+    if (type === 'sense' || type === 'sen') {
+      collectFromSense(data);
+    } else if (type === 'bs') {
+      collectFromSense(data.sense);
+    } else if (type === 'pseq') {
+      data.forEach(collectFromItem);
+    }
+  };
+
   for (const defBlock of entry.def) {
     for (const senseGroup of defBlock.sseq) {
-      for (const senseItem of senseGroup) {
-        const [type, data] = senseItem;
-        if (type === 'sense' || type === 'sen') {
-          collectFromSense(data);
-        } else if (type === 'bs') {
-          collectFromSense(data.sense);
-        } else if (type === 'pseq') {
-          // Paragraph sense sequence: array of inner sense items
-          for (const innerItem of data) {
-            const [innerType, innerData] = innerItem;
-            if (innerType === 'sense' || innerType === 'sen') {
-              collectFromSense(innerData);
-            }
-          }
-        }
-      }
+      senseGroup.forEach(collectFromItem);
     }
   }
 

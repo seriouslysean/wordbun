@@ -276,8 +276,15 @@ describe('text-utils', () => {
       expect(isAllConsonants('42')).toBe(false);
       expect(isAllConsonants('24/7')).toBe(false);
     });
-    it('keeps a consonant-only word that carries punctuation', () => {
-      expect(isAllConsonants('pb&j')).toBe(true);
+    // Only a vowel disqualifies a word: an ampersand or a hyphen is not one.
+    // Consistent with the other letter-pattern predicates, which ignore
+    // whatever is not a letter.
+    it.each(['pb&j', 'PB&J', 'tsk-tsk'])('counts %s, whose letters are all consonants, whatever its punctuation', (word) => {
+      expect(isAllConsonants(word)).toBe(true);
+    });
+    it('still needs every letter to be a consonant', () => {
+      expect(isAllConsonants('rock & roll')).toBe(false);
+      expect(isAllConsonants('&')).toBe(false);
     });
   });
 });

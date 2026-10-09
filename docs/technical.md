@@ -54,6 +54,7 @@ tools/                           # CLI tools (Node.js only, no Astro deps)
   sync-upstream.sh               # Merge upstream into a fork, gated (tool:sync)
   templates/site/                # Callers, Dependabot, README and .gitignore that create-site writes
   utils.ts                       # Shared tool utilities
+  word-file-paths.ts             # Which files are word files: the content loader's rule
 
 adapters/                        # Dictionary API adapters
   index.ts                       # Adapter registry + fallback chain
@@ -265,6 +266,8 @@ export const collections = {
 };
 ```
 
+The CLI tools read the same files. `listWordFilePaths()` in `tools/word-file-paths.ts` applies the loader's rule (every `.json` file at any depth under the words directory, no file or directory whose name starts with a dot, symbolic links followed), and `getWordFiles()` (add-word, generate-images, regenerate-all-words) and normalize-word-data both list the corpus through it, so the tools agree with each other and with the build on which files hold a word. One difference is deliberate: the loader lists a directory that a link also points to under both paths, and the tools list it once, under the path that sorts first, so no word is processed twice. A directory that cannot be listed is a failure, not an empty one. add-word writes `{year}/{YYYYMMDD}.json`; a word file placed anywhere else under the words directory is still built and still read.
+
 ### Computed Derivatives
 
 `src/utils/word-data-utils.ts` loads `allWords` once and derives everything from it:
@@ -351,7 +354,7 @@ Stored word files use the same `DictionaryDefinition` shape. `npm run tool:norma
 
 ### Enforcement
 
-`isCanonicalResponse()` in `utils/adapter-utils.ts` checks every rule above, including the ones a type cannot express. `fetchWithFallback()` applies it once to every adapter's answer, before displayability. A response that breaks it is refused whole with an unexpected-shape error: the chain moves on, and the fault stays in the final `AggregateError`. An answer with no definitions at all is read first, as the partner not having the word rather than a changed API: a Merriam-Webster entry that is only a cross-reference (`ran`, past tense of `run`, has an empty `shortdef`) or a Wiktionary meaning with an empty `definitions` list is a `WordNotFoundError`, so when every adapter says the same, add-word refuses the word at warn. Only a definition list the partner sent empty reaches that check empty. An answer that lists definitions but has nothing to keep is an unexpected shape before it gets there: `buildDictionaryResponse()` refuses a list whose every definition is blank (a Wordnik `text` renamed, every Wiktionary `definition` empty), and the Merriam-Webster adapter refuses an answer none of whose entries has `shortdef`, which the API documents as a top-level member of the entry and nowhere marks optional.
+`isCanonicalResponse()` in `utils/adapter-utils.ts` checks every rule above, including the ones a type cannot express. `fetchWithFallback()` applies it once to every adapter's answer, before displayability. A response that breaks it is refused whole with an unexpected-shape error: the chain moves on, and the fault stays in the final `AggregateError`. The guard reads the text the adapter hands it, after the adapter's translation, and refuses any definition whose text still holds a complete HTML-shaped tag. That includes one that was only ever text at the partner: Wordnik's `&lt;b&gt;critical&lt;/b&gt;` is decoded by `parseDefinitionMarkup()` to `<b>critical</b>`, which is tag-shaped, so the response is refused, the word comes from the next adapter in the chain and the Wordnik fault is reported. This is intended: canonical text is plain, and the guard cannot tell text shaped like markup from markup an adapter failed to translate. When no other adapter in the chain has the word, it is not added. A bracket that is not a tag (`&lt;20 mg/dL`, decoded to `<20 mg/dL`) is text and is kept. `tests/adapters/fallback.spec.ts` pins both. An answer with no definitions at all is read first, as the partner not having the word rather than a changed API: a Merriam-Webster entry that is only a cross-reference (`ran`, past tense of `run`, has an empty `shortdef`) or a Wiktionary meaning with an empty `definitions` list is a `WordNotFoundError`, so when every adapter says the same, add-word refuses the word at warn. Only a definition list the partner sent empty reaches that check empty. An answer that lists definitions but has nothing to keep is an unexpected shape before it gets there: `buildDictionaryResponse()` refuses a list whose every definition is blank (a Wordnik `text` renamed, every Wiktionary `definition` empty), and the Merriam-Webster adapter refuses an answer none of whose entries has `shortdef`, which the API documents as a top-level member of the entry and nowhere marks optional.
 
 `tests/adapters/contract.spec.ts` applies the same guard to fixtures. It enumerates the registry (`getAdapterNames()` in `adapters/index.ts`) and requires:
 
@@ -377,7 +380,7 @@ npm keeps any flag written before a bare `--` for itself, so a tool's flags alwa
 
 ### `add-word.ts`
 
-Adds a word with dictionary validation and duplicate detection. It does not render the social card: the Add Word workflow runs the complete image generation afterwards (see Image Generation).
+Adds a word with dictionary validation and duplicate detection. A word page's URL is `/word/<slug>`, and `slugify()` keeps only ASCII letters, digits, underscores and hyphens, so add-word refuses a word whose slug is empty (`&`, `日本`: the page would be `/word/` itself) and a word whose slug a different stored word already has (`can't` beside `cant`: both would be `/word/cant`). `create-site` refuses a seed word with an empty slug for the same reason. Only a new word is checked: the build and regenerate-all-words, which keeps each word's text, read stored words as they are. It does not render the social card: the Add Word workflow runs the complete image generation afterwards (see Image Generation).
 
 ```sh
 npm run tool:local tools/add-word.ts serendipity
@@ -415,7 +418,7 @@ The target must not exist or must be empty. `--engine-ref` must be a release tag
 
 ### `regenerate-all-words.ts`
 
-Batch refresh of word data from the dictionary API. Supports dry-run mode and rate limiting. A word file it cannot read (not JSON, or no `word` string) counts as a failure, in a dry run too, so the exit code says whether every stored word was covered. `--force` re-sources every word through the configured adapter chain (the `adapter` field follows); pronunciation audio and etymology come only from Merriam-Webster, so run it via `tool:local` with `MERRIAM_WEBSTER_API_KEY` in `.env` to backfill them.
+Batch refresh of word data from the dictionary API. Supports dry-run mode and rate limiting. A word file it cannot read (not JSON, or no `word` string) counts as a failure, in a dry run too, so the exit code says whether every stored word was covered. Run without `--force` or `--dry-run` it only asks for `--force` and exits 0, unless the words directory is missing or a file in it cannot be read: that exits 1 before the confirmation, which would otherwise count only the words it could see. `--force` re-sources every word through the configured adapter chain (the `adapter` field follows); pronunciation audio and etymology come only from Merriam-Webster, so run it via `tool:local` with `MERRIAM_WEBSTER_API_KEY` in `.env` to backfill them.
 
 ## URL System
 
@@ -518,13 +521,14 @@ The `isLogContext` type guard from `#types` validates the context argument befor
 
 **The `exit()` helper**: Always use `await exit(code)` instead of `process.exit()` in error handlers. `process.exit()` kills in-flight async work immediately, losing pending Sentry events. `exit()` flushes first.
 
-**Error level means fault**: only `logger.error` creates a Sentry event (`captureException` for an `Error`, otherwise `captureMessage` at level `error`); `warn`, `info` and `debug` only print. So CLI tools refuse operator input at `warn`: add-word's blank word, malformed or future date, date or word already taken, and a word every adapter in the chain reported as not found; generate-images' `--word` that is not in the data and `--page` that is not a page; regenerate-all-words' malformed `--timeout`, `--batch-size` or `--batch-timeout`; and a command line any of them cannot parse all exit 1 with a warn-level message. Network failures, HTTP errors, unexpected response shapes, rate limits, unreadable word files and missing configuration log at `error`. A words directory that is missing or holds no word file (no year directory, or year directories with no word file in them, which a failed first add-word leaves since it makes the year directory before fetching) is not a fault to add-word's duplicate check, since a new site's first word has nothing to collide with, but generate-images (its `--word` and `--page` runs included) and regenerate-all-words, which need data, fail on it at `error`.
+**Error level means fault**: only `logger.error` creates a Sentry event (`captureException` for an `Error`, otherwise `captureMessage` at level `error`); `warn`, `info` and `debug` only print. So CLI tools refuse operator input at `warn`: add-word's blank word, word with no URL slug or with the slug of a different stored word, malformed or future date, date or word already taken, and a word every adapter in the chain reported as not found; generate-images' `--word` that is not in the data and `--page` that is not a page; regenerate-all-words' malformed `--timeout`, `--batch-size` or `--batch-timeout`; create-site's missing or extra argument; and a command line any of them cannot parse all exit 1 with a warn-level message. Network failures, HTTP errors, unexpected response shapes, rate limits, unreadable word files and missing configuration log at `error`. A words directory that is missing or holds no word file (no year directory, or year directories with no word file in them, which a failed first add-word leaves since it makes the year directory before fetching) is not a fault to add-word's duplicate check, since a new site's first word has nothing to collide with, but generate-images (its `--word` and `--page` runs included) and regenerate-all-words, which need data, fail on it at `error`.
 
 ## Statistics System
 
 All statistics computed at build time from `allWords`:
 
 - **Letter patterns**: Palindromes, double/triple letters, alphabetical sequences, same start/end
+- **All consonants**: a word with at least one consonant and no vowel (a, e, i, o, u). Only a vowel disqualifies it, so punctuation does not: `pb&j` and `tsk-tsk` count, and `42`, which has no consonant, does not
 - **Word endings**: Common suffixes (-ed, -ing, -ly, -ness, -ful, -less)
 - **Letter analysis**: Most/least common letters (ranked by the number of words containing the letter, case-insensitive, not by total occurrences; `getLetterStats` is the single definition for the stat, its page, and its metadata), vowel/consonant ratios
 - **Streaks**: Current and longest consecutive word streaks

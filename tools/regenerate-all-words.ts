@@ -149,6 +149,13 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
       return unreadable.length;
     }
 
+    // Nothing to confirm when the corpus could not be read: asking to
+    // confirm zero words, exit 0, would pass a missing words directory off as
+    // a run that only needs --force. Each unreadable path is already logged.
+    if (!options.force && unreadable.length > 0) {
+      return unreadable.length;
+    }
+
     if (!options.force) {
       logger.info('CONFIRMATION REQUIRED', { wordCount: wordsToRegenerate.length });
       logger.info('This will overwrite existing word files.');
@@ -226,10 +233,6 @@ Options:
 Examples:
   npm run tool:regenerate-all-words -- --dry-run
   npm run tool:regenerate-all-words -- --timeout 2000 --batch-size 3 --force
-
-Environment Variables (for GitHub workflows):
-  WORDNIK_API_KEY           API key for dictionary access (required)
-  SOURCE_DIR                Data source subdirectory (unset = root paths)
 
 Note:
   Rate-limited lookups retry up to 3 times, waiting ${RATE_LIMIT_BACKOFF_MS / 1000}s and doubling each time.
