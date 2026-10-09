@@ -48,6 +48,8 @@ describe('generate-images bulk run', () => {
 
     expect(code).toBe(1);
     expect(`${stdout}${stderr}`).toMatch(/Image generation finished with failures.*failed: \d+/s);
+    // Each failure names its card: the error alone is the same for all of them
+    expect(stderr).toMatch(/Failed to generate generic image \{\s*label: '[^']+ \(\/stats\)'/);
   }, 35000);
 });
 
