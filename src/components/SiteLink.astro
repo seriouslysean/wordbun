@@ -16,16 +16,8 @@ const linkClass = variant === 'text'
 
 const isExternal = href.startsWith('http://') || href.startsWith('https://');
 
-const normalizeHref = (path: string) => {
-  if (isExternal) {
-return path;
-}
-
-  const cleanPath = path.replace(/\/$/, '') || '/';
-  return getUrl(cleanPath);
-};
-
-const finalHref = normalizeHref(href);
+// getUrl() ends a page URL in a slash whether or not the href has one
+const finalHref = isExternal ? href : getUrl(href);
 
 const finalRel = (attrs.target === '_blank' && !attrs.rel) ? 'noopener noreferrer' : attrs.rel;
 ---

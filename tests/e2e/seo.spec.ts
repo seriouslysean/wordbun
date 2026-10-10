@@ -29,27 +29,27 @@ test.describe('SEO build output', () => {
 		await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/word\//);
 	});
 
-	test('canonical links name the path each page is served at', async ({ page }) => {
-		// A build's Astro.url.pathname names the output file (/stats.html), so
-		// only the built pages show whether that reached the canonical link
-		const canonicalPath = async (): Promise<string> => {
-			const href = await page.locator('link[rel="canonical"]').getAttribute('href');
-			if (href === null) {
-				throw new Error('canonical link has no href');
-			}
-			return new URL(href).pathname;
-		};
-
+	test('an internal link is served without a redirect, at the URL its canonical names', async ({ page }) => {
+		// Only the served build shows whether the href a page prints is the URL
+		// the page is served at: a static host redirects the slashless form
 		await page.goto('/');
-		expect(await canonicalPath()).toBe('/');
 
-		await page.locator('footer a[href="/stats"]').click();
-		await expect(page).toHaveURL(/\/stats$/);
-		expect(await canonicalPath()).toBe('/stats');
+		const [response] = await Promise.all([
+			page.waitForResponse(candidate =>
+				candidate.request().isNavigationRequest() && candidate.frame() === page.mainFrame()),
+			page.locator('footer a[href="/stats/"]').click(),
+		]);
+		expect(response.status()).toBe(200);
+		expect(response.request().redirectedFrom()).toBeNull();
+		await expect(page.locator('#main-content')).toBeVisible();
 
-		await page.locator('main a[href^="/stats/"]').first().click();
-		await expect(page).toHaveURL(/\/stats\/.+/);
-		expect(await canonicalPath()).toBe(new URL(page.url()).pathname);
+		const servedPath = new URL(page.url()).pathname;
+		expect(servedPath).toBe('/stats/');
+		const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
+		if (canonical === null) {
+			throw new Error('canonical link has no href');
+		}
+		expect(new URL(canonical).pathname).toBe(servedPath);
 	});
 
 	test('structured data is present', async ({ page }) => {

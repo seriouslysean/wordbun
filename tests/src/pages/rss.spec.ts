@@ -30,6 +30,12 @@ describe('RSS feed', () => {
     );
   });
 
+  it('links each item to the trailing-slash URL its word page is served at', async () => {
+    const feed = await (await GET()).text();
+
+    expect(feed).toContain('<link>https://test.com/word/occasional/</link>');
+  });
+
   it('links the channel to the site home page under BASE_PATH', async () => {
     mockEnv.BASE_PATH = '/vocab';
 
