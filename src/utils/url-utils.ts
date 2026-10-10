@@ -46,7 +46,8 @@ export const getPathname = (astroPathname: string): string => {
 /**
  * Construct the URL a page or file is served at, with the configured base path
  * @param path - Route or file path to append to base path, or a pathname
- * that already carries it (Astro.url.pathname)
+ * that already carries it (Astro.url.pathname). A path only: a query string
+ * or fragment would be read as part of the last segment
  * @returns URL path with base path: a page ends in a slash ('/blog/stats/'),
  * a file does not ('/blog/rss.xml'), and the site root is '/blog/'
  */

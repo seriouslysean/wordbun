@@ -55,6 +55,10 @@ describe('generateLlmsTxt', () => {
     expect(output).toContain('](https://test.com/demo/word/)');
   });
 
+  it('leaves the 404 page out: its route is not a URL a host serves', () => {
+    expect(generateLlmsTxt(words)).not.toContain('/404');
+  });
+
   it('does not double a base path that SITE_URL repeats', () => {
     mockEnv.BASE_PATH = '/demo';
     mockEnv.SITE_URL = 'https://test.com/demo';
