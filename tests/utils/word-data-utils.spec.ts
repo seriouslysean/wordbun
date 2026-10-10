@@ -888,6 +888,44 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       expect(getWordSenses(word)).toEqual([{ partOfSpeech: 'noun', segments: [{ type: 'text', text: 'a definition' }], examples: [] }]);
     });
 
+    it('shows a definition standing in for the word without its examples', () => {
+      const word: WordData = {
+        word: 'indices',
+        date: '20250101',
+        adapter: 'merriam-webster',
+        data: [{ id: 'index', partOfSpeech: 'noun', text: 'a list of names', examples: ['an index of first lines'] }],
+      };
+      expect(getWordSenses(word)).toEqual([{ partOfSpeech: 'noun', segments: [{ type: 'text', text: 'a list of names' }], examples: [] }]);
+    });
+
+    it('matches an entry id to the headword by slug, not by spelling', () => {
+      const word: WordData = {
+        word: 'ice cream',
+        date: '20250101',
+        adapter: 'merriam-webster',
+        data: [
+          { id: 'ice-cream', partOfSpeech: 'adjective', text: 'of a color similar to that of vanilla ice cream' },
+          { id: 'ice cream', partOfSpeech: 'noun', text: 'a sweet frozen food' },
+        ],
+      };
+      expect(getWordSenses(word).map(sense => sense.partOfSpeech)).toEqual(['adjective', 'noun']);
+    });
+
+    it('opens with a sense whose part of speech the word is grouped under, when a compound is stored first', () => {
+      const word: WordData = {
+        word: 'happy',
+        date: '20250101',
+        adapter: 'merriam-webster',
+        data: [
+          { id: 'happy hour', partOfSpeech: 'noun', text: 'a period of reduced prices' },
+          { id: 'happy', partOfSpeech: 'adjective', text: 'enjoying well-being' },
+        ],
+      };
+      const [first] = getWordSenses(word);
+      expect(first?.partOfSpeech).toBe('adjective');
+      expect(Object.keys(groupWordsByPartOfSpeechPure([word]))).toEqual(['adjective']);
+    });
+
     it('returns an empty array for missing or invalid data', () => {
       expect(getWordSenses({ word: 'x', date: '1', adapter: 'a', data: [] })).toEqual([]);
       // @ts-expect-error null is a deliberate invalid runtime input.
