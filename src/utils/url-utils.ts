@@ -49,8 +49,8 @@ export const getPathname = (astroPathname: string): string => {
  * root. Never a pathname that already carries the base path: the base is
  * always added, since a route can begin with the base's own segment
  * ('/word/calm' under BASE_PATH=/word). Read Astro.url.pathname back to its
- * route with getPathname() or stripBasePath() first. A path only: a query
- * string or fragment would be read as part of the last segment
+ * route with getPathname() or stripBasePath() first. A query string or
+ * fragment is kept, after the slash ('/stats#top' is '/blog/stats/#top')
  * @returns URL path with base path: a page ends in a slash ('/blog/stats/'),
  * a file does not ('/blog/rss.xml'), and the site root is '/blog/'
  */

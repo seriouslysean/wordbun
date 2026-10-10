@@ -43,12 +43,19 @@ export const isPathUnderBase = (path: string, base: string): boolean =>
  * The URL path a page or file is served at. Pages are built as directories
  * ('stats/index.html'), and a static host serves a directory at its
  * trailing-slash URL only: '/stats' is a redirect to '/stats/' on GitHub
- * Pages. A file ('/rss.xml') is served at its own name.
- * @param path - URL path with no query or fragment
- * @returns The path, ending in a slash unless it names a file
+ * Pages. A file ('/rss.xml') is served at its own name. The slash belongs to
+ * the path, so a query string or fragment stays behind it: '/stats#top' is
+ * '/stats/#top'.
+ * @param path - URL path, with or without a query string or fragment
+ * @returns The path, ending in a slash unless it names a file, then the
+ * query string and fragment as given
  */
-export const withTrailingSlash = (path: string): string =>
-  path.endsWith('/') || FILE_PATH_PATTERN.test(path) ? path : `${path}/`;
+export const withTrailingSlash = (path: string): string => {
+  const end = path.search(/[?#]/);
+  const pathname = end === -1 ? path : path.slice(0, end);
+  const served = pathname.endsWith('/') || FILE_PATH_PATTERN.test(pathname) ? pathname : `${pathname}/`;
+  return served + path.slice(pathname.length);
+};
 
 /**
  * The URL path a route or file of the site is served at under a base path.
@@ -56,7 +63,8 @@ export const withTrailingSlash = (path: string): string =>
  * ('/word/calm' under the base '/word' is served at '/word/word/calm/'), so
  * no path can be tested for already having it. A pathname that does carry
  * the base (Astro.url.pathname) is read back to its route first.
- * @param route - Route ('/stats') or file path ('/rss.xml') from the site root
+ * @param route - Route ('/stats') or file path ('/rss.xml') from the site
+ * root, with or without a query string or fragment
  * @param basePath - Base path, '/' for the root; a trailing slash is ignored
  * @returns URL path with the base: a page ends in a slash, a file does not
  */

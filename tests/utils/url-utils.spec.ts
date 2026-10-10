@@ -187,6 +187,11 @@ describe('utils', () => {
       expect(getFullUrl('/')).toBe('https://example.com/');
     });
 
+    it('keeps a query string and fragment after the page slash', () => {
+      mockEnv.BASE_PATH = '/vocab';
+      expect(getFullUrl('/stats?page=2#top')).toBe('https://example.com/vocab/stats/?page=2#top');
+    });
+
     it('names the home page under a base path', () => {
       mockEnv.BASE_PATH = '/vocab';
       expect(getFullUrl('/')).toBe('https://example.com/vocab/');
@@ -317,6 +322,25 @@ describe('utils', () => {
     it('reads a dot in an earlier segment as part of a page path', () => {
       expect(withTrailingSlash('/a.b/stats')).toBe('/a.b/stats/');
     });
+
+    it('puts the slash on the path, before a query string or fragment', () => {
+      expect(withTrailingSlash('/stats#top')).toBe('/stats/#top');
+      expect(withTrailingSlash('/stats?page=2')).toBe('/stats/?page=2');
+      expect(withTrailingSlash('/stats?page=2#top')).toBe('/stats/?page=2#top');
+      expect(withTrailingSlash('/stats/#top')).toBe('/stats/#top');
+      expect(withTrailingSlash('/#top')).toBe('/#top');
+    });
+
+    it('decides file or page from the path alone, not from what follows it', () => {
+      // The dot is in the fragment or the query, so these are pages
+      expect(withTrailingSlash('/stats#v1.2')).toBe('/stats/#v1.2');
+      expect(withTrailingSlash('/stats?file=a.png')).toBe('/stats/?file=a.png');
+      // The slash is in the query, so the path still needs its own
+      expect(withTrailingSlash('/stats?next=/word/')).toBe('/stats/?next=/word/');
+      // A file keeps its name
+      expect(withTrailingSlash('/rss.xml?v=2')).toBe('/rss.xml?v=2');
+      expect(withTrailingSlash('/words.json#first')).toBe('/words.json#first');
+    });
   });
 
   describe('joinBasePath', () => {
@@ -359,6 +383,18 @@ describe('utils', () => {
     it('keeps the root a directory under a base path with a dot in it', () => {
       expect(joinBasePath('/', '/my.site')).toBe('/my.site/');
       expect(joinBasePath('/stats', '/my.site')).toBe('/my.site/stats/');
+    });
+
+    it('keeps a query string or fragment after the page slash', () => {
+      expect(joinBasePath('/stats#top', '/')).toBe('/stats/#top');
+      expect(joinBasePath('/stats#top', '/blog')).toBe('/blog/stats/#top');
+      expect(joinBasePath('/word/calm?ref=feed#sense-2', '/word')).toBe('/word/word/calm/?ref=feed#sense-2');
+      expect(joinBasePath('/rss.xml?v=2', '/blog')).toBe('/blog/rss.xml?v=2');
+    });
+
+    it('reads a query string or fragment with no path as the site root\'s', () => {
+      expect(joinBasePath('#top', '/')).toBe('/#top');
+      expect(joinBasePath('?page=2', '/blog')).toBe('/blog/?page=2');
     });
   });
 
