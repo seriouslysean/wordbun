@@ -121,8 +121,9 @@ const getDefinitionPlainText = (def: DisplayableDefinition): string =>
 /**
  * The one displayability rule. Everything that shows, counts, groups or accepts
  * a word's definitions goes through it, so no two of them disagree about which
- * definitions can be displayed. Which of those are the word's own, rather than
- * a compound's or a derived form's, is a second rule: getWordDefinitions.
+ * definitions can be displayed. Which definitions are the word's own, rather
+ * than a compound's or a derived form's, is a second rule, getWordDefinitions,
+ * which applies this one to the word's own entries.
  *
  * A definition is displayable when it has a part of speech and non-empty text.
  * Abbreviation-labelled definitions are displayable only when the word has no
@@ -173,17 +174,21 @@ interface WordDefinitions {
  * Their `id` differs from the headword, so they are left out. Homographs share
  * the headword's `id` and stay, as does a definition with no `id`.
  *
+ * The word's own entries are picked out first and the displayability rule is
+ * applied to them alone. Its abbreviation half compares the entries of one
+ * headword: over the whole lookup, the adjective "AC/DC" would hide "AC", the
+ * only definition "ac" has, and then stand in for it.
+ *
  * When no displayable definition is the word's own ("indices" is stored under
- * "index"), the first displayable one stands in for it, so a word with
- * anything displayable keeps one definition and its part of speech.
+ * "index"), the first displayable one of the whole lookup stands in for it, so
+ * a word with anything displayable keeps one definition and its part of speech.
  */
 const getWordDefinitions = (wordData: Pick<WordData, 'word' | 'data'>): WordDefinitions => {
-  const displayable = getDisplayableDefinitions(wordData.data);
   const wordSlug = slugify(wordData.word);
-  const own = displayable.filter(def => !def.id || slugify(def.id) === wordSlug);
+  const own = getDisplayableDefinitions(wordData.data.filter(def => !def.id || slugify(def.id) === wordSlug));
   return own.length > 0
     ? { definitions: own, standIn: false }
-    : { definitions: displayable.slice(0, 1), standIn: true };
+    : { definitions: getDisplayableDefinitions(wordData.data).slice(0, 1), standIn: true };
 };
 
 /**

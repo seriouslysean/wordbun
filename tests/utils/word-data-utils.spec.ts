@@ -696,6 +696,17 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       { id: 'ice', partOfSpeech: 'verb', text: 'to coat with or convert into ice' },
     ],
   };
+  // "ac" has no entry of its own but the abbreviation AC, and the lookup
+  // returns the adjective "AC/DC" with it.
+  const acLike: WordData = {
+    word: 'ac',
+    date: '20241227',
+    adapter: 'merriam-webster',
+    data: [
+      { id: 'AC', partOfSpeech: 'abbreviation', text: 'alternating current', examples: ['an AC adapter'] },
+      { id: 'AC/DC', partOfSpeech: 'adjective', text: 'operating on either alternating or direct current' },
+    ],
+  };
 
   describe('getDisplayableDefinitions', () => {
     it('requires a part of speech and non-empty text', () => {
@@ -856,7 +867,7 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
   });
 
   describe('consumers of the displayability and word-definition rules agree', () => {
-    const corpus: WordData[] = [sadLike, pbjLike, textOnly, emptyText, happyLike, indicesLike, iceLike];
+    const corpus: WordData[] = [sadLike, pbjLike, textOnly, emptyText, happyLike, indicesLike, iceLike, acLike];
 
     it.each([
       { fixture: sadLike, partsOfSpeech: ['adjective'], text: requireValue(sadLike.data[0]).text },
@@ -870,6 +881,8 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       // The compound stored first is "ice cream"'s: the primary definition is
       // the verb the page shows, not the first definition in the record
       { fixture: iceLike, partsOfSpeech: ['verb'], text: requireValue(iceLike.data[1]).text },
+      // The adjective is "AC/DC"'s: it does not hide the word's own abbreviation
+      { fixture: acLike, partsOfSpeech: ['abbreviation'], text: requireValue(acLike.data[0]).text },
     ])('for $fixture.word', ({ fixture, partsOfSpeech, text }) => {
       const displayed = partsOfSpeech.length > 0;
       const [primary = null] = partsOfSpeech;
@@ -982,6 +995,36 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       const [first] = getWordSenses(word);
       expect(first?.partOfSpeech).toBe('adjective');
       expect(Object.keys(groupWordsByPartOfSpeechPure([word]))).toEqual(['adjective']);
+    });
+
+    // The abbreviation rule keeps an abbreviation that shares a word's
+    // spelling out of its grammatical senses. Applied to every entry of the
+    // lookup, it let a compound's sense hide the only definition a word has.
+    it.each([
+      ['after', acLike.data],
+      ['before', acLike.data.toReversed()],
+    ])("shows a word's own abbreviation when a grammatical compound is stored %s it", (_order, data) => {
+      expect(getWordSenses({ ...acLike, data })).toEqual([{
+        partOfSpeech: 'abbreviation',
+        segments: [{ type: 'text', text: 'alternating current' }],
+        examples: ['an AC adapter'],
+      }]);
+    });
+
+    it('still hides an abbreviation from a word with a grammatical sense of its own, beside a compound', () => {
+      const word: WordData = {
+        ...sadLike,
+        data: [...sadLike.data, { id: 'sad sack', partOfSpeech: 'noun', text: 'an inept person' }],
+      };
+      expect(getWordSenses(word).map(sense => sense.partOfSpeech)).toEqual(['adjective']);
+    });
+
+    it('lets a grammatical definition stand in ahead of an abbreviation when neither is the word\'s own', () => {
+      expect(getWordSenses({ ...acLike, word: 'acs' })).toEqual([{
+        partOfSpeech: 'adjective',
+        segments: [{ type: 'text', text: 'operating on either alternating or direct current' }],
+        examples: [],
+      }]);
     });
 
     it('returns an empty array for missing or invalid data', () => {
