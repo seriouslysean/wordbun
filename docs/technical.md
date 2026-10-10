@@ -428,10 +428,12 @@ Two-tier system supporting root and subdirectory deployments:
 
 | Function | Purpose | Example (`BASE_PATH="/blog"`) |
 |----------|---------|-------------------------------|
-| `getUrl(path)` | Relative URL with BASE_PATH | `getUrl('/word/hello')` -> `/blog/word/hello/` |
-| `getFullUrl(path)` | Absolute URL for SEO | `getFullUrl('/word/hello')` -> `https://example.com/blog/word/hello/` |
+| `getUrl(route)` | Relative URL with BASE_PATH | `getUrl('/word/hello')` -> `/blog/word/hello/` |
+| `getFullUrl(route)` | Absolute URL for SEO | `getFullUrl('/word/hello')` -> `https://example.com/blog/word/hello/` |
 
 `getFullUrl()` uses `getUrl()` internally to ensure BASE_PATH consistency.
+
+Both take a route, or a file path, from the site root, and always add the base path (`joinBasePath()` in `utils/url-utils.ts`). Neither takes a pathname that already has it. A route can begin with the base path's own segment, so no path can be tested for already being under the base: with `BASE_PATH=/word` the word page `/word/calm` is served at `/word/word/calm/`, and with `BASE_PATH=/stats` the stats index `/stats` is served at `/stats/stats/`. Through 3.27.0 `getUrl()` returned a path that began with the base path unchanged, so under either of those base paths every URL of that section lost the base path (internal links, JSON-LD breadcrumb URLs, `llms.txt` entries and, under `/word`, the feed's item links): it named a page that does not exist or, for the section's index, the home page. The one pathname that does carry the base is `Astro.url.pathname`; it is read back to its route before it is used (Trailing Slashes, below).
 
 `SITE_URL` is the origin alone; a subdirectory belongs in `BASE_PATH` (Astro's [GitHub Pages guide](https://docs.astro.build/en/guides/deploy/github/) sets `site` and `base` the same way). URLs are resolved against the origin, so a `SITE_URL` that repeats the base path does not double it.
 
@@ -443,7 +445,7 @@ Code names a route without the slash, and the helpers turn it into the URL:
 
 - **A route is `/stats` or `/word/hello`.** `BASE_PATHS`, `ROUTES` and `URL_PATTERNS` in `constants/urls.ts`, the page metadata keys and the social card names are all keyed that way. Pass a route to `getUrl()`, `getFullUrl()` or `SiteLink`; do not write a URL by hand.
 - **`getUrl()` is the one place a route becomes a URL.** `withTrailingSlash()` in `utils/url-utils.ts` adds the slash unless the last segment has an extension (`FILE_PATH_PATTERN` in `constants/urls.ts`), the line Astro's dev server draws between a file and a page under `'always'` (`hasFileExtension` in `@astrojs/internal-helpers`; the two patterns are not the same text, but agree on every path that starts with a slash). No route has a dot in it: `slugify()` drops them. The canonical link, `og:url`, the JSON-LD `WebSite` and breadcrumb URLs, every internal link (`SiteLink`, the word chips, the heatmap, the word graph), the header search results and the random-word button (client scripts that import the same helper), `llms.txt`, the feed's channel and item links, the sitemap line in `robots.txt` and the manifest `start_url` and `scope` all come from these two helpers, so they agree. The sitemap is written by `@astrojs/sitemap`, which reads the same two settings and ends every `<loc>` in a slash.
-- **`Astro.url.pathname` ends in a slash** (`/blog/stats/`), in a build and in the dev server: "`directory` - The `Astro.url.pathname` will include a trailing slash to mimic folder behavior" (same reference, [Effect on Astro.url](https://docs.astro.build/en/reference/configuration-reference/#effect-on-astrourl)). `getPathname()` and `stripBasePath()` read it back to the route, and `getPageMetadata()` and `getSocialImageUrl()` go through them. Read the pathname through those: a raw comparison (`Astro.url.pathname === '/stats'`) is never true.
+- **`Astro.url.pathname` ends in a slash** (`/blog/stats/`), in a build and in the dev server: "`directory` - The `Astro.url.pathname` will include a trailing slash to mimic folder behavior" (same reference, [Effect on Astro.url](https://docs.astro.build/en/reference/configuration-reference/#effect-on-astrourl)). It also carries the base path. `getPathname()` and `stripBasePath()` read it back to the route, and `getPageMetadata()` and `getSocialImageUrl()` go through them; the layout builds the canonical link and `og:url` as `getFullUrl(stripBasePath(Astro.url.pathname))`. Read the pathname through those: a raw comparison (`Astro.url.pathname === '/stats'`) is never true, and `getUrl()` would add the base path to it a second time.
 
 The manifest scope needs the root's slash for a second reason: a scope is matched as a string prefix, so `/blog` would also claim `/blogroll`.
 

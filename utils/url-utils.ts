@@ -51,6 +51,22 @@ export const withTrailingSlash = (path: string): string =>
   path.endsWith('/') || FILE_PATH_PATTERN.test(path) ? path : `${path}/`;
 
 /**
+ * The URL path a route or file of the site is served at under a base path.
+ * The base is always added: a route can begin with the base's own segment
+ * ('/word/calm' under the base '/word' is served at '/word/word/calm/'), so
+ * no path can be tested for already having it. A pathname that does carry
+ * the base (Astro.url.pathname) is read back to its route first.
+ * @param route - Route ('/stats') or file path ('/rss.xml') from the site root
+ * @param basePath - Base path, '/' for the root; a trailing slash is ignored
+ * @returns URL path with the base: a page ends in a slash, a file does not
+ */
+export const joinBasePath = (route: string, basePath: string): string => {
+  const base = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
+  const rooted = route.startsWith('/') ? route : `/${route}`;
+  return base + withTrailingSlash(rooted);
+};
+
+/**
  * The route a served page path stands for: Astro.url.pathname is
  * '/stats/' where the route, and every key derived from it, is '/stats'.
  * The root stays '/'.

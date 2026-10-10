@@ -18,7 +18,7 @@ import {
   getMonthUrl,
   getStatUrl,
 } from '#astro-utils/url-utils';
-import { isPathUnderBase, withoutTrailingSlash, withTrailingSlash } from '#utils/url-utils';
+import { isPathUnderBase, joinBasePath, withoutTrailingSlash, withTrailingSlash } from '#utils/url-utils';
 
 declare const mockEnv: Record<string, string | boolean | undefined>;
 
@@ -81,10 +81,16 @@ describe('utils', () => {
       expect(getUrl('/20240319')).toBe('/blog/20240319/');
     });
 
-    it('prefixes a path that merely shares its first characters with the base path', () => {
+    it('adds the base path to a route that begins with the base path itself', () => {
+      // The argument is a route, never a pathname that already has the base:
+      // '/word/calm' is the word page wherever the site is deployed
+      mockEnv.BASE_PATH = '/word';
+      expect(getUrl('/word')).toBe('/word/word/');
+      expect(getUrl('/word/calm')).toBe('/word/word/calm/');
+
       mockEnv.BASE_PATH = '/app';
       expect(getUrl('/apple')).toBe('/app/apple/');
-      expect(getUrl('/app/x')).toBe('/app/x/');
+      expect(getUrl('/app/x')).toBe('/app/app/x/');
     });
 
     it('names the site root under a base path with its trailing slash', () => {
@@ -92,18 +98,13 @@ describe('utils', () => {
       mockEnv.BASE_PATH = '/blog';
       expect(getUrl('/')).toBe('/blog/');
       expect(getUrl()).toBe('/blog/');
-      // The base path itself names the root, with or without its slash
-      expect(getUrl('/blog')).toBe('/blog/');
-      expect(getUrl('/blog/')).toBe('/blog/');
 
       mockEnv.BASE_PATH = '/blog/';
       expect(getUrl('/')).toBe('/blog/');
-      expect(getUrl('/blog')).toBe('/blog/');
 
       // A dot in the base path does not make the root a file
       mockEnv.BASE_PATH = '/my.site';
       expect(getUrl('/')).toBe('/my.site/');
-      expect(getUrl('/my.site')).toBe('/my.site/');
       expect(getUrl('/stats')).toBe('/my.site/stats/');
     });
 
@@ -117,16 +118,26 @@ describe('utils', () => {
       expect(getUrl('')).toBe('/');
     });
 
-    it('ends a page URL in one slash, whichever form asks', () => {
-      // Astro.url.pathname already ends in a slash; a route does not
+    it('ends a page URL in one slash, with or without one on the route', () => {
       expect(getUrl('/stats')).toBe('/stats/');
       expect(getUrl('/stats/')).toBe('/stats/');
 
       mockEnv.BASE_PATH = '/blog';
       expect(getUrl('/stats')).toBe('/blog/stats/');
-      expect(getUrl('/blog/stats')).toBe('/blog/stats/');
-      expect(getUrl('/blog/stats/')).toBe('/blog/stats/');
+      expect(getUrl('/stats/')).toBe('/blog/stats/');
     });
+
+    it.each(['/', '/blog', '/blog/', '/word', '/stats', '/my.site'])(
+      'writes a URL under %s that getPathname() and stripBasePath() read back to the route',
+      basePath => {
+        // Layout builds the canonical URL from Astro.url.pathname this way
+        mockEnv.BASE_PATH = basePath;
+        for (const route of ['/', '/word', '/word/calm', '/stats', '/stats/streaks', '/browse/2024/january']) {
+          expect(getPathname(getUrl(route))).toBe(route);
+          expect(stripBasePath(getUrl(route))).toBe(route);
+        }
+      },
+    );
 
     it('leaves a file URL without a trailing slash', () => {
       expect(getUrl('/rss.xml')).toBe('/rss.xml');
@@ -176,11 +187,16 @@ describe('utils', () => {
       expect(getFullUrl('/')).toBe('https://example.com/');
     });
 
-    it('gives the home page one URL under a base path, whichever form asks', () => {
+    it('names the home page under a base path', () => {
       mockEnv.BASE_PATH = '/vocab';
       expect(getFullUrl('/')).toBe('https://example.com/vocab/');
-      expect(getFullUrl('/vocab')).toBe('https://example.com/vocab/');
-      expect(getFullUrl('/vocab/')).toBe('https://example.com/vocab/');
+      expect(getFullUrl()).toBe('https://example.com/vocab/');
+    });
+
+    it('adds the base path to a route that begins with the base path itself', () => {
+      mockEnv.BASE_PATH = '/stats';
+      expect(getFullUrl('/stats')).toBe('https://example.com/stats/stats/');
+      expect(getFullUrl('/stats/streaks')).toBe('https://example.com/stats/stats/streaks/');
     });
 
     it('does not double a base path that SITE_URL repeats', () => {
@@ -300,6 +316,49 @@ describe('utils', () => {
 
     it('reads a dot in an earlier segment as part of a page path', () => {
       expect(withTrailingSlash('/a.b/stats')).toBe('/a.b/stats/');
+    });
+  });
+
+  describe('joinBasePath', () => {
+    it('serves a route at the root as itself', () => {
+      expect(joinBasePath('/', '/')).toBe('/');
+      expect(joinBasePath('/stats', '/')).toBe('/stats/');
+      expect(joinBasePath('/rss.xml', '/')).toBe('/rss.xml');
+    });
+
+    it('puts the base path before the route, with or without a slash on the base', () => {
+      expect(joinBasePath('/', '/blog')).toBe('/blog/');
+      expect(joinBasePath('/stats', '/blog')).toBe('/blog/stats/');
+      expect(joinBasePath('/stats', '/blog/')).toBe('/blog/stats/');
+      expect(joinBasePath('/rss.xml', '/blog')).toBe('/blog/rss.xml');
+    });
+
+    it('adds a base path named like a section to that section\'s own routes', () => {
+      expect(joinBasePath('/word', '/word')).toBe('/word/word/');
+      expect(joinBasePath('/word/calm', '/word')).toBe('/word/word/calm/');
+      expect(joinBasePath('/words.json', '/word')).toBe('/word/words.json');
+      expect(joinBasePath('/stats', '/stats')).toBe('/stats/stats/');
+      expect(joinBasePath('/stats/streaks', '/stats')).toBe('/stats/stats/streaks/');
+      expect(joinBasePath('/browse', '/stats')).toBe('/stats/browse/');
+    });
+
+    it('adds a base path named like the image directory to an image path', () => {
+      expect(joinBasePath('/demo/images/social/pages/stats.png', '/demo'))
+        .toBe('/demo/demo/images/social/pages/stats.png');
+      expect(joinBasePath('/images/social/pages/stats.png', '/images'))
+        .toBe('/images/images/social/pages/stats.png');
+    });
+
+    it('reads a route given without its leading slash from the site root', () => {
+      expect(joinBasePath('', '/')).toBe('/');
+      expect(joinBasePath('stats', '/')).toBe('/stats/');
+      expect(joinBasePath('', '/blog')).toBe('/blog/');
+      expect(joinBasePath('stats', '/blog')).toBe('/blog/stats/');
+    });
+
+    it('keeps the root a directory under a base path with a dot in it', () => {
+      expect(joinBasePath('/', '/my.site')).toBe('/my.site/');
+      expect(joinBasePath('/stats', '/my.site')).toBe('/my.site/stats/');
     });
   });
 
