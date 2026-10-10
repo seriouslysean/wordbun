@@ -380,7 +380,7 @@ npm keeps any flag written before a bare `--` for itself, so a tool's flags alwa
 
 ### `add-word.ts`
 
-Adds a word with dictionary validation and duplicate detection. A word page's URL is `/word/<slug>`, and `slugify()` keeps only ASCII letters, digits, underscores and hyphens, so add-word refuses a word whose slug is empty (`&`, `日本`: the page would be `/word/` itself) and a word whose slug a different stored word already has (`can't` beside `cant`: both would be `/word/cant`). `create-site` refuses a seed word with an empty slug for the same reason. Only a new word is checked: the build and regenerate-all-words, which keeps each word's text, read stored words as they are. It does not render the social card: the Add Word workflow runs the complete image generation afterwards (see Image Generation).
+Adds a word with dictionary validation and duplicate detection. A word page's URL is `/word/<slug>/`, and `slugify()` keeps only ASCII letters, digits, underscores and hyphens, so add-word refuses a word whose slug is empty (`&`, `日本`: the page would be `/word/` itself) and a word whose slug a different stored word already has (`can't` beside `cant`: both would be `/word/cant/`). `create-site` refuses a seed word with an empty slug for the same reason. Only a new word is checked: the build and regenerate-all-words, which keeps each word's text, read stored words as they are. It does not render the social card: the Add Word workflow runs the complete image generation afterwards (see Image Generation).
 
 ```sh
 npm run tool:local tools/add-word.ts serendipity
@@ -426,35 +426,60 @@ Two-tier system supporting root and subdirectory deployments:
 
 | Function | Purpose | Example (`BASE_PATH="/blog"`) |
 |----------|---------|-------------------------------|
-| `getUrl(path)` | Relative URL with BASE_PATH | `getUrl('/word/hello')` -> `/blog/word/hello` |
-| `getFullUrl(path)` | Absolute URL for SEO | `getFullUrl('/word/hello')` -> `https://example.com/blog/word/hello` |
+| `getUrl(path)` | Relative URL with BASE_PATH | `getUrl('/word/hello')` -> `/blog/word/hello/` |
+| `getFullUrl(path)` | Absolute URL for SEO | `getFullUrl('/word/hello')` -> `https://example.com/blog/word/hello/` |
 
 `getFullUrl()` uses `getUrl()` internally to ensure BASE_PATH consistency.
 
-The site root is the one URL that keeps a trailing slash: `getUrl('/')` is `/blog/` and `getFullUrl('/')` is `https://example.com/blog/`. Under a base path the root is a directory, which a static host serves only at its slash URL (GitHub Pages answers `/blog` with a 301 to `/blog/`), and `@astrojs/sitemap` names it the same way. The canonical link, `og:url`, the JSON-LD `WebSite` and breadcrumb URLs, the feed's channel link and the manifest `start_url` and `scope` all come from these two helpers, so they agree. The manifest scope needs the slash for a second reason: a scope is matched as a string prefix, so `/blog` would also claim `/blogroll`.
-
 `SITE_URL` is the origin alone; a subdirectory belongs in `BASE_PATH` (Astro's [GitHub Pages guide](https://docs.astro.build/en/guides/deploy/github/) sets `site` and `base` the same way). URLs are resolved against the origin, so a `SITE_URL` that repeats the base path does not double it.
 
-**Known limit, open decision.** Every other page is linked without a trailing slash (`trailingSlash: 'never'`) while `build.format` is left at its default, `directory`, which writes `stats/index.html`. Astro leaves trailing slashes on prerendered pages to the host, and GitHub Pages answers `/stats` with a 301 to `/stats/`, so canonical URLs, sitemap entries and internal links to non-root pages each cost a redirect there. Astro's [`build.format` reference](https://docs.astro.build/en/reference/configuration-reference/#buildformat) pairs `directory` with `trailingSlash: 'always'` and `file` with `'never'`; this project runs neither pair. Either pairing changes every page URL or output path, so it is not decided here.
+### Trailing Slashes
+
+A page URL ends in a slash and a file URL does not: `/blog/`, `/blog/stats/` and `/blog/word/hello/`, but `/blog/rss.xml`, `/blog/words.json` and every image. `astro.config.ts` sets `build.format: 'directory'`, which writes each page as `stats/index.html`, with `trailingSlash: 'always'`. That is the pair Astro's [`build.format` reference](https://docs.astro.build/en/reference/configuration-reference/#buildformat) gives: "`directory` - Set `trailingSlash: 'always'`". A static host serves a directory's `index.html` at the slash URL, so the URL a page prints is the URL it is served at, with no redirect.
+
+Code names a route without the slash, and the helpers turn it into the URL:
+
+- **A route is `/stats` or `/word/hello`.** `BASE_PATHS`, `ROUTES` and `URL_PATTERNS` in `constants/urls.ts`, the page metadata keys and the social card names are all keyed that way. Pass a route to `getUrl()`, `getFullUrl()` or `SiteLink`; do not write a URL by hand.
+- **`getUrl()` is the one place a route becomes a URL.** `withTrailingSlash()` in `utils/url-utils.ts` adds the slash unless the last segment has an extension (`FILE_PATH_PATTERN` in `constants/urls.ts`), the same test Astro's dev server uses to tell a file from a page under `'always'` (`hasFileExtension` in `@astrojs/internal-helpers`). No route has a dot in it: `slugify()` drops them. The canonical link, `og:url`, the JSON-LD `WebSite` and breadcrumb URLs, every internal link (`SiteLink`, the word chips, the heatmap, the word graph), the header search results and the random-word button (client scripts that import the same helper), `llms.txt`, the feed's channel and item links, the sitemap line in `robots.txt` and the manifest `start_url` and `scope` all come from these two helpers, so they agree. The sitemap is written by `@astrojs/sitemap`, which reads the same two settings and ends every `<loc>` in a slash.
+- **`Astro.url.pathname` ends in a slash** (`/blog/stats/`), in a build and in the dev server: "`directory` - The `Astro.url.pathname` will include a trailing slash to mimic folder behavior" (same reference, [Effect on Astro.url](https://docs.astro.build/en/reference/configuration-reference/#effect-on-astrourl)). `getPathname()` and `stripBasePath()` read it back to the route, and `getPageMetadata()` and `getSocialImageUrl()` go through them. Read the pathname through those: a raw comparison (`Astro.url.pathname === '/stats'`) is never true.
+
+The manifest scope needs the root's slash for a second reason: a scope is matched as a string prefix, so `/blog` would also claim `/blogroll`.
+
+**The slashless form** (`/stats`) is the host's to answer: "Trailing slashes on prerendered pages are handled by the hosting platform, and may not respect your chosen configuration" ([`trailingSlash`](https://docs.astro.build/en/reference/configuration-reference/#trailingslash)).
+
+| Server | `/stats/` | `/stats` |
+|--------|-----------|----------|
+| GitHub Pages | 200 | 301 to `/stats/` |
+| `python3 -m http.server` in `dist/` | 200 | 301 to `/stats/` |
+| `astro preview` | 200 | 404, Astro's own page: `Not Found (trailingSlash is set to "always")` |
+| `astro dev` | 200 | 404, Astro's own page, which names the setting and links `/stats/` |
+
+Through 3.26 the site linked the slashless form everywhere (`trailingSlash: 'never'` with the same `directory` output), so canonical URLs, sitemap entries and internal links each cost that redirect on GitHub Pages. Links published then keep working there, through the same redirect. The GitHub Pages row was read from the deployed 3.26 demo site, which has the same file layout; the other rows from this build. A host that answers `/stats` with neither the page nor a redirect would break those older links, and none has been tested beyond these four.
+
+**Files.** An endpoint with an extension (`rss.xml`, `words.json`, `manifest.json`, `robots.txt`, `llms.txt`, `humans.txt`, `health.txt`, `theme.css`, `ga-init.js`) is built as that file and matched without a slash in the dev server and the preview as well. The home page is `index.html` and its URL is the root, `/` or `/blog/`.
+
+**The 404 page** is the one page that is not a directory: Astro writes `404.html` at the root. Its route is still `/404`, so its canonical link and `og:url` name `/404/`, which is not where the file is: GitHub Pages serves it with a 200 at `/404` and with a 404 at every missing path, `/404/` among them. The page is `noindex`.
+
+**Feed item identity, open decision.** `@astrojs/rss` writes each item's `<guid>` from its `<link>`, and its item schema has no guid field. So the guids gained the slash together with the links, and a feed reader that keys items by guid shows the items that are in the feed at that release as new, once. Keeping the 3.26 guid while the link changes needs a `<guid>` passed through the item's `customData`, which replaces the generated one only because of how the package merges that field (`Object.assign` in its `generateRSS`), behaviour its README does not state. Not decided here.
 
 ### Route Structure
 
 ```
-/                           # Homepage (current word)
-/word                       # All words
-/word/{word}                # Individual word pages
-/browse                     # Browse hub
-/browse/year                # Words by year index
-/browse/{year}              # Words by year
-/browse/{year}/{month}      # Words by month
-/browse/letter              # Words by starting letter index
-/browse/letter/{letter}     # Words by starting letter
-/browse/length              # Words by length index
-/browse/length/{n}          # Words by length
-/browse/part-of-speech      # Words by part of speech index
-/browse/part-of-speech/{p}  # Words by part of speech
-/stats                      # Statistics hub
-/stats/{category}           # Individual stat pages
+/                            # Homepage (current word)
+/word/                       # All words
+/word/{word}/                # Individual word pages
+/browse/                     # Browse hub
+/browse/year/                # Words by year index
+/browse/{year}/              # Words by year
+/browse/{year}/{month}/      # Words by month
+/browse/letter/              # Words by starting letter index
+/browse/letter/{letter}/     # Words by starting letter
+/browse/length/              # Words by length index
+/browse/length/{n}/          # Words by length
+/browse/part-of-speech/      # Words by part of speech index
+/browse/part-of-speech/{p}/  # Words by part of speech
+/stats/                      # Statistics hub
+/stats/{category}/           # Individual stat pages
 ```
 
 ## Sentry Integration
@@ -566,6 +591,7 @@ The key question for each test: what is the minimum layer that can verify this?
 | What | Why |
 |------|-----|
 | Navigation flows (click link, page loads) | Route resolution only works against built output |
+| An internal link is served with no redirect, at the URL its canonical names | Only a served build shows whether the href a page prints is the URL the page is served at |
 | 404 handling | HTTP status codes require a running server |
 | Meta tags exist in rendered HTML | Verifies build pipeline assembled components correctly |
 | JSON-LD parses as valid JSON | Script tags must survive the build |
@@ -609,12 +635,12 @@ Excluded from Vitest coverage: build-time utilities (`static-file-utils.ts`, `st
 E2E tests run against the built site via `npm run test:e2e` (requires `npm run build` first). Playwright starts its own foreground `astro preview --ignore-lock` on port 4517 (`PORT` in `playwright.config.ts`, `reuseExistingServer: false`), so the run always serves the current `dist/` and never reuses a server on Astro's default 4321. They verify build assembly — that the pipeline correctly assembled components into working pages — not logic (which unit and component tests cover). Five spec files organized by concern:
 
 - **`navigation.spec.ts`** — User journeys: discover a word and navigate between words, browse by year, footer section links, 404 handling
-- **`seo.spec.ts`** — Build output wiring: meta tags present (description, canonical, OpenGraph, Twitter), JSON-LD parseable, RSS and sitemap discoverable
+- **`seo.spec.ts`** — Build output wiring: meta tags present (description, canonical, OpenGraph, Twitter), an internal link served without a redirect at the URL its canonical names, JSON-LD parseable, RSS and sitemap discoverable
 - **`accessibility.spec.ts`** — Structural a11y: skip-to-content keyboard flow, document language and viewport, image alt text, link accessible text, heading outline and named nav landmarks
 - **`search.spec.ts`** — Header search: opens from the icon, filters by starts-with, navigates to a result
 - **`stats.spec.ts`** — `/stats` visualizations: heatmap and connections graph present and navigable, no horizontal scroll
 
-E2E always runs in demo mode — the CI workflow skips `setup-env` and explicitly sets `SOURCE_DIR=demo` (no `BASE_PATH`) so production env vars don't break test selectors. All test URLs omit trailing slashes (`trailingSlash: 'never'`).
+E2E always runs in demo mode — the CI workflow skips `setup-env` and explicitly sets `SOURCE_DIR=demo` (no `BASE_PATH`) so production env vars don't break test selectors. Every page URL in a test ends in a trailing slash (`trailingSlash: 'always'`): `page.goto('/stats/')`, `a[href="/stats/"]`. `astro preview` answers the slashless form with a 404, not the redirect a static host gives. File URLs (`/rss.xml`, `/sitemap-index.xml`) have none.
 
 ### CI Workflows
 
