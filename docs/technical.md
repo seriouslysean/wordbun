@@ -435,12 +435,7 @@ The site root is the one URL that keeps a trailing slash: `getUrl('/')` is `/blo
 
 `SITE_URL` is the origin alone; a subdirectory belongs in `BASE_PATH` (Astro's [GitHub Pages guide](https://docs.astro.build/en/guides/deploy/github/) sets `site` and `base` the same way). URLs are resolved against the origin, so a `SITE_URL` that repeats the base path does not double it.
 
-**Page files.** Every other page is linked without a trailing slash (`trailingSlash: 'never'`) and written as a file named for its route (`build.format: 'file'`): `/stats` is `stats.html`, not `stats/index.html`. That is the pair Astro's [`build.format` reference](https://docs.astro.build/en/reference/configuration-reference/#buildformat) gives: `directory` with `trailingSlash: 'always'`, `file` with `'never'`. Astro leaves trailing slashes on prerendered pages to the host ([`trailingSlash`](https://docs.astro.build/en/reference/configuration-reference/#trailingslash)), and with `directory` GitHub Pages answered `/stats` with a 301 to `/stats/`, so every canonical URL, sitemap entry and internal link to a non-root page cost a redirect. No URL changed with the format: the home page is still `index.html`, `404.html` is still at the root, endpoints (`robots.txt`, `rss.xml`, `theme.css`, `ga-init.js`, `manifest.json`, the sitemap) keep their paths, and the sitemap lists the same URLs, the root alone with a slash.
-
-Two things follow from the format:
-
-- **`Astro.url.pathname` names the output file during a build**: `/stats.html`, and `/index.html` for the home page, where the dev server gives `/stats` and `/` (the reference's [Effect on Astro.url](https://docs.astro.build/en/reference/configuration-reference/#effect-on-astrourl); the home page's name is what the build was seen to produce, the reference shows only `/foo.html`). `toRoutePath()` in `utils/url-utils.ts` is the one place that turns the file into the route. `getPathname()` and `stripBasePath()` apply it after removing the base path, and so does `generateBreadcrumbs()`, so `getPageMetadata()`, `getSocialImageUrl()`, the canonical link and the breadcrumbs all read the route. Read the pathname through those; a raw comparison (`Astro.url.pathname === '/stats'`) holds in the dev server and fails in a build.
-- **A section with pages below it is a file beside a directory of the same name**: `word.html` beside `word/`, `stats.html` beside `stats/`, `browse.html` beside `browse/`, `browse/length.html`, `browse/letter.html` and `browse/part-of-speech.html` beside theirs, and `browse/2024.html` beside `browse/2024/` for each year that has words. None of those directories holds an `index.html`. Astro's preview server answers `/stats` with the file, and E2E reaches these pages through it. Not verified here: that GitHub Pages answers `/stats` with `stats.html`, without a redirect, when `stats/` also exists. That needs a live deploy to confirm.
+**Known limit, open decision.** Every other page is linked without a trailing slash (`trailingSlash: 'never'`) while `build.format` is left at its default, `directory`, which writes `stats/index.html`. Astro leaves trailing slashes on prerendered pages to the host, and GitHub Pages answers `/stats` with a 301 to `/stats/`, so canonical URLs, sitemap entries and internal links to non-root pages each cost a redirect there. Astro's [`build.format` reference](https://docs.astro.build/en/reference/configuration-reference/#buildformat) pairs `directory` with `trailingSlash: 'always'` and `file` with `'never'`; this project runs neither pair. Either pairing changes every page URL or output path, so it is not decided here.
 
 ### Route Structure
 
@@ -573,7 +568,6 @@ The key question for each test: what is the minimum layer that can verify this?
 | Navigation flows (click link, page loads) | Route resolution only works against built output |
 | 404 handling | HTTP status codes require a running server |
 | Meta tags exist in rendered HTML | Verifies build pipeline assembled components correctly |
-| Canonical link names the path a page is served at | Only a build's `Astro.url.pathname` names the output file (`/stats.html`); no lower layer sees it |
 | JSON-LD parses as valid JSON | Script tags must survive the build |
 | RSS feed and sitemap return HTTP 200 | HTTP-level concerns |
 | Skip-to-content keyboard flow | Real focus management in a real browser |
@@ -615,7 +609,7 @@ Excluded from Vitest coverage: build-time utilities (`static-file-utils.ts`, `st
 E2E tests run against the built site via `npm run test:e2e` (requires `npm run build` first). Playwright starts its own foreground `astro preview --ignore-lock` on port 4517 (`PORT` in `playwright.config.ts`, `reuseExistingServer: false`), so the run always serves the current `dist/` and never reuses a server on Astro's default 4321. They verify build assembly — that the pipeline correctly assembled components into working pages — not logic (which unit and component tests cover). Five spec files organized by concern:
 
 - **`navigation.spec.ts`** — User journeys: discover a word and navigate between words, browse by year, footer section links, 404 handling
-- **`seo.spec.ts`** — Build output wiring: meta tags present (description, canonical, OpenGraph, Twitter), canonical links name the served path, JSON-LD parseable, RSS and sitemap discoverable
+- **`seo.spec.ts`** — Build output wiring: meta tags present (description, canonical, OpenGraph, Twitter), JSON-LD parseable, RSS and sitemap discoverable
 - **`accessibility.spec.ts`** — Structural a11y: skip-to-content keyboard flow, document language and viewport, image alt text, link accessible text, heading outline and named nav landmarks
 - **`search.spec.ts`** — Header search: opens from the icon, filters by starts-with, navigates to a result
 - **`stats.spec.ts`** — `/stats` visualizations: heatmap and connections graph present and navigable, no horizontal scroll

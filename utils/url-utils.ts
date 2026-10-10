@@ -38,21 +38,3 @@ export const getPartOfSpeechUrl = (partOfSpeech: string): string => {
  */
 export const isPathUnderBase = (path: string, base: string): boolean =>
   path === base || path.startsWith(`${base}/`);
-
-/**
- * The route a page pathname stands for. With `build.format: 'file'` a build
- * sets Astro.url.pathname to the output file ('/stats.html', and '/index.html'
- * for the home page) where the dev server gives the route ('/stats', '/').
- * Only the home page is named 'index': the word "index" builds
- * '/word/index.html', which is the route '/word/index'. No slug holds a dot,
- * so no route ends in '.html' itself.
- * @see https://docs.astro.build/en/reference/configuration-reference/#effect-on-astrourl
- * @param pathname - Page pathname without the base path
- * @returns The path as the route names it
- */
-export const toRoutePath = (pathname: string): string => {
-  if (pathname === '/index.html') {
-    return '/';
-  }
-  return pathname.endsWith('.html') ? pathname.slice(0, -'.html'.length) : pathname;
-};

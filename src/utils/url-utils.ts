@@ -1,6 +1,6 @@
 import { BASE_PATH, SITE_URL } from 'astro:env/client';
 import { BASE_PATHS, BROWSE_PATHS, ROUTES, STATS_SLUGS } from '#constants/urls';
-import { isPathUnderBase, toRoutePath } from '#utils/url-utils';
+import { isPathUnderBase } from '#utils/url-utils';
 
 // =====================================================
 // URL Slug Utilities
@@ -20,27 +20,26 @@ export const getBasePath = (): string => {
 
 /**
  * Get a clean pathname without the base path
- * Use this with Astro.url.pathname to get the logical path: a build names the
- * output file there ('/blog/stats.html'), the dev server the route
+ * Use this with Astro.url.pathname to get the logical path
  * @param astroPathname - The pathname from Astro.url.pathname
- * @returns Clean pathname without base path or the build's file ending
+ * @returns Clean pathname without base path
  */
 export const getPathname = (astroPathname: string): string => {
   const basePath = getBasePath();
-
+  
   if (basePath === '/') {
-    return toRoutePath(astroPathname);
+    return astroPathname;
   }
-
+  
   // Handle base path with trailing slash
   const cleanBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
-
+  
   if (isPathUnderBase(astroPathname, cleanBasePath)) {
     const withoutBase = astroPathname.slice(cleanBasePath.length);
-    return toRoutePath(withoutBase || '/');
+    return withoutBase || '/';
   }
-
-  return toRoutePath(astroPathname);
+  
+  return astroPathname;
 };
 
 /**
@@ -60,9 +59,8 @@ export const getUrl = (path = '/'): string => {
 
   // The site root under a base path is a directory, and a static host serves
   // a directory only at its trailing-slash URL: /blog redirects to /blog/.
-  // Astro's sitemap names it the same way. `trailingSlash: 'never'` makes the
-  // dev server's Astro.url.pathname '/blog' there, so that form is the root
-  // as well. A build's is '/blog/index.html', which getPathname() reads.
+  // Astro's sitemap names it the same way. `trailingSlash: 'never'` makes
+  // Astro.url.pathname '/blog' there, so that form is the root as well.
   if (path === '/' || path === cleanBasePath) {
     return `${cleanBasePath}/`;
   }

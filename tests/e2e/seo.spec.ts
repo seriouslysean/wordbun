@@ -29,29 +29,6 @@ test.describe('SEO build output', () => {
 		await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/word\//);
 	});
 
-	test('canonical links name the path each page is served at', async ({ page }) => {
-		// A build's Astro.url.pathname names the output file (/stats.html), so
-		// only the built pages show whether that reached the canonical link
-		const canonicalPath = async (): Promise<string> => {
-			const href = await page.locator('link[rel="canonical"]').getAttribute('href');
-			if (href === null) {
-				throw new Error('canonical link has no href');
-			}
-			return new URL(href).pathname;
-		};
-
-		await page.goto('/');
-		expect(await canonicalPath()).toBe('/');
-
-		await page.locator('footer a[href="/stats"]').click();
-		await expect(page).toHaveURL(/\/stats$/);
-		expect(await canonicalPath()).toBe('/stats');
-
-		await page.locator('main a[href^="/stats/"]').first().click();
-		await expect(page).toHaveURL(/\/stats\/.+/);
-		expect(await canonicalPath()).toBe(new URL(page.url()).pathname);
-	});
-
 	test('structured data is present', async ({ page }) => {
 		await page.goto('/');
 

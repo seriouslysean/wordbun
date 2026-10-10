@@ -18,7 +18,7 @@ import {
   getMonthUrl,
   getStatUrl,
 } from '#astro-utils/url-utils';
-import { isPathUnderBase, toRoutePath } from '#utils/url-utils';
+import { isPathUnderBase } from '#utils/url-utils';
 
 declare const mockEnv: Record<string, string | boolean | undefined>;
 
@@ -247,31 +247,6 @@ describe('utils', () => {
     });
   });
 
-  // build.format 'file': a build's Astro.url.pathname names the output file
-  describe('toRoutePath', () => {
-    it('drops the file ending a build puts on a page pathname', () => {
-      expect(toRoutePath('/stats.html')).toBe('/stats');
-      expect(toRoutePath('/browse/2024/january.html')).toBe('/browse/2024/january');
-      expect(toRoutePath('/404.html')).toBe('/404');
-    });
-
-    it('reads the home page file as the root', () => {
-      expect(toRoutePath('/index.html')).toBe('/');
-    });
-
-    it('keeps a page whose own name is index or html', () => {
-      expect(toRoutePath('/word/index.html')).toBe('/word/index');
-      expect(toRoutePath('/word/html.html')).toBe('/word/html');
-    });
-
-    it('leaves a dev server pathname, which already names the route, unchanged', () => {
-      expect(toRoutePath('/')).toBe('/');
-      expect(toRoutePath('/stats')).toBe('/stats');
-      expect(toRoutePath('/word/html')).toBe('/word/html');
-      expect(toRoutePath('')).toBe('');
-    });
-  });
-
   describe('getBasePath', () => {
     it('returns "/" when BASE_PATH is not set', () => {
       mockEnv.BASE_PATH = undefined;
@@ -309,12 +284,6 @@ describe('utils', () => {
       it('handles empty pathname', () => {
         expect(getPathname('')).toBe('');
       });
-
-      it('reads the output file a build names as its route', () => {
-        expect(getPathname('/stats.html')).toBe('/stats');
-        expect(getPathname('/word/index.html')).toBe('/word/index');
-        expect(getPathname('/index.html')).toBe('/');
-      });
     });
 
     describe('with BASE_PATH=/occasional-wotd', () => {
@@ -332,13 +301,6 @@ describe('utils', () => {
       it('returns pathname unchanged if no base path present', () => {
         expect(getPathname('/other/path')).toBe('/other/path');
         expect(getPathname('/words/browse')).toBe('/words/browse');
-      });
-
-      it('reads the output file a build names as its route', () => {
-        expect(getPathname('/occasional-wotd/stats.html')).toBe('/stats');
-        expect(getPathname('/occasional-wotd/word/index.html')).toBe('/word/index');
-        expect(getPathname('/occasional-wotd/index.html')).toBe('/');
-        expect(getPathname('/other/path.html')).toBe('/other/path');
       });
 
       it('handles edge cases', () => {
