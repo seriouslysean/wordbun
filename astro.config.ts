@@ -108,6 +108,11 @@ export default defineConfig({
   site,
   base,
   trailingSlash: 'never',
+  // `file` writes each page as `stats.html`, where the default, `directory`,
+  // writes `stats/index.html` and GitHub Pages answers `/stats` with a 301 to
+  // `/stats/`. Astro's reference pairs `file` with `trailingSlash: 'never'`:
+  // https://docs.astro.build/en/reference/configuration-reference/#buildformat
+  build: { format: 'file' },
   // v7 changes the compressHTML default from `true` to `'jsx'` (collapses
   // whitespace between inline elements). Pin the v6 behavior to keep build
   // output byte-stable across the upgrade.
