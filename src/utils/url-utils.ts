@@ -320,6 +320,14 @@ export const getLetterPatternsUrl = (): string =>
 export const getWordEndingsUrl = (): string => 
   ROUTES.STAT(STATS_SLUGS.WORD_ENDINGS);
 
+/**
+ * Get URL for parts of speech stats section. The words of one part of speech
+ * are a browse page: see getPartOfSpeechUrl.
+ * @returns Parts of speech stats URL
+ */
+export const getPartsOfSpeechStatsUrl = (): string =>
+  ROUTES.STAT(STATS_SLUGS.PARTS_OF_SPEECH);
+
 // =====================================================
 // Specific Stats URLs - Other Stats
 // =====================================================
