@@ -53,10 +53,11 @@ export const URL_PATTERNS = {
 // =====================================================
 
 // A path whose last segment ends in an extension: '/rss.xml',
-// '/images/social/pages/stats.png'. The dev server tells the two apart the
-// same way under `trailingSlash: 'always'` (hasFileExtension in
-// @astrojs/internal-helpers/path). slugify() drops dots, so no page route
-// built below matches.
+// '/images/social/pages/stats.png'. Astro's dev server draws the same line
+// under `trailingSlash: 'always'` (hasFileExtension in
+// @astrojs/internal-helpers/path; its pattern also wants the slash before
+// the segment, which a path given here without one lacks). slugify() drops
+// dots, so no page route built below matches.
 export const FILE_PATH_PATTERN = /[^/]\.\w+$/;
 
 // =====================================================
