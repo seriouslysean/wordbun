@@ -3,7 +3,6 @@ import {
   browserTracingIntegration,
   init,
   replayIntegration,
-  userTimingIntegration,
 } from '@sentry/astro';
 import { SENTRY_DSN, SENTRY_ENVIRONMENT, SITE_ID } from 'astro:env/client';
 
@@ -15,8 +14,6 @@ init({
   integrations: [
     browserSessionIntegration(sentryBrowserBaseline.session),
     browserTracingIntegration(sentryBrowserBaseline.tracing),
-    // SDK 11 moved performance.mark()/measure() spans out of browser tracing
-    userTimingIntegration(),
     // Page text and media unmasked, what a visitor types masked
     replayIntegration(sentryReplayPrivacy),
   ],

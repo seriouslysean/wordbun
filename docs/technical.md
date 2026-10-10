@@ -478,7 +478,7 @@ The `sentry()` integration in `astro.config.ts` takes build-time options only (`
 
 ### Pinned Defaults
 
-SDK 11 collects more than SDK 10 unless told otherwise, so every default it changed is set explicitly. `utils/sentry-options.ts` is the one definition; `sentry.config.shared.js` and `utils/logger.ts` spread it into each `init`. Sources: the SDK's [migration guide](https://github.com/getsentry/sentry-javascript/blob/11.6.0/MIGRATION.md) and [changelog](https://github.com/getsentry/sentry-javascript/blob/11.6.0/CHANGELOG.md).
+SDK 11 collects more than SDK 10 unless told otherwise, so every default it changed is set explicitly, apart from user timing spans (under the table), where it collects less. `utils/sentry-options.ts` is the one definition; `sentry.config.shared.js` and `utils/logger.ts` spread it into each `init`. Sources: the SDK's [migration guide](https://github.com/getsentry/sentry-javascript/blob/11.6.0/MIGRATION.md) and [changelog](https://github.com/getsentry/sentry-javascript/blob/11.6.0/CHANGELOG.md).
 
 | Option | Pinned value | SDK 11 default | Where |
 |--------|--------------|----------------|-------|
@@ -493,9 +493,12 @@ SDK 11 collects more than SDK 10 unless told otherwise, so every default it chan
 | `browserSessionIntegration` `lifecycle` | `'route'` | `'page'` | browser |
 | `browserTracingIntegration` `instrumentBfcacheRestore` | `false` | `true`: a navigation span per back/forward-cache restore | browser |
 | `browserTracingIntegration` `webVitals` | `softNavigations: false`, `bfcacheNavigations: false` | both `true` (span streaming only) | browser |
-| `userTimingIntegration` | added | `performance.mark()` spans dropped from browser tracing | browser |
 
 `traceLifecycle: 'static'` is a compatibility mode the SDK plans to remove in a later major; moving to span streaming then is a behaviour change (the `site` scope tag does not reach streamed spans) and needs its own decision.
+
+`Dedupe` sends nothing more; it is removed for what it would lose. It drops an event that repeats the one before it, comparing the message, fingerprint and stack trace but not the context. The logger sends the message as the event and what differs as context, so a tool that fails on three words in a row (`'Failed to process word'` in `tools/regenerate-all-words.ts`) would report the first only.
+
+One changed default is left as SDK 11 has it: `browserTracingIntegration` no longer turns `performance.mark()` and `performance.measure()` entries into spans, and `userTimingIntegration`, which the migration guide gives to keep them, is not added. No script the build emits makes a mark or a measure, so the integration could only send the names and `detail` of entries made by third-party scripts and browser extensions.
 
 Session Replay is error-only (`replaysOnErrorSampleRate: 1`, `replaysSessionSampleRate: 0`). What a replay may show is `sentryReplayPrivacy` in the same file, a privacy choice and not an SDK 10 pin: page text and media are unmasked (`maskAllText: false`, `blockAllMedia: false`), since the content is public, and input values are masked (`maskAllInputs: true`, which is also the SDK's default; see [Replay privacy](https://docs.sentry.io/platforms/javascript/guides/astro/session-replay/privacy/)). The header search box is the only input, so a replay of a session that hit an error shows one `*` for each character typed there, not the characters. The results listed under the box are page text and stay readable: a replay still shows which words matched.
 
