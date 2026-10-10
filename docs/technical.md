@@ -496,7 +496,17 @@ Three Sentry contexts, each with its own SDK:
 | Server | `@sentry/astro` | `sentry.server.config.js` | Tracing disabled (static site) |
 | CLI | `@sentry/node` | Lazy init in `utils/logger.ts` | Only initializes on first error |
 
-The `sentry()` integration in `astro.config.ts` takes build-time options only (`org`, `project`, `authToken`, read from `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`); runtime options live in the two config files. The release the build injects and uploads source maps under is `SENTRY_RELEASE`, which `astro.config.ts` sets to the same string as `__RELEASE__` when the environment does not.
+The `sentry()` integration in `astro.config.ts` takes build-time options only (`org`, `project`, `authToken`, read from `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`, and `sourcemaps`, under Source Maps below); runtime options live in the two config files. The release the build injects and uploads source maps under is `SENTRY_RELEASE`, which `astro.config.ts` sets to the same string as `__RELEASE__` when the environment does not.
+
+### Source Maps
+
+A Sentry-enabled build makes source maps for Sentry to read and deletes them before the site is deployed. The config leaves `vite.build.sourcemap` unset, so the integration sets it to `'hidden'`: the client build writes `.js.map` files beside its chunks in `dist/_astro/`, and no chunk carries a `sourceMappingURL` comment. What ties a chunk to its uploaded map is the debug ID the plugin writes into the chunk (`sentry-dbid-<uuid>`), which stays in the deployed JavaScript.
+
+`astro.config.ts` sets `sourcemaps.filesToDeleteAfterUpload` to `['./dist/**/*.map']`. It has to be set: the SDK's own default is `./dist/**/client/**/*.map` and `./dist/**/server/**/*.map`, the layout an adapter produces, which matches nothing in a static build, so every deploy served the maps at `/_astro/<chunk>.js.map` (the largest about 1.7 MB). The glob is resolved from the directory the build runs in and names Astro's default `outDir`. The option sits under `sourcemaps` in the integration's options (`@sentry/astro` in the SDK's [migration guide](https://github.com/getsentry/sentry-javascript/blob/11.6.0/MIGRATION.md)); Sentry's [Vite guide](https://docs.sentry.io/platforms/javascript/sourcemaps/uploading/vite/) gives it as the way to keep generated maps from being public.
+
+Deletion does not wait for a successful upload. The plugin deletes in the `finally` of its `writeBundle` hook, after that build's upload call has returned, so the maps are gone whether the upload succeeded, was skipped (Sentry enabled with no `SENTRY_AUTH_TOKEN`) or failed. A failed release or upload is logged (`[sentry-vite-plugin] Error: An error occurred. Couldn't finish all operations`) and does not fail the build: that deploy has its maps in neither place, and its stack traces stay minified in Sentry.
+
+Validation limit: a build with no token, and a build whose upload a closed local port refused, both exit 0 with no `.map` under `dist/`, and the second copied the maps out for upload before deleting them. A successful upload followed by deletion is read from the plugin source, not run. A deploy shows it: `/_astro/<chunk>.js.map` returns 404 on the live site and a new error in Sentry still shows original source.
 
 ### Pinned Defaults
 

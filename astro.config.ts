@@ -206,6 +206,12 @@ export default defineConfig({
       project: process.env.SENTRY_PROJECT,
       org: process.env.SENTRY_ORG,
       authToken: process.env.SENTRY_AUTH_TOKEN,
+      // The SDK's default deletes maps under `dist/**/client/` and
+      // `dist/**/server/`, an adapter's layout. A static build writes them to
+      // `dist/_astro/`, so none matched and every deploy published them.
+      sourcemaps: {
+        filesToDeleteAfterUpload: ['./dist/**/*.map'],
+      },
     })] : []),
     sitemap({
       filter: (page) => !page.endsWith('.txt'),
