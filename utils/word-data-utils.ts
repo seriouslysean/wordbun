@@ -154,44 +154,6 @@ export const getDisplayableDefinitions = (definitions: DictionaryDefinition[]): 
 export const isValidDictionaryData = (data: DictionaryDefinition[]): boolean =>
   getDisplayableDefinitions(data).length > 0;
 
-/**
- * Finds a word's first displayable definition. Its text is what a page shows,
- * as plain text: a cross-reference is kept as the words it links, with no
- * whitespace around the whole. Meta descriptions,
- * JSON-LD and the RSS feed use it as it is.
- *
- * @param definitions - Array of dictionary definitions
- * @returns First displayable definition or null if none found
- */
-export function findValidDefinition(definitions: DictionaryDefinition[]): { text: string; partOfSpeech: string } | null {
-  const [definition] = getDisplayableDefinitions(definitions);
-  if (!definition) {
-    return null;
-  }
-
-  return { text: getDefinitionPlainText(definition), partOfSpeech: definition.partOfSpeech };
-}
-
-/**
- * A word's first displayable definition, its part of speech, and the source
- * the definition came from, read from the stored record alone: which adapter
- * wrote the record does not matter. Empty when nothing is displayable, as for
- * a word without data.
- */
-export const getWordDetails = (wordData: WordData): WordProcessedData => {
-  const [definition] = getDisplayableDefinitions(wordData?.data ?? []);
-  if (!definition) {
-    return { partOfSpeech: '', definition: '', meta: null };
-  }
-
-  const { attributionText, sourceDictionary, sourceUrl } = definition;
-  return {
-    partOfSpeech: definition.partOfSpeech,
-    definition: getDefinitionPlainText(definition),
-    meta: { attributionText, sourceDictionary, sourceUrl },
-  };
-};
-
 interface WordDefinitions {
   definitions: DisplayableDefinition[];
   /** True when the word has no definition of its own and the first displayable one stands in for it. */
@@ -200,9 +162,11 @@ interface WordDefinitions {
 
 /**
  * The one rule for which displayable definitions are a word's own. The senses
- * its page shows (getWordSenses) and the parts of speech it is grouped, browsed
- * and counted under (getWordPartsOfSpeech) both read it, so a word is never
- * listed under a part of speech its own page does not show.
+ * its page shows (getWordSenses), the parts of speech it is grouped, browsed
+ * and counted under (getWordPartsOfSpeech) and its primary definition
+ * (findValidDefinition, getWordDetails) all read it, so a word is never listed
+ * under a part of speech, or described by a definition, that its own page does
+ * not show.
  *
  * A lookup returns compound and derived entries with the headword: "happy
  * hour", a noun, comes back with "happy", and "read", a verb, with "reading".
@@ -213,13 +177,53 @@ interface WordDefinitions {
  * "index"), the first displayable one stands in for it, so a word with
  * anything displayable keeps one definition and its part of speech.
  */
-const getWordDefinitions = (wordData: WordData): WordDefinitions => {
+const getWordDefinitions = (wordData: Pick<WordData, 'word' | 'data'>): WordDefinitions => {
   const displayable = getDisplayableDefinitions(wordData.data);
   const wordSlug = slugify(wordData.word);
   const own = displayable.filter(def => !def.id || slugify(def.id) === wordSlug);
   return own.length > 0
     ? { definitions: own, standIn: false }
     : { definitions: displayable.slice(0, 1), standIn: true };
+};
+
+/**
+ * A word's primary definition: the first of its own definitions
+ * (getWordDefinitions), which is the first sense its page shows, never a
+ * compound's that the dictionary happened to list first. Its text is what a
+ * page shows, as plain text: a cross-reference is kept as the words it links,
+ * with no whitespace around the whole. Meta descriptions, JSON-LD and the RSS
+ * feed use it as it is.
+ *
+ * @param wordData - The word and its definitions, stored or as an adapter answered them
+ * @returns The primary definition, or null when the word has nothing displayable
+ */
+export function findValidDefinition(wordData: Pick<WordData, 'word' | 'data'>): { text: string; partOfSpeech: string } | null {
+  const [definition] = getWordDefinitions(wordData).definitions;
+  if (!definition) {
+    return null;
+  }
+
+  return { text: getDefinitionPlainText(definition), partOfSpeech: definition.partOfSpeech };
+}
+
+/**
+ * A word's primary definition (see findValidDefinition), its part of speech,
+ * and the source the definition came from, read from the stored record alone:
+ * which adapter wrote the record does not matter. Empty when nothing is
+ * displayable, as for a word without data.
+ */
+export const getWordDetails = (wordData: WordData): WordProcessedData => {
+  const [definition] = wordData?.data ? getWordDefinitions(wordData).definitions : [];
+  if (!definition) {
+    return { partOfSpeech: '', definition: '', meta: null };
+  }
+
+  const { attributionText, sourceDictionary, sourceUrl } = definition;
+  return {
+    partOfSpeech: definition.partOfSpeech,
+    definition: getDefinitionPlainText(definition),
+    meta: { attributionText, sourceDictionary, sourceUrl },
+  };
 };
 
 /**

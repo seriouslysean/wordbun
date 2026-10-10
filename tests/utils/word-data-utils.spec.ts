@@ -182,7 +182,7 @@ describe('word-data-utils', () => {
         .toEqual({ partOfSpeech: '', definition: '', meta: null });
     });
 
-    it('reads the first displayable definition and its source from the stored record', () => {
+    it("reads the word's first displayable definition and its source from the stored record", () => {
       const word: WordData = {
         word: 'test',
         date: '20250101',
@@ -207,6 +207,29 @@ describe('word-data-utils', () => {
           sourceDictionary: 'collegiate',
           sourceUrl: 'https://www.merriam-webster.com/dictionary/test',
         },
+      });
+    });
+
+    it("reads the word's own first definition and its source when a compound is stored first", () => {
+      const word: WordData = {
+        word: 'happy',
+        date: '20250101',
+        adapter: 'merriam-webster',
+        data: [
+          {
+            id: 'happy hour',
+            partOfSpeech: 'noun',
+            text: 'a period of reduced prices',
+            sourceUrl: 'https://example.com/happy-hour',
+          },
+          { id: 'happy', partOfSpeech: 'adjective', text: 'enjoying well-being', sourceUrl: 'https://example.com/happy' },
+        ],
+      };
+
+      expect(getWordDetails(word)).toEqual({
+        partOfSpeech: 'adjective',
+        definition: 'enjoying well-being',
+        meta: { attributionText: undefined, sourceDictionary: undefined, sourceUrl: 'https://example.com/happy' },
       });
     });
 
@@ -410,12 +433,12 @@ describe('word-data-utils', () => {
         { text: 'Valid definition', partOfSpeech: 'noun' },
         { text: 'Another valid', partOfSpeech: 'verb' },
       ];
-      const result = findValidDefinition(definitions);
+      const result = findValidDefinition(makeWord('test', '20250101', definitions));
       expect(result).toEqual({ text: 'Valid definition', partOfSpeech: 'noun' });
     });
 
     it('returns null for empty array', () => {
-      expect(findValidDefinition([])).toBeNull();
+      expect(findValidDefinition(makeWord('test', '20250101'))).toBeNull();
     });
 
     it('returns null when no definitions have partOfSpeech', () => {
@@ -423,14 +446,15 @@ describe('word-data-utils', () => {
         { text: 'No part of speech' },
         { text: 'Another without' },
       ];
-      expect(findValidDefinition(definitions)).toBeNull();
+      expect(findValidDefinition(makeWord('test', '20250101', definitions))).toBeNull();
     });
 
     it('returns canonical text without its outer whitespace', () => {
       const definitions: DictionaryDefinition[] = [
         { text: ' A taxonomic order & class ', partOfSpeech: 'noun' },
       ];
-      expect(findValidDefinition(definitions)).toEqual({ text: 'A taxonomic order & class', partOfSpeech: 'noun' });
+      expect(findValidDefinition(makeWord('test', '20250101', definitions)))
+        .toEqual({ text: 'A taxonomic order & class', partOfSpeech: 'noun' });
     });
 
     it('skips empty text values', () => {
@@ -439,8 +463,24 @@ describe('word-data-utils', () => {
         { text: '   ', partOfSpeech: 'verb' },
         { text: 'Valid', partOfSpeech: 'adjective' },
       ];
-      const result = findValidDefinition(definitions);
+      const result = findValidDefinition(makeWord('test', '20250101', definitions));
       expect(result).toEqual({ text: 'Valid', partOfSpeech: 'adjective' });
+    });
+
+    // The compound is another entry's: a description of "happy" taken from it
+    // would describe "happy hour" under the page that shows the adjective
+    it("takes the word's own first definition when a compound is stored first", () => {
+      const definitions: DictionaryDefinition[] = [
+        { id: 'happy hour', partOfSpeech: 'noun', text: 'a period of reduced prices' },
+        { id: 'happy', partOfSpeech: 'adjective', text: 'enjoying well-being' },
+      ];
+      expect(findValidDefinition(makeWord('happy', '20250101', definitions)))
+        .toEqual({ text: 'enjoying well-being', partOfSpeech: 'adjective' });
+    });
+
+    it('needs only the word and its definitions, as an adapter answers them', () => {
+      expect(findValidDefinition({ word: 'test', data: [{ text: 'A sense', partOfSpeech: 'noun' }] }))
+        .toEqual({ text: 'A sense', partOfSpeech: 'noun' });
     });
   });
 
@@ -645,6 +685,17 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       { id: 'cross-index', partOfSpeech: 'verb', text: 'to index under a second heading' },
     ],
   };
+  // The order of a lookup is the dictionary's: "ice cream", a noun, can come
+  // back ahead of the entry for "ice" that the lookup asked for.
+  const iceLike: WordData = {
+    word: 'ice',
+    date: '20241228',
+    adapter: 'merriam-webster',
+    data: [
+      { id: 'ice cream', partOfSpeech: 'noun', text: 'a sweet flavored frozen food' },
+      { id: 'ice', partOfSpeech: 'verb', text: 'to coat with or convert into ice' },
+    ],
+  };
 
   describe('getDisplayableDefinitions', () => {
     it('requires a part of speech and non-empty text', () => {
@@ -805,7 +856,7 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
   });
 
   describe('consumers of the displayability and word-definition rules agree', () => {
-    const corpus: WordData[] = [sadLike, pbjLike, textOnly, emptyText, happyLike, indicesLike];
+    const corpus: WordData[] = [sadLike, pbjLike, textOnly, emptyText, happyLike, indicesLike, iceLike];
 
     it.each([
       { fixture: sadLike, partsOfSpeech: ['adjective'], text: requireValue(sadLike.data[0]).text },
@@ -816,12 +867,19 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       { fixture: happyLike, partsOfSpeech: ['adjective'], text: requireValue(happyLike.data[0]).text },
       // The first definition stands in for a word with no entry of its own
       { fixture: indicesLike, partsOfSpeech: ['noun'], text: requireValue(indicesLike.data[0]).text },
+      // The compound stored first is "ice cream"'s: the primary definition is
+      // the verb the page shows, not the first definition in the record
+      { fixture: iceLike, partsOfSpeech: ['verb'], text: requireValue(iceLike.data[1]).text },
     ])('for $fixture.word', ({ fixture, partsOfSpeech, text }) => {
       const displayed = partsOfSpeech.length > 0;
       const [primary = null] = partsOfSpeech;
 
       expect(getWordSenses(fixture).map(sense => sense.partOfSpeech)).toEqual(partsOfSpeech);
-      expect(findValidDefinition(fixture.data)).toEqual(displayed ? { text, partOfSpeech: primary } : null);
+      // The primary definition is the first sense the page shows, for the
+      // description, the feed and structured data, and for the source link
+      expect(findValidDefinition(fixture)).toEqual(displayed ? { text, partOfSpeech: primary } : null);
+      expect(extractWordDefinition(fixture)).toEqual({ definition: text ?? '', partOfSpeech: primary ?? '' });
+      expect(getWordDetails(fixture)).toMatchObject({ definition: text ?? '', partOfSpeech: primary ?? '' });
       expect(getAvailablePartsOfSpeech([fixture])).toEqual(partsOfSpeech);
       expect(isValidDictionaryData(fixture.data)).toBe(displayed);
 
