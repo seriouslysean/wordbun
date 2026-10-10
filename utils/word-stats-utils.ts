@@ -86,9 +86,10 @@ export const getWordEndingStats = (words: WordData[]): WordEndingStatsResult => 
  * Counts the words under each part of speech, most words first and
  * alphabetical between equal counts. A count is the size of that part of
  * speech's group in groupWordsByPartOfSpeech, the grouping the browse pages
- * list, so the stat and the page it links to cannot disagree: a word with
- * definitions under several parts of speech is counted under each, and the
- * counts can add up to more than the number of words.
+ * list, so the stat and the page it links to cannot disagree: a word whose own
+ * definitions, the senses its page shows, span several parts of speech is
+ * counted under each, and the counts can add up to more than the number of
+ * words.
  */
 export const getPartOfSpeechStats = (words: WordData[]): PartOfSpeechStat[] =>
   Object.entries(groupWordsByPartOfSpeech(words))
