@@ -1,7 +1,8 @@
 /**
  * Sentry options that pin SDK 10 behaviour on SDK 11, which collects more by
- * default. The one definition for all three inits: the browser and build-time
- * server configs (`sentry.config.shared.js`) and the CLI logger
+ * default, and the Session Replay privacy options. The one definition for all
+ * three inits: the browser and build-time server configs
+ * (`sentry.config.shared.js`, `sentry.client.config.js`) and the CLI logger
  * (`utils/logger.ts`). No SDK import at runtime, so it loads everywhere.
  */
 import type { NodeOptions } from '@sentry/node';
@@ -85,4 +86,20 @@ export const sentryBrowserBaseline = {
     instrumentBfcacheRestore: false,
     webVitals: { softNavigations: false, bfcacheNavigations: false },
   },
+} as const;
+
+/**
+ * What a Session Replay may show: a privacy choice, not an SDK 10 pin. Page
+ * text and media are recorded as they are, since the site's content is public
+ * and an unmasked replay is far more useful for debugging. What a visitor
+ * types is not: the value of every input (the header search box is the only
+ * one) is replaced in the browser with one `*` per character before a replay
+ * is sent. Masking inputs is also the SDK's default; it is set here so the
+ * choice is stated.
+ * @see https://docs.sentry.io/platforms/javascript/guides/astro/session-replay/privacy/
+ */
+export const sentryReplayPrivacy = {
+  maskAllText: false,
+  blockAllMedia: false,
+  maskAllInputs: true,
 } as const;
