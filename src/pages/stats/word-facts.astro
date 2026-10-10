@@ -86,41 +86,41 @@ const { title, description } = getPageMetadata(Astro.url.pathname);
     <Heading text={title} />
     <DescriptionText text={description} />
 
-    {lengthItems.length && (
+    {lengthItems.length > 0 && (
       <StatsSection title={t('stats.lengths_heading')}>
-        {lengthItems.filter(item => !item.isWord).length && (
+        {lengthItems.filter(item => !item.isWord).length > 0 && (
           <DefinitionList items={lengthItems.filter(item => !item.isWord)} />
         )}
-        {lengthItems.filter(item => item.isWord).length && (
+        {lengthItems.filter(item => item.isWord).length > 0 && (
           <DefinitionList items={lengthItems.filter(item => item.isWord)} valueType="word" reverseWord />
         )}
       </StatsSection>
     )}
 
-    {syllableItems.length && (
+    {syllableItems.length > 0 && (
       <StatsSection title={t('stats.syllables_heading')}>
         <DefinitionList items={syllableItems} valueType="word" reverseWord />
       </StatsSection>
     )}
 
-    {letterCompositionItems.length && (
+    {letterCompositionItems.length > 0 && (
       <StatsSection title={t('stats.composition_heading')}>
-        {letterCompositionItems.filter(item => !item.isWord).length && (
+        {letterCompositionItems.filter(item => !item.isWord).length > 0 && (
           <DefinitionList items={letterCompositionItems.filter(item => !item.isWord)} />
         )}
-        {letterCompositionItems.filter(item => item.isWord).length && (
+        {letterCompositionItems.filter(item => item.isWord).length > 0 && (
           <DefinitionList items={letterCompositionItems.filter(item => item.isWord)} valueType="word" reverseWord />
         )}
       </StatsSection>
     )}
 
-    {letterFrequencyItems.length && (
+    {letterFrequencyItems.length > 0 && (
       <StatsSection title={t('stats.frequency_heading')}>
         <DefinitionList items={letterFrequencyItems} />
       </StatsSection>
     )}
 
-    {specialWordItems.length && (
+    {specialWordItems.length > 0 && (
       <StatsSection title={t('stats.special_heading')}>
         <DefinitionList items={specialWordItems} />
       </StatsSection>

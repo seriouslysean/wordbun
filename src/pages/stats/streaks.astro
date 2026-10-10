@@ -58,7 +58,7 @@ const { title, description } = getPageMetadata(Astro.url.pathname);
       <DefinitionList items={streakItems} />
     </StatsSection>
 
-    {antiStreakItems.length && (
+    {antiStreakItems.length > 0 && (
       <StatsSection title={t('stats.anti_streak_heading')}>
         <DefinitionList items={antiStreakItems} />
         

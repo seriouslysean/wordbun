@@ -34,7 +34,7 @@ const { title, description } = getPageMetadata(Astro.url.pathname);
     <Heading text={title} />
     <DescriptionText text={description} />
 
-    {wordEndingItems.length && (
+    {wordEndingItems.length > 0 && (
       <StatsSection title={t('stats.suffix_heading')}>
         <DefinitionList items={wordEndingItems.map(item => ({
           label: item.label,
