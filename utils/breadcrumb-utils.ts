@@ -5,7 +5,7 @@
 
 import { URL_PATTERNS } from '#constants/urls';
 import { getPageTitle } from '#utils/page-metadata-utils';
-import { isPathUnderBase } from '#utils/url-utils';
+import { isPathUnderBase, toRoutePath } from '#utils/url-utils';
 
 export interface BreadcrumbItem {
   label: string;
@@ -14,7 +14,7 @@ export interface BreadcrumbItem {
 
 /**
  * Generate breadcrumb items from a URL pathname
- * @param pathname - The URL pathname to parse
+ * @param pathname - The URL pathname to parse, as Astro.url.pathname gives it
  * @param basePath - The base path to filter out (e.g., from BASE_PATH env var)
  * @param word - The word a word page shows; the URL holds only its slug
  * @returns Array of breadcrumb items with labels and hrefs
@@ -34,8 +34,10 @@ export function generateBreadcrumbs(pathname: string, basePath?: string, word?: 
     return [];
   }
   
-  const segments = pathWithoutBase.split('/').filter(Boolean);
-  
+  // A build's pathname names the output file: 'stats.html', and 'index.html'
+  // for the home page
+  const segments = toRoutePath(`/${pathWithoutBase}`).split('/').filter(Boolean);
+
   if (segments.length === 0) {
     return [];
   }

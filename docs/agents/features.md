@@ -288,7 +288,7 @@ helpers that do real work: `getBasePath`, `getPathname`, `getUrl`,
 - `src/utils/word-data-utils.ts` contains no `Object.groupBy` calls; all
   four `groupWordsBy*` exports are one-line delegators.
 - Stats pages render identical HTML before and after — verified by diffing
-  `dist/stats/**`.
+  `dist/stats.html` and `dist/stats/**`.
 - Architecture test asserts `groupWordsByLength` etc. are imported from
   `#utils/word-data-utils`.
 - `src/utils/url-utils.ts` exports drop from 40 to ~17.
@@ -303,8 +303,8 @@ helpers that do real work: `getBasePath`, `getPathname`, `getUrl`,
 5. Delete the 23 zero-arg `STATS_SLUGS`/`BASE_PATHS`/`BROWSE_PATHS`
    wrappers in `src/utils/url-utils.ts`.
 6. Update the two stats pages to import constants directly.
-7. Diff `dist/stats/index.html` and `dist/stats/letter-patterns/index.html`
-   against pre-change build.
+7. Diff `dist/stats.html` and `dist/stats/letter-patterns.html` against
+   pre-change build.
 8. Run all gates.
 
 **Out-of-scope:** renaming exports, changes to `ROUTES`/`BASE_PATHS`/

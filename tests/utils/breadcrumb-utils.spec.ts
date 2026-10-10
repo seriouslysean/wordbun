@@ -80,6 +80,16 @@ describe('generateBreadcrumbs', () => {
     expect(generateBreadcrumbs('/app/', '/app/')).toEqual([]);
   });
 
+  it('reads the output file a build names as the route it is', () => {
+    // build.format 'file': Astro.url.pathname is /stats/palindromes.html in a
+    // build, and /index.html for the home page
+    expect(generateBreadcrumbs('/index.html')).toEqual([]);
+    expect(generateBreadcrumbs('/blog/index.html', '/blog')).toEqual([]);
+    expect(generateBreadcrumbs('/stats/palindromes.html')).toEqual(generateBreadcrumbs('/stats/palindromes'));
+    expect(generateBreadcrumbs('/blog/stats/palindromes.html', '/blog')).toEqual(generateBreadcrumbs('/stats/palindromes'));
+    expect(generateBreadcrumbs('/word/index.html', undefined, 'index').at(-1)).toEqual({ label: 'index', href: '/word/index' });
+  });
+
   it('should treat regex metacharacters in the base path literally', () => {
     const stripped = generateBreadcrumbs('/a.b/words', '/a.b');
     expect(stripped.map(crumb => crumb.href)).toEqual(['/', '/words']);

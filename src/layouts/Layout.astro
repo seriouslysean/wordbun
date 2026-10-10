@@ -14,7 +14,7 @@ import { getSocialImageUrl } from '#astro-utils/image-utils';
 import { STRUCTURED_DATA_TYPE, type StructuredDataType } from '#astro-utils/schema-utils';
 import { getMetaDescription, seoConfig } from '#astro-utils/seo-utils';
 import { getAsciiArt } from '#astro-utils/static-file-utils';
-import { getFullUrl,getUrl } from '#astro-utils/url-utils';
+import { getFullUrl, getUrl, stripBasePath } from '#astro-utils/url-utils';
 import { extractWordDefinition } from '#astro-utils/word-data-utils';
 import { getOpenGraphLocale, t } from '#utils/i18n-utils';
 import { formatPageTitle } from '#utils/page-title-utils';
@@ -34,7 +34,8 @@ const { title, word, description, structuredDataType, noindex, nofollow, itemCou
 
 const ogType = structuredDataType === STRUCTURED_DATA_TYPE.WORD_SINGLE ? 'article' : 'website';
 
-const currentUrl = getFullUrl(Astro.url.pathname);
+// A build's Astro.url.pathname names the output file (/stats.html), not the URL
+const currentUrl = getFullUrl(stripBasePath(Astro.url.pathname));
 const metaDescription = description || getMetaDescription();
 
 const wordData = word || null;
