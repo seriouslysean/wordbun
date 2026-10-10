@@ -163,28 +163,24 @@ function createPageMetadata(stats: PrecomputedStats): Record<string, PageMeta> {
       title: t('stats.word_facts_heading'),
       description: t('stats.word_facts_description'),
       category: 'pages',
-      secondaryText: t('stats.word_facts_subheading'),
     },
     [ROUTES.STAT(STATS_SLUGS.STREAKS)]: {
       type: 'static',
       title: t('stats.streaks_index_heading'),
       description: t('stats.streaks_index_description'),
       category: 'pages',
-      secondaryText: t('stats.streaks_index_subheading'),
     },
     [ROUTES.STAT(STATS_SLUGS.LETTER_PATTERNS)]: {
       type: 'static',
       title: t('stats.letter_patterns_index_heading'),
       description: t('stats.letter_patterns_index_description'),
       category: 'pages',
-      secondaryText: t('stats.letter_patterns_index_subheading'),
     },
     [ROUTES.STAT(STATS_SLUGS.WORD_ENDINGS)]: {
       type: 'static',
       title: t('stats.word_endings_index_heading'),
       description: t('stats.word_endings_index_description'),
       category: 'pages',
-      secondaryText: t('stats.word_endings_index_subheading'),
     },
     [ROUTES.STAT(STATS_SLUGS.PARTS_OF_SPEECH)]: {
       type: 'static',
