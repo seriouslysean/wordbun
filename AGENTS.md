@@ -215,7 +215,7 @@ All config via environment variables validated in `astro.config.ts` (single sour
 - `getFullUrl(path)` — absolute URL for SEO/social sharing
 - Never hardcode paths; always use these helpers
 - A route is written without a trailing slash (`/stats`, `ROUTES.*`); the helpers end a page URL in one (`/stats/`) and leave a file URL (`/rss.xml`) without. Pages are built as directories (`build.format: 'directory'`, `trailingSlash: 'always'`)
-- `Astro.url.pathname` ends in a slash: read it through `getPathname()` or `stripBasePath()`, never compare it raw
+- `Astro.url.pathname` ends in a slash and already carries `BASE_PATH`: read it through `getPathname()` or `stripBasePath()`, never compare it raw, and never pass it to `getUrl()` or `getFullUrl()`, which take a route and always add the base
 
 ## Quality Gates
 

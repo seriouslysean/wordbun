@@ -79,7 +79,7 @@ TypeScript aliases (`#utils`, `#astro-utils`, `#types`, `#constants`, `#config`,
 
 - Environment validation and CSP live in `astro.config.ts`. Dynamic inline content that cannot be auto-hashed goes in a same-origin endpoint (`src/pages/theme.css.ts`, `src/pages/ga-init.js.ts`), not inline `<style set:html>`, `<script is:inline>`, or `define:vars`.
 - Stats definitions live in `constants/stats.ts`, URL patterns in `constants/urls.ts`.
-- URLs: `getUrl(path)` for internal navigation (adds `BASE_PATH`), `getFullUrl(path)` for absolute SEO and social URLs. Never hardcode paths. Pass a route without a trailing slash (`/stats`); the helpers end a page URL in one (`/stats/`) and leave a file URL (`/rss.xml`) without. `Astro.url.pathname` ends in a slash: read it through `getPathname()` or `stripBasePath()`.
+- URLs: `getUrl(path)` for internal navigation (adds `BASE_PATH`), `getFullUrl(path)` for absolute SEO and social URLs. Never hardcode paths. Pass a route without a trailing slash (`/stats`); the helpers end a page URL in one (`/stats/`) and leave a file URL (`/rss.xml`) without. `Astro.url.pathname` ends in a slash and already carries `BASE_PATH`: read it through `getPathname()` or `stripBasePath()`, and never pass it to `getUrl()` or `getFullUrl()`, which take a route and always add the base.
 
 ## Error Handling
 

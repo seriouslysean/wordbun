@@ -104,6 +104,11 @@ if (!process.env.SENTRY_RELEASE) {
   process.env.SENTRY_RELEASE = release;
 }
 
+// The build plugin uploads source maps through the Sentry CLI, which reports
+// about itself to Sentry on its own: `telemetry: false` on the integration
+// does not reach it. A value the environment already sets is kept.
+process.env.SENTRY_CLI_NO_TELEMETRY ??= '1';
+
 export default defineConfig({
   site,
   base,
