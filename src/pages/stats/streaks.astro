@@ -12,18 +12,19 @@ import {
 } from '#astro-utils/word-data-utils';
 import { t, tp } from '#utils/i18n-utils';
 import { formatDate } from '#utils/date-utils';
+import { getCurrentStreakUrl, getLongestStreakUrl } from '#astro-utils/url-utils';
 
 
 const streakItems = [
   {
     label: t('stats.current_streak'),
     value: tp('stats.days', streakStats.currentStreak),
-    ...(streakStats.currentStreak > 0 ? { href: '/stats/current-streak' } : {})
+    ...(streakStats.currentStreak > 0 ? { href: getCurrentStreakUrl() } : {})
   },
   {
     label: t('stats.longest_streak'),
     value: tp('stats.days', streakStats.longestStreak),
-    ...(streakStats.longestStreak > 0 ? { href: '/stats/longest-streak' } : {})
+    ...(streakStats.longestStreak > 0 ? { href: getLongestStreakUrl() } : {})
   }
 ];
 
