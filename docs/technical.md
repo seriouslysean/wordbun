@@ -496,7 +496,7 @@ Three Sentry contexts, each with its own SDK:
 | Server | `@sentry/astro` | `sentry.server.config.js` | Tracing disabled (static site) |
 | CLI | `@sentry/node` | Lazy init in `utils/logger.ts` | Only initializes on first error |
 
-The `sentry()` integration in `astro.config.ts` takes build-time options only (`org`, `project`, `authToken`, read from `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`, and `sourcemaps`, under Source Maps below); runtime options live in the two config files. The release the build injects and uploads source maps under is `SENTRY_RELEASE`, which `astro.config.ts` sets to the same string as `__RELEASE__` when the environment does not.
+The `sentry()` integration in `astro.config.ts` takes build-time options only (`org`, `project`, `authToken`, read from `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`, with `sourcemaps` and `telemetry` under Source Maps and Build Telemetry below); runtime options live in the two config files. The release the build injects and uploads source maps under is `SENTRY_RELEASE`, which `astro.config.ts` sets to the same string as `__RELEASE__` when the environment does not.
 
 ### Source Maps
 
@@ -507,6 +507,12 @@ A Sentry-enabled build makes source maps for Sentry to read and deletes them bef
 Deletion does not wait for a successful upload. The plugin deletes in the `finally` of its `writeBundle` hook, after that build's upload call has returned, so the maps are gone whether the upload succeeded, was skipped (Sentry enabled with no `SENTRY_AUTH_TOKEN`) or failed. A failed release or upload is logged (`[sentry-vite-plugin] Error: An error occurred. Couldn't finish all operations`) and does not fail the build: that deploy has its maps in neither place, and its stack traces stay minified in Sentry.
 
 Validation limit: a build with no token, and a build whose upload a closed local port refused, both exit 0 with no `.map` under `dist/`, and the second copied the maps out for upload before deleting them. A successful upload followed by deletion is read from the plugin source, not run. A deploy shows it: `/_astro/<chunk>.js.map` returns 404 on the live site and a new error in Sentry still shows original source.
+
+### Build Telemetry
+
+`telemetry: false` in the same options turns off what the build plugin reports about itself. The integration passes `telemetry ?? true` to the Vite plugin, so left unset, a build aimed at sentry.io sends a Sentry-owned project a session and sampled `Sentry Bundler Plugin execution` transactions, tagged with the org and project slugs, the Node version, the platform and which plugin options are set, and prints ``[sentry-vite-plugin] Info: Sending telemetry data on issues and performance to Sentry. To disable telemetry, set `options.telemetry` to `false`.`` once per Vite build. With the option off the line is gone and the plugin sends nothing. Sentry's [Astro source maps guide](https://docs.sentry.io/platforms/javascript/guides/astro/sourcemaps/) names the option: "You can disable telemetry collection by setting `telemetry: false` in the `sentry` integration options."
+
+Open decision: the option stops at the plugin. To create the release and upload the maps the plugin calls the Sentry CLI (the `sentry` package, a dependency of `@sentry/bundler-plugins`), which reports about itself to a second Sentry-owned project unless `SENTRY_CLI_NO_TELEMETRY=1` or `DO_NOT_TRACK=1` is in the build's environment. Nothing here sets either, so a build that has a token still attempts that connection.
 
 ### Pinned Defaults
 
