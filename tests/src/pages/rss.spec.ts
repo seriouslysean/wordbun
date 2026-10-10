@@ -36,6 +36,14 @@ describe('RSS feed', () => {
     expect(feed).toContain('<link>https://test.com/word/occasional/</link>');
   });
 
+  it('keeps each item guid as the slashless URL it had before 3.27.0, exactly once', async () => {
+    const feed = await (await GET()).text();
+
+    expect(feed.match(/<guid[^>]*>[^<]*<\/guid>/g)).toEqual([
+      '<guid isPermaLink="true">https://test.com/word/occasional</guid>',
+    ]);
+  });
+
   it('links the channel to the site home page under BASE_PATH', async () => {
     mockEnv.BASE_PATH = '/vocab';
 
