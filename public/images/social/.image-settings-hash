@@ -1,5 +1,5 @@
 {
-  "settings": "718dc03cbd45",
+  "settings": "27a89794d38d",
   "cards": {
     "social/2022/20220731-hi.png": "9c0012448e32",
     "social/2025/20250702-sign.png": "2c21346c10cb",
@@ -102,6 +102,7 @@
     "social/2026/20260627-doorknob.png": "66e721d55c2f",
     "social/2026/20260828-picturesque.png": "cc419c3946f9",
     "social/2026/20260907-crunch.png": "b91ed71908bc",
+    "social/2026/20261011-pumpkin.png": "573ceb704a81",
     "social/pages/404.png": "2ed66b13898d",
     "social/pages/browse-2022-july.png": "431786303081",
     "social/pages/browse-2022.png": "557f56bf9642",
@@ -118,6 +119,7 @@
     "social/pages/browse-2026-january.png": "8624b67b4a79",
     "social/pages/browse-2026-june.png": "5cbf35aeefd4",
     "social/pages/browse-2026-march.png": "11aa470a4358",
+    "social/pages/browse-2026-october.png": "3be1c5fe4efa",
     "social/pages/browse-2026-september.png": "3846ae4356a9",
     "social/pages/browse-2026.png": "9de61188df97",
     "social/pages/browse-length-10.png": "5362c903df13",
@@ -175,6 +177,7 @@
     "social/pages/stats-milestone-words.png": "05768afde1b1",
     "social/pages/stats-most-common-letter.png": "858e80fbb3cf",
     "social/pages/stats-palindromes.png": "8b3489c1926a",
+    "social/pages/stats-parts-of-speech.png": "61757bdb72ac",
     "social/pages/stats-same-start-end.png": "5d5a3e978f4f",
     "social/pages/stats-streaks.png": "76e987065457",
     "social/pages/stats-triple-letters.png": "d01e0cd59d15",

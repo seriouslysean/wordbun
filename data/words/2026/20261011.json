@@ -1,0 +1,108 @@
+{
+    "word": "pumpkin",
+    "date": "20261011",
+    "adapter": "merriam-webster",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "pumpkin",
+            "partOfSpeech": "noun",
+            "text": "a fruit of any of various cultivars of herbaceous plants (Cucurbita pepo, C. maxima, C. moschata, C. ficifolia, and C. argyrosperma) of the gourd family that is typically round and orange but may be another color or shape, that has a hard usually smooth skin with shallow longitudinal grooves, and that is grown for ornamental use or for its fibrous pale flesh used especially in baking or as feed for livestock",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/pumpkin"
+        },
+        {
+            "id": "pumpkin",
+            "partOfSpeech": "noun",
+            "text": "any of several annual chiefly trailing American plants that bear pumpkins",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/pumpkin"
+        },
+        {
+            "id": "pumpkin",
+            "partOfSpeech": "noun",
+            "text": "a strong orange color",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/pumpkin"
+        },
+        {
+            "id": "pumpkin spice",
+            "partOfSpeech": "noun",
+            "text": "a mixture of usually cinnamon, nutmeg, ginger, cloves, and often allspice that is commonly used in pumpkin pie —often used before another noun",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/pumpkin",
+            "examples": [
+                "Pumpkin spice is everywhere, and at this point you simply give in to the pounds you'll potentially gain from all the glorious spreads during the holidays.",
+                "By mixing in a few simple ingredients with pumpkin—think vanilla yogurt, brown sugar, pumpkin pie spice and a sprinkling of graham cracker—you create a velvety pumpkin pie experience in a matter of seconds."
+            ]
+        },
+        {
+            "id": "pumpkin-spiced",
+            "partOfSpeech": "adjective",
+            "text": "flavored or scented with pumpkin spice",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/pumpkin",
+            "examples": [
+                "a pumpkin-spiced latte",
+                "pumpkin spiced candles"
+            ]
+        },
+        {
+            "id": "Japanese pumpkin",
+            "partOfSpeech": "noun",
+            "text": "kabocha",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/pumpkin",
+            "examples": [
+                "It's a gluten-free waffle filled with roasted kabocha commonly called Japanese pumpkin."
+            ]
+        },
+        {
+            "id": "kabocha",
+            "partOfSpeech": "noun",
+            "text": "a winter squash (Curcubita maxima) of Japanese origin that is round with somewhat flattened top and bottom, typically dark green skin usually streaked or mottled with pale green, and yellowish-orange sweet flesh —called also Japanese pumpkin",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/pumpkin",
+            "examples": [
+                "Scoop the squash from its rind. There's no need to be too careful; kabocha squash skin is thin and easily eaten.",
+                "Kabochas make a lovely table decoration until they're cooked.",
+                "If you don't have access to kabocha pumpkin, which can be found at the State Farmers Market, it can be substituted for butternut squash or canned pumpkin puree …"
+            ]
+        },
+        {
+            "id": "kobocha",
+            "text": "a winter squash (Curcubita maxima) of Japanese origin that is round with somewhat flattened top and bottom, typically dark green skin usually streaked or mottled with pale green, and yellowish-orange sweet flesh —called also Japanese pumpkin",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/pumpkin",
+            "examples": [
+                "Scoop the squash from its rind. There's no need to be too careful; kabocha squash skin is thin and easily eaten.",
+                "Kabochas make a lovely table decoration until they're cooked.",
+                "If you don't have access to kabocha pumpkin, which can be found at the State Farmers Market, it can be substituted for butternut squash or canned pumpkin puree …"
+            ]
+        }
+    ],
+    "enrichment": {
+        "pronunciation": "ˈpəm(p)-kən",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/p/pumpki02.mp3",
+        "etymology": "alteration of earlier pumpion, modification of French popon, pompon melon, pumpkin, from Latin pepon-, pepo, from Greek pepōn, from pepōn ripened; akin to Greek pessein to cook, ripen — more at cook",
+        "synonyms": [
+            "pumpkin vine",
+            "autumn pumpkin",
+            "Cucurbita pepo"
+        ],
+        "related": [
+            "squash",
+            "squash vine",
+            "vegetable",
+            "veggie"
+        ]
+    }
+}
