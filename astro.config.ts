@@ -1,6 +1,8 @@
 import { execSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
+import type { AstroIntegration } from 'astro';
 import sitemap from '@astrojs/sitemap';
 import sentry from '@sentry/astro';
 import { defineConfig, envField } from 'astro/config';
@@ -107,7 +109,12 @@ if (!process.env.SENTRY_RELEASE) {
 // The build plugin uploads source maps through the Sentry CLI, which reports
 // about itself to Sentry on its own: `telemetry: false` on the integration
 // does not reach it. A value the environment already sets is kept.
-process.env.SENTRY_CLI_NO_TELEMETRY ??= '1';
+if (!process.env.SENTRY_CLI_NO_TELEMETRY) {
+  process.env.SENTRY_CLI_NO_TELEMETRY = '1';
+}
+
+// Sentry consumes this after Astro has resolved CLI overrides such as --outDir.
+const sourceMapsToDelete: string[] = [];
 
 export default defineConfig({
   site,
@@ -207,18 +214,24 @@ export default defineConfig({
     },
   },
   integrations: [
-    ...(sentryEnabled ? [sentry({
+    ...(sentryEnabled ? [{
+      name: 'generated-source-maps',
+      hooks: {
+        'astro:config:done': ({ config }) => {
+          const assetsDirectory = fileURLToPath(new URL(`${config.build.assets}/`, config.outDir));
+          sourceMapsToDelete.push(`${assetsDirectory}**/*.js.map`);
+        },
+      },
+    } satisfies AstroIntegration, sentry({
       project: process.env.SENTRY_PROJECT,
       org: process.env.SENTRY_ORG,
       authToken: process.env.SENTRY_AUTH_TOKEN,
       // The build plugin otherwise sends Sentry a session and timing data
       // about itself, tagged with the org and project, on every build.
       telemetry: false,
-      // The SDK's default deletes maps under `dist/**/client/` and
-      // `dist/**/server/`, an adapter's layout. A static build writes them to
-      // `dist/_astro/`, so none matched and every deploy published them.
+      // Only generated JavaScript maps belong to this cleanup, not public .map files.
       sourcemaps: {
-        filesToDeleteAfterUpload: ['./dist/**/*.map'],
+        filesToDeleteAfterUpload: sourceMapsToDelete,
       },
     })] : []),
     sitemap({

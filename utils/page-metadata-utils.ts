@@ -1,4 +1,4 @@
-import { BASE_PARTS_OF_SPEECH } from '#constants/parts-of-speech';
+import { BASE_PARTS_OF_SPEECH, isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { URL_PATTERNS, BASE_PATHS, BROWSE_PATHS, ROUTES, STATS_SLUGS } from '#constants/urls';
 
 import type { WordData } from '#types';
@@ -485,7 +485,7 @@ export function getPageTitle(path: string): string {
   }
 
   const partOfSpeechMatch = path.match(URL_PATTERNS.PART_OF_SPEECH_PAGE);
-  if (partOfSpeechMatch && partOfSpeechMatch[1]) {
+  if (partOfSpeechMatch && partOfSpeechMatch[1] && isBasePartOfSpeech(partOfSpeechMatch[1])) {
     return t(`parts_of_speech.${partOfSpeechMatch[1]}`);
   }
 
@@ -591,7 +591,7 @@ function getPageMetadataForMap(
 
   // Handle dynamic part-of-speech pages
   const partOfSpeechMatch = path.match(URL_PATTERNS.PART_OF_SPEECH_PAGE);
-  if (partOfSpeechMatch && partOfSpeechMatch[1]) {
+  if (partOfSpeechMatch && partOfSpeechMatch[1] && isBasePartOfSpeech(partOfSpeechMatch[1])) {
     const partOfSpeech = partOfSpeechMatch[1];
     const wordsOfPartOfSpeech = getWordsByPartOfSpeech(partOfSpeech, words);
     const displayName = t(`parts_of_speech.${partOfSpeech}`);

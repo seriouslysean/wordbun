@@ -135,14 +135,14 @@ describe('normalizeWordData', () => {
     expect(normalizeWordData(first.word, 'words/2025/20251103.json')).toEqual(first);
   });
 
-  it.each(['merriam-webster', 'wiktionary', 'manual'])("keeps the entry headwords a %s record stores as ids, a compound's included", (adapter) => {
+  it.each(['merriam-webster', 'wiktionary', 'manual', 'wordnik'])("keeps the entry headwords a %s record stores as ids, a compound's included", (adapter) => {
     const canonical = {
       word: 'happy',
       date: '20250101',
       adapter,
       data: [
-        { id: 'happy', partOfSpeech: 'adjective', text: 'enjoying well-being' },
         { id: 'happy hour', partOfSpeech: 'noun', text: 'a period of reduced prices' },
+        { id: 'happy', partOfSpeech: 'adjective', text: 'enjoying well-being' },
       ],
     };
 
