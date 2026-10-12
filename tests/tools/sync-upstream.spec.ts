@@ -284,6 +284,59 @@ describe('sync-upstream.sh', { timeout: 90000 }, () => {
     });
   });
 
+  // Git refuses the merge itself, but only once the sync branch exists and
+  // with no merge begun, so the abandon command's merge --abort would fail
+  describe('refuses a copy that cannot merge upstream', () => {
+    const expectUntouched = (): void => {
+      expect(syncBranches()).toBe('');
+      expect(git(ctx.site, 'symbolic-ref', '--short', 'HEAD')).toBe('main');
+      expect(isMerging()).toBe(false);
+      expect(git(ctx.site, 'status', '--porcelain', '--untracked-files=all')).toBe('');
+      expect(npmCalls()).toEqual([]);
+    };
+
+    it('made without the engine history, and points at Starting a Site', async () => {
+      release({ 'src/engine.ts': 'export const version = 2;\n' });
+      git(ctx.site, 'switch', '--quiet', '--orphan', 'copied');
+      commit(ctx.site, { 'README.md': 'engine\n', 'src/engine.ts': 'export const version = 1;\n' }, 'files copied in');
+      git(ctx.site, 'branch', '--quiet', '--move', '--force', 'main');
+      const main = git(ctx.site, 'rev-parse', 'main');
+
+      const result = await sync();
+
+      expect(result.code).toBe(1);
+      expect(result.output).toContain('shares no history with upstream/main');
+      expect(result.output).toContain('Starting a Site in docs/README.md');
+      expect(result.output).not.toContain('conflicts');
+      expect(result.output).not.toContain('git merge --abort');
+      expect(git(ctx.site, 'rev-parse', 'main')).toBe(main);
+      expectUntouched();
+    });
+
+    // Its one commit has no parent here, so it shares none with upstream
+    it('cloned shallow, and says how to fetch the rest', async () => {
+      diverge();
+      release({ 'src/engine.ts': 'export const version = 2;\n' });
+      fs.rmSync(ctx.site, { recursive: true, force: true });
+      git(ctx.root, 'clone', '--quiet', '--depth', '1', `file://${ctx.origin}`, 'site');
+      git(ctx.site, 'remote', 'add', 'upstream', '../upstream.git');
+
+      const result = await sync();
+
+      expect(result.code).toBe(1);
+      expect(result.output).toContain('shallow clone');
+      expect(result.output).not.toContain('Starting a Site');
+      expectUntouched();
+
+      const advice = result.output.match(/\((git fetch [^)]+)\)/)?.[1];
+      if (!advice) {
+        throw new Error('sync output omitted the fetch command');
+      }
+      execFileSync('bash', ['-c', advice], { cwd: ctx.site, env: ctx.env, stdio: 'pipe' });
+      expect(git(ctx.site, 'merge-base', 'HEAD', 'upstream/main')).toBe(git(ctx.site, 'rev-parse', 'main~1'));
+    });
+  });
+
   describe('does nothing', () => {
     it('without an upstream remote', async () => {
       git(ctx.site, 'remote', 'remove', 'upstream');

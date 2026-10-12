@@ -11,7 +11,9 @@
 #   1. Refuses to start off the repository root, off main, during a merge or
 #      rebase, or with modified, staged or untracked files. Ignored files such
 #      as .env are fine. Nothing is ever stashed.
-#   2. Fetches upstream and stops if main already contains upstream/main
+#   2. Fetches upstream and stops if main already contains upstream/main, or
+#      if the two share no history: a copy made without the engine's history
+#      cannot merge it
 #   3. Creates sync/upstream-<short sha> from main and merges upstream/main
 #      into it with --no-ff --no-commit, so even a fast-forward stops before a
 #      commit exists
@@ -92,6 +94,19 @@ git fetch upstream --no-tags
 if git merge-base --is-ancestor upstream/main HEAD; then
   echo "Already up to date with upstream/main."
   exit 0
+fi
+
+# Git refuses to merge histories with no common commit, and only once a merge
+# is asked for: by then there would be a sync branch to delete and no merge
+# to abort. A shallow clone has cut its history off above the commit it shares.
+if ! git merge-base HEAD upstream/main >/dev/null; then
+  if [[ "$(git rev-parse --is-shallow-repository)" == true ]]; then
+    fail "main shares no history with upstream/main in this shallow clone, so there is nothing to merge." \
+      "Fetch the rest of its history (git fetch --unshallow origin), then sync again."
+  fi
+  fail "main shares no history with upstream/main, so there is nothing to merge:" \
+    "this copy was made without the engine's history, which every release is merged into." \
+    "Starting a Site in docs/README.md makes a copy that has it. Nothing was changed here."
 fi
 
 BRANCH="sync/upstream-$(git rev-parse --short upstream/main)"
