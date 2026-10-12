@@ -59,8 +59,9 @@ The gaps listed here before are closed: `static-file-utils.ts` and
 branches. Notable in the coverage table as of v3.25.0:
 
 - `src/utils/url-utils.ts` at 34% of functions: the single-expression URL
-  helpers that the Architecture & Code Quality entry in
-  [features.md](features.md) proposes deleting.
+  helpers, most of which pages call and no unit test does. The Architecture & Code
+  Quality entry in [features.md](features.md) no longer proposes deleting
+  them.
 - `src/utils/static-paths-utils.ts` at 67% of branches and
   `src/utils/static-file-utils.ts` at 78% of lines.
 - `tools/` at 81% of lines since `tools/create-site.ts` was removed. Three entry points are excluded because they run
@@ -89,7 +90,8 @@ branches. Notable in the coverage table as of v3.25.0:
   already used" when the holder answers HTTP at `/`, or "Timed out waiting
   60000ms from config.webServer" when it does not (the preview then binds
   the next free port while Playwright keeps polling 4517). `lsof -i :4517`
-  finds the holder in both cases.
+  finds the holder in both cases. A second run on the same machine (another
+  worktree) takes its own port: `E2E_PORT=4518 npm run test:e2e`.
 
 ## Performance
 

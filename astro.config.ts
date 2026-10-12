@@ -86,6 +86,14 @@ if (missingEnvVars.length > 0) {
   throw new Error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
 }
 
+// Astro takes `base` with or without its leading slash and serves the site
+// under /blog either way. The URL helpers read BASE_PATH as it was given,
+// through astro:env/client, and `blog` made every link relative and doubled
+// the base in the canonical. Written back with the slash, both read one value.
+if (process.env.BASE_PATH && !process.env.BASE_PATH.startsWith('/')) {
+  process.env.BASE_PATH = `/${process.env.BASE_PATH}`;
+}
+
 const site = process.env.SITE_URL;
 const base = process.env.BASE_PATH;
 // Sentry requires DSN to function — match the CLI logger's guard pattern

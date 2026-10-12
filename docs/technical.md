@@ -150,7 +150,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 
 | Variable | Default | Purpose |
 |----------|---------|---------|
-| `BASE_PATH` | `/` | Subdirectory for deployment |
+| `BASE_PATH` | `/` | Subdirectory for deployment (`/blog`). `astro.config.ts` adds a missing leading slash, so `blog` builds the same site |
 | `SITE_LOCALE` | `en-US` | BCP 47 locale: `<html lang>`, the feed and manifest language, and `og:locale` as `language_REGION` (`en_US`), left out when the locale names no region |
 
 ### Site Metadata
@@ -650,7 +650,7 @@ Vitest thresholds: lines 80%, functions 80%, branches 85%, statements 80%.
 
 Excluded from Vitest coverage: build-time utilities (`static-file-utils.ts`, `static-paths-utils.ts`), pages, CLI tools (tested via integration), content config.
 
-E2E tests run against the built site via `npm run test:e2e` (requires `npm run build` first). Playwright starts its own foreground `astro preview --ignore-lock` on port 4517 (`PORT` in `playwright.config.ts`, `reuseExistingServer: false`), so the run always serves the current `dist/` and never reuses a server on Astro's default 4321. They verify build assembly — that the pipeline correctly assembled components into working pages — not logic (which unit and component tests cover). Five spec files organized by concern:
+E2E tests run against the built site via `npm run test:e2e` (requires `npm run build` first). Playwright starts its own foreground `astro preview --ignore-lock` on port 4517 (`PORT` in `playwright.config.ts`, `reuseExistingServer: false`), so the run always serves the current `dist/` and never reuses a server on Astro's default 4321. `E2E_PORT` moves it for a second run on the same machine: `E2E_PORT=4518 npm run test:e2e`. They verify build assembly — that the pipeline correctly assembled components into working pages — not logic (which unit and component tests cover). Five spec files organized by concern:
 
 - **`navigation.spec.ts`** — User journeys: discover a word and navigate between words, browse by year, footer section links, 404 handling
 - **`seo.spec.ts`** — Build output wiring: meta tags present (description, canonical, OpenGraph, Twitter), an internal link served without a redirect at the URL its canonical names, no canonical link, `og:url` or breadcrumb JSON-LD on the 404 page, JSON-LD parseable, RSS and sitemap discoverable, the view transition opt-in inline in `<head>` on each page family
