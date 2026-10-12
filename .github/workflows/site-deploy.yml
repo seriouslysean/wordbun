@@ -159,6 +159,26 @@ jobs:
         working-directory: engine
         run: npm run build
 
+      # With Sentry on, the build writes a source map beside each script,
+      # uploads them and deletes them (astro.config.ts,
+      # filesToDeleteAfterUpload: the same directory, the same *.js.map).
+      # One left behind would be published with the site, so the deploy
+      # stops instead. With Sentry off no map is generated.
+      - name: Check for source maps
+        working-directory: engine
+        run: |
+          # find fails on a missing directory, and no scripts means no maps
+          if [[ ! -d dist/_astro ]]; then
+            exit 0
+          fi
+          MAPS=$(find dist/_astro -name '*.js.map')
+          if [[ -n "$MAPS" ]]; then
+            while IFS= read -r map; do
+              echo "::error::$map is a source map the build did not remove, and the deploy would publish it."
+            done <<< "$MAPS"
+            exit 1
+          fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:

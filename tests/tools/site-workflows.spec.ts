@@ -680,6 +680,52 @@ esac
       expect(Object.fromEntries(siteTree)).toEqual({ ...SITE, ...written });
     });
   });
+
+  // The Sentry plugin deletes the maps it uploads. One it leaves in
+  // dist/_astro would be published with the site.
+  describe('site-deploy.yml source map check', () => {
+    const FILE = 'site-deploy.yml';
+    const STEP = 'Check for source maps';
+    const check = (): Promise<StepResult> => runStep(FILE, STEP);
+
+    it('runs on the built site, after Build and before the upload', () => {
+      const names = workflowSteps(workflow(FILE)).map(step => optionalString(step, 'name'));
+
+      expect(names.indexOf(STEP)).toBe(names.indexOf('Build') + 1);
+      expect(names.indexOf('Upload artifact')).toBe(names.indexOf(STEP) + 1);
+    });
+
+    it('fails and names every JavaScript source map under dist/_astro', async () => {
+      write('engine/dist/_astro/page.abc.js', 'script\n');
+      write('engine/dist/_astro/page.abc.js.map', '{}\n');
+      write('engine/dist/_astro/chunks/search.def.js.map', '{}\n');
+
+      const result = await check();
+
+      expect(result.code).toBe(1);
+      expect(result.output).toContain('::error::dist/_astro/page.abc.js.map');
+      expect(result.output).toContain('::error::dist/_astro/chunks/search.def.js.map');
+    });
+
+    // The config's cleanup covers generated JavaScript maps under the
+    // assets directory only, and so does the check
+    it('passes a build with no JavaScript source map under dist/_astro', async () => {
+      write('engine/dist/_astro/page.abc.js', 'script\n');
+      write('engine/dist/_astro/Layout.abc.css.map', '{}\n');
+      write('engine/dist/vendor.js.map', '{}\n');
+
+      const result = await check();
+
+      expect(result.code).toBe(0);
+      expect(result.output).toBe('');
+    });
+
+    it('passes a build with no dist/_astro', async () => {
+      write('engine/dist/index.html', 'page\n');
+
+      expect((await check()).code).toBe(0);
+    });
+  });
 });
 
   // Checkouts are uses: steps, so these read the order of the steps. A
