@@ -1,6 +1,5 @@
 ---
 import type { SourceMeta, WordSense } from '#types';
-import { getDefinitionLicense } from '#utils/attribution-utils';
 import { t } from '#utils/i18n-utils';
 
 interface Props {
@@ -10,9 +9,6 @@ interface Props {
 
 const { senses, meta = null } = Astro.props;
 const sourceUrl = meta?.sourceUrl;
-// Shown only where the source's licence asks for a credit on the page itself
-const license = getDefinitionLicense(meta);
-const credit = license ? meta?.attributionText : undefined;
 const hasMultiple = senses.length > 1;
 ---
 
@@ -41,6 +37,13 @@ const hasMultiple = senses.length > 1;
                 ))}
               </ul>
             )}
+            {/* On the slide of the sense it credits: the senses of one word
+                can come from different sources */}
+            {sense.credit && (
+              <p class="word-senses__credit">
+                <a class="word-senses__license" href={sense.credit.licenseUrl} title={sense.credit.licenseName} target="_blank" rel="license noopener noreferrer">{sense.credit.text}</a>
+              </p>
+            )}
           </li>
         ))}
       </ol>
@@ -68,12 +71,6 @@ const hasMultiple = senses.length > 1;
           </a>
         )}
       </div>
-    )}
-
-    {license && credit && (
-      <p class="word-senses__credit">
-        <a class="word-senses__license" href={license.url} title={license.name} target="_blank" rel="license noopener noreferrer">{credit}</a>
-      </p>
     )}
   </section>
 )}
@@ -319,10 +316,10 @@ if (section && track) {
     text-decoration: underline;
   }
 
-  /* The credit a licence asks for, as quiet as the source link above it. */
+  /* The credit a licence asks for, under the sense it is for. */
   .word-senses__credit {
-    margin: var(--spacing-small) 0 0;
-    text-align: center;
+    margin: var(--spacing-base) 0 0;
+    text-align: right;
     font-size: var(--font-size-xs);
     /* A name and a licence, written as they are */
     text-transform: none;

@@ -906,6 +906,40 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
     });
   });
 
+  describe('getWordSenses credit', () => {
+    const WIKTIONARY_CREDIT = {
+      text: 'from Wiktionary, Creative Commons Attribution/Share-Alike License.',
+      licenseName: 'Creative Commons Attribution-ShareAlike 4.0 International License',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    };
+    const wiktionary = { sourceDictionary: 'wiktionary', attributionText: WIKTIONARY_CREDIT.text };
+    const century = { sourceDictionary: 'century', attributionText: 'from The Century Dictionary.' };
+    const mixed = (...sources: Array<{ sourceDictionary?: string; attributionText?: string }>): WordData => ({
+      word: 'lightroom',
+      date: '20251002',
+      adapter: 'wordnik',
+      data: sources.map((source, index): DictionaryDefinition => ({ partOfSpeech: 'noun', text: `sense ${index + 1}`, ...source })),
+    });
+
+    it("credits a Wiktionary sense that is not the word's first", () => {
+      expect(getWordSenses(mixed(century, wiktionary)).map(sense => sense.credit)).toEqual([undefined, WIKTIONARY_CREDIT]);
+    });
+
+    it('does not put the credit of the first sense over the others', () => {
+      expect(getWordSenses(mixed(wiktionary, century, {})).map(sense => sense.credit)).toEqual([WIKTIONARY_CREDIT, undefined, undefined]);
+    });
+
+    it('credits every sense of a word that is all Wiktionary', () => {
+      expect(getWordSenses(mixed(wiktionary, wiktionary)).every(sense => sense.credit?.licenseUrl === WIKTIONARY_CREDIT.licenseUrl)).toBe(true);
+    });
+
+    it('shows no credit for a source that asks for none on the page, or for a sense with no stored text to show', () => {
+      const merriamWebster = { sourceDictionary: 'collegiate', attributionText: "from Merriam-Webster's Collegiate Dictionary" };
+
+      expect(getWordSenses(mixed(merriamWebster, { sourceDictionary: 'wiktionary' })).some(sense => 'credit' in sense)).toBe(false);
+    });
+  });
+
   describe('getWordSenses', () => {
     const reading: WordData = {
       word: 'reading',

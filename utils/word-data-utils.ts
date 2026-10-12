@@ -6,6 +6,7 @@ import type { BasePartOfSpeech } from '#constants/parts-of-speech';
 import { BASE_PARTS_OF_SPEECH, isBasePartOfSpeech } from '#constants/parts-of-speech';
 import { MAX_SENSE_EXAMPLES } from '#constants/text-patterns';
 import { getMonthSlugFromDate } from '#utils/date-utils';
+import { getDefinitionLicense } from '#utils/attribution-utils';
 import { toDefinitionSegments } from '#utils/definition-text';
 import { slugify } from '#utils/text-utils';
 
@@ -325,6 +326,17 @@ export const groupWordsByPartOfSpeech = (words: WordData[]): WordGrouping<string
   return groups;
 };
 
+// Decided for each sense from its own stored fields, never from the word's
+// first definition: a record fetched through Wordnik mixes Wiktionary's text
+// with WordNet's and the Century Dictionary's, and a credit belongs beside
+// the text it is for and nowhere else
+const senseCredit = (def: DictionaryDefinition): Pick<WordSense, 'credit'> => {
+  const license = getDefinitionLicense(def);
+  return license && def.attributionText
+    ? { credit: { text: def.attributionText, licenseName: license.name, licenseUrl: license.url } }
+    : {};
+};
+
 /**
  * Returns every sense of a word for the senses slider: the word's own
  * definitions (getWordDefinitions), so compound/derived entries are excluded
@@ -367,6 +379,7 @@ export const getWordSenses = (wordData: WordData): WordSense[] => {
     partOfSpeech: def.partOfSpeech,
     segments: getDefinitionSegments(def),
     examples: standIn ? [] : collectSenseExamples(def),
+    ...senseCredit(def),
   }));
 };
 
