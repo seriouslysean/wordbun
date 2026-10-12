@@ -1051,6 +1051,48 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       ]);
     });
 
+    // "ness" typed without its hyphen: the lookup has the suffix and nothing
+    // for the bare word. Every sense of the suffix stands in, whatever entry
+    // the dictionary listed first, and as a stand-in none carries examples.
+    it('lets every sense of the affix spelt like the word stand in for it, without examples', () => {
+      const word: WordData = {
+        word: 'ness',
+        date: '20250101',
+        adapter: 'merriam-webster',
+        data: [
+          { id: 'Nessie', partOfSpeech: 'noun', text: 'a lake monster' },
+          { id: '-ness', partOfSpeech: 'noun', text: 'state, condition, quality', examples: ['goodness'] },
+          { id: '-ness', partOfSpeech: 'noun', text: 'an instance of a state' },
+        ],
+      };
+
+      expect(getWordSenses(word)).toEqual([
+        { partOfSpeech: 'noun', segments: [{ type: 'text', text: 'state, condition, quality' }], examples: [] },
+        { partOfSpeech: 'noun', segments: [{ type: 'text', text: 'an instance of a state' }], examples: [] },
+      ]);
+      expect(getWordDetails(word)).toMatchObject({ definition: 'state, condition, quality' });
+    });
+
+    it.each([
+      ['a non-breaking hyphen', '\u2011ness'],
+      ['a typographic hyphen', '\u2010ness'],
+    ])('reads %s as the hyphen of an affix', (_kind, headword) => {
+      const word: WordData = {
+        word: headword,
+        date: '20250101',
+        adapter: 'merriam-webster',
+        data: [
+          { id: 'ness', partOfSpeech: 'noun', text: 'a cape or headland' },
+          { id: '-ness', partOfSpeech: 'noun', text: 'state, condition, quality', examples: ['goodness'] },
+        ],
+      };
+
+      // The suffix's own entry, so its examples show
+      expect(getWordSenses(word)).toEqual([
+        { partOfSpeech: 'noun', segments: [{ type: 'text', text: 'state, condition, quality' }], examples: ['goodness'] },
+      ]);
+    });
+
     it('lets an affix stand in for a word with no entry of its own', () => {
       const word: WordData = {
         word: 'the',

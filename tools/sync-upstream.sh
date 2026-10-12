@@ -98,11 +98,16 @@ fi
 
 # Git refuses to merge histories with no common commit, and only once a merge
 # is asked for: by then there would be a sync branch to delete and no merge
-# to abort. A shallow clone has cut its history off above the commit it shares.
+# to abort. A shallow clone may only have cut its history off above the commit
+# it shares, which fetching the rest brings back; or it may be a shallow clone
+# of a copy made without the engine's history, which no fetch can give one.
+# From here the two look the same, so the message covers both.
 if ! git merge-base HEAD upstream/main >/dev/null; then
   if [[ "$(git rev-parse --is-shallow-repository)" == true ]]; then
     fail "main shares no history with upstream/main in this shallow clone, so there is nothing to merge." \
-      "Fetch the rest of its history (git fetch --unshallow origin), then sync again."
+      "Fetch the rest of its history (git fetch --unshallow origin), then sync again." \
+      "If it still shares none, this copy was made without the engine's history, which no fetch adds:" \
+      "Starting a Site in docs/README.md makes a copy that has it. Nothing was changed here."
   fi
   fail "main shares no history with upstream/main, so there is nothing to merge:" \
     "this copy was made without the engine's history, which every release is merged into." \

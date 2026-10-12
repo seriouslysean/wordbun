@@ -90,9 +90,11 @@ export async function adapterFetch(url: string, adapterName: string, headers?: R
 
 /**
  * Throws a structured error for non-OK HTTP responses.
- * Handles 429 (rate limit), 404 (not found), and generic failures.
+ * Handles 429 (rate limit), 404 (not found), and generic failures. A generic
+ * failure names the dictionary and the status code: the reason phrase alone
+ * is not enough, since HTTP/2 has none and Wikimedia sends none.
  */
-export function throwOnHttpError(response: Response, word: string): void {
+export function throwOnHttpError(response: Response, word: string, apiName: string): void {
   if (response.status === 429) {
     throw new RateLimitError('Rate limit exceeded. Please try again later.');
   }
@@ -100,7 +102,7 @@ export function throwOnHttpError(response: Response, word: string): void {
     throwWordNotFound(word);
   }
   if (!response.ok) {
-    throw new Error(`Failed to fetch word data: ${response.statusText}`);
+    throw new Error(`Failed to fetch word data from ${apiName}: HTTP ${[response.status, response.statusText].filter(Boolean).join(' ')}`);
   }
 }
 

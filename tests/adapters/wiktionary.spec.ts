@@ -284,7 +284,11 @@ describe('wiktionary adapter', () => {
     });
 
     it('throws on a server error', async () => {
-      await expect(lookUp('test', 500, {})).rejects.toThrow('Failed to fetch');
+      // Wikimedia sends no reason phrase: the status code is what says what happened
+      const { wiktionaryAdapter } = await import('#adapters/wiktionary');
+      fetchMock.mockResolvedValueOnce(new Response('{}', { status: 503 }));
+
+      await expect(wiktionaryAdapter.fetchWordData('test')).rejects.toThrow('Failed to fetch word data from Wiktionary: HTTP 503');
     });
   });
 

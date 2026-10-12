@@ -364,19 +364,19 @@ describe('adapter-utils', () => {
   describe('throwOnHttpError', () => {
     it('does nothing for ok responses', () => {
       const response = httpResponse(200);
-      expect(() => throwOnHttpError(response, 'test')).not.toThrow();
+      expect(() => throwOnHttpError(response, 'test', 'Wiktionary')).not.toThrow();
     });
 
     it('throws rate limit error for 429', () => {
       const response = httpResponse(429);
-      expect(() => throwOnHttpError(response, 'test')).toThrow(RateLimitError);
-      expect(() => throwOnHttpError(response, 'test')).toThrow('Rate limit exceeded');
+      expect(() => throwOnHttpError(response, 'test', 'Wiktionary')).toThrow(RateLimitError);
+      expect(() => throwOnHttpError(response, 'test', 'Wiktionary')).toThrow('Rate limit exceeded');
     });
 
     it('throws word not found for 404', () => {
       const response = httpResponse(404);
-      expect(() => throwOnHttpError(response, 'serendipity')).toThrow(WordNotFoundError);
-      expect(() => throwOnHttpError(response, 'serendipity')).toThrow(
+      expect(() => throwOnHttpError(response, 'serendipity', 'Wiktionary')).toThrow(WordNotFoundError);
+      expect(() => throwOnHttpError(response, 'serendipity', 'Wiktionary')).toThrow(
         'Word "serendipity" not found in dictionary',
       );
     });
@@ -385,12 +385,12 @@ describe('adapter-utils', () => {
       const response = httpResponse(500, 'Internal Server Error');
       const error = (() => {
         try {
-          throwOnHttpError(response, 'test');
+          throwOnHttpError(response, 'test', 'Wiktionary');
         } catch (thrown) {
           return thrown;
         }
       })();
-      expect(getError(error).message).toBe('Failed to fetch word data: Internal Server Error');
+      expect(getError(error).message).toBe('Failed to fetch word data from Wiktionary: HTTP 500 Internal Server Error');
       expect(error).not.toBeInstanceOf(WordNotFoundError);
       expect(error).not.toBeInstanceOf(RateLimitError);
     });

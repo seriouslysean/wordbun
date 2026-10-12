@@ -156,8 +156,10 @@ export const getDisplayableDefinitions = (definitions: DictionaryDefinition[]): 
 export const isValidDictionaryData = (data: DictionaryDefinition[]): boolean =>
   getDisplayableDefinitions(data).length > 0;
 
-// A prefix, suffix or infix as a dictionary writes its headword: "the-", "-an", "-a-"
-const isAffix = (headword: string): boolean => /^-|-$/.test(headword.trim());
+// A prefix, suffix or infix as a dictionary writes its headword: "the-", "-an",
+// "-a-". The hyphen may be the typographic one (U+2010) or the non-breaking
+// one (U+2011), which a headword copied from a page carries.
+const isAffix = (headword: string): boolean => /^[-\u2010\u2011]|[-\u2010\u2011]$/.test(headword.trim());
 
 interface WordDefinitions {
   definitions: DisplayableDefinition[];
@@ -188,17 +190,24 @@ interface WordDefinitions {
  * headword: over the whole lookup, the adjective "AC/DC" would hide "AC", the
  * only definition "ac" has, and then stand in for it.
  *
- * When no displayable definition is the word's own ("indices" is stored under
- * "index"), the first displayable one of the whole lookup stands in for it, so
- * a word with anything displayable keeps one definition and its part of speech.
+ * When no displayable definition is the word's own, others stand in for it,
+ * so a word with anything displayable keeps a definition and its part of
+ * speech. The entries spelt like the word but for the affix hyphen come
+ * first: "ness", typed without its hyphen, comes back with "-ness" alone, and
+ * all of that entry's senses stand in. Failing those ("indices" is stored
+ * under "index"), the first displayable definition of the whole lookup does.
  */
 const getWordDefinitions = (wordData: Pick<WordData, 'word' | 'data'>): WordDefinitions => {
   const wordSlug = slugify(wordData.word);
   const wordIsAffix = isAffix(wordData.word);
   const own = getDisplayableDefinitions(wordData.data.filter(def =>
     !def.id || (slugify(def.id) === wordSlug && isAffix(def.id) === wordIsAffix)));
-  return own.length > 0
-    ? { definitions: own, standIn: false }
+  if (own.length > 0) {
+    return { definitions: own, standIn: false };
+  }
+  const spelledAlike = getDisplayableDefinitions(wordData.data.filter(def => def.id && slugify(def.id) === wordSlug));
+  return spelledAlike.length > 0
+    ? { definitions: spelledAlike, standIn: true }
     : { definitions: getDisplayableDefinitions(wordData.data).slice(0, 1), standIn: true };
 };
 

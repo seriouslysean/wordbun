@@ -142,7 +142,10 @@ Arguments:
 
 Options:
   -o, --overwrite       Replace the word already stored for the date
-  -p, --preserve-case   Preserve original capitalization (default: converts to lowercase)
+  -p, --preserve-case   Preserve original capitalization (default: converts to lowercase).
+                        Needed for an entry a dictionary spells with a capital: the
+                        word is looked up as it will be stored, and Wiktionary's
+                        titles are case-sensitive ("Japan" is found, "japan" is not)
   -h, --help            Show this help message
 
 Examples:

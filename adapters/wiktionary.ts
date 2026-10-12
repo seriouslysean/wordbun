@@ -153,7 +153,7 @@ export const wiktionaryAdapter: DictionaryAdapter = {
     const baseUrl = process.env.WIKTIONARY_API_URL || DEFAULT_API_URL;
     const url = `${baseUrl}/page/definition/${encodeURIComponent(word)}`;
     const response = await adapterFetch(url, 'Wiktionary', { 'User-Agent': USER_AGENT, 'Api-User-Agent': USER_AGENT });
-    throwOnHttpError(response, word);
+    throwOnHttpError(response, word, 'Wiktionary');
 
     const data = await parseJsonResponse(response, 'Wiktionary');
 

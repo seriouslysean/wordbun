@@ -325,7 +325,10 @@ describe('sync-upstream.sh', { timeout: 90000 }, () => {
 
       expect(result.code).toBe(1);
       expect(result.output).toContain('shallow clone');
-      expect(result.output).not.toContain('Starting a Site');
+      // Unshallowing cannot help a copy made without the engine's history, and
+      // from a shallow clone the two cannot be told apart
+      expect(result.output).toContain('If it still shares none');
+      expect(result.output).toContain('Starting a Site in docs/README.md');
       expectUntouched();
 
       const advice = result.output.match(/\((git fetch [^)]+)\)/)?.[1];
