@@ -676,7 +676,7 @@ Five separate workflow files, one per quality gate. Each reports an individual c
 
 All five trigger on PR to main and push to main. Lint, Typecheck, Test, and Build run in parallel. E2E builds with demo defaults (no `setup-env`) then runs Playwright.
 
-Lint has a second job, `actionlint`, which checks the workflow files with [actionlint](https://github.com/rhysd/actionlint) 1.7.12 and `.github/actionlint.yaml`. It downloads the release archive with `gh release download`, the [documented way](https://github.com/rhysd/actionlint/blob/v1.7.12/docs/install.md#prebuilt-binaries) to install a prebuilt binary, and refuses one whose SHA-256 is not the digest pinned in the workflow, so moving to a new actionlint means changing the version and the digest together. It reads `.github/workflows/` only: the caller templates in `tools/templates/site/` are not linted. It is not a lefthook job, so run `actionlint` locally before pushing a workflow change.
+Lint has a second job, `actionlint`, which checks the workflow files with [actionlint](https://github.com/rhysd/actionlint) 1.7.12 and `.github/actionlint.yaml`. It downloads the release archive with `gh release download`, the [documented way](https://github.com/rhysd/actionlint/blob/v1.7.12/docs/install.md#prebuilt-binaries) to install a prebuilt binary, and refuses one whose SHA-256 is not the digest pinned in the workflow, so moving to a new actionlint means changing the version and the digest together. It is not a lefthook job, so run `actionlint` locally before pushing a workflow change.
 
 ### Key Regression Test
 
