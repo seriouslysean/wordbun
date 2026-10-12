@@ -182,6 +182,14 @@ export default defineConfig({
         output: {
           chunkFileNames: '_astro/[name]-[hash].js',
           entryFileNames: '_astro/[name]-[hash].js',
+          // The view transition opt-in gets a chunk of its own. A stylesheet
+          // under Vite's assetsInlineLimit is inlined in <head> by Astro's
+          // default build.inlineStylesheets ('auto') and hashed into the CSP,
+          // so the rule never waits on an external file (docs/technical.md,
+          // Coverage). Left in the Layout chunk it ships external.
+          codeSplitting: {
+            groups: [{ name: 'view-transition', test: /\/src\/styles\/view-transition\.css$/ }],
+          },
         },
       },
     },
