@@ -48,11 +48,14 @@ SOURCE_DIR=demo npm run build
 No `.env` is needed to run the demo. This repository only ships the demo words
 (`data/demo/words/`), so `SOURCE_DIR=demo` is required here: without it the
 site reads `data/words/`, finds no words, and the build fails with
-`Word not found`. To add words you need a dictionary API key:
+`Word not found`. To add words, name a dictionary in `DICTIONARY_ADAPTER`:
+`wiktionary` needs no API key, `merriam-webster` and `wordnik` each need
+their own.
 
 ```bash
 cp .env.example .env
-# Set SOURCE_DIR=demo and add your dictionary API key in .env
+# Set SOURCE_DIR=demo and DICTIONARY_ADAPTER in .env, with that dictionary's
+# API key unless it is wiktionary
 ```
 
 ## Adding Words
@@ -82,8 +85,9 @@ SITE_URL="https://my-word-site.com"
 SOURCE_DIR=""                           # Data subdirectory; unset reads data/words/, demo reads data/demo/words/
 
 # Dictionary Service
-DICTIONARY_ADAPTER="merriam-webster"
-MERRIAM_WEBSTER_API_KEY="your-api-key-here"
+DICTIONARY_ADAPTER="merriam-webster"    # merriam-webster, wordnik or wiktionary; required to add words
+MERRIAM_WEBSTER_API_KEY="your-api-key-here"   # wordnik reads WORDNIK_API_KEY; wiktionary needs no key
+DICTIONARY_FALLBACK="wiktionary"        # Tried in order when the primary fails; none disables it
 
 # Colors (optional)
 COLOR_PRIMARY="#9a3412"
@@ -143,7 +147,7 @@ Start from a clone. A copy without this repository's history, such as a template
 
 3. In the new repository's **Settings**, before the first push:
    - **Secrets and variables > Actions > Variables**: `SITE_URL`, `SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_ID` and `DICTIONARY_ADAPTER` (`wordnik`, `merriam-webster` or `wiktionary`); `BASE_PATH` when the site is served from a subdirectory, such as `/my-site` for `username.github.io/my-site`; `SITE_TZ` when the site's day is not `America/New_York`; anything else in `.env.example` that should differ from its default. Leave `SOURCE_DIR` unset: Deploy and Add Word stop when a site sets it.
-   - **Secrets and variables > Actions > Secrets**: the API key of each dictionary the site uses (`WORDNIK_API_KEY`, `MERRIAM_WEBSTER_API_KEY`), and any `GA_*` or `SENTRY_*` setting. API keys, `GA_*` and `SENTRY_*` are secrets; everything else is a variable.
+   - **Secrets and variables > Actions > Secrets**: the API key of each dictionary the site uses, as its adapter or in its fallback chain (`WORDNIK_API_KEY`, `MERRIAM_WEBSTER_API_KEY`; Wiktionary has none), and any `GA_*` or `SENTRY_*` setting. API keys, `GA_*` and `SENTRY_*` are secrets; everything else is a variable.
    - **Pages > Build and deployment > Source**: GitHub Actions.
    - **Environments > github-pages**: deployment branches allow `main`.
    - **Rules** or branch protection on `main`, if any: let a push from the workflow's `GITHUB_TOKEN` through, since Add Word commits straight to `main`.
