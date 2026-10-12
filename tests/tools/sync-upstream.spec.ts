@@ -431,8 +431,8 @@ describe('sync-upstream.sh', { timeout: 90000 }, () => {
     });
   });
 
-  // The gates before it build only the demo words, so without this a release
-  // that rejects a stored word is first caught by Deploy, after the push
+  // The gates before it build only the demo words, so without this a stored
+  // word that a page cannot render is first caught by Deploy, after the push
   describe('with words of its own', () => {
     it('stops before the commit when they do not build', async () => {
       diverge();

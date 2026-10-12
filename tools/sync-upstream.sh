@@ -19,9 +19,10 @@
 #      merged package.json is upstream's; any other conflict stops the sync
 #   5. Installs with npm ci and runs the AGENTS.md quality gates in order:
 #      lint, typecheck, test, the demo build, E2E
-#   6. Builds the repository's own words (SOURCE_DIR empty, so data/words),
-#      which no gate above reads, when it tracks any; a .env supplies the
-#      site's settings and astro.config.ts's defaults stand in without one
+#   6. Builds the repository's own words (SOURCE_DIR empty, so data/words)
+#      when it tracks any: typecheck holds them to the collection schema, and
+#      nothing above renders them. A .env supplies the site's settings and
+#      astro.config.ts's defaults stand in without one
 #   7. Dry-runs the stored-word normalizer over those words and reports what
 #      it would rewrite. Nothing is written, and the report is never a gate
 #   8. Commits the merge once the gates pass without changing any file, and
@@ -142,10 +143,12 @@ else
   gate env SOURCE_DIR=demo BASE_PATH=/ npm run test:e2e
 fi
 
-# Every gate above reads the demo words, so a release that rejects a word
-# this repository stores would first fail in Deploy, after the push. This
-# builds what Deploy builds. Last of the gates, since it replaces the dist/
-# that E2E serves. A repository that tracks no words of its own, such as a
+# The build and E2E above read the demo words. Typecheck reads this
+# repository's own, but only against the collection schema (astro check,
+# with SOURCE_DIR unset), so a stored word the schema accepts and a page
+# cannot render would first fail in Deploy, after the push. This builds what
+# Deploy builds. Last of the gates, since it replaces the dist/ that E2E
+# serves. A repository that tracks no words of its own, such as a
 # copy that has not added its first, has nothing to build, and the build
 # fails without a word.
 NORMALIZE_REPORT=""
