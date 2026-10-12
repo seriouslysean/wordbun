@@ -138,13 +138,14 @@ Start from a clone. A copy without this repository's history, such as a template
    cd my-site
    git remote rename origin upstream
    git remote add origin git@github.com:YOUR-ACCOUNT/my-site.git
-   nvm use && npm install
+   nvm use && npm ci
    ```
 
 3. In the new repository's **Settings**, before the first push:
    - **Secrets and variables > Actions > Variables**: `SITE_URL`, `SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_ID` and `DICTIONARY_ADAPTER` (`wordnik`, `merriam-webster` or `wiktionary`); `BASE_PATH` when the site is served from a subdirectory, such as `/my-site` for `username.github.io/my-site`; `SITE_TZ` when the site's day is not `America/New_York`; anything else in `.env.example` that should differ from its default. Leave `SOURCE_DIR` unset: Deploy and Add Word stop when a site sets it.
    - **Secrets and variables > Actions > Secrets**: the API key of each dictionary the site uses (`WORDNIK_API_KEY`, `MERRIAM_WEBSTER_API_KEY`), and any `GA_*` or `SENTRY_*` setting. API keys, `GA_*` and `SENTRY_*` are secrets; everything else is a variable.
    - **Pages > Build and deployment > Source**: GitHub Actions.
+   - **Environments > github-pages**: deployment branches allow `main`.
    - **Rules** or branch protection on `main`, if any: let a push from the workflow's `GITHUB_TOKEN` through, since Add Word commits straight to `main`.
 4. Add the first word on your machine. A new copy has no `data/words/`, and Deploy and Add Word both stop without it, so the first word cannot come from the Actions tab:
 
