@@ -277,7 +277,7 @@ the wrapper today, so tightening it has no external consumer.
 
 **`url-utils.ts` thin-wrapper review: withdrawn.** An earlier review
 counted 23 single-expression wrappers with two calling files and recommended
-deleting them. That count is stale. At v3.28.0 `src/utils/url-utils.ts` has
+deleting them. That count is stale. As of v3.29.0 `src/utils/url-utils.ts` has
 30 zero-argument helpers around `ROUTES.STAT(STATS_SLUGS.X)`,
 `BASE_PATHS.X` or `BROWSE_PATHS.X`, and each has a caller. Nine files call
 them: `Footer.astro`, `RandomWordLink.astro`, `src/pages/stats.astro`,

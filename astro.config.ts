@@ -90,8 +90,10 @@ if (missingEnvVars.length > 0) {
 // under /blog either way. The URL helpers read BASE_PATH as it was given,
 // through astro:env/client, and `blog` made every link relative and doubled
 // the base in the canonical. Written back with the slash, both read one value.
-if (process.env.BASE_PATH && !process.env.BASE_PATH.startsWith('/')) {
-  process.env.BASE_PATH = `/${process.env.BASE_PATH}`;
+// Trimmed first, as the colours above are: a stray space became part of the path.
+const basePathSetting = process.env.BASE_PATH?.trim();
+if (basePathSetting) {
+  process.env.BASE_PATH = basePathSetting.startsWith('/') ? basePathSetting : `/${basePathSetting}`;
 }
 
 const site = process.env.SITE_URL;

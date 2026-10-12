@@ -253,7 +253,7 @@ These aren't enforced by tools, but the codebase follows them consistently:
 
 This repository is the engine. A downstream site (wordbug, wordbun) is a full copy of it in a repository of its own, with this one as its `upstream` remote: it adds its own words, keeps its own data, and runs the tools and the workflows itself. It is not a GitHub fork, and it differs from the engine only under `data/words/` and `public/images/`.
 
-After releasing, sync each site with `npm run tool:sync`: it merges upstream on a `sync/upstream-*` branch, commits only after every quality gate passes, the last of them a build of the site's own words, and never pushes (merge-based, no force push). A site's Deploy and Add Word are this repository's, so they call the reusable workflows with `./` at the site's own commit.
+After releasing, sync each site with `npm run tool:sync`: it merges upstream on a `sync/upstream-*` branch, commits only after every quality gate passes, the last of them a build of the site's own words (from the sync after the one that brings this script in, since a sync runs the script the site already had), and never pushes (merge-based, no force push). A site's Deploy and Add Word are this repository's, so they call the reusable workflows with `./` at the site's own commit.
 
 Two rules keep those merges clean:
 

@@ -150,7 +150,7 @@ Start from a clone. A copy without this repository's history, such as a template
 4. Add the first word on your machine. A new copy has no `data/words/`, and Deploy and Add Word both stop without it, so the first word cannot come from the Actions tab:
 
    ```bash
-   cp .env.example .env    # the settings from step 3 and a dictionary API key; SOURCE_DIR stays empty
+   cp .env.example .env    # the settings from step 3 and your dictionary's API key (Wiktionary needs none); SOURCE_DIR stays empty
    npm run tool:local tools/add-word.ts serendipity
    npm run tool:local tools/generate-images.ts
    git add data/words public/images

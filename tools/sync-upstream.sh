@@ -152,7 +152,7 @@ fi
 # copy that has not added its first, has nothing to build, and the build
 # fails without a word.
 NORMALIZE_REPORT=""
-if [[ -z "$(git ls-files -- data/words)" ]]; then
+if [[ -z "$(git ls-files -- 'data/words/*.json')" ]]; then
   echo ""
   echo "Skipping the own-words build: nothing is tracked under data/words."
 else

@@ -21,7 +21,8 @@
 import { execFileSync } from 'node:child_process';
 import { describe, expect, it } from 'vitest';
 
-const UPSTREAM = /[/:]seriouslysean\/occasional-wotd(\.git)?\/?$/;
+const ENGINE = 'seriouslysean/occasional-wotd';
+const UPSTREAM = /[/:]seriouslysean\/occasional-wotd(\.git)?\/?$/i;
 
 const git = (...args: string[]): string => {
   try {
@@ -36,7 +37,9 @@ const GITHUB_REPOSITORY = /github\.com[/:]([^/]+\/[^/]+?)(\.git)?\/?$/;
 const origin = git('remote', 'get-url', 'origin');
 const hasUpstreamRemote = git('remote').split('\n').includes('upstream');
 const isAnotherGitHubRepository = GITHUB_REPOSITORY.test(origin) && !UPSTREAM.test(origin);
-const isSite = hasUpstreamRemote || isAnotherGitHubRepository;
+// GitHub Actions names the repository itself, whatever the checkout's remote says
+const isEngineInCi = process.env.GITHUB_REPOSITORY?.toLowerCase() === ENGINE;
+const isSite = !isEngineInCi && (hasUpstreamRemote || isAnotherGitHubRepository);
 
 describe.skipIf(isSite)('Architecture: site content stays out of the engine', () => {
   it.each(['data/words', 'public/images'])('tracks nothing under %s', (directory) => {
