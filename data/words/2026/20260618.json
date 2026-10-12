@@ -1,22 +1,22 @@
 {
     "word": "apple juice",
     "date": "20260618",
-    "adapter": "wordnik",
+    "adapter": "wiktionary",
     "preserveCase": false,
     "data": [
         {
             "partOfSpeech": "noun",
-            "text": "The juice of apples as a drink.",
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "text": "The juice of apples. (This entry is a translation hub.)",
+            "attributionText": "Adapted from Wiktionary (CC BY-SA 4.0)",
             "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/apple%20juice"
+            "sourceUrl": "https://en.wiktionary.org/wiki/apple_juice"
         },
         {
             "partOfSpeech": "noun",
-            "text": "the juice of apples",
-            "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
-            "sourceDictionary": "wordnet",
-            "sourceUrl": "https://www.wordnik.com/words/apple%20juice"
+            "text": "Filtered and pasteurized juice of apples, as opposed to apple cider (which is unfiltered) and hard cider (which is fermented and alcoholic).",
+            "attributionText": "Adapted from Wiktionary (CC BY-SA 4.0)",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/apple_juice"
         }
     ],
     "enrichment": {

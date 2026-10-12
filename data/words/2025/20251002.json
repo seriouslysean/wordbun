@@ -1,75 +1,22 @@
 {
     "word": "lightroom",
     "date": "20251002",
-    "adapter": "wordnik",
+    "adapter": "wiktionary",
     "preserveCase": false,
     "data": [
         {
             "partOfSpeech": "noun",
-            "text": "A small apartment next to the magazine in a ship of war, in which lights for illuminating the magazine are placed behind thick glass windows, to avoid danger from carrying fire among the explosives. Also called light-box.",
-            "references": [
-                {
-                    "start": 211,
-                    "end": 220,
-                    "url": "https://www.wordnik.com/words/light-box"
-                }
-            ],
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/lightroom"
+            "text": "A small room from which the magazine of a naval vessel is lighted, being separated from the magazine by heavy glass windows.",
+            "attributionText": "Adapted from Wiktionary (CC BY-SA 4.0)",
+            "sourceDictionary": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/lightroom"
         },
         {
             "partOfSpeech": "noun",
             "text": "The room at the top of a lighthouse containing the lighting apparatus.",
-            "attributionText": "from The Century Dictionary.",
-            "sourceDictionary": "century",
-            "sourceUrl": "https://www.wordnik.com/words/lightroom"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A small room from which the magazine of a naval vessel is lighted, being separated from the magazine by heavy glass windows.",
-            "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
-            "sourceDictionary": "gcide",
-            "sourceUrl": "https://www.wordnik.com/words/lightroom"
-        },
-        {
-            "partOfSpeech": "noun",
-            "text": "A small room from which the magazine of a naval vessel is lighted, being separated from the magazine by heavy glass windows.",
-            "references": [
-                {
-                    "start": 8,
-                    "end": 12,
-                    "url": "https://www.wordnik.com/words/room"
-                },
-                {
-                    "start": 28,
-                    "end": 36,
-                    "url": "https://www.wordnik.com/words/magazine"
-                },
-                {
-                    "start": 42,
-                    "end": 47,
-                    "url": "https://www.wordnik.com/words/naval"
-                },
-                {
-                    "start": 48,
-                    "end": 54,
-                    "url": "https://www.wordnik.com/words/vessel"
-                },
-                {
-                    "start": 58,
-                    "end": 65,
-                    "url": "https://www.wordnik.com/words/lighted"
-                },
-                {
-                    "start": 116,
-                    "end": 123,
-                    "url": "https://www.wordnik.com/words/windows"
-                }
-            ],
-            "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+            "attributionText": "Adapted from Wiktionary (CC BY-SA 4.0)",
             "sourceDictionary": "wiktionary",
-            "sourceUrl": "https://www.wordnik.com/words/lightroom"
+            "sourceUrl": "https://en.wiktionary.org/wiki/lightroom"
         }
     ]
 }
