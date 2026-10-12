@@ -8,17 +8,19 @@ import { buildWordData, getWordFiles, primaryPartOfSpeech, tryFetchRelations } f
 import type { WordEnrichment } from '#types';
 import { isRateLimited } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
-import { isRecord } from '#utils/type-guards';
+import { isRecord, isString } from '#utils/type-guards';
 import { isWordEnrichment, parseWordData } from '#utils/stored-word-validation';
 
 interface StoredEntry {
   preserveCase: boolean;
+  adapter?: string;
   enrichment?: WordEnrichment;
 }
 
 /**
  * Reads, once, what a backfill must carry over from the file it replaces: the
- * preserveCase flag and any enrichment. An unreadable file carries nothing.
+ * preserveCase flag and any enrichment, with the adapter that supplied it. An
+ * unreadable file carries nothing.
  */
 function readStoredEntry(filePath: string): StoredEntry {
   try {
@@ -28,6 +30,7 @@ function readStoredEntry(filePath: string): StoredEntry {
     }
     return {
       preserveCase: data.preserveCase === true,
+      adapter: isString(data.adapter) ? data.adapter : undefined,
       enrichment: isWordEnrichment(data.enrichment) ? data.enrichment : undefined,
     };
   } catch {
@@ -36,6 +39,8 @@ function readStoredEntry(filePath: string): StoredEntry {
 }
 
 interface RegenerateOptions {
+  /** Only the records whose stored `adapter` is this, when given */
+  adapter?: string;
   dryRun: boolean;
   force: boolean;
   timeout: number;
@@ -86,7 +91,12 @@ export async function regenerateWordFile(word: string, date: string, originalPat
 
     const { response, adapterName } = await fetchWithFallback(word);
     const relations = await tryFetchRelations(word, primaryPartOfSpeech(response));
-    const { preserveCase, enrichment: storedEnrichment } = readStoredEntry(originalPath);
+    const stored = readStoredEntry(originalPath);
+    const { preserveCase } = stored;
+    // Enrichment is carried over only from the dictionary that answers now: a
+    // pronunciation another dictionary supplied would otherwise be kept under
+    // this one's name, and outlive every other trace of where it came from
+    const storedEnrichment = stored.adapter === adapterName ? stored.enrichment : undefined;
     const wordData = buildWordData({
       // Keep original casing for preserveCase words; backfill must not lowercase them.
       word: preserveCase ? word : word.toLowerCase(),
@@ -141,8 +151,17 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
   try {
     // Unreadable files are already logged; each counts as a failure, so a
     // run that could not see every word never reports success.
-    const { files: wordsToRegenerate, failures: unreadable } = getWordFiles();
-    logger.info('Found word files to process', { count: wordsToRegenerate.length, unreadable: unreadable.length });
+    const { files, failures: unreadable } = getWordFiles();
+    // The stored value is compared as written: it may name a dictionary this
+    // version no longer has an adapter for, which is when a site re-sources
+    const wordsToRegenerate = options.adapter === undefined
+      ? files
+      : files.filter(file => file.adapter === options.adapter);
+    logger.info('Found word files to process', {
+      count: wordsToRegenerate.length,
+      unreadable: unreadable.length,
+      ...(options.adapter === undefined ? {} : { adapter: options.adapter, of: files.length }),
+    });
 
     if (options.dryRun) {
       logger.info('DRY RUN MODE - Words that would be regenerated:');
@@ -220,13 +239,16 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
 const HELP_TEXT = `
 Regenerate All Words Tool
 
-Regenerates all word files with fresh dictionary data.
+Regenerates all word files with fresh dictionary data, or with --adapter only
+those a given dictionary supplied. A word that cannot be looked up keeps its
+file as it was, and the tool exits 1.
 
 Usage:
   npm run tool:local tools/regenerate-all-words.ts -- [options]
   npm run tool:regenerate-all-words -- [options]
 
 Options:
+  --adapter <name>           Only words whose stored "adapter" is <name>
   --dry-run                  Preview what would be regenerated without doing it
   --force                    Skip confirmation prompts
   --timeout <ms>             Delay between API calls (default: ${DEFAULTS.timeout})
@@ -237,10 +259,13 @@ Options:
 Examples:
   npm run tool:regenerate-all-words -- --dry-run
   npm run tool:regenerate-all-words -- --timeout 2000 --batch-size 3 --force
+  npm run tool:regenerate-all-words -- --adapter wordnik --dry-run
 
 Note:
   Rate-limited lookups retry up to 3 times, waiting ${RATE_LIMIT_BACKOFF_MS / 1000}s and doubling each time.
   This tool will overwrite existing word files with fresh dictionary data.
+  A word keeps its date, its case and whether that case is preserved. Stored
+  enrichment is kept only when the same dictionary answers again.
   Use --dry-run first to preview changes.
 ${COMMON_ENV_DOCS}
 `;
@@ -251,6 +276,7 @@ if (isEntryPoint(import.meta.url)) {
     options: {
       help: { type: 'boolean', short: 'h', default: false },
       'dry-run': { type: 'boolean', default: false },
+      adapter: { type: 'string' },
       force: { type: 'boolean', default: false },
       timeout: { type: 'string', default: String(DEFAULTS.timeout) },
       'batch-size': { type: 'string', default: String(DEFAULTS.batchSize) },
@@ -267,6 +293,7 @@ if (isEntryPoint(import.meta.url)) {
   const run = async (): Promise<void> => {
     // The options are validated before any word is touched.
     const failed = await regenerateAllWords({
+      adapter: values.adapter,
       dryRun: !!values['dry-run'],
       force: !!values.force,
       timeout: await parseCount('timeout', values.timeout, 0),
