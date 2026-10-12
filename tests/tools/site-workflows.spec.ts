@@ -233,7 +233,6 @@ const ADD_WORD_SECRETS: Record<string, string> = {
   MERRIAM_WEBSTER_API_KEY: 'merriam-webster-api-key',
   SENTRY_DSN: 'sentry-dsn',
   SENTRY_ENABLED: 'sentry-enabled',
-  WORDNIK_API_KEY: 'wordnik-api-key',
 };
 
 const repositorySecretBindings = (scope: Record<string, string>): YamlObject => Object.fromEntries(

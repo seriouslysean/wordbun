@@ -8,7 +8,6 @@ import sentry from '@sentry/astro';
 import { defineConfig, envField } from 'astro/config';
 
 import pkg from './package.json' with { type: 'json' };
-import { DEFAULT_WORDNIK_WEBSITE_URL } from '#constants/defaults';
 import { isHexColor } from '#utils/color-utils';
 import { getCodeHash } from '#utils/code-hash';
 
@@ -51,7 +50,6 @@ const defaults = {
   SITE_DESCRIPTION: 'A word-of-the-day site featuring interesting vocabulary',
   SITE_ID: 'occasional-wotd',
   SOURCE_DIR: '',
-  WORDNIK_WEBSITE_URL: DEFAULT_WORDNIK_WEBSITE_URL,
 };
 
 // Apply defaults for missing environment variables
@@ -170,7 +168,6 @@ export default defineConfig({
       SENTRY_ENVIRONMENT: envField.string({ context: 'client', access: 'public', default: 'development' }),
       BASE_PATH: envField.string({ context: 'client', access: 'public', default: '/' }),
       SOURCE_DIR: envField.string({ context: 'client', access: 'public', default: defaults.SOURCE_DIR }),
-      WORDNIK_WEBSITE_URL: envField.string({ context: 'client', access: 'public', default: defaults.WORDNIK_WEBSITE_URL, url: true }),
     },
   },
   vite: {

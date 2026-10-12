@@ -17,7 +17,6 @@ name: Site Add Word
 #         MERRIAM_WEBSTER_API_KEY: ${{ secrets.MERRIAM_WEBSTER_API_KEY }}
 #         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 #         SENTRY_ENABLED: ${{ secrets.SENTRY_ENABLED }}
-#         WORDNIK_API_KEY: ${{ secrets.WORDNIK_API_KEY }}
 #
 # engine/ is the calling repository at the dispatched commit and site/ the
 # tip of the dispatched branch. The word is added and the images generated
@@ -55,9 +54,6 @@ on:
         required: false
       SENTRY_ENABLED:
         description: 'Whether Sentry is enabled'
-        required: false
-      WORDNIK_API_KEY:
-        description: 'Wordnik API key'
         required: false
 
 permissions:
@@ -120,7 +116,6 @@ jobs:
           merriam-webster-api-key: ${{ secrets.MERRIAM_WEBSTER_API_KEY }}
           sentry-dsn: ${{ secrets.SENTRY_DSN }}
           sentry-enabled: ${{ secrets.SENTRY_ENABLED }}
-          wordnik-api-key: ${{ secrets.WORDNIK_API_KEY }}
 
       # site/ is the branch tip and engine/ the dispatched commit of the same
       # repository, so the copy brings in only content pushed since the
@@ -172,7 +167,7 @@ jobs:
       - name: Validate dictionary adapters and API keys
         run: |
           shopt -s nocasematch
-          VALID="wordnik, merriam-webster, wiktionary"
+          VALID="merriam-webster, wiktionary"
 
           # tools/utils.ts refuses to add a word without it
           if [[ -z "$DICTIONARY_ADAPTER" ]]; then
@@ -201,7 +196,6 @@ jobs:
 
           for adapter in "${ADAPTERS[@]}"; do
             case "$adapter" in
-              wordnik) KEY_NAME=WORDNIK_API_KEY ;;
               merriam-webster) KEY_NAME=MERRIAM_WEBSTER_API_KEY ;;
               wiktionary) continue ;;
               *)

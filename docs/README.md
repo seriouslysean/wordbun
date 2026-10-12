@@ -23,7 +23,7 @@ A template for creating family word-of-the-day sites that provides a foundation 
 
 ## Features
 
-- **Rich Word Data**: Multi-adapter dictionary support (Merriam-Webster, Wordnik, Wiktionary) with automatic fallback
+- **Rich Word Data**: Multi-adapter dictionary support (Merriam-Webster, Wiktionary) with automatic fallback, credited on an Attributions page
 - **Smart Statistics**: Letter patterns, word endings, reading streaks, and linguistic analysis
 - **Social Images**: Automated generation of beautiful, shareable word graphics
 - **Lightning Fast**: Static site generation with Astro for optimal performance
@@ -49,8 +49,7 @@ No `.env` is needed to run the demo. This repository only ships the demo words
 (`data/demo/words/`), so `SOURCE_DIR=demo` is required here: without it the
 site reads `data/words/`, finds no words, and the build fails with
 `Word not found`. To add words, name a dictionary in `DICTIONARY_ADAPTER`:
-`wiktionary` needs no API key, `merriam-webster` and `wordnik` each need
-their own.
+`wiktionary` needs no API key, `merriam-webster` needs its own.
 
 ```bash
 cp .env.example .env
@@ -85,8 +84,8 @@ SITE_URL="https://my-word-site.com"
 SOURCE_DIR=""                           # Data subdirectory; unset reads data/words/, demo reads data/demo/words/
 
 # Dictionary Service
-DICTIONARY_ADAPTER="merriam-webster"    # merriam-webster, wordnik or wiktionary; required to add words
-MERRIAM_WEBSTER_API_KEY="your-api-key-here"   # wordnik reads WORDNIK_API_KEY; wiktionary needs no key
+DICTIONARY_ADAPTER="merriam-webster"    # merriam-webster or wiktionary; required to add words
+MERRIAM_WEBSTER_API_KEY="your-api-key-here"   # wiktionary needs no key
 DICTIONARY_FALLBACK="wiktionary"        # Tried in order when the primary fails; none disables it
 
 # Colors (optional)
@@ -146,8 +145,8 @@ Start from a clone. A copy without this repository's history, such as a template
    ```
 
 3. In the new repository's **Settings**, before the first push:
-   - **Secrets and variables > Actions > Variables**: `SITE_URL`, `SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_ID` and `DICTIONARY_ADAPTER` (`wordnik`, `merriam-webster` or `wiktionary`); `BASE_PATH` when the site is served from a subdirectory, such as `/my-site` for `username.github.io/my-site`; `SITE_TZ` when the site's day is not `America/New_York`; anything else in `.env.example` that should differ from its default. Leave `SOURCE_DIR` unset: Deploy and Add Word stop when a site sets it.
-   - **Secrets and variables > Actions > Secrets**: the API key of each dictionary the site uses, as its adapter or in its fallback chain (`WORDNIK_API_KEY`, `MERRIAM_WEBSTER_API_KEY`; Wiktionary has none), and any `GA_*` or `SENTRY_*` setting. API keys, `GA_*` and `SENTRY_*` are secrets; everything else is a variable.
+   - **Secrets and variables > Actions > Variables**: `SITE_URL`, `SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_ID` and `DICTIONARY_ADAPTER` (`merriam-webster` or `wiktionary`); `BASE_PATH` when the site is served from a subdirectory, such as `/my-site` for `username.github.io/my-site`; `SITE_TZ` when the site's day is not `America/New_York`; anything else in `.env.example` that should differ from its default. Leave `SOURCE_DIR` unset: Deploy and Add Word stop when a site sets it.
+   - **Secrets and variables > Actions > Secrets**: the API key of each dictionary the site uses, as its adapter or in its fallback chain (`MERRIAM_WEBSTER_API_KEY`; Wiktionary has none), and any `GA_*` or `SENTRY_*` setting. API keys, `GA_*` and `SENTRY_*` are secrets; everything else is a variable.
    - **Pages > Build and deployment > Source**: GitHub Actions.
    - **Environments > github-pages**: deployment branches allow `main`.
    - **Rules** or branch protection on `main`, if any: let a push from the workflow's `GITHUB_TOKEN` through, since Add Word commits straight to `main`.
@@ -203,7 +202,7 @@ See [Technical Guide - Testing](technical.md#testing) for details.
 ## Technology
 
 - **[Astro](https://astro.build/)** - Static site generator
-- **Dictionary APIs** - Merriam-Webster, Wordnik, Wiktionary (with fallback chain)
+- **Dictionary APIs** - Merriam-Webster, Wiktionary (with fallback chain)
 - **[Sharp](https://sharp.pixelplumbing.com/)** - Image generation
 - **[Vitest](https://vitest.dev/)** - Testing framework
 - **[GitHub Pages](https://pages.github.com/)** - Hosting platform

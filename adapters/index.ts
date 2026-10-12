@@ -1,6 +1,5 @@
 import { merriamWebsterAdapter } from '#adapters/merriam-webster';
 import { wiktionaryAdapter } from '#adapters/wiktionary';
-import { wordnikAdapter } from '#adapters/wordnik';
 import type { DictionaryAdapter, DictionaryResponse, FetchOptions } from '#types';
 import { isCanonicalResponse, throwUnexpectedShape, throwWordNotFound } from '#utils/adapter-utils';
 import { logger } from '#utils/logger';
@@ -8,7 +7,6 @@ import { getErrorMessage } from '#utils/text-utils';
 import { isValidDictionaryData } from '#utils/word-data-utils';
 
 const ADAPTER_REGISTRY: Record<string, DictionaryAdapter> = {
-  'wordnik': wordnikAdapter,
   'merriam-webster': merriamWebsterAdapter,
   'wiktionary': wiktionaryAdapter,
 };
@@ -57,7 +55,7 @@ export interface FetchResult {
 
 /**
  * Parses DICTIONARY_FALLBACK into an ordered list of adapter names.
- * Supports comma-separated values (e.g. "wordnik,wiktionary").
+ * Supports comma-separated values (e.g. "merriam-webster,wiktionary").
  * Defaults to "wiktionary" when unset or blank: CI exports an unset
  * repository variable as "", which must not silently drop the fallback.
  * "none", in any case, disables it.

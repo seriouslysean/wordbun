@@ -43,4 +43,3 @@ jobs:
       MERRIAM_WEBSTER_API_KEY: ${{ secrets.MERRIAM_WEBSTER_API_KEY }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_ENABLED: ${{ secrets.SENTRY_ENABLED }}
-      WORDNIK_API_KEY: ${{ secrets.WORDNIK_API_KEY }}
