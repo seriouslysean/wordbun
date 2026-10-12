@@ -50,11 +50,12 @@ export const ADAPTER_FETCH_TIMEOUT_MS = 15000;
  * timeout) into descriptive errors with adapter context.
  * fetch throws TypeError on network failures and a TimeoutError DOMException
  * when the deadline passes — this ensures callers get a meaningful message
- * instead of a raw "fetch failed" or "The operation was aborted".
+ * instead of a raw "fetch failed" or "The operation was aborted". `headers`
+ * are the request headers a partner asks its clients to send.
  */
-export async function adapterFetch(url: string, adapterName: string): Promise<Response> {
+export async function adapterFetch(url: string, adapterName: string, headers?: Record<string, string>): Promise<Response> {
   try {
-    return await fetch(url, { signal: AbortSignal.timeout(ADAPTER_FETCH_TIMEOUT_MS) });
+    return await fetch(url, { ...(headers ? { headers } : {}), signal: AbortSignal.timeout(ADAPTER_FETCH_TIMEOUT_MS) });
   } catch (error) {
     if (error instanceof Error && error.name === 'TimeoutError') {
       throw new Error(`${adapterName} request timed out after ${ADAPTER_FETCH_TIMEOUT_MS}ms`, { cause: error });
@@ -211,8 +212,8 @@ export function buildDefinition(
  * caller's decision (--preserve-case), not the adapter's. A blank attribution
  * or URL and a blank headword field are omitted, and so is a headword with
  * nothing left in it. A definition whose text is blank is dropped: a partner
- * sense with nothing to show (Wordnik's optional text, a blank
- * Merriam-Webster shortdef) is not a reason to refuse the others. When every
+ * sense with nothing to show (a blank Merriam-Webster shortdef, an
+ * item Wiktionary sends empty) is not a reason to refuse the others. When every
  * definition is blank, though, the partner has changed how it sends text (a
  * renamed field reads as none): that throws as an unexpected shape. Only an
  * empty list, which fetchWithFallback reports as not found, is the partner

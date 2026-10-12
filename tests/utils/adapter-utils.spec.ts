@@ -111,10 +111,10 @@ describe('adapter-utils', () => {
         AbortSignal.abort(new DOMException('The operation was aborted due to timeout', 'TimeoutError')),
       );
 
-      const error = getError(await adapterFetch('https://slow.invalid', 'Wordnik').catch(e => e));
+      const error = getError(await adapterFetch('https://slow.invalid', 'Wiktionary').catch(e => e));
 
       expect(timeoutSpy).toHaveBeenCalledWith(ADAPTER_FETCH_TIMEOUT_MS);
-      expect(error.message).toBe(`Wordnik request timed out after ${ADAPTER_FETCH_TIMEOUT_MS}ms`);
+      expect(error.message).toBe(`Wiktionary request timed out after ${ADAPTER_FETCH_TIMEOUT_MS}ms`);
       expect(error.cause).toBeInstanceOf(DOMException);
       if (!(error.cause instanceof DOMException)) {
         throw new Error('Expected a timeout DOMException cause');
@@ -125,8 +125,8 @@ describe('adapter-utils', () => {
     it('wraps non-Error throws with adapter context', async () => {
       vi.stubGlobal('fetch', vi.fn().mockRejectedValue('connection reset'));
 
-      await expect(adapterFetch('https://example.com', 'Wordnik'))
-        .rejects.toThrow('Wordnik network request failed: connection reset');
+      await expect(adapterFetch('https://example.com', 'Wiktionary'))
+        .rejects.toThrow('Wiktionary network request failed: connection reset');
     });
   });
 
@@ -302,7 +302,7 @@ describe('adapter-utils', () => {
     });
 
     it('treats a field whose value is undefined as absent, as JSON does', () => {
-      expect(isCanonicalResponse(withDefinition({ examples: undefined, wordnikUrl: undefined }), 'test')).toBe(true);
+      expect(isCanonicalResponse(withDefinition({ examples: undefined, partnerUrl: undefined }), 'test')).toBe(true);
     });
 
     it.each([
@@ -324,7 +324,7 @@ describe('adapter-utils', () => {
       ['a headword audio URL that is not absolute http(s)', withHeadword({ audio: 'test.mp3' })],
       // Definitions
       ['a definition that is not an object', withResponse({ definitions: ['A trial'] })],
-      ['a key outside the definition', withDefinition({ wordnikUrl: 'https://example.com/test' })],
+      ['a key outside the definition', withDefinition({ partnerUrl: 'https://example.com/test' })],
       ['a definition without text', withoutDefinitionField('text')],
       ['blank text', withDefinition({ text: '  ' })],
       ['markup left in the text', withDefinition({ text: 'A procedure for <xref>critical</xref> evaluation', references: undefined })],
@@ -476,8 +476,8 @@ describe('adapter-utils', () => {
 
   describe('throwUnexpectedShape', () => {
     it('names the adapter and the word', () => {
-      expect(() => throwUnexpectedShape('Wordnik', 'serendipity')).toThrow(
-        'Wordnik returned an unexpected response shape for "serendipity"',
+      expect(() => throwUnexpectedShape('Wiktionary', 'serendipity')).toThrow(
+        'Wiktionary returned an unexpected response shape for "serendipity"',
       );
     });
   });
