@@ -249,7 +249,18 @@ These aren't enforced by tools, but the codebase follows them consistently:
 6. Push with tag: `git push && git push origin vX.Y.0`
 7. Create release: `gh release create vX.Y.0 --generate-notes --notes-start-tag vPREV`
 
-After releasing, sync downstream repos with `npm run tool:sync`: it merges upstream on a `sync/upstream-*` branch, commits only after every quality gate passes, and never pushes (merge-based, no force push). A synced fork's Deploy and Add Word call the reusable workflows with `./` at its own commit, so forks keep working until the owner migrates them.
+### Downstream sites
+
+This repository is the engine. A downstream site (wordbug, wordbun) is a full copy of it in a repository of its own, with this one as its `upstream` remote: it adds its own words, keeps its own data, and runs the tools and the workflows itself. It is not a GitHub fork, and it differs from the engine only under `data/words/` and `public/images/`.
+
+After releasing, sync each site with `npm run tool:sync`: it merges upstream on a `sync/upstream-*` branch, commits only after every quality gate passes, the last of them a build of the site's own words, and never pushes (merge-based, no force push). A site's Deploy and Add Word are this repository's, so they call the reusable workflows with `./` at the site's own commit.
+
+Two rules keep those merges clean:
+
+- **The engine never tracks `data/words/` or `public/images/`.** They are the sites'. This repository's own words and cards are the demo's, under `data/demo/` and `public/demo/`. `tests/architecture/site-content.spec.ts` enforces it.
+- **Engine files are changed only upstream.** Everything outside those two directories is the engine's, in a site too: make the change here and sync it. The favicons (`public/favicon.ico`, `public/favicon.svg`) are the only files both sides hold.
+
+`docs/technical.md` (Downstream Sync) has the detail, and `docs/README.md` (Starting a Site) the steps for a new site.
 
 ## Contributing via Git
 
