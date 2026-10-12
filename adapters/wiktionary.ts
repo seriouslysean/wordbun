@@ -77,19 +77,36 @@ const isUsage = (value: unknown): value is WiktionaryUsage =>
 export const isWiktionaryUsages = (value: unknown): value is WiktionaryUsage[] =>
   Array.isArray(value) && value.every(isUsage);
 
+// What is in the HTML and no part of its text: a comment, and a script or a
+// stylesheet with its content ("antidisestablishmentarianism" carries a
+// template's stylesheet). A comment goes whole, so a `>` inside it ends nothing.
+const HIDDEN = /<!--.*?-->|<(script|style)\b[^>]*>.*?<\/\1\s*>/gis;
+
+// Tags that end a line or a block: the words on either side are separate
+const BREAKS = /<\/?(?:br|p|div|li|ol|ul|dl|dt|dd|table|tr|td|th|blockquote|h[1-6]|hr)\b[^>]*>/gi;
+
+const TAGS = /<[^>]*>/g;
+
+// Marks that set the direction of the text around them and show as nothing
+const DIRECTIONAL_MARKS = /[\u200E\u200F\u202A-\u202E\u2066-\u2069]/g;
+
+const withoutHidden = (html: string): string => html.replaceAll(HIDDEN, '');
+
 /**
- * Reads the endpoint's HTML as plain text: tags are dropped and their content
- * kept, character references are decoded, and runs of whitespace become
- * single spaces. Links
- * to other entries are dropped with the rest of the markup, as the
+ * Reads the endpoint's HTML as plain text. Comments, scripts and stylesheets
+ * go with their content; a tag that breaks a line or closes a block becomes a
+ * space, so "a<br>b" is two words; every other tag is dropped and its content
+ * kept. Links to other entries go with the rest of the markup, as the
  * Merriam-Webster adapter drops its cross-references: Wiktionary links nearly
- * every content word of a definition. A `<style>` element goes with its
- * content, which is a template's stylesheet and no part of the text
- * ("antidisestablishmentarianism" carries one). A literal `<` is always
- * written `&lt;` in HTML, so every raw one opens a tag.
+ * every content word of a definition. Only then are character references
+ * decoded, so text is never read as markup: a literal `<` is always written
+ * `&lt;` in HTML, every raw one opens a tag, and what `&lt;b&gt;` decodes to
+ * is the reader's "<b>", not a tag to drop. Directional marks are removed and
+ * runs of whitespace become single spaces.
  */
 export const htmlToText = (html: string): string =>
-  decodeHTML(html.replaceAll(/<style\b[^>]*>.*?<\/style>/gis, '').replaceAll(/<[^>]*>/g, ''))
+  decodeHTML(withoutHidden(html).replaceAll(BREAKS, ' ').replaceAll(TAGS, ''))
+    .replaceAll(DIRECTIONAL_MARKS, '')
     .replaceAll(/\s+/g, ' ')
     .trim();
 
@@ -109,7 +126,10 @@ const SUBSENSES = /<ol\b/i;
  * sense of the word, often the specific one a reader is after, and dropping
  * them would leave "water" without mineral water and "Paris" without Texas.
  */
-const ownSenseHtml = (html: string): string => html.slice(0, SUBSENSES.exec(html)?.index);
+const ownSenseHtml = (html: string): string => {
+  const shown = withoutHidden(html);
+  return shown.slice(0, SUBSENSES.exec(shown)?.index);
+};
 
 /**
  * True for an item that is a footnote of the page and no sense of the word.
