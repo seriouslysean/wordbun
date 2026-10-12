@@ -63,9 +63,9 @@ branches. Notable in the coverage table as of v3.25.0:
   [features.md](features.md) proposes deleting.
 - `src/utils/static-paths-utils.ts` at 67% of branches and
   `src/utils/static-file-utils.ts` at 78% of lines.
-- `tools/` at 68% of lines. Three entry points are excluded because they run
+- `tools/` at 81% of lines since `tools/create-site.ts` was removed. Three entry points are excluded because they run
   in spawned processes (`vitest.config.ts` names them). Of those counted,
-  `tools/create-site.ts` sits at 19% of lines and `tools/utils.ts` at 76%.
+  `tools/add-word.ts` sits at 75% of lines and `tools/utils.ts` at 80%.
 
 ## Migration Opportunities
 
