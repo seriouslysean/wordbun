@@ -22,14 +22,18 @@
 #   6. Builds the repository's own words (SOURCE_DIR empty, so data/words)
 #      when it tracks any: typecheck holds them to the collection schema, and
 #      nothing above renders them. A .env supplies the site's settings and
-#      astro.config.ts's defaults stand in without one
+#      astro.config.ts's defaults stand in without one. This build and the
+#      demo build run with SENTRY_ENABLED=false whatever .env says: with
+#      Sentry on and a token there, a build creates a release and uploads
+#      source maps, here from a tree nobody has merged yet
 #   7. Dry-runs the stored-word normalizer over those words and reports what
 #      it would rewrite. Nothing is written, and the report is never a gate
 #   8. Commits the merge once the gates pass without changing any file, and
 #      fails if a commit hook then changes what was committed
 #
-# It never pushes and never touches main. On success the sync branch is left
-# checked out for review. Merge, not rebase, so main can be pushed without
+# It never pushes and never touches main, and its builds create no Sentry
+# release and upload nothing. On success the sync branch is left checked out
+# for review. Merge, not rebase, so main can be pushed without
 # force once the branch is merged into it.
 
 set -euo pipefail
@@ -134,8 +138,9 @@ gate npm run lint
 gate npm run typecheck
 gate npm test
 # The demo site at the root path, as the E2E workflow builds it, whatever a
-# local .env sets
-gate env SOURCE_DIR=demo BASE_PATH=/ npm run build
+# local .env sets. Sentry off: a variable that is set wins over .env, and a
+# build with Sentry on creates a release and uploads source maps.
+gate env SOURCE_DIR=demo BASE_PATH=/ SENTRY_ENABLED=false npm run build
 if [[ "$SKIP_E2E" == true ]]; then
   echo ""
   echo "Skipping E2E (--skip-e2e)."
@@ -160,8 +165,9 @@ else
     echo ""
     echo "No .env here, so the own-words build uses the default site settings in astro.config.ts."
   fi
-  # Set and empty selects data/words and, being set, wins over a .env value
-  gate env SOURCE_DIR= npm run build
+  # Set and empty selects data/words and, being set, wins over a .env value,
+  # as SENTRY_ENABLED does: Deploy's build reports to Sentry, this one must not
+  gate env SOURCE_DIR= SENTRY_ENABLED=false npm run build
 
   # A release can change the stored format without rejecting the old one,
   # which the build above then accepts. Reported, never fixed here: the

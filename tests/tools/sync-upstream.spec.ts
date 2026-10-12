@@ -33,14 +33,14 @@ const GATES = ['ci', 'run lint', 'run typecheck', 'test', 'run build', 'run test
 const NORMALIZE = 'run tool:normalize-word-data -- --dry-run';
 const OWN_WORDS = ['run build', NORMALIZE];
 
-// Logs each call as its arguments, a tab, and the SOURCE_DIR and BASE_PATH it
-// saw, "unset" for one it did not. NPM_FAIL names the call that fails, and
+// Logs each call as its arguments, a tab, the SOURCE_DIR and BASE_PATH it saw,
+// a tab, and the SENTRY_ENABLED it saw, "unset" for one it did not. NPM_FAIL names the call that fails, and
 // NPM_FAIL_OWN_BUILD fails only the build whose SOURCE_DIR is set and empty;
 // NPM_WRITE is a file the build appends to, as a gate that rewrites a tracked
 // file would. NPM_NORMALIZE is how many files the normalizer's dry run says
 // it would rewrite, in the tool's own words.
 const FAKE_NPM = `#!/usr/bin/env bash
-printf '%s\\t%s:%s\\n' "$*" "\${SOURCE_DIR-unset}" "\${BASE_PATH-unset}" >> "$NPM_LOG"
+printf '%s\\t%s:%s\\t%s\\n' "$*" "\${SOURCE_DIR-unset}" "\${BASE_PATH-unset}" "\${SENTRY_ENABLED-unset}" >> "$NPM_LOG"
 if [[ -n "\${NPM_WRITE-}" && "$*" == "run build" ]]; then
   echo changed >> "$NPM_WRITE"
 fi
@@ -411,6 +411,22 @@ describe('sync-upstream.sh', { timeout: 90000 }, () => {
       expect(isMerging()).toBe(true);
     });
 
+    // With Sentry on and a token in .env, a build creates a release and
+    // uploads source maps. The fake npm reads no .env, so the shell stands in
+    // for it: a variable the script sets wins over both.
+    it('builds with Sentry off whatever the shell has it set to', async () => {
+      diverge();
+      release({ 'src/engine.ts': 'export const version = 2;\n' });
+
+      const result = await sync([], { SENTRY_ENABLED: 'true' });
+      const sentrySeenBy = (gate: string): string[] => npmCalls().map(line => line.split('\t'))
+        .filter(([call]) => call === gate).map(([, , sentry]) => sentry ?? '');
+
+      expect(result.code).toBe(0);
+      expect(sentrySeenBy('run build')).toEqual(['false', 'false']);
+      expect(sentrySeenBy('run lint')).toEqual(['true']);
+    });
+
     it('skips only E2E with --skip-e2e', async () => {
       diverge();
       release({ 'src/engine.ts': 'export const version = 2;\n' });
@@ -442,7 +458,7 @@ describe('sync-upstream.sh', { timeout: 90000 }, () => {
       const result = await sync([], { NPM_FAIL_OWN_BUILD: '1' });
 
       expect(result.code).toBe(1);
-      expect(result.output).toContain('Failed: env SOURCE_DIR= npm run build');
+      expect(result.output).toContain('Failed: env SOURCE_DIR= SENTRY_ENABLED=false npm run build');
       expect(result.output).toContain('No .env here');
       expect(gatesRun()).toEqual([...GATES, 'run build']);
       expect(git(ctx.site, 'rev-parse', 'HEAD')).toBe(main);
