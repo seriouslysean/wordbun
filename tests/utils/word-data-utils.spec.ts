@@ -982,6 +982,51 @@ describe('word-page surfacing helpers (utils/word-data-utils)', () => {
       expect(getWordSenses(word).map(sense => sense.partOfSpeech)).toEqual(['adjective', 'noun']);
     });
 
+    // Merriam-Webster returns the prefix "the-" (god) with "the", and the
+    // slug drops the hyphen that tells them apart
+    it.each([
+      ['a prefix', 'the', 'the-'],
+      ['a suffix', 'an', '-an'],
+      ['an infix', 'a', '-a-'],
+    ])("leaves %s out of the word it is spelt like", (_kind, headword, affix) => {
+      const word: WordData = {
+        word: headword,
+        date: '20250101',
+        adapter: 'merriam-webster',
+        data: [
+          { id: headword, partOfSpeech: 'article', text: 'a function word' },
+          { id: affix, partOfSpeech: 'noun', text: 'an affix sense' },
+        ],
+      };
+      expect(getWordSenses(word).map(sense => sense.partOfSpeech)).toEqual(['article']);
+      expect(getWordsByPartOfSpeechPure('noun', [word])).toEqual([]);
+    });
+
+    it('keeps the entries of a word that is itself an affix, and leaves out the word spelt like it', () => {
+      const word: WordData = {
+        word: '-ness',
+        date: '20250101',
+        adapter: 'merriam-webster',
+        data: [
+          { id: 'ness', partOfSpeech: 'noun', text: 'a cape or headland' },
+          { id: '-ness', partOfSpeech: 'noun', text: 'state, condition, quality' },
+        ],
+      };
+      expect(getWordSenses(word).map(sense => sense.segments)).toEqual([
+        [{ type: 'text', text: 'state, condition, quality' }],
+      ]);
+    });
+
+    it('lets an affix stand in for a word with no entry of its own', () => {
+      const word: WordData = {
+        word: 'the',
+        date: '20250101',
+        adapter: 'merriam-webster',
+        data: [{ id: 'the-', partOfSpeech: 'noun', text: 'god' }],
+      };
+      expect(getWordDetails(word)).toMatchObject({ partOfSpeech: 'noun', definition: 'god' });
+    });
+
     it('opens with a sense whose part of speech the word is grouped under, when a compound is stored first', () => {
       const word: WordData = {
         word: 'happy',

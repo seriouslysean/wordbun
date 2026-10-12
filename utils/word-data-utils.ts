@@ -155,6 +155,9 @@ export const getDisplayableDefinitions = (definitions: DictionaryDefinition[]): 
 export const isValidDictionaryData = (data: DictionaryDefinition[]): boolean =>
   getDisplayableDefinitions(data).length > 0;
 
+// A prefix, suffix or infix as a dictionary writes its headword: "the-", "-an", "-a-"
+const isAffix = (headword: string): boolean => /^-|-$/.test(headword.trim());
+
 interface WordDefinitions {
   definitions: DisplayableDefinition[];
   /** True when the word has no definition of its own and the first displayable one stands in for it. */
@@ -174,6 +177,11 @@ interface WordDefinitions {
  * Their `id` differs from the headword, so they are left out. Homographs share
  * the headword's `id` and stay, as does a definition with no `id`.
  *
+ * An `id` is compared by slug, so "ice-cream" is "ice cream". The slug also
+ * drops the hyphen that marks an affix, and Merriam-Webster returns "the-"
+ * (god), "-an" and "-a-" with "the", "an" and "a": an entry is the word's own
+ * only when it is an affix exactly when the word is, so "-ness" keeps "-ness".
+ *
  * The word's own entries are picked out first and the displayability rule is
  * applied to them alone. Its abbreviation half compares the entries of one
  * headword: over the whole lookup, the adjective "AC/DC" would hide "AC", the
@@ -185,7 +193,9 @@ interface WordDefinitions {
  */
 const getWordDefinitions = (wordData: Pick<WordData, 'word' | 'data'>): WordDefinitions => {
   const wordSlug = slugify(wordData.word);
-  const own = getDisplayableDefinitions(wordData.data.filter(def => !def.id || slugify(def.id) === wordSlug));
+  const wordIsAffix = isAffix(wordData.word);
+  const own = getDisplayableDefinitions(wordData.data.filter(def =>
+    !def.id || (slugify(def.id) === wordSlug && isAffix(def.id) === wordIsAffix)));
   return own.length > 0
     ? { definitions: own, standIn: false }
     : { definitions: getDisplayableDefinitions(wordData.data).slice(0, 1), standIn: true };
