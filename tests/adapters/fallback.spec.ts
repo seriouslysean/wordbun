@@ -297,16 +297,37 @@ describe('fetchWithFallback', () => {
     );
   });
 
-  it('reports an unknown fallback adapter alongside the primary failure', async () => {
+  // "wordnik" was a valid name once. Resolved only when its turn came, it
+  // was silent for every word the primary had.
+  it.each([
+    ['the only fallback', 'wordnik'],
+    ['after a valid one', 'wiktionary, wordnik'],
+  ])('refuses a fallback name that is no adapter before fetching anything, when it is %s', async (_, value) => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
-    vi.stubEnv('DICTIONARY_FALLBACK', 'nonesuch');
-    mockFailingAdapter('#adapters/merriam-webster', 'merriamWebsterAdapter', 'merriam-webster', new Error(RATE_LIMITED));
+    vi.stubEnv('DICTIONARY_FALLBACK', value);
+    const primary = vi.fn().mockResolvedValue({ word: 'test', definitions: [{ text: 'a test', partOfSpeech: 'noun' }], meta: { source: 'Merriam-Webster' } });
+    vi.doMock('#adapters/merriam-webster', () => ({
+      merriamWebsterAdapter: { name: 'merriam-webster', fetchWordData: primary },
+    }));
 
     const { fetchWithFallback } = await import('#adapters');
 
-    await expect(fetchWithFallback('test')).rejects.toThrow(
-      `All dictionary adapters failed for "test": merriam-webster: ${RATE_LIMITED} | nonesuch: Unknown adapter: nonesuch`,
+    const error = await catchError(fetchWithFallback('test'));
+    expect(error).not.toBeInstanceOf(AggregateError);
+    expect(error.message).toBe(
+      'DICTIONARY_FALLBACK names an adapter that does not exist. Unknown adapter: wordnik. Valid adapters: merriam-webster, wiktionary',
     );
+    // The primary has the word, and is never asked
+    expect(primary).not.toHaveBeenCalled();
+  });
+
+  it('names the valid adapters when the primary is not one', async () => {
+    vi.stubEnv('DICTIONARY_ADAPTER', 'wordnik');
+    vi.stubEnv('DICTIONARY_FALLBACK', 'wiktionary');
+
+    const { fetchWithFallback } = await import('#adapters');
+
+    await expect(fetchWithFallback('test')).rejects.toThrow('Unknown adapter: wordnik. Valid adapters: merriam-webster, wiktionary');
   });
 
   it.each([

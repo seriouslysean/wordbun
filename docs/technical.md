@@ -139,7 +139,7 @@ All environment variables are validated in `astro.config.ts` (single source of t
 |----------|---------|---------|
 | `SOURCE_DIR` | `''` | Data source subdirectory (unset = root paths) |
 | `DICTIONARY_ADAPTER` | — | Primary dictionary API (`merriam-webster`, `wiktionary`); no default, `add-word` and `regenerate-all-words` refuse to run without it |
-| `DICTIONARY_FALLBACK` | `wiktionary` | Fallback chain, comma-separated; empty means the default Wiktionary fallback, `none` (any case) disables it |
+| `DICTIONARY_FALLBACK` | `wiktionary` | Fallback chain, comma-separated; empty means the default Wiktionary fallback, `none` (any case) disables it. Every name is resolved before the first lookup, so one that is no adapter (`wordnik`, removed) fails add-word and regenerate-all-words at once with the valid names, whether or not the primary has the word |
 | `MERRIAM_WEBSTER_API_KEY` | — | Merriam-Webster API key |
 | `MERRIAM_WEBSTER_API_URL` | `https://dictionaryapi.com/api/v3/references` | MW API endpoint |
 | `MERRIAM_WEBSTER_DICTIONARY` | `collegiate` | MW dictionary edition |

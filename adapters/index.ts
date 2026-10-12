@@ -31,7 +31,7 @@ export function getAdapterByName(name: string): DictionaryAdapter {
   // Own keys only: "constructor" must not read Object.prototype
   const adapter = Object.hasOwn(ADAPTER_REGISTRY, key) ? ADAPTER_REGISTRY[key] : undefined;
   if (!adapter) {
-    throw new Error(`Unknown adapter: ${name}`);
+    throw new Error(`Unknown adapter: ${name}. Valid adapters: ${getAdapterNames().join(', ')}`);
   }
   return adapter;
 }
@@ -68,6 +68,23 @@ function parseFallbackChain(): string[] {
     return [];
   }
   return raw.split(',').map(s => s.trim()).filter(Boolean);
+}
+
+/**
+ * The fallback adapters, each resolved from its name before anything is
+ * fetched. A name that is no adapter is the site's configuration at fault,
+ * whatever the word: resolved only when its turn came, a stale name
+ * ("wordnik", once valid) stayed silent for every word the primary had, and
+ * surfaced as one more failed adapter only when the primary did not.
+ */
+function resolveFallbackChain(): DictionaryAdapter[] {
+  return parseFallbackChain().map((name) => {
+    try {
+      return getAdapterByName(name);
+    } catch (error) {
+      throw new Error(`DICTIONARY_FALLBACK names an adapter that does not exist. ${getErrorMessage(error)}`, { cause: error });
+    }
+  });
 }
 
 /**
@@ -110,7 +127,9 @@ interface AdapterFailure {
 
 /**
  * Fetches word data using the primary adapter, then tries each fallback
- * in DICTIONARY_FALLBACK order (comma-separated) until one succeeds.
+ * in DICTIONARY_FALLBACK order (comma-separated) until one succeeds. Every
+ * configured name is resolved first, so a name that is no adapter fails the
+ * call before the first request, with the valid names.
  * An adapter succeeds only when its response has usable definitions.
  * With no fallback configured the primary's error is thrown as is. Otherwise
  * an exhausted chain throws one AggregateError holding every adapter's error
@@ -118,27 +137,26 @@ interface AdapterFailure {
  */
 export async function fetchWithFallback(word: string, options?: FetchOptions): Promise<FetchResult> {
   const primary = getAdapter();
+  const fallbacks = resolveFallbackChain();
   try {
     const response = await fetchUsable(primary, word, options);
     return { response, adapterName: primary.name };
   } catch (primaryError) {
-    const fallbacks = parseFallbackChain();
     if (fallbacks.length === 0) {
       throw primaryError;
     }
 
     const failures: AdapterFailure[] = [{ adapter: primary.name, error: primaryError }];
-    for (const fallbackName of fallbacks) {
+    for (const fallback of fallbacks) {
       const failed = failures.at(-1);
       logger.warn('Adapter failed, trying fallback', {
-        adapter: failed?.adapter, error: getErrorMessage(failed?.error), fallback: fallbackName, word,
+        adapter: failed?.adapter, error: getErrorMessage(failed?.error), fallback: fallback.name, word,
       });
       try {
-        const fallback = getAdapterByName(fallbackName);
         const response = await fetchUsable(fallback, word, options);
         return { response, adapterName: fallback.name };
       } catch (fallbackError) {
-        failures.push({ adapter: fallbackName, error: fallbackError });
+        failures.push({ adapter: fallback.name, error: fallbackError });
       }
     }
 
