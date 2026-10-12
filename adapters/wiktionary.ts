@@ -23,8 +23,12 @@ import { isOptional, isRecord, isString, isStringArray } from '#utils/type-guard
 const DEFAULT_API_URL = 'https://en.wiktionary.org/api/rest_v1';
 const PAGE_URL = 'https://en.wiktionary.org/wiki';
 
-// The endpoint keys its answer by language code; only English entries are read
-const ENGLISH = 'en';
+// The endpoint keys its answer by language code. Under "en" it sends the
+// page's English section and, before it, its Translingual one: terms used
+// across languages, such as a taxonomic name or a code word. Each usage
+// names its section in `language`.
+const ENGLISH_KEY = 'en';
+const ENGLISH = 'English';
 
 /**
  * Wikimedia asks every client for a User-Agent that names it and gives a way
@@ -63,10 +67,11 @@ const isDefinition = (value: unknown): value is WiktionaryDefinition =>
 const isUsage = (value: unknown): value is WiktionaryUsage =>
   isRecord(value)
   && isString(value.partOfSpeech)
+  && isString(value.language)
   && Array.isArray(value.definitions) && value.definitions.every(isDefinition);
 
 /**
- * Checks every field fetchWordData reads from the English entries, down to
+ * Checks every field fetchWordData reads from the usages, down to
  * each definition, so a malformed one is refused before the transform runs.
  */
 export const isWiktionaryUsages = (value: unknown): value is WiktionaryUsage[] =>
@@ -138,13 +143,20 @@ export const wiktionaryAdapter: DictionaryAdapter = {
       throwUnexpectedShape('Wiktionary', word);
     }
     // A page with entries in other languages only has no English word on it
-    const usages = data[ENGLISH];
-    if (usages === undefined) {
+    const sent = data[ENGLISH_KEY];
+    if (sent === undefined) {
       throwWordNotFound(word);
     }
-    if (!isWiktionaryUsages(usages)) {
+    if (!isWiktionaryUsages(sent)) {
       throwUnexpectedShape('Wiktionary', word);
     }
+    // The English section is the word. The Translingual one comes first and
+    // would otherwise supply the primary definition: of "three" a NATO code
+    // word, of "set" a language code, of "Paris" a genus of plants. It is read
+    // only when the page has no English section, as for "Amblypygi", a
+    // taxonomic name, whose only definition it holds.
+    const english = sent.filter(usage => usage.language === ENGLISH);
+    const usages = english.length > 0 ? english : sent;
     const sourceUrl = getPageUrl(word);
 
     // No `id`: the endpoint answers for one page, and names no other entry

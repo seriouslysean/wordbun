@@ -536,7 +536,7 @@ describe('fetchWithFallback when a dictionary answers with no definitions', () =
   it('refuses a Wiktionary definition whose character references decode to a tag', async () => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'wiktionary');
     vi.stubEnv('DICTIONARY_FALLBACK', 'merriam-webster');
-    answers.wiktionary = { en: [{ partOfSpeech: 'Noun', definitions: [{ definition: 'Marked &lt;b&gt;critical&lt;/b&gt; in the source' }] }] };
+    answers.wiktionary = { en: [{ partOfSpeech: 'Noun', language: 'English', definitions: [{ definition: 'Marked &lt;b&gt;critical&lt;/b&gt; in the source' }] }] };
     answers.merriamWebster = [];
     const { fetchWithFallback } = await import('#adapters');
     const { isWordNotFound } = await import('#utils/adapter-utils');
@@ -556,7 +556,7 @@ describe('fetchWithFallback when a dictionary answers with no definitions', () =
   it('keeps a decoded bracket that is not a tag', async () => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'wiktionary');
     vi.stubEnv('DICTIONARY_FALLBACK', 'none');
-    answers.wiktionary = { en: [{ partOfSpeech: 'Noun', definitions: [{ definition: 'Below range (&lt;20 mg/dL) &amp; falling' }] }] };
+    answers.wiktionary = { en: [{ partOfSpeech: 'Noun', language: 'English', definitions: [{ definition: 'Below range (&lt;20 mg/dL) &amp; falling' }] }] };
     const { fetchWithFallback } = await import('#adapters');
 
     const { response } = await fetchWithFallback('test');
@@ -567,7 +567,7 @@ describe('fetchWithFallback when a dictionary answers with no definitions', () =
   it('reports a Wiktionary answer whose every definition lacks text as an unexpected shape', async () => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'wiktionary');
     vi.stubEnv('DICTIONARY_FALLBACK', 'none');
-    answers.wiktionary = { en: [{ partOfSpeech: 'Noun', definitions: [{ definition: '' }, { definition: '  ' }] }] };
+    answers.wiktionary = { en: [{ partOfSpeech: 'Noun', language: 'English', definitions: [{ definition: '' }, { definition: '  ' }] }] };
     const { fetchWithFallback } = await import('#adapters');
     const { isWordNotFound } = await import('#utils/adapter-utils');
 

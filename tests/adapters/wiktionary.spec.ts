@@ -22,6 +22,7 @@ const loadFixture = (name: string): unknown => JSON.parse(
 const ATTRIBUTION = 'Adapted from Wiktionary (CC BY-SA 4.0)';
 
 const usage = (partOfSpeech: string, ...definitions: unknown[]): unknown => ({ partOfSpeech, language: 'English', definitions });
+const translingual = (partOfSpeech: string, ...definitions: unknown[]): unknown => ({ partOfSpeech, language: 'Translingual', definitions });
 
 const first = <T>(items: T[]): T => {
   const [item] = items;
@@ -109,6 +110,26 @@ describe('wiktionary adapter', () => {
       expect(first(result.definitions).sourceUrl).toBe('https://en.wiktionary.org/wiki/sacr%C3%A9_bleu');
     });
 
+    it("reads the English section, not the Translingual one the endpoint sends before it", async () => {
+      const fixture = loadFixture('three');
+      const result = await lookUp('three', 200, fixture);
+
+      expect(JSON.stringify(fixture)).toContain('radiotelephony');
+      expect(first(result.definitions)).toMatchObject({
+        label: 'Numeral',
+        text: 'A numerical value equal to 3; the number following two and preceding four.',
+      });
+      expect(result.definitions.find(definition => definition.partOfSpeech)?.text).toBe('The digit/figure 3.');
+      expect(JSON.stringify(result.definitions)).not.toContain('radiotelephony');
+    });
+
+    it('leaves the genus out of a place name', async () => {
+      const result = await lookUp('Paris', 200, loadFixture('Paris'));
+
+      expect(first(result.definitions).text).toMatch(/^The capital and largest city of France/);
+    });
+
+    // Amblypygi has no English section: its only definition is Translingual
     it('reads a taxonomic name, a proper noun, as a noun with its entities decoded', async () => {
       const result = await lookUp('Amblypygi', 200, loadFixture('Amblypygi'));
 
@@ -192,6 +213,21 @@ describe('wiktionary adapter', () => {
     });
   });
 
+  describe('sections', () => {
+    it('reads the Translingual section when the page has no English one', async () => {
+      const result = await lookUp('Aa', 200, { en: [translingual('Noun', { definition: 'A genus.' })] });
+
+      expect(result.definitions.map(definition => definition.text)).toEqual(['A genus.']);
+    });
+
+    it('reads only the English section when the page has both, wherever it comes', async () => {
+      const body = { en: [translingual('Symbol', { definition: 'A code.' }), usage('Noun', { definition: 'A word.' }), translingual('Noun', { definition: 'A genus.' })] };
+      const result = await lookUp('aa', 200, body);
+
+      expect(result.definitions.map(definition => definition.text)).toEqual(['A word.']);
+    });
+  });
+
   describe('parts of speech', () => {
     it('keeps an unmappable heading as the label', async () => {
       const result = await lookUp('break a leg', 200, { en: [usage('Phrase', { definition: 'Good luck' })] });
@@ -226,8 +262,9 @@ describe('wiktionary adapter', () => {
     it.each([
       ['the body is a list', []],
       ['the English entries are not a list', { en: { partOfSpeech: 'Noun' } }],
-      ['a usage has no definitions', { en: [{ partOfSpeech: 'Noun' }] }],
-      ['a usage has no part of speech', { en: [{ definitions: [{ definition: 'A thing' }] }] }],
+      ['a usage has no definitions', { en: [{ partOfSpeech: 'Noun', language: 'English' }] }],
+      ['a usage has no part of speech', { en: [{ language: 'English', definitions: [{ definition: 'A thing' }] }] }],
+      ['a usage does not name its section', { en: [{ partOfSpeech: 'Noun', definitions: [{ definition: 'A thing' }] }] }],
       ['a definition has no text', { en: [usage('Noun', {})] }],
       ['an example is not a string', { en: [usage('Noun', { definition: 'A thing', examples: [1] })] }],
       ['every definition is blank', { en: [usage('Noun', { definition: '' }, { definition: '<span></span> ' })] }],
