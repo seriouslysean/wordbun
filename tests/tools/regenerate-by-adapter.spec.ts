@@ -230,6 +230,41 @@ describe('regenerate-all-words without --adapter', { timeout: 35000 }, () => {
     });
   });
 
+  it('skips a word written by hand without a lookup, and a skip fails nothing', async () => {
+    const MANUAL_RECORD = { word: 'serendipity', date: '20240101', adapter: 'manual', preserveCase: false, data: [definition] };
+    fs.writeFileSync(filePath('20240101.json'), JSON.stringify(MANUAL_RECORD, null, 4));
+    ctx.requested = [];
+
+    const { stdout, stderr, code } = await runAsMerriamWebsterSite(['--force']);
+
+    expect(code).toBe(0);
+    expect(stdout).toMatch(/Skipping words written by hand.*skipped: 1/s);
+    expect(stdout).toMatch(/Regeneration complete.*success: 1.*failed: 0.*skipped: 1.*total: 2/s);
+    expect(stderr).not.toContain('[error]');
+    // Asked of no dictionary, and as it was written
+    expect(ctx.requested.filter(title => title.startsWith('serendipity'))).toEqual([]);
+    expect(fs.readFileSync(filePath('20240101.json'), 'utf-8')).toBe(JSON.stringify(MANUAL_RECORD, null, 4));
+
+    // A dry run lists only what would be looked up
+    const dryRun = await runAsMerriamWebsterSite(['--dry-run']);
+    expect(dryRun.code).toBe(0);
+    expect(dryRun.stdout).toContain('Amblypygi');
+    expect(dryRun.stdout).not.toContain("word: 'serendipity'");
+  });
+
+  it('refuses --adapter manual: there is no dictionary to re-source a hand-written word from', async () => {
+    ctx.requested = [];
+
+    for (const args of [['--dry-run'], ['--force']]) {
+      const { stderr, code } = await runAsMerriamWebsterSite(['--adapter', 'manual', ...args]);
+
+      expect(code).toBe(1);
+      expect(stderr).toContain('[warn] Words written by hand cannot be re-sourced');
+      expect(stderr).not.toContain('[error]');
+    }
+    expect(ctx.requested).toEqual([]);
+  });
+
   it('lets --adapter move the same record, since changing dictionary is what it asks for', async () => {
     const { code } = await runAsMerriamWebsterSite(['--adapter', 'merriam-webster', '--force']);
 

@@ -55,6 +55,9 @@ export const DEFAULTS = {
   batchTimeout: 60000,
 } as const;
 
+// The stored `adapter` of a word written by hand: no dictionary supplied it
+const MANUAL_ADAPTER = 'manual';
+
 // First rate-limit retry waits this long; each further retry doubles it.
 const RATE_LIMIT_BACKOFF_MS = 30000;
 
@@ -170,31 +173,49 @@ export async function regenerateWordFile(
 }
 
 /**
- * Regenerates all word files using fresh dictionary data. Every word is
- * attempted; the returned failure count decides the exit code.
+ * Regenerates all word files using fresh dictionary data. Every word a
+ * dictionary supplied is attempted; a word written by hand is skipped
+ * without a lookup, since no dictionary's answer should replace it. The
+ * returned failure count decides the exit code, and a skip is not a failure.
  * @param options - Configuration options
  * @returns Number of words that could not be regenerated
  */
 async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
   try {
+    // Hand-written words have no dictionary to be re-sourced from, and are
+    // not to be replaced by one. Refused at warn, as other input is.
+    if (options.adapter === MANUAL_ADAPTER) {
+      logger.warn('Words written by hand cannot be re-sourced', {
+        adapter: options.adapter,
+        reason: 'A record whose adapter is "manual" came from no dictionary, and no lookup replaces it',
+      });
+      return await exit(1);
+    }
+
     // Unreadable files are already logged; each counts as a failure, so a
     // run that could not see every word never reports success.
     const { files, failures: unreadable } = getWordFiles();
     // The stored value is compared as written: it may name a dictionary this
     // version no longer has an adapter for, which is when a site re-sources
-    const wordsToRegenerate = options.adapter === undefined
+    const selected = options.adapter === undefined
       ? files
       : files.filter(file => file.adapter === options.adapter);
+    const wordsToRegenerate = selected.filter(file => file.adapter !== MANUAL_ADAPTER);
+    const skipped = selected.length - wordsToRegenerate.length;
     logger.info('Found word files to process', {
       count: wordsToRegenerate.length,
+      skipped,
       unreadable: unreadable.length,
       ...(options.adapter === undefined ? {} : { adapter: options.adapter, of: files.length }),
     });
+    if (skipped > 0) {
+      logger.info('Skipping words written by hand', { skipped, adapter: MANUAL_ADAPTER });
+    }
 
     // A filter that matches nothing is a mistyped name ("Merriam-Webster"), or
     // a job already done: either way no word was regenerated, and exit 0 would
     // say they all were. Refused at warn, as the tool refuses its other input.
-    if (options.adapter !== undefined && wordsToRegenerate.length === 0) {
+    if (options.adapter !== undefined && selected.length === 0) {
       const stored = Object.entries(Object.groupBy(files, file => file.adapter ?? '(none)'))
         .map(([adapter, records]) => `${adapter} (${records?.length ?? 0})`)
         .toSorted();
@@ -264,7 +285,8 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
     logger.info('Regeneration complete', {
       success: successCount,
       failed: failureCount,
-      total: outcomes.length + unreadable.length,
+      skipped,
+      total: outcomes.length + unreadable.length + skipped,
     });
 
     return failureCount;
@@ -304,6 +326,8 @@ Examples:
 Note:
   Rate-limited lookups retry up to 3 times, waiting ${RATE_LIMIT_BACKOFF_MS / 1000}s and doubling each time.
   This tool will overwrite existing word files with fresh dictionary data.
+  A word written by hand (stored adapter "manual") is skipped without a
+  lookup and counted as skipped, which is not a failure.
   A word keeps its date, its case and whether that case is preserved. Without
   --adapter a word is refreshed only from the dictionary that wrote it: when
   another one answers (the fallback, after the primary failed), the stored
