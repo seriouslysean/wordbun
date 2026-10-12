@@ -73,15 +73,31 @@ async function parseCount(option: string, raw: string, min: number): Promise<num
   return value;
 }
 
+interface RegenerateWordOptions {
+  /**
+   * True when the run was asked to move records to another dictionary
+   * (--adapter). Otherwise a record is only ever refreshed from the
+   * dictionary that wrote it.
+   */
+  resource?: boolean;
+}
+
 /**
  * Creates a new word file with fresh data from the dictionary adapter
  * @param word - Word to fetch data for
  * @param date - Date in YYYYMMDD format
  * @param originalPath - Original file path
+ * @param options - Whether the record may change dictionary
  * @param retryCount - Current retry attempt (for exponential backoff)
  * @returns True if a valid record was written, false otherwise
  */
-export async function regenerateWordFile(word: string, date: string, originalPath: string, retryCount: number = 0): Promise<boolean> {
+export async function regenerateWordFile(
+  word: string,
+  date: string,
+  originalPath: string,
+  options: RegenerateWordOptions = {},
+  retryCount: number = 0,
+): Promise<boolean> {
   const maxRetries = 3;
 
   try {
@@ -90,8 +106,20 @@ export async function regenerateWordFile(word: string, date: string, originalPat
     }
 
     const { response, adapterName } = await fetchWithFallback(word);
-    const relations = await tryFetchRelations(word, primaryPartOfSpeech(response));
     const stored = readStoredEntry(originalPath);
+    // A refresh must not change where a word comes from behind the owner's
+    // back. The fallback answers whenever the primary fails for any reason (a
+    // rate limit, an outage, a timeout), and written, its answer would turn a
+    // Merriam-Webster record into a Wiktionary one and lose the pronunciation,
+    // audio and etymology with it. So the stored record stays and the word
+    // counts as failed, unless changing dictionary is what the run is for.
+    if (!options.resource && stored.adapter !== undefined && stored.adapter !== adapterName) {
+      throw new Error(
+        `"${word}" is stored from ${stored.adapter} and was answered by ${adapterName}; the stored record is kept. `
+        + `To replace it from another dictionary, run with --adapter ${stored.adapter}`,
+      );
+    }
+    const relations = await tryFetchRelations(word, primaryPartOfSpeech(response));
     const { preserveCase } = stored;
     // Enrichment is carried over only from the dictionary that answers now: a
     // pronunciation another dictionary supplied would otherwise be kept under
@@ -128,7 +156,7 @@ export async function regenerateWordFile(word: string, date: string, originalPat
         maxRetries,
       });
       await delay(backoffDelay);
-      return regenerateWordFile(word, date, originalPath, retryCount + 1);
+      return regenerateWordFile(word, date, originalPath, options, retryCount + 1);
     }
 
     logger.error('Failed to regenerate word file', {
@@ -162,6 +190,17 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
       unreadable: unreadable.length,
       ...(options.adapter === undefined ? {} : { adapter: options.adapter, of: files.length }),
     });
+
+    // A filter that matches nothing is a mistyped name ("Merriam-Webster"), or
+    // a job already done: either way no word was regenerated, and exit 0 would
+    // say they all were. Refused at warn, as the tool refuses its other input.
+    if (options.adapter !== undefined && wordsToRegenerate.length === 0) {
+      const stored = Object.entries(Object.groupBy(files, file => file.adapter ?? '(none)'))
+        .map(([adapter, records]) => `${adapter} (${records?.length ?? 0})`)
+        .toSorted();
+      logger.warn('No stored word has that adapter', { adapter: options.adapter, stored: stored.join(', ') });
+      return await exit(1);
+    }
 
     if (options.dryRun) {
       logger.info('DRY RUN MODE - Words that would be regenerated:');
@@ -206,7 +245,7 @@ async function regenerateAllWords(options: RegenerateOptions): Promise<number> {
 
         logger.info('Regenerating word', { index: i + 1, total: wordsToRegenerate.length, word: item.word });
 
-        const success = await regenerateWordFile(item.word, item.date, item.path);
+        const success = await regenerateWordFile(item.word, item.date, item.path, { resource: options.adapter !== undefined });
         outcomes.push(success);
 
         // Use standard delay between requests within a batch
@@ -248,7 +287,8 @@ Usage:
   npm run tool:regenerate-all-words -- [options]
 
 Options:
-  --adapter <name>           Only words whose stored "adapter" is <name>
+  --adapter <name>           Only words whose stored "adapter" is <name>, exactly as
+                             stored; each may then come from another dictionary
   --dry-run                  Preview what would be regenerated without doing it
   --force                    Skip confirmation prompts
   --timeout <ms>             Delay between API calls (default: ${DEFAULTS.timeout})
@@ -264,8 +304,11 @@ Examples:
 Note:
   Rate-limited lookups retry up to 3 times, waiting ${RATE_LIMIT_BACKOFF_MS / 1000}s and doubling each time.
   This tool will overwrite existing word files with fresh dictionary data.
-  A word keeps its date, its case and whether that case is preserved. Stored
-  enrichment is kept only when the same dictionary answers again.
+  A word keeps its date, its case and whether that case is preserved. Without
+  --adapter a word is refreshed only from the dictionary that wrote it: when
+  another one answers (the fallback, after the primary failed), the stored
+  record is kept and the word counts as failed. Stored enrichment is kept
+  only when the same dictionary answers again.
   Use --dry-run first to preview changes.
 ${COMMON_ENV_DOCS}
 `;

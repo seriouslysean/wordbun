@@ -10,6 +10,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import os from 'node:os';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import {
   afterAll, afterEach, beforeAll, beforeEach, describe, expect, it,
 } from 'vitest';
@@ -17,6 +18,7 @@ import {
 import { spawnTool } from '#tests/helpers/spawn.ts';
 
 const TOOL = path.join(process.cwd(), 'tools', 'regenerate-all-words.ts');
+const LOG_LEVELS = pathToFileURL(path.join(process.cwd(), 'tests', 'helpers', 'log-levels.ts')).href;
 const FIXTURES_DIR = path.join(process.cwd(), 'tests', 'adapters', 'fixtures', 'wiktionary');
 const fixture = (name: string): string => fs.readFileSync(path.join(FIXTURES_DIR, `${name}.json`), 'utf-8');
 
@@ -54,7 +56,7 @@ const filePath = (name: string): string => path.join(ctx.tempDir, 'data', 'words
 const contents = (name: StoredFile): string => JSON.stringify(STORED[name], null, 4);
 const read = (name: StoredFile): string => fs.readFileSync(filePath(name), 'utf-8');
 
-const run = (args: string[]) => spawnTool([TOOL, '--timeout=0', '--batch-timeout=0', ...args], {
+const run = (args: string[]) => spawnTool(['--import', LOG_LEVELS, TOOL, '--timeout=0', '--batch-timeout=0', ...args], {
   env: {
     SOURCE_DIR: '',
     DICTIONARY_ADAPTER: 'wiktionary',
@@ -147,10 +149,91 @@ describe('regenerate-all-words --adapter', { timeout: 35000 }, () => {
     const first = await run(['--adapter', 'wordnik', '--force']);
     expect(first.code).toBe(0);
 
-    // Nothing is left for a second run to do
+    // A second run finds none, and says what is stored instead of passing
+    // for a run that regenerated something
     ctx.requested = [];
     const second = await run(['--adapter', 'wordnik', '--force']);
-    expect(second.code).toBe(0);
+    expect(second.code).toBe(1);
+    expect(second.stderr).toContain('[warn] No stored word has that adapter');
+    expect(second.stderr).toContain("stored: 'merriam-webster (1), wiktionary (2)'");
+    expect(second.stderr).not.toContain('[error]');
     expect(ctx.requested).toEqual([]);
+  });
+
+  it.each([
+    ['a name in another case', 'Wordnik'],
+    ['a name nothing stores', 'nosuch'],
+    ['an empty name', ''],
+  ])('refuses %s instead of finishing with nothing done', async (_, name) => {
+    for (const args of [['--dry-run'], ['--force']]) {
+      const { stdout, stderr, code } = await run([`--adapter=${name}`, ...args]);
+
+      expect(code).toBe(1);
+      expect(stderr).toContain('[warn] No stored word has that adapter');
+      expect(stderr).toContain("stored: 'merriam-webster (1), wordnik (3)'");
+      expect(stderr).not.toContain('[error]');
+      expect(stdout).not.toContain('Regeneration complete');
+    }
+    expect(ctx.requested).toEqual([]);
+    expect(read('20240101.json')).toBe(contents('20240101.json'));
+  });
+});
+
+// The fallback answers whenever the primary fails, whatever the reason. A
+// plain refresh must not let that move a record to the fallback's dictionary.
+describe('regenerate-all-words without --adapter', { timeout: 35000 }, () => {
+  const MW_RECORD = {
+    word: 'serendipity',
+    date: '20240101',
+    adapter: 'merriam-webster',
+    preserveCase: false,
+    data: [definition],
+    enrichment: { pronunciation: 'ˌser-ən-ˈdi-pə-tē', etymology: 'from its possession by the heroes of a Persian fairy tale' },
+  };
+  const WIKTIONARY_RECORD = { word: 'Amblypygi', date: '20240102', adapter: 'wiktionary', preserveCase: true, data: [definition] };
+
+  // Merriam-Webster does not answer for the word: its endpoint is a path this
+  // server has nothing at. Any primary failure takes the same road to the fallback.
+  const runAsMerriamWebsterSite = (args: string[]) => spawnTool(['--import', LOG_LEVELS, TOOL, '--timeout=0', '--batch-timeout=0', ...args], {
+    env: {
+      SOURCE_DIR: '',
+      DICTIONARY_ADAPTER: 'merriam-webster',
+      DICTIONARY_FALLBACK: 'wiktionary',
+      MERRIAM_WEBSTER_API_KEY: 'test-key',
+      MERRIAM_WEBSTER_API_URL: `${ctx.baseUrl}/down`,
+      WIKTIONARY_API_URL: ctx.baseUrl,
+      SENTRY_ENABLED: 'false',
+    },
+    cwd: ctx.tempDir,
+    timeout: 30000,
+  });
+
+  beforeEach(() => {
+    for (const name of Object.keys(STORED)) {
+      fs.rmSync(filePath(name));
+    }
+    fs.writeFileSync(filePath('20240101.json'), JSON.stringify(MW_RECORD, null, 4));
+    fs.writeFileSync(filePath('20240102.json'), JSON.stringify(WIKTIONARY_RECORD, null, 4));
+  });
+
+  it('keeps a record the fallback answered for, counts it as failed, and still refreshes the rest', async () => {
+    const { stdout, stderr, code } = await runAsMerriamWebsterSite(['--force']);
+
+    expect(code).toBe(1);
+    expect(`${stdout}${stderr}`).toMatch(/Regeneration complete.*success: 1.*failed: 1/s);
+    expect(stderr).toContain('is stored from merriam-webster and was answered by wiktionary; the stored record is kept');
+    // The Merriam-Webster record, its pronunciation and etymology included, is as it was
+    expect(fs.readFileSync(filePath('20240101.json'), 'utf-8')).toBe(JSON.stringify(MW_RECORD, null, 4));
+    // The record Wiktionary wrote is refreshed from Wiktionary
+    expect(JSON.parse(fs.readFileSync(filePath('20240102.json'), 'utf-8'))).toMatchObject({
+      word: 'Amblypygi', adapter: 'wiktionary', data: [{ sourceUrl: 'https://en.wiktionary.org/wiki/Amblypygi' }],
+    });
+  });
+
+  it('lets --adapter move the same record, since changing dictionary is what it asks for', async () => {
+    const { code } = await runAsMerriamWebsterSite(['--adapter', 'merriam-webster', '--force']);
+
+    expect(code).toBe(0);
+    expect(JSON.parse(fs.readFileSync(filePath('20240101.json'), 'utf-8'))).toMatchObject({ word: 'serendipity', adapter: 'wiktionary' });
   });
 });
