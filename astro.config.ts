@@ -34,9 +34,13 @@ const colorSchema = Object.fromEntries(
   })]),
 );
 
-// Load .env locally when present, skip in CI (GitHub Actions etc).
-// Variables already set in the environment win over the file.
-if (!process.env.CI && existsSync('.env')) {
+// Load .env when present. Variables already set in the environment win over
+// the file. CI is no exception: a workflow has no .env (it is ignored, and
+// setup-env exports variables), and astro:env reads the file through Vite
+// whatever this does, so skipping it here under CI left `base` at the root
+// while the URL helpers read BASE_PATH from the file. Loaded here, a value
+// is in process.env before either reads it, and both read that.
+if (existsSync('.env')) {
   process.loadEnvFile();
 }
 

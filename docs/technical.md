@@ -123,6 +123,8 @@ tests/
 
 All environment variables are validated in `astro.config.ts` (single source of truth). See `.env.example` for the complete list with defaults.
 
+`astro.config.ts` loads `.env` into `process.env` whenever the file is there, with `CI` set or not, and a variable the environment already sets wins over the file. The config (`site`, `base`, the word data path, whether Sentry is on) and `astro:env` (the URL helpers, the components) then read one value: `astro:env` reads `.env` itself through Vite, which lets `process.env` override the file. A workflow has no `.env`; `setup-env` exports the repository's variables. `.env` is the only file the config loads: Vite's mode files (`.env.local`, `.env.production`) reach `astro:env` and not the config, so a setting put there splits the two. Keep settings in `.env` or the environment.
+
 ### Required
 
 | Variable | Purpose |
