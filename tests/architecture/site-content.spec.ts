@@ -10,9 +10,12 @@
  * `data/demo/` and `public/demo/`.
  *
  * `.gitignore` cannot hold the rule, because the sites get that file too and
- * must track both directories. So this asks Git what is tracked, and only
- * where `origin` is this repository: the suite runs in every site, in its
- * sync gates and its CI, where tracking them is the point.
+ * must track both directories. So this asks Git what is tracked, everywhere
+ * except in a checkout it can tell is a site's: the suite runs in every site,
+ * in its sync gates and its CI, where tracking them is the point. A site is a
+ * checkout with an `upstream` remote (the test `tools/sync-upstream.sh` uses),
+ * or one whose GitHub repository is not this one. A checkout it cannot
+ * identify is held to the rule, so a failed Git command never skips it.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -28,9 +31,14 @@ const git = (...args: string[]): string => {
   }
 };
 
-const isUpstream = UPSTREAM.test(git('remote', 'get-url', 'origin'));
+const GITHUB_REPOSITORY = /github\.com[/:]([^/]+\/[^/]+?)(\.git)?\/?$/;
 
-describe.skipIf(!isUpstream)('Architecture: site content stays out of the engine', () => {
+const origin = git('remote', 'get-url', 'origin');
+const hasUpstreamRemote = git('remote').split('\n').includes('upstream');
+const isAnotherGitHubRepository = GITHUB_REPOSITORY.test(origin) && !UPSTREAM.test(origin);
+const isSite = hasUpstreamRemote || isAnotherGitHubRepository;
+
+describe.skipIf(isSite)('Architecture: site content stays out of the engine', () => {
   it.each(['data/words', 'public/images'])('tracks nothing under %s', (directory) => {
     // Proves Git answered: an empty reply from a failed command would pass
     expect(git('ls-files', '--', 'package.json')).toBe('package.json');

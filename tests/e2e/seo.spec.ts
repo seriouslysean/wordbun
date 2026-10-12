@@ -75,7 +75,7 @@ test.describe('SEO build output', () => {
 		expect(await countBreadcrumbTrails()).toBe(1);
 	});
 
-	test('every page family carries the view transition opt-in inline', async ({ page }) => {
+	test('home, word, stats, browse and 404 pages carry the view transition opt-in inline', async ({ page }) => {
 		// The build inlines the rule only while its chunk stays split out and
 		// small (astro.config.ts, codeSplitting); nothing fails when it slips
 		// back into the external stylesheet. The policy is a <meta>, which only

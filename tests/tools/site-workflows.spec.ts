@@ -370,8 +370,8 @@ describe('site workflows', { timeout: 60000 }, () => {
     });
 
     // A ./ call runs the called workflow from the caller's own commit, which
-    // for a fork is a commit only the fork has
-    it('checks out the calling commit when a fork that has not moved to a thin site calls its own copy', () => {
+    // for a downstream site is a commit only that site has
+    it('checks out the calling commit when a downstream site calls its own copy', () => {
       expect(engineCheckout('seriouslysean/wordbug')).toMatchObject({ repository: 'seriouslysean/wordbug', ref: SHA });
     });
   });

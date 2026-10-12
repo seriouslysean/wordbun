@@ -173,14 +173,14 @@ else
     WOULD_CHANGE=$(grep -c 'Would normalize word file' <<< "$NORMALIZE_OUTPUT" || true)
     if [[ "$WOULD_CHANGE" -gt 0 ]]; then
       NORMALIZE_REPORT="The normalizer would rewrite $WOULD_CHANGE stored word file(s) under data/words; the sync changed none of them.
-To see them: $NORMALIZE -- --dry-run
-To rewrite them: $NORMALIZE, then review and commit the result."
+To see them: env SOURCE_DIR= $NORMALIZE -- --dry-run
+To rewrite them: env SOURCE_DIR= $NORMALIZE, then review and commit the result."
     else
       NORMALIZE_REPORT="The normalizer would change no stored word."
     fi
   else
     NORMALIZE_REPORT="The normalizer could not check every stored word, so whether any needs rewriting is unknown.
-To see why: $NORMALIZE -- --dry-run"
+To see why: env SOURCE_DIR= $NORMALIZE -- --dry-run"
   fi
   echo "$NORMALIZE_REPORT"
 fi

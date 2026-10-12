@@ -159,7 +159,7 @@ Start from a clone. A copy without this repository's history, such as a template
    ```
 
    `SITE_TITLE` is drawn on every card, so give `.env` the title the repository variable has. The push starts Deploy, which publishes the site; if it ran before a setting was in place, run **Deploy to GitHub Pages** again from the Actions tab.
-5. Run **Add Word** from the Actions tab with a word. It commits `Add word: <word>` to `main` with the word's file and its cards, and the Deploy it starts publishes the word. That run is the check that the whole setup works.
+5. Run **Add Word** from the Actions tab with a word and a date other than today's: step 4 gave today its word, and Add Word refuses a date that already has one. It commits `Add word: <word>` to `main` with the word's file and its cards, and the Deploy it starts publishes the word. That run is the check that the whole setup works.
 
 From then on the site's own files are the ones under `data/words/` and `public/images/`, plus `public/favicon.svg` and `public/favicon.ico` if it replaces them. Everything else, `data/demo/` and `public/demo/` included, stays as the engine has it and is changed only upstream, which is what keeps `npm run tool:sync` merging cleanly.
 

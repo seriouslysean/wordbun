@@ -468,7 +468,7 @@ describe('sync-upstream.sh', { timeout: 90000 }, () => {
 
       expect(result.code).toBe(0);
       expect(result.output).toContain('would rewrite 2 stored word file(s)');
-      expect(result.output).toContain('To rewrite them: npm run tool:normalize-word-data, then review and commit the result.');
+      expect(result.output).toContain('To rewrite them: env SOURCE_DIR= npm run tool:normalize-word-data, then review and commit the result.');
       expect(parents('HEAD')).toHaveLength(2);
       expect(git(ctx.site, 'status', '--porcelain')).toBe('');
     });
