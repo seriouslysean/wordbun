@@ -131,6 +131,33 @@ describe('wiktionary adapter', () => {
       expect(first(result.definitions).text).toContain('A fried corn or flour tortilla');
     });
 
+    // The endpoint nests a sense's subsenses in its HTML and lists each again
+    it("ends a sense's text where its subsenses begin, and keeps each subsense as a definition", async () => {
+      const result = await lookUp('water', 200, loadFixture('water'));
+      const texts = result.definitions.map(definition => definition.text);
+
+      const parent = texts.indexOf('A combination of water and other substance(s).');
+      expect(parent).toBeGreaterThan(-1);
+      expect(texts[parent + 1]).toBe('Mineral water.');
+      expect(texts.filter(text => text.includes('Mineral water.'))).toEqual(['Mineral water.']);
+      // Its examples arrive mixed with its subsenses' and later senses'
+      expect(result.definitions[parent]).not.toHaveProperty('examples');
+      expect(result.definitions[parent + 1]?.examples).toEqual(['Perrier is the most popular water in this restaurant.']);
+      // The verb's first sense nests four
+      expect(texts).toContain('To wet or supply with water; to moisten; to overflow with water; to irrigate.');
+      expect(texts).toContain('To pour water into the soil surrounding (plants).');
+    });
+
+    it('lists the places a sense groups once each, not again inside the sense that groups them', async () => {
+      const result = await lookUp('Paris', 200, loadFixture('Paris'));
+      const texts = result.definitions.map(definition => definition.text);
+
+      expect(texts).toContain('A locale in the United States.');
+      expect(texts.filter(text => text.includes('Lamar County'))).toHaveLength(1);
+      expect(Math.max(...texts.map(text => text.length))).toBeLessThan(400);
+      expect(new Set(texts).size).toBe(texts.length);
+    });
+
     it('leaves out a footnote the endpoint lists among the definitions', async () => {
       const word = 'pneumonoultramicroscopicsilicovolcanoconiosis';
       const fixture = loadFixture(word);
@@ -229,7 +256,6 @@ describe('wiktionary adapter', () => {
       ['drops tags and keeps their content', 'A <a rel="mw:WikiLink" href="/wiki/room" title="room">room</a>.', 'A room.'],
       ['drops a void element', 'Juice.<link rel="mw:PageProp/Category" href="./Category:X">', 'Juice.'],
       ['decodes character references', 'Arachnida&nbsp;&ndash; R&amp;D', 'Arachnida – R&D'],
-      ['joins a list of subsenses into one line', 'A trial.\n\n<ol><li>An exam.</li>\n<li>A session.</li></ol>', 'A trial. An exam. A session.'],
       ['drops a stylesheet with its content', 'A philosophy. <style data-mw-deduplicate="TemplateStyles:r1">.mw-parser-output .defdate{font-size:smaller}</style>', 'A philosophy.'],
       ['trims what an empty label leaves behind', '<span class="usage-label-sense"></span> A small room.', 'A small room.'],
     ])('%s', async (_, html, text) => {

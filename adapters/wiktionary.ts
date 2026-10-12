@@ -74,8 +74,8 @@ export const isWiktionaryUsages = (value: unknown): value is WiktionaryUsage[] =
 
 /**
  * Reads the endpoint's HTML as plain text: tags are dropped and their content
- * kept, character references are decoded, and runs of whitespace (a sense with
- * subsenses arrives as a list, one item to a line) become single spaces. Links
+ * kept, character references are decoded, and runs of whitespace become
+ * single spaces. Links
  * to other entries are dropped with the rest of the markup, as the
  * Merriam-Webster adapter drops its cross-references: Wiktionary links nearly
  * every content word of a definition. A `<style>` element goes with its
@@ -87,6 +87,24 @@ export const htmlToText = (html: string): string =>
   decodeHTML(html.replaceAll(/<style\b[^>]*>.*?<\/style>/gis, '').replaceAll(/<[^>]*>/g, ''))
     .replaceAll(/\s+/g, ' ')
     .trim();
+
+// Where a sense's subsenses begin: the ordered list nested in its HTML
+const SUBSENSES = /<ol\b/i;
+
+/**
+ * A sense's own HTML, without its subsenses. The endpoint sends a sense that
+ * has subsenses twice over: its text is followed by a nested `<ol>` holding
+ * every subsense, and each subsense then comes again as a definition of its
+ * own. "water" has "A combination of water and other substance(s)." with
+ * "Mineral water." nested in it and again as the next item; "Paris" has "A
+ * locale in the United States." with twenty-five places nested and then
+ * listed. So the sense's own text ends where the list opens. The list is cut
+ * to the end rather than to its closing tag, which the endpoint leaves out.
+ * The subsenses stay as the definitions the endpoint makes of them: each is a
+ * sense of the word, often the specific one a reader is after, and dropping
+ * them would leave "water" without mineral water and "Paris" without Texas.
+ */
+const ownSenseHtml = (html: string): string => html.slice(0, SUBSENSES.exec(html)?.index);
 
 /**
  * True for an item that is a footnote of the page and no sense of the word.
@@ -133,11 +151,13 @@ export const wiktionaryAdapter: DictionaryAdapter = {
     const definitions = usages.flatMap(usage =>
       usage.definitions.filter(def => !isFootnote(def.definition)).map(def => buildDefinition({
         partOfSpeech: usage.partOfSpeech,
-        text: htmlToText(def.definition),
+        text: htmlToText(ownSenseHtml(def.definition)),
         attributionText: ATTRIBUTION,
         sourceDictionary: 'wiktionary',
         sourceUrl,
-        examples: def.examples?.map(htmlToText),
+        // A sense with subsenses is sent with their examples, and those of
+        // senses after them, mixed into its own: none can be called its own
+        examples: SUBSENSES.test(def.definition) ? undefined : def.examples?.map(htmlToText),
       }, POS_MAP)));
 
     return buildDictionaryResponse(word, definitions, 'Wiktionary', ATTRIBUTION, sourceUrl);
