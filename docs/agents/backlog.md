@@ -59,8 +59,9 @@ The gaps listed here before are closed: `static-file-utils.ts` and
 branches. Notable in the coverage table as of v3.25.0:
 
 - `src/utils/url-utils.ts` at 34% of functions: the single-expression URL
-  helpers that the Architecture & Code Quality entry in
-  [features.md](features.md) proposes deleting.
+  helpers, most of which pages call and no unit test does. The Architecture & Code
+  Quality entry in [features.md](features.md) no longer proposes deleting
+  them.
 - `src/utils/static-paths-utils.ts` at 67% of branches and
   `src/utils/static-file-utils.ts` at 78% of lines.
 - `tools/` at 68% of lines. Three entry points are excluded because they run
