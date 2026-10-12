@@ -9,8 +9,10 @@ import {
   buildDefinition,
   classifyPartOfSpeech,
   isCanonicalResponse,
+  isNotDisplayable,
   isRateLimited,
   isWordNotFound,
+  NoDisplayableDefinitionError,
   normalizePOS,
   RateLimitError,
   parseJsonResponse,
@@ -459,6 +461,32 @@ describe('adapter-utils', () => {
 
     it('goes by type, not by message', () => {
       expect(isWordNotFound(new Error('Word "zz" not found in dictionary. Please check the spelling.'))).toBe(false);
+    });
+  });
+
+  describe('isNotDisplayable', () => {
+    const phrase = new NoDisplayableDefinitionError('wiktionary has "etc." only as: Phrase.');
+
+    it('is true when the only adapter has the word as nothing a page can display', () => {
+      expect(isNotDisplayable(phrase)).toBe(true);
+    });
+
+    it('is true when every other adapter said not found', () => {
+      expect(isNotDisplayable(new AggregateError([new WordNotFoundError('gone'), phrase]))).toBe(true);
+    });
+
+    it('is false when no adapter had the word at all, which is not found', () => {
+      expect(isNotDisplayable(new WordNotFoundError('gone'))).toBe(false);
+      expect(isNotDisplayable(new AggregateError([new WordNotFoundError('gone'), new WordNotFoundError('gone')]))).toBe(false);
+    });
+
+    it('is false when any adapter failed for another reason', () => {
+      expect(isNotDisplayable(new AggregateError([new RateLimitError('slow down'), phrase]))).toBe(false);
+      expect(isNotDisplayable(new AggregateError([phrase, new Error('network request failed')]))).toBe(false);
+    });
+
+    it('goes by type, not by message', () => {
+      expect(isNotDisplayable(new Error(phrase.message))).toBe(false);
     });
   });
 

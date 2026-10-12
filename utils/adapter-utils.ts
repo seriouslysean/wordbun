@@ -26,6 +26,30 @@ export class RateLimitError extends Error {
 }
 
 /**
+ * The dictionary has the word and answered well, but classifies none of its
+ * definitions as a part of speech in the vocabulary: "etc." is a phrase,
+ * "pre-" a prefix, "%" a symbol. An adapter keeps such a term as the
+ * definition's `label`, and a definition with only a label is one no page
+ * can display. Like a missing word it is the word that is unsuitable, not the
+ * dictionary that is at fault.
+ */
+export class NoDisplayableDefinitionError extends Error {
+  name = 'NoDisplayableDefinitionError';
+}
+
+/**
+ * True when the word could not be added only because no dictionary that has
+ * it classifies it as something a page can display: at least one adapter
+ * said so, and every other one said the word does not exist. A rate limit, an
+ * outage or an unexpected shape anywhere in the chain is still a fault.
+ */
+export const isNotDisplayable = (error: unknown): boolean => {
+  const failures = flattenErrors(error);
+  return failures.some(failure => failure instanceof NoDisplayableDefinitionError)
+    && failures.every(failure => failure instanceof NoDisplayableDefinitionError || failure instanceof WordNotFoundError);
+};
+
+/**
  * True when every adapter that was asked said the word does not exist, so a
  * rate limit or an outage anywhere in the fallback chain is not reported as
  * a misspelling.

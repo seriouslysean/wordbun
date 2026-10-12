@@ -142,6 +142,33 @@ describe('add-word failure reporting', () => {
     expect(ctx.logger.error).not.toHaveBeenCalled();
   });
 
+  // "etc." is a phrase and "pre-" a prefix at Wiktionary: it has the word and
+  // answered well, so nothing is at fault
+  it('reports a word the dictionary has only as a phrase as input, not a fault', async () => {
+    ctx.responses.wiktionary = httpResponse(200, {
+      en: [{ partOfSpeech: 'Phrase', language: 'English', definitions: [{ definition: 'And so on.' }] }],
+    });
+
+    await addWord();
+
+    expect(ctx.logger.warn).toHaveBeenCalledWith('Word has no definition the site can display', {
+      word: WORD,
+      errorMessage: expect.stringContaining(`wiktionary: wiktionary has "${WORD}" only as: Phrase.`),
+    });
+    expect(ctx.logger.error).not.toHaveBeenCalled();
+  });
+
+  it('still reports a fault when the other dictionary failed for a reason of its own', async () => {
+    ctx.responses['merriam-webster'] = httpResponse(429);
+    ctx.responses.wiktionary = httpResponse(200, {
+      en: [{ partOfSpeech: 'Prefix', language: 'English', definitions: [{ definition: 'Before.' }] }],
+    });
+
+    await addWord();
+
+    expect(ctx.logger.error).toHaveBeenCalledExactlyOnceWith('Failed to add word', expect.objectContaining({ word: WORD }));
+  });
+
   it('keeps the single-adapter message unchanged when no fallback is configured', async () => {
     vi.stubEnv('DICTIONARY_FALLBACK', 'none');
 

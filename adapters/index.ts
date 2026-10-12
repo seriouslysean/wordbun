@@ -1,7 +1,9 @@
 import { merriamWebsterAdapter } from '#adapters/merriam-webster';
 import { wiktionaryAdapter } from '#adapters/wiktionary';
 import type { DictionaryAdapter, DictionaryResponse, FetchOptions } from '#types';
-import { isCanonicalResponse, throwUnexpectedShape, throwWordNotFound } from '#utils/adapter-utils';
+import {
+  isCanonicalResponse, NoDisplayableDefinitionError, throwUnexpectedShape, throwWordNotFound,
+} from '#utils/adapter-utils';
 import { logger } from '#utils/logger';
 import { getErrorMessage } from '#utils/text-utils';
 import { isValidDictionaryData } from '#utils/word-data-utils';
@@ -79,7 +81,10 @@ function parseFallbackChain(): string[] {
  * before the guard, whose contract requires a definition, would call it a
  * broken shape. buildDictionaryResponse has already refused a list whose
  * every definition was blank, so an empty list here is one the partner sent
- * empty.
+ * empty. A canonical response none of whose definitions has a part of speech
+ * from the vocabulary is neither: the partner has the word, as a phrase or a
+ * prefix, and answered well. It is refused by its own error, which names
+ * what the partner calls the word, so a caller can tell it from a fault.
  */
 async function fetchUsable(adapter: DictionaryAdapter, word: string, options?: FetchOptions): Promise<DictionaryResponse> {
   const response = await adapter.fetchWordData(word, options);
@@ -90,7 +95,10 @@ async function fetchUsable(adapter: DictionaryAdapter, word: string, options?: F
     throwUnexpectedShape(adapter.name, word);
   }
   if (!isValidDictionaryData(response.definitions)) {
-    throw new Error(`${adapter.name} returned no usable definitions for "${word}"`);
+    const terms = [...new Set(response.definitions.map(definition => definition.label ?? 'unclassified'))];
+    throw new NoDisplayableDefinitionError(
+      `${adapter.name} has "${word}" only as: ${terms.join(', ')}. A page shows a definition by its part of speech, and none of these is one.`,
+    );
   }
   return response;
 }

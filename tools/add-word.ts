@@ -2,7 +2,7 @@ import { isEntryPoint } from '#tools/entry';
 import { COMMON_ENV_DOCS, parseToolArgs, showHelp } from '#tools/help-utils';
 import { createWordEntry, findSlugCollision, findWordInFiles, getWordFiles } from '#tools/utils';
 import { getTodayYYYYMMDD, isValidDate } from '#utils/date-utils';
-import { isWordNotFound } from '#utils/adapter-utils';
+import { isNotDisplayable, isWordNotFound } from '#utils/adapter-utils';
 import { exit, getErrorMessage, logger } from '#utils/logger';
 import { slugify } from '#utils/text-utils';
 
@@ -118,6 +118,10 @@ export async function addWord(input: string, options: AddWordOptions = {}): Prom
     // from one of them is a different problem and is reported as such
     if (isWordNotFound(error)) {
       logger.warn('Word not found in dictionary', { word, errorMessage });
+    } else if (isNotDisplayable(error)) {
+      // The dictionary has it, as a phrase, an affix or a symbol: the word
+      // is one the site cannot show, which is input, not a fault
+      logger.warn('Word has no definition the site can display', { word, errorMessage });
     } else {
       logger.error('Failed to add word', { word, errorMessage });
     }

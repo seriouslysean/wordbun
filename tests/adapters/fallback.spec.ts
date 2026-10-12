@@ -395,7 +395,7 @@ describe('fetchWithFallback', () => {
     );
   });
 
-  it('throws a named error when the last adapter has no usable definitions', async () => {
+  it('throws an error of its own, naming what the dictionary calls the word, when no definition is displayable', async () => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
     vi.stubEnv('DICTIONARY_FALLBACK', 'none');
 
@@ -409,8 +409,13 @@ describe('fetchWithFallback', () => {
 
     const { fetchWithFallback } = await import('#adapters');
 
-    await expect(fetchWithFallback('test')).rejects.toThrow('merriam-webster returned no usable definitions for "test"');
+    const { NoDisplayableDefinitionError } = await import('#utils/adapter-utils');
+
+    const error = await catchError(fetchWithFallback('test'));
+    expect(error).toBeInstanceOf(NoDisplayableDefinitionError);
+    expect(error.message).toBe('merriam-webster has "test" only as: affix. A page shows a definition by its part of speech, and none of these is one.');
   });
+
   it('falls through when the primary breaks the canonical contract', async () => {
     vi.stubEnv('DICTIONARY_ADAPTER', 'merriam-webster');
     vi.stubEnv('DICTIONARY_FALLBACK', 'wiktionary');
