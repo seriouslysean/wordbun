@@ -1,4 +1,4 @@
-# occasional-wotd
+# wordbun
 
 A modern, family-friendly word-of-the-day site generator template for creating occasional vocabulary learning sites.
 
