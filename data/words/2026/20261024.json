@@ -1,0 +1,141 @@
+{
+    "word": "cotton",
+    "date": "20261024",
+    "adapter": "merriam-webster",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "cotton",
+            "partOfSpeech": "noun",
+            "text": "a soft usually white fibrous substance composed of the hairs surrounding the seeds of various erect freely branching tropical plants (genus Gossypium) of the mallow family",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton",
+            "partOfSpeech": "noun",
+            "text": "a plant producing cotton; especially: one grown for its cotton",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton",
+            "partOfSpeech": "noun",
+            "text": "a crop of cotton",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton",
+            "partOfSpeech": "verb",
+            "text": "to take a liking —used with to",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton",
+            "partOfSpeech": "verb",
+            "text": "to come to understand —used with to or on to",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "Cotton:b1",
+            "label": "biographical name",
+            "text": "Charles 1630—1687 English author and translator",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "Cotton:b2",
+            "label": "biographical name",
+            "text": "John 1585—1652 American (English-born) Puritan clergyman",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton bollworm",
+            "partOfSpeech": "noun",
+            "text": "corn earworm",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton candy",
+            "partOfSpeech": "noun",
+            "text": "a candy made of spun sugar",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton candy",
+            "partOfSpeech": "noun",
+            "text": "something attractive but insubstantial",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton gin",
+            "partOfSpeech": "noun",
+            "text": "a machine that separates the seeds, hulls, and foreign material from cotton",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton grass",
+            "partOfSpeech": "noun",
+            "text": "any of a genus (Eriophorum) of sedges with tufted spikes",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton-picking",
+            "partOfSpeech": "adjective",
+            "text": "damned —used as an intensive or as a generalized expression of disapproval",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        },
+        {
+            "id": "cotton stainer",
+            "partOfSpeech": "noun",
+            "text": "any of several bugs (genus Dysdercus) that damage and stain the lint of developing cotton; especially: a red and brown bug (D. suturellus) that attacks cotton in the southern U.S.",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cotton"
+        }
+    ],
+    "enrichment": {
+        "pronunciation": "ˈkä-tᵊn",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/cotton01.mp3",
+        "etymology": "Middle English coton, from Anglo-French cotun, from Old Italian cotone, from Arabic quṭun, quṭn",
+        "synonyms": [
+            "cotton fiber",
+            "cotton wool"
+        ],
+        "related": [
+            "plant fiber",
+            "plant fibre",
+            "cottony",
+            "absorbent cotton",
+            "long-staple cotton",
+            "short-staple cotton",
+            "fabric",
+            "cloth",
+            "gauze",
+            "gauze bandage"
+        ]
+    }
+}
