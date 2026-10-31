@@ -1,0 +1,63 @@
+{
+    "word": "cauldron",
+    "date": "20261030",
+    "adapter": "merriam-webster",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "cauldron",
+            "partOfSpeech": "noun",
+            "text": "a large kettle or boiler",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cauldron",
+            "examples": [
+                "a cauldron of intense emotions"
+            ]
+        },
+        {
+            "id": "cauldron",
+            "partOfSpeech": "noun",
+            "text": "something resembling a boiling cauldron in intensity or degree of agitation",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cauldron",
+            "examples": [
+                "a cauldron of intense emotions"
+            ]
+        },
+        {
+            "id": "caldron",
+            "partOfSpeech": "noun",
+            "text": "a large kettle or boiler",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cauldron",
+            "examples": [
+                "a cauldron of intense emotions"
+            ]
+        },
+        {
+            "id": "caldron",
+            "partOfSpeech": "noun",
+            "text": "something resembling a boiling cauldron in intensity or degree of agitation",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/cauldron",
+            "examples": [
+                "a cauldron of intense emotions"
+            ]
+        }
+    ],
+    "enrichment": {
+        "pronunciation": "ˈkȯl-drən",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/cauldr01.mp3",
+        "etymology": "Middle English caudron, caldron, from Anglo-French cauderon, diminutive of caldere basin, from Late Latin caldaria, from feminine of Latin caldarius used for hot water, from calidus warm, from calēre to be warm — more at lee",
+        "synonyms": [
+            "caldron"
+        ],
+        "related": [
+            "pot"
+        ]
+    }
+}
