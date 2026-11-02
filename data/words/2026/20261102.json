@@ -1,0 +1,158 @@
+{
+    "word": "bird",
+    "date": "20261102",
+    "adapter": "merriam-webster",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "bird",
+            "partOfSpeech": "noun",
+            "text": "the young of a feathered vertebrate",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird",
+            "partOfSpeech": "noun",
+            "text": "any of a class (Aves) of warm-blooded vertebrates distinguished by having the body more or less completely covered with feathers and the forelimbs modified as wings",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird",
+            "partOfSpeech": "noun",
+            "text": "a game bird",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird",
+            "partOfSpeech": "verb",
+            "text": "to observe or identify wild birds in their habitats",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "Bird:b",
+            "label": "biographical name",
+            "text": "Larry (Joe) 1956— American basketball player",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird colonel",
+            "partOfSpeech": "noun",
+            "text": "colonel",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird-dog",
+            "partOfSpeech": "verb",
+            "text": "to watch closely",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird-dog",
+            "partOfSpeech": "verb",
+            "text": "to seek out: follow, detect",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird dog",
+            "partOfSpeech": "noun",
+            "text": "a gundog trained to hunt or retrieve birds",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird dog",
+            "partOfSpeech": "noun",
+            "text": "one (such as a canvasser or talent scout) who seeks out something for another",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird dog",
+            "partOfSpeech": "noun",
+            "text": "one who steals another's date",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird-dogging",
+            "partOfSpeech": "noun",
+            "text": "the stealing of another's date (as at a party)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird-dogging",
+            "partOfSpeech": "noun",
+            "text": "the action of one that bird-dogs",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird feeder",
+            "partOfSpeech": "noun",
+            "text": "a device or apparatus for supplying food to birds; especially: one that is designed to be used outdoors in order to attract wild birds",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        },
+        {
+            "id": "bird flu",
+            "partOfSpeech": "noun",
+            "text": "avian influenza; specifically: severe often fatal influenza A caused by strains of a subtype (H5N1) of the causative orthomyxovirus (Alphainfluenzavirus influenzae) that have produced epidemics in domestic birds especially in Asia with sporadic associated human infections",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/bird"
+        }
+    ],
+    "enrichment": {
+        "pronunciation": "ˈbərd",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/bird0001.mp3",
+        "etymology": "Middle English brid, bird, from Old English bridd",
+        "synonyms": [
+            "fowl"
+        ],
+        "related": [
+            "vertebrate",
+            "craniate",
+            "birdwatch",
+            "dickeybird",
+            "dickey-bird",
+            "cock",
+            "hen",
+            "nester",
+            "night bird",
+            "bird of passage",
+            "protoavis",
+            "archaeopteryx",
+            "archeopteryx",
+            "Sinornis",
+            "Ibero-mesornis",
+            "archaeornis",
+            "ratite",
+            "ratite bird",
+            "carinate",
+            "carinate bird"
+        ]
+    }
+}
