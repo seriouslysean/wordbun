@@ -1,0 +1,251 @@
+{
+    "word": "rock",
+    "date": "20261117",
+    "adapter": "merriam-webster",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "rock",
+            "partOfSpeech": "verb",
+            "text": "to move back and forth in or as if in a cradle",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock",
+            "examples": [
+                "She gently rocked the baby to sleep.",
+                "a boat rocked by the waves",
+                "An earthquake rocked the town.",
+                "A hard right rocked the contender.",
+                "The scandal rocked the community.",
+                "Their invention rocked the industry.",
+                "The band rocked the crowd.",
+                "His performance rocked the house. =the audience loved his performance",
+                "… rocking a tight yellow T-shirt with jeans and high wooden sandals, belting her lyrics into a microphone.",
+                "In the picture he's rocking a beard, a pair of shades and a striped t-shirt.",
+                "The tower rocked under the impact of the hurricane.",
+                "rocked on the balls of his feet",
+                "the train rocked through the countryside",
+                "The band was rocking all night long.",
+                "her new car rocks"
+            ]
+        },
+        {
+            "id": "rock",
+            "partOfSpeech": "verb",
+            "text": "to cause to sway back and forth",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock",
+            "examples": [
+                "She gently rocked the baby to sleep.",
+                "a boat rocked by the waves",
+                "An earthquake rocked the town.",
+                "A hard right rocked the contender.",
+                "The scandal rocked the community.",
+                "Their invention rocked the industry.",
+                "The band rocked the crowd.",
+                "His performance rocked the house. =the audience loved his performance",
+                "… rocking a tight yellow T-shirt with jeans and high wooden sandals, belting her lyrics into a microphone.",
+                "In the picture he's rocking a beard, a pair of shades and a striped t-shirt.",
+                "The tower rocked under the impact of the hurricane.",
+                "rocked on the balls of his feet",
+                "the train rocked through the countryside",
+                "The band was rocking all night long.",
+                "her new car rocks"
+            ]
+        },
+        {
+            "id": "rock",
+            "partOfSpeech": "verb",
+            "text": "to cause to shake violently",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock",
+            "examples": [
+                "She gently rocked the baby to sleep.",
+                "a boat rocked by the waves",
+                "An earthquake rocked the town.",
+                "A hard right rocked the contender.",
+                "The scandal rocked the community.",
+                "Their invention rocked the industry.",
+                "The band rocked the crowd.",
+                "His performance rocked the house. =the audience loved his performance",
+                "… rocking a tight yellow T-shirt with jeans and high wooden sandals, belting her lyrics into a microphone.",
+                "In the picture he's rocking a beard, a pair of shades and a striped t-shirt.",
+                "The tower rocked under the impact of the hurricane.",
+                "rocked on the balls of his feet",
+                "the train rocked through the countryside",
+                "The band was rocking all night long.",
+                "her new car rocks"
+            ]
+        },
+        {
+            "id": "rock",
+            "partOfSpeech": "noun",
+            "text": "a rocking movement",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock"
+        },
+        {
+            "id": "rock",
+            "partOfSpeech": "noun",
+            "text": "popular music usually played on electronically amplified instruments and characterized by a persistent heavily accented beat, repetition of simple phrases, and often country, folk, and blues elements",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock"
+        },
+        {
+            "id": "rock",
+            "partOfSpeech": "noun",
+            "text": "a large mass of stone forming a cliff, promontory, or peak",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock",
+            "examples": [
+                "The superintendent describes [Michael] Doran as a rock on which the success of the school is and will continue to be built.",
+                "… a rock of independent thought … in an ocean of parochialism.",
+                "Who's going to fight through screens or risk lumps and lacerations lunging into the stands after the rock?"
+            ]
+        },
+        {
+            "id": "rock",
+            "partOfSpeech": "noun",
+            "text": "a concreted mass of stony material; also: broken pieces of such masses",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock",
+            "examples": [
+                "The superintendent describes [Michael] Doran as a rock on which the success of the school is and will continue to be built.",
+                "… a rock of independent thought … in an ocean of parochialism.",
+                "Who's going to fight through screens or risk lumps and lacerations lunging into the stands after the rock?"
+            ]
+        },
+        {
+            "id": "rock",
+            "partOfSpeech": "noun",
+            "text": "consolidated or unconsolidated solid mineral matter; also: a particular mass of it",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock",
+            "examples": [
+                "The superintendent describes [Michael] Doran as a rock on which the success of the school is and will continue to be built.",
+                "… a rock of independent thought … in an ocean of parochialism.",
+                "Who's going to fight through screens or risk lumps and lacerations lunging into the stands after the rock?"
+            ]
+        },
+        {
+            "id": "rock",
+            "partOfSpeech": "noun",
+            "text": "distaff",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock"
+        },
+        {
+            "id": "rock",
+            "partOfSpeech": "noun",
+            "text": "the wool or flax on a distaff",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock"
+        },
+        {
+            "id": "Rock:g",
+            "label": "geographical name",
+            "text": "river 300 miles (483 kilometers) long in southern Wisconsin and northern Illinois flowing south and southwest into the Mississippi River at the city of Rock Island",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock"
+        },
+        {
+            "id": "rock and roll",
+            "partOfSpeech": "noun",
+            "text": "popular music usually played on electronically amplified instruments and characterized by a persistent heavily accented beat, repetition of simple phrases, and often country, folk, and blues elements: rock —often used before another noun",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock",
+            "examples": [
+                "If many older people had been suspicious of the jukebox in the early fifties, they were even more affronted by the success of rock and roll after 1954.",
+                "The industry has changed. Is it no longer sex, drugs and rock 'n' roll?"
+            ]
+        },
+        {
+            "id": "rock and roll",
+            "partOfSpeech": "verb",
+            "text": "to perform or dance to rock and roll music",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock",
+            "examples": [
+                "Mark headed off to Liverpool over the weekend, where he did a little rocking and rolling.",
+                "He was wide awake and ready to rock and roll at 5:00 A.M.",
+                "… an overwhelming majority of the U.S. population has a primal desire to unfold a badass pair of shades, slide them onto their head … throw a jacket over their shoulder, and utter, \"let's rock and roll.\""
+            ]
+        },
+        {
+            "id": "rock and roll",
+            "partOfSpeech": "verb",
+            "text": "to start out or get going energetically",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock",
+            "examples": [
+                "Mark headed off to Liverpool over the weekend, where he did a little rocking and rolling.",
+                "He was wide awake and ready to rock and roll at 5:00 A.M.",
+                "… an overwhelming majority of the U.S. population has a primal desire to unfold a badass pair of shades, slide them onto their head … throw a jacket over their shoulder, and utter, \"let's rock and roll.\""
+            ]
+        },
+        {
+            "id": "rock and roller",
+            "partOfSpeech": "noun",
+            "text": "rocker",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock"
+        },
+        {
+            "id": "rock bass",
+            "partOfSpeech": "noun",
+            "text": "a brown spotted sunfish (Ambloplites rupestris) found especially in the upper Mississippi River valley and Great Lakes region",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock"
+        },
+        {
+            "id": "rock-bottom",
+            "partOfSpeech": "adjective",
+            "text": "being the very lowest; also: fundamental",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/rock",
+            "examples": [
+                "rock-bottom prices",
+                "the rock-bottom question"
+            ]
+        }
+    ],
+    "enrichment": {
+        "pronunciation": "ˈräk",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/r/rock0001.mp3",
+        "etymology": "Middle English rokken, from Old English roccian; akin to Old High German rucken to cause to move",
+        "synonyms": [
+            "sway",
+            "shake"
+        ],
+        "related": [
+            "move back and forth",
+            "wag",
+            "waggle",
+            "careen",
+            "rocking chair",
+            "rocker",
+            "roll",
+            "nutate",
+            "swag",
+            "totter",
+            "move",
+            "displace"
+        ]
+    }
+}
