@@ -1,0 +1,78 @@
+{
+    "word": "crocodile",
+    "date": "20261123",
+    "adapter": "merriam-webster",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "crocodile",
+            "partOfSpeech": "noun",
+            "text": "any of several large, carnivorous, thick-skinned, long-bodied, aquatic reptiles (family Crocodylidae and especially genus Crocodylus) of tropical and subtropical waters that have a long, tapered, V-shaped snout; broadly: crocodilian",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crocodile"
+        },
+        {
+            "id": "crocodile",
+            "partOfSpeech": "noun",
+            "text": "the skin or hide of a crocodile",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crocodile"
+        },
+        {
+            "id": "crocodile",
+            "partOfSpeech": "noun",
+            "text": "a line of people (such as schoolchildren) usually walking in pairs",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crocodile"
+        },
+        {
+            "id": "Limpopo:g",
+            "label": "geographical name",
+            "text": "river 1000 miles (1609 kilometers) long in southern Africa flowing from Limpopo province, Republic of South Africa, into the Indian Ocean in Mozambique",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crocodile"
+        },
+        {
+            "id": "Limpopo:g",
+            "label": "geographical name",
+            "text": "province of the northeastern part of the Republic of South Africa bordering Botswana, Zimbabwe, and Mozambique area 47,598 square miles (123,280 square kilometers)",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crocodile"
+        },
+        {
+            "id": "crocodile bird",
+            "partOfSpeech": "noun",
+            "text": "an African bird (Pluvianus aegyptius) that is related to the pratincoles and lights on the crocodile and eats its insect parasites",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crocodile"
+        },
+        {
+            "id": "crocodile tears",
+            "partOfSpeech": "noun",
+            "text": "false or affected tears; also: hypocritical sorrow",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/crocodile"
+        }
+    ],
+    "enrichment": {
+        "pronunciation": "ˈkrä-kə-ˌdī(-ə)l",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/crocod01.mp3",
+        "etymology": "Middle English & Latin; Middle English cocodrille, from Anglo-French, from Medieval Latin cocodrillus, alteration of Latin crocodilus, from Greek krokodilos lizard, crocodile, from krokē shingle, pebble + drilos worm; akin to Sanskrit śarkara pebble",
+        "related": [
+            "crocodilian reptile",
+            "crocodilian",
+            "African crocodile",
+            "Nile crocodile",
+            "Asian crocodile",
+            "Crocodylus porosus",
+            "Morlett's crocodile"
+        ]
+    }
+}
