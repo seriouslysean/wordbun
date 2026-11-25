@@ -1,0 +1,43 @@
+{
+    "word": "upside down",
+    "date": "20261125",
+    "adapter": "merriam-webster",
+    "preserveCase": false,
+    "data": [
+        {
+            "id": "upside down",
+            "partOfSpeech": "adverb",
+            "text": "in such a way that the upper and the lower parts are reversed in position",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/upside%20down",
+            "examples": [
+                "turned their world upside down"
+            ]
+        },
+        {
+            "id": "upside down",
+            "partOfSpeech": "adverb",
+            "text": "in or into great disorder",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/upside%20down",
+            "examples": [
+                "turned their world upside down"
+            ]
+        },
+        {
+            "id": "upside-down cake",
+            "partOfSpeech": "noun",
+            "text": "a cake baked with its batter covering an arrangement of fruit (such as pineapple) and served with the fruit side up",
+            "attributionText": "from Merriam-Webster's Collegiate Dictionary",
+            "sourceDictionary": "collegiate",
+            "sourceUrl": "https://www.merriam-webster.com/dictionary/upside%20down"
+        }
+    ],
+    "enrichment": {
+        "pronunciation": "ˈəp-ˌsīd-ˈdau̇n",
+        "audio": "https://media.merriam-webster.com/audio/prons/en/us/mp3/u/upside03.mp3",
+        "etymology": "alteration of Middle English up so doun, from up + so + doun down"
+    }
+}
